@@ -17,6 +17,8 @@ namespace Evbpc.Framework.Windows.Forms
     /// The Keys class contains constants for processing keyboard input. The members of the Keys enumeration consist of a key code and a set of modifiers combined into a single integer value. In the Win32 application programming interface (API) a key value has two halves, with the high-order bits containing the key code (which is the same as a Windows virtual key code), and the low-order bits representing key modifiers such as the SHIFT, CONTROL, and ALT keys.
     /// 
     /// Caution: Do not use the values in this enumeration for combined bitwise operations. The values in the enumeration are not mutually exclusive.
+    /// 
+    /// Also, do note: I wrote a little program that generated this file for me. I cannot guarantee it's accuracy.
     /// </remarks>
     [FlagsAttribute]
     public enum Keys

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Xna.Utilities
 {
+    /// <summary>
+    /// This provides an easy-to-use class to interact with the Keyboard in an XNA game.
+    /// </summary>
     public class KeyboardStateManager
     {
         private KeyboardState _kPrev;
@@ -37,6 +40,11 @@ namespace Evbpc.Framework.Xna.Utilities
                 OnKeyPress(new KeyPressEventArgs(GetKeyChar(pressedKey)));
         }
 
+        /// <summary>
+        /// Gets the <code>char</code> value represented by the <see cref="Evbpc.Framework.Windows.Forms.Keys"/> that was sent.
+        /// </summary>
+        /// <param name="key">The <see cref="Evbpc.Framework.Windows.Forms.Keys"/> enumeration value to examine.</param>
+        /// <returns>A <code>char</code> that represents the ASCII value of the key.</returns>
         public static char GetKeyChar(Evbpc.Framework.Windows.Forms.Keys key)
         {
             if ((key & Evbpc.Framework.Windows.Forms.Keys.Shift) == Evbpc.Framework.Windows.Forms.Keys.Shift)
@@ -46,6 +54,7 @@ namespace Evbpc.Framework.Xna.Utilities
                 if ((int)key >= 0x41 && (int)key <= 0x5A)
                     return (char)key;
 
+                // We made this a massive `switch` statement for the speed it provides.
                 switch (key)
                 {
                     case Framework.Windows.Forms.Keys.D1:
@@ -331,7 +340,6 @@ namespace Evbpc.Framework.Xna.Utilities
             if (key == Microsoft.Xna.Framework.Input.Keys.RightShift)
                 kv = Framework.Windows.Forms.Keys.RShiftKey | Framework.Windows.Forms.Keys.Shift;
             
-
             return kv;
         }
     }
