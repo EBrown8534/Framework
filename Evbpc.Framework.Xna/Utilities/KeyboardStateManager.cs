@@ -15,6 +15,8 @@ namespace Evbpc.Framework.Xna.Utilities
     {
         private KeyboardState _kPrev;
         private KeyboardState _kNow;
+        private TimeSpan _HoldRepeatTrigger = new TimeSpan(0, 0, 0, 0, 250); // Default to 250ms
+        private TimeSpan _HoldRepeatDelay = new TimeSpan(0, 0, 0, 0, 35); // Default to 35ms
 
         /// <summary>
         /// Gets the <code>KeyboardState</code> from the previous update.
@@ -24,10 +26,6 @@ namespace Evbpc.Framework.Xna.Utilities
         /// Gets the <code>KeyboardState</code> from the current update.
         /// </summary>
         public KeyboardState KeyStateNow { get { return _kNow; } }
-
-        private TimeSpan _HoldRepeatTrigger = new TimeSpan(0, 0, 0, 0, 250);
-        private TimeSpan _HoldRepeatDelay = new TimeSpan(0, 0, 0, 0, 35);
-
         /// <summary>
         /// Determines how long a key must be held for to begin triggering a repeated keypress.
         /// </summary>
