@@ -17,14 +17,13 @@ using Evbpc.Framework.Xna.Utilities;
 namespace Evbpc.Framework.Xna.Windows.Forms
 {
     /// <summary>
-    /// Represents a form that can be drawn with an XNA SpriteBatch.
+    /// Represents a <see cref="Evbpc.Framework.Windows.Forms.Form"/> that can be drawn with an XNA <code>SpriteBatch</code>.
     /// </summary>
     public class Form : Evbpc.Framework.Windows.Forms.Form
     {
         private Texture2D _BackgroundTexture;
         private Texture2D _TitleTexture;
         private static MouseState _mPrev;
-        public static KeyboardStateManager KeyStateMan { get; set; }
         private bool _ShowTitleBar;
         private int _TitleBarHeight;
         private EFD.Color _TitleBarColor;
@@ -35,6 +34,8 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         private EFD.Point _DragPosStart;
         private bool _InDrag;
         //private EFD.Size _WindowSize;
+
+        public static KeyboardStateManager KeyStateMan { get; set; }
 
         /// <summary>
         /// The Texture2D to use as the background of the form. If the <see cref="Size"/> does not match the Texture2D size, clipping or resizing may occur.
