@@ -10,6 +10,7 @@ namespace Evbpc.Framework.Drawing
 {
     public class PointConverter : TypeConverter
     {
+        // TODO: Actual right-proper implementation of this bad-boy.
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) { return true; }
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) { return true; }
         public override Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value) { return value; }
