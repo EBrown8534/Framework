@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Keys = Evbpc.Framework.Windows.Forms.Keys;
+using XnaKeys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace Evbpc.Framework.Xna.Utilities
 {
@@ -197,7 +198,7 @@ namespace Evbpc.Framework.Xna.Utilities
         {
             var pressedKeys = new List<Keys>();
 
-            foreach (Microsoft.Xna.Framework.Input.Keys key in k.GetPressedKeys())
+            foreach (XnaKeys key in k.GetPressedKeys())
             {
                 pressedKeys.Add(XnaKeyToKey(key));
 
@@ -328,19 +329,19 @@ namespace Evbpc.Framework.Xna.Utilities
             return IsPressedState(pressedKeys, key, false);
         }
 
-        private static Keys XnaKeyToKey(Microsoft.Xna.Framework.Input.Keys key)
+        private static Keys XnaKeyToKey(XnaKeys key)
         {
             Keys kv = Keys.None;
 
             switch (key)
             {
-                case Microsoft.Xna.Framework.Input.Keys.OemComma:
+                case XnaKeys.OemComma:
                     kv = Keys.Oemcomma;
                     break;
-                case Microsoft.Xna.Framework.Input.Keys.OemTilde:
+                case XnaKeys.OemTilde:
                     kv = Keys.Oemtilde;
                     break;
-                case Microsoft.Xna.Framework.Input.Keys.OemPlus:
+                case XnaKeys.OemPlus:
                     kv = Keys.Oemplus;
                     break;
                 default:
@@ -349,9 +350,9 @@ namespace Evbpc.Framework.Xna.Utilities
                     break;
             }
 
-            if (key == Microsoft.Xna.Framework.Input.Keys.LeftShift)
+            if (key == XnaKeys.LeftShift)
                 kv = Keys.LShiftKey | Keys.Shift;
-            if (key == Microsoft.Xna.Framework.Input.Keys.RightShift)
+            if (key == XnaKeys.RightShift)
                 kv = Keys.RShiftKey | Keys.Shift;
 
             return kv;
