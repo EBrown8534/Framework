@@ -4,6 +4,12 @@ This repository is a bulk repository for cloning many functions of `System.Drawi
 
 This repository was originally created for another project of mine, hence the naming.
 
+## Included projects
+
+`Evbpc.Framework`: contains the root utilities, classes and structures to replicate certain portions of the `System.Drawing` namespace, as well as limited support for certain physics operations, and a small list of additional utilities (for serialization, logging, etc.).
+`Evbpc.Framework.Windows`: contains the additional features required to create `Form` objects within XNA (or other graphics libraries, this project is library agnostic).
+`Evbpc.Framework.Xna`: contains the wrapping of the `Evbpc.Framework` and `Evbpc.Framework.Windows` projects to XNA-compatible formats.
+
 ## What can you do with it
 
 Anyone is free to use this to their own purposes, I only request that if you make substantial changes you create a pull-request to include them in this repository.
