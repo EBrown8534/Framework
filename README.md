@@ -16,7 +16,7 @@ Anyone is free to use this to their own purposes, I only request that if you mak
 
 ## How do I use it
 
-This solution requires Visual Studio 2013, XNA 4.0, and .NET 4.0. Detailed setup instructions are below.
+This solution requires Visual Studio 2013, XNA 4.0, and .NET 4.5. Detailed setup instructions are below.
 
 ## Setting up XNA 4.0
 
