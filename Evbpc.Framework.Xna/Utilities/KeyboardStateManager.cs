@@ -294,7 +294,6 @@ namespace Evbpc.Framework.Xna.Utilities
                                     keyLastTickAt[pressedKeys[i]] = DateTime.UtcNow;
                                 else
                                     keyLastTickAt.Add(pressedKeys[i], DateTime.UtcNow);
-                                //keysHeld[pressedKeys[i]] = DateTime.UtcNow;
                             }
                         }
                     }
@@ -350,17 +349,6 @@ namespace Evbpc.Framework.Xna.Utilities
                     break;
             }
 
-            //if ((key & Microsoft.Xna.Framework.Input.Keys.LeftShift) == Microsoft.Xna.Framework.Input.Keys.LeftShift)
-            //{
-            //    //kv = kv | Framework.Windows.Forms.Keys.LShiftKey;
-            //    kv = kv | Framework.Windows.Forms.Keys.Shift;
-            //}
-            //if ((key & Microsoft.Xna.Framework.Input.Keys.RightShift) == Microsoft.Xna.Framework.Input.Keys.RightShift)
-            //{
-            //    //kv = kv | Framework.Windows.Forms.Keys.RShiftKey;
-            //    kv = kv | Framework.Windows.Forms.Keys.Shift;
-            //}
-            //if ((key & Microsoft.Xna.Framework.Input.Keys.RightShift) == Microsoft.Xna.Framework.Input.Keys.RightShift)
             if (key == Microsoft.Xna.Framework.Input.Keys.LeftShift)
                 kv = Framework.Windows.Forms.Keys.LShiftKey | Framework.Windows.Forms.Keys.Shift;
             if (key == Microsoft.Xna.Framework.Input.Keys.RightShift)
