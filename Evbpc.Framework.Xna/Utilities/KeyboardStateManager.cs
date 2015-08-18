@@ -16,9 +16,19 @@ namespace Evbpc.Framework.Xna.Utilities
         private KeyboardState _kPrev;
         private KeyboardState _kNow;
 
+        /// <summary>
+        /// Gets the <code>KeyboardState</code> from the previous update.
+        /// </summary>
         public KeyboardState KeyStatePrevious { get { return _kPrev; } }
+        /// <summary>
+        /// Gets the <code>KeyboardState</code> from the current update.
+        /// </summary>
         public KeyboardState KeyStateNow { get { return _kNow; } }
 
+        /// <summary>
+        /// Updates the internal <code>KeyboardState</code> and fires relevant events.
+        /// </summary>
+        /// <param name="kState">The new <code>KeyboardState</code>.</param>
         public void Update(KeyboardState kState)
         {
             _kPrev = _kNow;
