@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Keys = Evbpc.Framework.Windows.Forms.Keys;
 
 namespace Evbpc.Framework.Xna.Utilities
 {
@@ -44,32 +45,32 @@ namespace Evbpc.Framework.Xna.Utilities
             _kPrev = _kNow;
             _kNow = kState;
 
-            List<Evbpc.Framework.Windows.Forms.Keys> keysDownNow = GetPressedKeys(_kNow);
-            List<Evbpc.Framework.Windows.Forms.Keys> keysDownPrev = GetPressedKeys(_kPrev);
-            List<Evbpc.Framework.Windows.Forms.Keys> keysPressed = GetPressedKeys();
+            var keysDownNow = GetPressedKeys(_kNow);
+            var keysDownPrev = GetPressedKeys(_kPrev);
+            var keysPressed = GetPressedKeys();
 
-            foreach (Evbpc.Framework.Windows.Forms.Keys keyDownNow in keysDownNow)
-                if (!keysDownPrev.Contains(keyDownNow))
-                    OnKeyDown(new KeyEventArgs(keyDownNow));
+            foreach (Keys key in keysDownNow)
+                if (!keysDownPrev.Contains(key))
+                    OnKeyDown(new KeyEventArgs(key));
 
-            foreach (Evbpc.Framework.Windows.Forms.Keys keyDownPrev in keysDownPrev)
-                if (!keysDownNow.Contains(keyDownPrev))
-                    OnKeyUp(new KeyEventArgs(keyDownPrev));
+            foreach (Keys key in keysDownPrev)
+                if (!keysDownNow.Contains(key))
+                    OnKeyUp(new KeyEventArgs(key));
 
-            foreach (Evbpc.Framework.Windows.Forms.Keys pressedKey in keysPressed)
-                OnKeyPress(new KeyPressEventArgs(GetKeyChar(pressedKey)));
+            foreach (Keys key in keysPressed)
+                OnKeyPress(new KeyPressEventArgs(GetKeyChar(key)));
         }
 
         /// <summary>
-        /// Gets the <code>char</code> value represented by the <see cref="Evbpc.Framework.Windows.Forms.Keys"/> that was sent.
+        /// Gets the <code>char</code> value represented by the <see cref="Keys"/> that was sent.
         /// </summary>
-        /// <param name="key">The <see cref="Evbpc.Framework.Windows.Forms.Keys"/> enumeration value to examine.</param>
+        /// <param name="key">The <see cref="Keys"/> enumeration value to examine.</param>
         /// <returns>A <code>char</code> that represents the ASCII value of the key.</returns>
-        public static char GetKeyChar(Evbpc.Framework.Windows.Forms.Keys key)
+        public static char GetKeyChar(Keys key)
         {
-            if ((key & Evbpc.Framework.Windows.Forms.Keys.Shift) == Evbpc.Framework.Windows.Forms.Keys.Shift)
+            if ((key & Keys.Shift) == Keys.Shift)
             {
-                key = key ^ Framework.Windows.Forms.Keys.Shift;
+                key ^= Keys.Shift;
 
                 if ((int)key >= 0x41 && (int)key <= 0x5A)
                     return (char)key;
@@ -77,55 +78,55 @@ namespace Evbpc.Framework.Xna.Utilities
                 // We made this a massive `switch` statement for the speed it provides.
                 switch (key)
                 {
-                    case Framework.Windows.Forms.Keys.D1:
+                    case Keys.D1:
                         return '!';
-                    case Framework.Windows.Forms.Keys.D2:
+                    case Keys.D2:
                         return '@';
-                    case Framework.Windows.Forms.Keys.D3:
+                    case Keys.D3:
                         return '#';
-                    case Framework.Windows.Forms.Keys.D4:
+                    case Keys.D4:
                         return '$';
-                    case Framework.Windows.Forms.Keys.D5:
+                    case Keys.D5:
                         return '%';
-                    case Framework.Windows.Forms.Keys.D6:
+                    case Keys.D6:
                         return '^';
-                    case Framework.Windows.Forms.Keys.D7:
+                    case Keys.D7:
                         return '&';
-                    case Framework.Windows.Forms.Keys.D8:
+                    case Keys.D8:
                         return '*';
-                    case Framework.Windows.Forms.Keys.D9:
+                    case Keys.D9:
                         return '(';
-                    case Framework.Windows.Forms.Keys.D0:
+                    case Keys.D0:
                         return ')';
-                    case Framework.Windows.Forms.Keys.OemPeriod:
+                    case Keys.OemPeriod:
                         return '>';
-                    case Framework.Windows.Forms.Keys.Oemcomma:
+                    case Keys.Oemcomma:
                         return '<';
-                    case Framework.Windows.Forms.Keys.OemQuestion:
+                    case Keys.OemQuestion:
                         return '?';
-                    case Framework.Windows.Forms.Keys.OemOpenBrackets:
+                    case Keys.OemOpenBrackets:
                         return '{';
-                    case Framework.Windows.Forms.Keys.OemCloseBrackets:
+                    case Keys.OemCloseBrackets:
                         return '}';
-                    case Framework.Windows.Forms.Keys.OemSemicolon:
+                    case Keys.OemSemicolon:
                         return ':';
-                    case Framework.Windows.Forms.Keys.OemQuotes:
+                    case Keys.OemQuotes:
                         return '"';
-                    case Framework.Windows.Forms.Keys.Oemtilde:
+                    case Keys.Oemtilde:
                         return '~';
-                    case Framework.Windows.Forms.Keys.Oemplus:
+                    case Keys.Oemplus:
                         return '+';
-                    case Framework.Windows.Forms.Keys.Separator:
+                    case Keys.Separator:
                         return '_';
-                    case Framework.Windows.Forms.Keys.OemPipe:
+                    case Keys.OemPipe:
                         return '|';
-                    case Framework.Windows.Forms.Keys.Divide:
+                    case Keys.Divide:
                         return '/';
-                    case Framework.Windows.Forms.Keys.Multiply:
+                    case Keys.Multiply:
                         return '*';
-                    case Framework.Windows.Forms.Keys.Subtract:
+                    case Keys.Subtract:
                         return '-';
-                    case Framework.Windows.Forms.Keys.Add:
+                    case Keys.Add:
                         return '+';
                 }
 
@@ -135,68 +136,66 @@ namespace Evbpc.Framework.Xna.Utilities
             {
                 if ((int)key >= 0x41 && (int)key <= 0x5A)
                     return (char)((int)key + 32);
-                else if ((int)key >= 0x30 && (int)key <= 0x39)
+                if ((int)key >= 0x30 && (int)key <= 0x39)
                     return (char)key;
-                else
+
+                switch (key)
                 {
-                    switch (key)
-                    {
-                        case Framework.Windows.Forms.Keys.Separator:
-                            return '-';
-                        case Framework.Windows.Forms.Keys.Oemplus:
-                            return '=';
-                        case Framework.Windows.Forms.Keys.Divide:
-                            return '/';
-                        case Framework.Windows.Forms.Keys.Multiply:
-                            return '*';
-                        case Framework.Windows.Forms.Keys.Subtract:
-                            return '-';
-                        case Framework.Windows.Forms.Keys.Add:
-                            return '+';
-                        case Framework.Windows.Forms.Keys.NumPad0:
-                        case Framework.Windows.Forms.Keys.NumPad1:
-                        case Framework.Windows.Forms.Keys.NumPad2:
-                        case Framework.Windows.Forms.Keys.NumPad3:
-                        case Framework.Windows.Forms.Keys.NumPad4:
-                        case Framework.Windows.Forms.Keys.NumPad5:
-                        case Framework.Windows.Forms.Keys.NumPad6:
-                        case Framework.Windows.Forms.Keys.NumPad7:
-                        case Framework.Windows.Forms.Keys.NumPad8:
-                        case Framework.Windows.Forms.Keys.NumPad9:
-                            return key.ToString().Substring(6, 1)[0];
-                        case Framework.Windows.Forms.Keys.OemPeriod:
-                            return '.';
-                        case Framework.Windows.Forms.Keys.Oemcomma:
-                            return ',';
-                        case Framework.Windows.Forms.Keys.OemQuestion:
-                            return '/';
-                        case Framework.Windows.Forms.Keys.OemPipe:
-                            return '\\';
-                        case Framework.Windows.Forms.Keys.OemOpenBrackets:
-                            return '[';
-                        case Framework.Windows.Forms.Keys.OemCloseBrackets:
-                            return ']';
-                        case Framework.Windows.Forms.Keys.OemSemicolon:
-                            return ';';
-                        case Framework.Windows.Forms.Keys.OemQuotes:
-                            return '\'';
-                        case Framework.Windows.Forms.Keys.Oemtilde:
-                            return '`';
-                        case Framework.Windows.Forms.Keys.Decimal:
-                            return '.';
-                        default:
-                            return (char)key;
-                    }
+                    case Keys.Separator:
+                        return '-';
+                    case Keys.Oemplus:
+                        return '=';
+                    case Keys.Divide:
+                        return '/';
+                    case Keys.Multiply:
+                        return '*';
+                    case Keys.Subtract:
+                        return '-';
+                    case Keys.Add:
+                        return '+';
+                    case Keys.NumPad0:
+                    case Keys.NumPad1:
+                    case Keys.NumPad2:
+                    case Keys.NumPad3:
+                    case Keys.NumPad4:
+                    case Keys.NumPad5:
+                    case Keys.NumPad6:
+                    case Keys.NumPad7:
+                    case Keys.NumPad8:
+                    case Keys.NumPad9:
+                        return key.ToString().Substring(6, 1)[0];
+                    case Keys.OemPeriod:
+                        return '.';
+                    case Keys.Oemcomma:
+                        return ',';
+                    case Keys.OemQuestion:
+                        return '/';
+                    case Keys.OemPipe:
+                        return '\\';
+                    case Keys.OemOpenBrackets:
+                        return '[';
+                    case Keys.OemCloseBrackets:
+                        return ']';
+                    case Keys.OemSemicolon:
+                        return ';';
+                    case Keys.OemQuotes:
+                        return '\'';
+                    case Keys.Oemtilde:
+                        return '`';
+                    case Keys.Decimal:
+                        return '.';
+                    default:
+                        return (char)key;
                 }
             }
         }
 
-        private static Dictionary<Framework.Windows.Forms.Keys, DateTime> keysPressedAt = new Dictionary<Framework.Windows.Forms.Keys, DateTime>();
-        private static Dictionary<Framework.Windows.Forms.Keys, DateTime> keyLastTickAt = new Dictionary<Framework.Windows.Forms.Keys, DateTime>();
+        private static Dictionary<Keys, DateTime> keysPressedAt = new Dictionary<Keys, DateTime>();
+        private static Dictionary<Keys, DateTime> keyLastTickAt = new Dictionary<Keys, DateTime>();
 
-        private List<Framework.Windows.Forms.Keys> GetPressedKeys(KeyboardState k)
+        private List<Keys> GetPressedKeys(KeyboardState k)
         {
-            List<Framework.Windows.Forms.Keys> pressedKeys = new List<Framework.Windows.Forms.Keys>();
+            var pressedKeys = new List<Keys>();
 
             foreach (Microsoft.Xna.Framework.Input.Keys key in k.GetPressedKeys())
             {
@@ -256,104 +255,105 @@ namespace Evbpc.Framework.Xna.Utilities
         /// </remarks>
         public event KeyEventHandler KeyUp;
 
-        private List<Framework.Windows.Forms.Keys> GetPressedKeys()
+        private List<Keys> GetPressedKeys()
         {
-            List<Framework.Windows.Forms.Keys> pressedKeys = GetPressedKeys(_kNow);
-            List<Framework.Windows.Forms.Keys> prevPressedKeys = GetPressedKeys(_kPrev);
+            var pressedKeys = GetPressedKeys(_kNow);
+            var prevPressedKeys = GetPressedKeys(_kPrev);
 
-            List<Framework.Windows.Forms.Keys> result = new List<Framework.Windows.Forms.Keys>();
+            var result = new List<Keys>();
             bool shiftPressed = false;
 
-            for (int i = 0; i < pressedKeys.Count; i++)
+            foreach (Keys key in pressedKeys)
             {
-                if ((pressedKeys[i] & Framework.Windows.Forms.Keys.Shift) == Framework.Windows.Forms.Keys.Shift)
+                if ((key & Keys.Shift) == Keys.Shift)
                     shiftPressed = true;
                 else
                 {
-                    if (IsKeyUp(prevPressedKeys, pressedKeys[i]))
+                    if (IsKeyUp(prevPressedKeys, key))
                     {
-                        result.Add(pressedKeys[i]);
+                        result.Add(key);
 
-                        if (keysPressedAt.ContainsKey(pressedKeys[i]))
-                            keysPressedAt.Remove(pressedKeys[i]);
+                        if (keysPressedAt.ContainsKey(key))
+                            keysPressedAt.Remove(key);
 
-                        if (keyLastTickAt.ContainsKey(pressedKeys[i]))
-                            keyLastTickAt.Remove(pressedKeys[i]);
+                        if (keyLastTickAt.ContainsKey(key))
+                            keyLastTickAt.Remove(key);
                     }
                     else
                     {
-                        if (keysPressedAt.ContainsKey(pressedKeys[i]))
+                        if (keysPressedAt.ContainsKey(key))
                         {
-                            TimeSpan timeDifference = DateTime.UtcNow - keysPressedAt[pressedKeys[i]];
+                            TimeSpan timeDifference = DateTime.UtcNow - keysPressedAt[key];
 
-                            if (timeDifference > _HoldRepeatTrigger && (keyLastTickAt.ContainsKey(pressedKeys[i]) && DateTime.UtcNow - keyLastTickAt[pressedKeys[i]] > _HoldRepeatDelay || !keyLastTickAt.ContainsKey(pressedKeys[i])))
+                            if (timeDifference > _HoldRepeatTrigger && (keyLastTickAt.ContainsKey(key) && DateTime.UtcNow - keyLastTickAt[key] > _HoldRepeatDelay || !keyLastTickAt.ContainsKey(key)))
                             {
-                                result.Add(pressedKeys[i]);
+                                result.Add(key);
 
-                                if (keyLastTickAt.ContainsKey(pressedKeys[i]))
-                                    keyLastTickAt[pressedKeys[i]] = DateTime.UtcNow;
+                                if (keyLastTickAt.ContainsKey(key))
+                                    keyLastTickAt[key] = DateTime.UtcNow;
                                 else
-                                    keyLastTickAt.Add(pressedKeys[i], DateTime.UtcNow);
+                                    keyLastTickAt.Add(key, DateTime.UtcNow);
                             }
                         }
                     }
 
-                    if (!keysPressedAt.ContainsKey(pressedKeys[i]))
-                        keysPressedAt.Add(pressedKeys[i], DateTime.UtcNow);
+                    if (!keysPressedAt.ContainsKey(key))
+                        keysPressedAt.Add(key, DateTime.UtcNow);
                 }
             }
 
             if (shiftPressed)
                 for (int i = 0; i < result.Count; i++)
-                    result[i] = result[i] | Framework.Windows.Forms.Keys.Shift;
+                    result[i] |= Keys.Shift;
 
             return result;
         }
 
-        private static bool IsKeyDown(List<Framework.Windows.Forms.Keys> pressedKeys, Framework.Windows.Forms.Keys key)
+        private static bool IsPressedState(List<Keys> pressedKeys, Keys key, bool state)
         {
             for (int i = 0; i < pressedKeys.Count; i++)
                 if (pressedKeys[i] == key)
-                    return true;
+                    return state;
 
-            return false;
+            return !state;
         }
 
-        private static bool IsKeyUp(List<Framework.Windows.Forms.Keys> pressedKeys, Framework.Windows.Forms.Keys key)
+        private static bool IsKeyDown(List<Keys> pressedKeys, Keys key)
         {
-            for (int i = 0; i < pressedKeys.Count; i++)
-                if (pressedKeys[i] == key)
-                    return false;
-
-            return true;
+            return IsPressedState(pressedKeys, key, true);
         }
 
-        private static Framework.Windows.Forms.Keys XnaKeyToKey(Microsoft.Xna.Framework.Input.Keys key)
+        private static bool IsKeyUp(List<Keys> pressedKeys, Keys key)
         {
-            Framework.Windows.Forms.Keys kv = Framework.Windows.Forms.Keys.None;
+            return IsPressedState(pressedKeys, key, false);
+        }
+
+        private static Keys XnaKeyToKey(Microsoft.Xna.Framework.Input.Keys key)
+        {
+            Keys kv = Keys.None;
 
             switch (key)
             {
                 case Microsoft.Xna.Framework.Input.Keys.OemComma:
-                    kv = Framework.Windows.Forms.Keys.Oemcomma;
+                    kv = Keys.Oemcomma;
                     break;
                 case Microsoft.Xna.Framework.Input.Keys.OemTilde:
-                    kv = Framework.Windows.Forms.Keys.Oemtilde;
+                    kv = Keys.Oemtilde;
                     break;
                 case Microsoft.Xna.Framework.Input.Keys.OemPlus:
-                    kv = Framework.Windows.Forms.Keys.Oemplus;
+                    kv = Keys.Oemplus;
                     break;
                 default:
-                    if (Enum.IsDefined(typeof(Framework.Windows.Forms.Keys), key.ToString()) | key.ToString().Contains(","))
-                        kv = kv | (Framework.Windows.Forms.Keys)Enum.Parse(typeof(Framework.Windows.Forms.Keys), key.ToString());
+                    if (Enum.IsDefined(typeof(Keys), key.ToString()) | key.ToString().Contains(","))
+                        kv |= (Keys)Enum.Parse(typeof(Keys), key.ToString());
                     break;
             }
 
             if (key == Microsoft.Xna.Framework.Input.Keys.LeftShift)
-                kv = Framework.Windows.Forms.Keys.LShiftKey | Framework.Windows.Forms.Keys.Shift;
+                kv = Keys.LShiftKey | Keys.Shift;
             if (key == Microsoft.Xna.Framework.Input.Keys.RightShift)
-                kv = Framework.Windows.Forms.Keys.RShiftKey | Framework.Windows.Forms.Keys.Shift;
-            
+                kv = Keys.RShiftKey | Keys.Shift;
+
             return kv;
         }
     }
