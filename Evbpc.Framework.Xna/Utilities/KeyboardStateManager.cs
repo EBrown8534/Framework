@@ -25,6 +25,18 @@ namespace Evbpc.Framework.Xna.Utilities
         /// </summary>
         public KeyboardState KeyStateNow { get { return _kNow; } }
 
+        private TimeSpan _HoldRepeatTrigger = new TimeSpan(0, 0, 0, 0, 250);
+        private TimeSpan _HoldRepeatDelay = new TimeSpan(0, 0, 0, 0, 35);
+
+        /// <summary>
+        /// Determines how long a key must be held for to begin triggering a repeated keypress.
+        /// </summary>
+        public TimeSpan HoldRepeatTrigger { get { return _HoldRepeatTrigger; } set { _HoldRepeatTrigger = value; } }
+        /// <summary>
+        /// Determines how long between repeated keypresses a key must be held for to continue the repeat.
+        /// </summary>
+        public TimeSpan HoldRepeatDelay { get { return _HoldRepeatDelay; } set { _HoldRepeatDelay = value; } }
+
         /// <summary>
         /// Updates the internal <code>KeyboardState</code> and fires relevant events.
         /// </summary>
@@ -193,7 +205,7 @@ namespace Evbpc.Framework.Xna.Utilities
                 pressedKeys.Add(XnaKeyToKey(key));
 
                 if (!keysPressedAt.ContainsKey(XnaKeyToKey(key)))
-                    keysPressedAt.Add(XnaKeyToKey(key), DateTime.Now);
+                    keysPressedAt.Add(XnaKeyToKey(key), DateTime.UtcNow);
             }
 
             return pressedKeys;
@@ -274,23 +286,23 @@ namespace Evbpc.Framework.Xna.Utilities
                     {
                         if (keysPressedAt.ContainsKey(pressedKeys[i]))
                         {
-                            TimeSpan timeDifference = DateTime.Now - keysPressedAt[pressedKeys[i]];
+                            TimeSpan timeDifference = DateTime.UtcNow - keysPressedAt[pressedKeys[i]];
 
-                            if (timeDifference > new TimeSpan(0, 0, 0, 0, 250) && (keyLastTickAt.ContainsKey(pressedKeys[i]) && DateTime.Now - keyLastTickAt[pressedKeys[i]] > new TimeSpan(0, 0, 0, 0, 35) || !keyLastTickAt.ContainsKey(pressedKeys[i])))
+                            if (timeDifference > _HoldRepeatTrigger && (keyLastTickAt.ContainsKey(pressedKeys[i]) && DateTime.UtcNow - keyLastTickAt[pressedKeys[i]] > _HoldRepeatDelay || !keyLastTickAt.ContainsKey(pressedKeys[i])))
                             {
                                 result.Add(pressedKeys[i]);
 
                                 if (keyLastTickAt.ContainsKey(pressedKeys[i]))
-                                    keyLastTickAt[pressedKeys[i]] = DateTime.Now;
+                                    keyLastTickAt[pressedKeys[i]] = DateTime.UtcNow;
                                 else
-                                    keyLastTickAt.Add(pressedKeys[i], DateTime.Now);
-                                //keysHeld[pressedKeys[i]] = DateTime.Now;
+                                    keyLastTickAt.Add(pressedKeys[i], DateTime.UtcNow);
+                                //keysHeld[pressedKeys[i]] = DateTime.UtcNow;
                             }
                         }
                     }
 
                     if (!keysPressedAt.ContainsKey(pressedKeys[i]))
-                        keysPressedAt.Add(pressedKeys[i], DateTime.Now);
+                        keysPressedAt.Add(pressedKeys[i], DateTime.UtcNow);
                 }
             }
 
