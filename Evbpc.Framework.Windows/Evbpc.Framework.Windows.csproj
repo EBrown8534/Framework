@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C4E27E9E-B586-4F9F-8CDB-DD8128ADDA33}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Evbpc.Framework.Windows</RootNamespace>
+    <AssemblyName>Evbpc.Framework.Windows</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\AnchorStyles.cs" />
+    <Compile Include="Forms\Button.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ButtonBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\CloseReason.cs" />
+    <Compile Include="Forms\ContainerControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ContentAlignment.cs" />
+    <Compile Include="Forms\Control.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ControlEventArgs.cs" />
+    <Compile Include="Forms\EventHandlerDelegates.cs" />
+    <Compile Include="Forms\FlatButtonAppearance.cs" />
+    <Compile Include="Forms\FlatStyle.cs" />
+    <Compile Include="Forms\Form.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\FormBorderStyle.cs" />
+    <Compile Include="Forms\FormClosedEventArgs.cs" />
+    <Compile Include="Forms\FormClosingEventArgs.cs" />
+    <Compile Include="Forms\FormStartPosition.cs" />
+    <Compile Include="Forms\FormWindowState.cs" />
+    <Compile Include="Forms\HScrollProperties.cs" />
+    <Compile Include="Forms\IButtonControl.cs" />
+    <Compile Include="Forms\IContainerControl.cs" />
+    <Compile Include="Forms\KeyEventArgs.cs" />
+    <Compile Include="Forms\KeyPressEventArgs.cs" />
+    <Compile Include="Forms\Keys.cs" />
+    <Compile Include="Forms\Label.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MouseButtons.cs" />
+    <Compile Include="Forms\MouseEventArgs.cs" />
+    <Compile Include="Forms\ScrollableControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\ScrollEventArgs.cs" />
+    <Compile Include="Forms\ScrollEventType.cs" />
+    <Compile Include="Forms\ScrollOrientation.cs" />
+    <Compile Include="Forms\ScrollProperties.cs" />
+    <Compile Include="Forms\SizeGripStyle.cs" />
+    <Compile Include="Forms\TextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\TextBoxBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\VScrollProperties.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Evbpc.Framework\Evbpc.Framework.csproj">
+      <Project>{91b3b072-1736-4684-853b-a9682b06c8b6}</Project>
+      <Name>Evbpc.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
