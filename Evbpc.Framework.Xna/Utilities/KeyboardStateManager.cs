@@ -128,6 +128,7 @@ namespace Evbpc.Framework.Xna.Utilities
                 else if ((int)key >= 0x30 && (int)key <= 0x39)
                     return (char)key;
                 else
+                {
                     switch (key)
                     {
                         case Framework.Windows.Forms.Keys.Separator:
@@ -176,6 +177,7 @@ namespace Evbpc.Framework.Xna.Utilities
                         default:
                             return (char)key;
                     }
+                }
             }
         }
 
@@ -253,6 +255,7 @@ namespace Evbpc.Framework.Xna.Utilities
             bool shiftPressed = false;
 
             for (int i = 0; i < pressedKeys.Count; i++)
+            {
                 if ((pressedKeys[i] & Framework.Windows.Forms.Keys.Shift) == Framework.Windows.Forms.Keys.Shift)
                     shiftPressed = true;
                 else
@@ -268,6 +271,7 @@ namespace Evbpc.Framework.Xna.Utilities
                             keyLastTickAt.Remove(pressedKeys[i]);
                     }
                     else
+                    {
                         if (keysPressedAt.ContainsKey(pressedKeys[i]))
                         {
                             TimeSpan timeDifference = DateTime.Now - keysPressedAt[pressedKeys[i]];
@@ -283,10 +287,12 @@ namespace Evbpc.Framework.Xna.Utilities
                                 //keysHeld[pressedKeys[i]] = DateTime.Now;
                             }
                         }
+                    }
 
                     if (!keysPressedAt.ContainsKey(pressedKeys[i]))
                         keysPressedAt.Add(pressedKeys[i], DateTime.Now);
                 }
+            }
 
             if (shiftPressed)
                 for (int i = 0; i < result.Count; i++)
