@@ -62,11 +62,17 @@
     <Compile Include="Drawing\Extensions\ColorExtensions.cs" />
     <Compile Include="Utilities\KeyboardStateManager.cs" />
     <Compile Include="Windows\Forms\IDrawableControl.cs" />
-    <Compile Include="Windows\Forms\Form.cs" />
+    <Compile Include="Windows\Forms\Form.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\Forms\IUpdateableControl.cs" />
-    <Compile Include="Windows\Forms\Label.cs" />
-    <Compile Include="Windows\Forms\TextBox.cs" />
+    <Compile Include="Windows\Forms\Label.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\TextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Evbpc.Framework.Windows\Evbpc.Framework.Windows.csproj">
