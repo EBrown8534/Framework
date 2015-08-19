@@ -42,8 +42,27 @@ namespace Evbpc.Framework.Drawing
         public float X { get { return _Location.X; } set { _Location.X = value; } }
         public float Y { get { return _Location.Y; } set { _Location.Y = value; } }
 
+        /// <summary>
+        /// Determines if a <see cref="PointF"/> is contained within the current <see cref="RectangleF"/>.
+        /// </summary>
+        /// <param name="pt">The <see cref="PointF"/> to test.</param>
+        /// <returns>True if pt is contained within this <see cref="RectangleF"/>.</returns>
         public bool Contains(PointF pt) { return Contains(pt.X, pt.Y); }
+        /// <summary>
+        /// Determines if a <see cref="RectangleF"/> is entirely contained within this <see cref="RectangleF"/>.
+        /// </summary>
+        /// <param name="rect">The <see cref="RectangleF"/> to test.</param>
+        /// <returns>True if rect is entirely contained within this <see cref="RectangleF"/>.</returns>
         public bool Contains(RectangleF rect) { return Contains(rect.Top, rect.Left) && Contains(rect.Top, rect.Right) && Contains(rect.Bottom, rect.Left) && Contains(rect.Bottom, rect.Right); }
+        /// <summary>
+        /// Determines if the position represented by x and y is contained within the current <see cref="RectangleF"/>.
+        /// </summary>
+        /// <param name="x">The x value of the position to test.</param>
+        /// <param name="y">The y value of the position to test.</param>
+        /// <returns>True if the position represented by the x and y values is contained within this <see cref="RectangleF"/>.</returns>
+        /// <remarks>
+        /// This method is entirely inclusive. If the position represented by the x and y values is on the edge of, or entirely within the current <see cref="RectangleF"/>, then this method will return true.
+        /// </remarks>
         public bool Contains(float x, float y) { return _Location.X <= x && _Location.X + _Size.Width >= x && _Location.Y <= y && _Location.Y + _Size.Height >= y; }
         public override bool Equals(Object obj) { if (obj.GetType() == typeof(RectangleF)) { return (RectangleF)obj == this; } else { return false; } }
         public static RectangleF FromLTRB(float left, float top, float right, float bottom) { return new RectangleF(new PointF(top, left), new SizeF(bottom - top, right - left)); }
