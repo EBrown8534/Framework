@@ -16,8 +16,8 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class Form : ContainerControl
     {
-        protected static Form ActiveForm;
-        protected static List<Form> Forms = new List<Form>();
+        protected static Form _ActiveForm;
+        protected static List<Form> _Forms = new List<Form>();
         private bool _allowTransparency;
         private Size _defaultSize;
         private FormBorderStyle _formBorderStyle;
@@ -48,7 +48,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.activeform(v=vs.110).aspx
         /// </remarks>
-        public static Form ActiveForm { get { return ActiveForm; } }
+        public static Form ActiveForm { get { return _ActiveForm; } }
 
         /// <summary>
         /// Infrastructure. Gets or sets a value indicating whether the opacity of the form can be adjusted.
@@ -221,27 +221,27 @@ namespace Evbpc.Framework.Windows.Forms
         #region Methods
         public void Activate()
         {
-            ActiveForm = this;
+            _ActiveForm = this;
             List<Form> l2 = new List<Form>();
 
-            for (int i = 0; i < Forms.Count; i++)
+            for (int i = 0; i < _Forms.Count; i++)
             {
-                l2.Add(Forms[i]);
+                l2.Add(_Forms[i]);
             }
 
-            Forms.Clear();
-            Forms.Add(this);
+            _Forms.Clear();
+            _Forms.Add(this);
 
             for (int i = 0; i < l2.Count; i++)
             {
                 if (l2[i] != this)
-                    Forms.Add(l2[i]);
+                    _Forms.Add(l2[i]);
             }
         }
         public void AddOwnedForm(Form ownedForm) { Form[] tForms = new Form[_ownedForms.Length + 1]; for (int i = 0; i < _ownedForms.Length; i++) { tForms[i] = _ownedForms[i]; } tForms[tForms.Length - 1] = ownedForm; _ownedForms = tForms; }
-        public void Close() { OnClosing(new CancelEventArgs()); OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false)); OnClosed(new EventArgs()); OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing)); Forms.Remove(this); }
+        public void Close() { OnClosing(new CancelEventArgs()); OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false)); OnClosed(new EventArgs()); OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing)); _Forms.Remove(this); }
 
-        public static Form FindForm(string key) { foreach (Form f in Forms) { if (f.Name == key) { return f; } } throw new KeyNotFoundException(); }
+        public static Form FindForm(string key) { foreach (Form f in _Forms) { if (f.Name == key) { return f; } } throw new KeyNotFoundException(); }
 
         [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool IsInputChar(char charCode) { throw new NotImplementedException(); }
@@ -279,7 +279,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// 
         /// If you do not need to add controls, programmatically change anything on the form, or programmatically operate on it, then it is not necessary to hold on to the variable. You may still subscribe to events and will be informed when an event is triggered.
         /// </remarks>
-        public void Show() { if (Forms.Contains(this)) { throw new InvalidOperationException("The Form.Show() method has already been called on this Form."); } Forms.Add(this); base.Show(); Enabled = true; Visible = true; }
+        public void Show() { if (_Forms.Contains(this)) { throw new InvalidOperationException("The Form.Show() method has already been called on this Form."); } _Forms.Add(this); base.Show(); Enabled = true; Visible = true; }
         #endregion
 
         #region Events
