@@ -102,10 +102,12 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                 foreach (Control c in Controls)
                 {
                     if (c is IDrawableControl)
+                    {
                         if (_ShowTitleBar)
                             ((IDrawableControl)c).Draw(s, new EFD.Point(Location.X, Location.Y + _TitleBarHeight));
                         else
                             ((IDrawableControl)c).Draw(s, Location);
+                    }
                 }
             }
         }
@@ -127,7 +129,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                     _Forms[f].Activate();
                 }
                 else if (f < 0)
+                {
                     _ActiveForm = null;
+                }
             }
 
             if (_ActiveForm != null)
@@ -149,10 +153,13 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <param name="s">The SpriteBatch to do the drawing.</param>
         public static void DrawAll(SpriteBatch s)
         {
-            for (int i = _Forms.Count - 1; i >= 0; i--)
-            {
-                ((Form)_Forms[i]).Draw(s);
-            }
+            foreach (Form form in _Forms)
+                form.Draw(s);
+
+            //for (int i = _Forms.Count - 1; i >= 0; i--)
+            //{
+            //    ((Form)_Forms[i]).Draw(s);
+            //}
         }
 
         internal void Update(MouseState m, bool hasFocus, GameTime gt)
@@ -181,12 +188,14 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                         _ClickStart = DateTime.Now;
 
                         if (_ShowTitleBar)
+                        {
                             if (m.X >= this.Bounds.Left && m.X < this.Bounds.Right && m.Y >= this.Location.Y && m.Y < this.Location.Y + this.TitleBarHeight)
                             {
                                 _DragMouseStart = new EFD.Point(m.X, m.Y);
                                 _DragPosStart = this.Location;
                                 _InDrag = true;
                             }
+                        }
 
                         OnMouseDown(new MouseEventArgs(MouseButtons.Left, 0, m.X, m.Y, m.ScrollWheelValue - _mPrev.ScrollWheelValue));
                     }
@@ -214,7 +223,12 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         {
             for (int i = 0; i < _Forms.Count; i++)
             {
-                if (p.X >= _Forms[i].Bounds.Left && p.X < _Forms[i].Bounds.Right && p.Y >= _Forms[i].Bounds.Top && p.Y < _Forms[i].Bounds.Bottom && _Forms[i].Visible && _Forms[i].Enabled)
+                if (p.X >= _Forms[i].Bounds.Left
+                    && p.X < _Forms[i].Bounds.Right
+                    && p.Y >= _Forms[i].Bounds.Top
+                    && p.Y < _Forms[i].Bounds.Bottom
+                    && _Forms[i].Visible
+                    && _Forms[i].Enabled)
                 {
                     return i;
                 }

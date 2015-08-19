@@ -19,16 +19,22 @@ namespace Evbpc.Framework.Windows.Forms
         {
             //if (this.ContainsFocus)
             if (this.Parent.Focused)
+            {
                 if (e.KeyChar < 32 || e.KeyChar >= 127)
+                {
                     if (e.KeyChar == (char)Keys.Back)
+                    {
                         if (this.Text.Length > 0)
                             this.Text = this.Text.Substring(0, this.Text.Length - 1);
                         else
                             this.Text = "";
+                    }
                     else
                         this.Text = this.Text;
+                }
                 else
                     this.Text += e.KeyChar;
+            }
         }
     }
 }
