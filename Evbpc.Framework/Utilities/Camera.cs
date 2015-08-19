@@ -14,6 +14,7 @@ namespace Evbpc.Framework.Utilities
     public class Camera : ITrackableObject
     {
         private PointF _Position;
+        private SizeF _Size;
 
         /// <summary>
         /// Gets the <see cref="ITrackableObject"/> that is being tracked by this <see cref="Camera"/> instance.
@@ -22,11 +23,11 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// Gets the <see cref="PointF"/> that is the current location of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF Position { get { return _Position; } private set { if (_Position != value) { var oldPosition = _Position; _Position = value; OnPositionChanged(new PositionChangedEventArgs(oldPosition, _Position)); } } }
+        public PointF Position { get { return _Position; } private set { if (_Position != value) { var oldPosition = _Position; _Position = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(_Position, oldPosition, Size, Size)); } } }
         /// <summary>
         /// Gets the <see cref="SizeF"/> of this <see cref="Camera"/> instance.
         /// </summary>
-        public SizeF Size { get; private set; }
+        public SizeF Size { get { return _Size; } private set { if (_Size != value) { var oldSize = _Size; _Size = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(Position, Position, _Size, oldSize)); } } }
         /// <summary>
         /// Gets the <code>float</code> value that represents how this <see cref="Camera"/> instance should scale (or zoom). A value of <code>1.0f</code> is the default, and indicates that it should not be zoomed.
         /// </summary>
@@ -67,10 +68,10 @@ namespace Evbpc.Framework.Utilities
 
             TrackObject = trackObject;
             TriggerBounds = triggerBounds;
-            trackObject.PositionChanged += trackObject_PositionChanged;
+            trackObject.TrackableObjectChanged += trackObject_TrackableObjectChanged;
         }
 
-        private void trackObject_PositionChanged(object sender, PositionChangedEventArgs e)
+        private void trackObject_TrackableObjectChanged(object sender, TrackableObjectChangedEventArgs e)
         {
             // We should make the new camera position the same as the position of the entity, minus the centering
             _Position = new PointF((TrackObject.Position.X + TrackObject.Size.Width) / 2.0f - RelativeCenter.X, (TrackObject.Position.Y + TrackObject.Size.Height) / 2.0f - RelativeCenter.Y);
@@ -150,11 +151,11 @@ namespace Evbpc.Framework.Utilities
             return false;
         }
 
-        private void OnPositionChanged(PositionChangedEventArgs e) { var handler = PositionChanged; if (handler != null) { handler(this, e); } }
+        private void OnTrackableObjectChanged(TrackableObjectChangedEventArgs e) { var handler = TrackableObjectChanged; if (handler != null) { handler(this, e); } }
 
         /// <summary>
         /// An event that may be subscribed to for notification of when the <see cref="Position"/> property of this <see cref="Camera"/> instance changes.
         /// </summary>
-        public event EventHandler<PositionChangedEventArgs> PositionChanged;
+        public event EventHandler<TrackableObjectChangedEventArgs> TrackableObjectChanged;
     }
 }
