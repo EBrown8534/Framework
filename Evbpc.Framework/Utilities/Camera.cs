@@ -49,11 +49,11 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// Gets the <see cref="PointF"/> that represents the global center position of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF AbsoluteCenter { get { return new PointF(Position.X + Size.Width / 2f, Position.Y + Size.Height / 2f); } }
+        public PointF AbsoluteCenter { get { return new PointF(Position.X + Size.Width / 2.0f, Position.Y + Size.Height / 2.0f); } }
         /// <summary>
         /// Gets the <see cref="PointF"/> that represents the center of the <see cref="Size"/> of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF RelativeCenter { get { return new PointF(Size.Width / 2f, Size.Height / 2f); } }
+        public PointF RelativeCenter { get { return new PointF(Size.Width / 2.0f, Size.Height / 2.0f); } }
 
         /// <summary>
         /// Creates a new instance of the <see cref="Camera"/> class from the specified <see cref="TrackObject"/> and <see cref="TriggerBounds"/>.
@@ -67,9 +67,7 @@ namespace Evbpc.Framework.Utilities
 
             TrackObject = trackObject;
             TriggerBounds = triggerBounds;
-
-            if (trackObject != null)
-                trackObject.PositionChanged += trackObject_PositionChanged;
+            trackObject.PositionChanged += trackObject_PositionChanged;
         }
 
         private void trackObject_PositionChanged(object sender, PositionChangedEventArgs e)
@@ -135,6 +133,7 @@ namespace Evbpc.Framework.Utilities
                 return Bounds.Contains(new RectangleF(testObject.Position, testObject.Size));
             else
             {
+                // We're only checking corner cases as we are assuming that the `testObject` is not *bigger* than the `Camera`. If it is, then that's a different issue. (We'll likely fix this in the future, just not today!)
                 if (Bounds.Contains(testObject.Position))
                     return true;
 
