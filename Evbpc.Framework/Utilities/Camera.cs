@@ -72,7 +72,11 @@ namespace Evbpc.Framework.Utilities
                 trackObject.PositionChanged += trackObject_PositionChanged;
         }
 
-        private void trackObject_PositionChanged(object sender, PositionChangedEventArgs e) { }
+        private void trackObject_PositionChanged(object sender, PositionChangedEventArgs e)
+        {
+            // We should make the new camera position the same as the position of the entity, minus the centering
+            _Position = new PointF(e.NewPosition.X - RelativeCenter.X, e.NewPosition.Y - RelativeCenter.Y);
+        }
 
         /// <summary>
         /// This method will <b>immediately</b> move the <see cref="Camera"/> to center on the <see cref="ITrackableObject"/>. If you wish to pan smoothly, you should use <see cref="CenterCamera(float)"/>.
