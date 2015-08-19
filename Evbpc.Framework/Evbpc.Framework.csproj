@@ -105,7 +105,7 @@
     <Compile Include="Utilities\Logging\ConsoleLogger.cs" />
     <Compile Include="Utilities\Logging\ILogger.cs" />
     <Compile Include="Utilities\Logging\LoggingType.cs" />
-    <Compile Include="Utilities\PositionChangedEventArgs.cs" />
+    <Compile Include="Utilities\TrackableObjectChangedEventArgs.cs" />
     <Compile Include="Utilities\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Utilities\Serialization\ISerializableByteArray.cs" />
     <Compile Include="Utilities\LanguageHelpers.cs" />
