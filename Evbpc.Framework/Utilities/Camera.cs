@@ -8,13 +8,28 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Utilities
 {
+    /// <summary>
+    /// Represents an object that tracks and updates it's position based on another object, and can be used to determine where rendering should take place.
+    /// </summary>
     public class Camera : ITrackableObject
     {
         private PointF _Position;
 
+        /// <summary>
+        /// Gets the <see cref="ITrackableObject"/> that is being tracked by this <see cref="Camera"/> instance.
+        /// </summary>
         public ITrackableObject TrackObject { get; private set; }
+        /// <summary>
+        /// Gets the <see cref="PointF"/> that is the current location of this <see cref="Camera"/> instance.
+        /// </summary>
         public PointF Position { get { return _Position; } private set { if (_Position != value) { var oldPosition = _Position; _Position = value; OnPositionChanged(new PositionChangedEventArgs(oldPosition, _Position)); } } }
+        /// <summary>
+        /// Gets the <see cref="SizeF"/> of this <see cref="Camera"/> instance.
+        /// </summary>
         public SizeF Size { get; private set; }
+        /// <summary>
+        /// Gets the <code>float</code> value that represents how this <see cref="Camera"/> instance should scale (or zoom). A value of <code>1.0f</code> is the default, and indicates that it should not be zoomed.
+        /// </summary>
         public float Scale { get; private set; }
 
         /// <summary>
@@ -27,25 +42,37 @@ namespace Evbpc.Framework.Utilities
         /// </remarks>
         public RectangleF TriggerBounds { get; private set; }
 
+        /// <summary>
+        /// Gets the <see cref="RectangleF"/> that represents the entire covered portion of this <see cref="Camera"/> instance.
+        /// </summary>
         public RectangleF Bounds { get { return new RectangleF(Position, Size); } }
+        /// <summary>
+        /// Gets the <see cref="PointF"/> that represents the global center position of this <see cref="Camera"/> instance.
+        /// </summary>
         public PointF AbsoluteCenter { get { return new PointF(Position.X + Size.Width / 2f, Position.Y + Size.Height / 2f); } }
+        /// <summary>
+        /// Gets the <see cref="PointF"/> that represents the center of the <see cref="Size"/> of this <see cref="Camera"/> instance.
+        /// </summary>
         public PointF RelativeCenter { get { return new PointF(Size.Width / 2f, Size.Height / 2f); } }
 
         /// <summary>
         /// Creates a new instance of the <see cref="Camera"/> class from the specified <see cref="TrackObject"/> and <see cref="TriggerBounds"/>.
         /// </summary>
-        /// <param name="mObject">An <see cref="ITrackableObject"/> to follow.</param>
-        /// <param name="mTriggerBounds">A <see cref="RectangleF"/> that represents how close to the edge of the screen an <see cref="ITrackableObject"/> must be to trigger panning.</param>
-        public Camera(ITrackableObject mObject, RectangleF mTriggerBounds)
+        /// <param name="trackObject">An <see cref="ITrackableObject"/> to follow.</param>
+        /// <param name="triggerBounds">A <see cref="RectangleF"/> that represents how close to the edge of the screen an <see cref="ITrackableObject"/> must be to trigger panning.</param>
+        public Camera(ITrackableObject trackObject, RectangleF triggerBounds)
         {
-            TrackObject = mObject;
-            TriggerBounds = mTriggerBounds;
+            if (trackObject == null || trackObject == this)
+                throw new ArgumentException("The trackObject must not be null or this instance.");
 
-            if (mObject != null)
-                mObject.PositionChanged += mObject_PositionChanged;
+            TrackObject = trackObject;
+            TriggerBounds = triggerBounds;
+
+            if (trackObject != null)
+                trackObject.PositionChanged += trackObject_PositionChanged;
         }
 
-        private void mObject_PositionChanged(object sender, PositionChangedEventArgs e) { }
+        private void trackObject_PositionChanged(object sender, PositionChangedEventArgs e) { }
 
         /// <summary>
         /// This method will <b>immediately</b> move the <see cref="Camera"/> to center on the <see cref="ITrackableObject"/>. If you wish to pan smoothly, you should use <see cref="CenterCamera(float)"/>.
@@ -62,20 +89,42 @@ namespace Evbpc.Framework.Utilities
         /// If a value of <c>0</c> is provided for the <c>animationTime</c>, then this has the same effect as the <see cref="CenterCamera()"/> method.
         /// </remarks>
         public void CenterCamera(float animationTime) { /* TODO: Implement this method. */ }
+        /// <summary>
+        /// Updates the <see cref="Position"/> of the current <see cref="Camera"/> instance to the value specified.
+        /// </summary>
+        /// <param name="position">A <see cref="PointF"/> representing the new <see cref="Position"/> of the <see cref="Camera"/>.</param>
         public void SetPosition(PointF position) { Position = position; }
+        /// <summary>
+        /// Alters the <see cref="Position"/> of the current <see cref="Camera"/> instance by the specified <see cref="Vector2F"/>.
+        /// </summary>
+        /// <param name="vector">The distance to move the <see cref="Camera"/>.</param>
         public void MoveCamera(Vector2F vector) { Position = new PointF(Position.X + vector.X, Position.Y + vector.Y); }
+        /// <summary>
+        /// Updates the <see cref="Size"/> of the current <see cref="Camera"/> instance.
+        /// </summary>
+        /// <param name="size">A <see cref="SizeF"/> representing the new <see cref="Size"/> of the <see cref="Camera"/>.</param>
         public void SetSize(SizeF size) { Size = size; }
+        /// <summary>
+        /// Alters the <see cref="Size"/> of the current <see cref="Camera"/> instance by the specified <see cref="Vector2F"/>.
+        /// </summary>
+        /// <param name="adjustment">The <see cref="Vector2F"/> representing how much to increase/decrease the <see cref="Size"/>.</param>
         public void ResizeCamera(Vector2F adjustment) { Size = new SizeF(Size.Width + adjustment.X, Size.Height + adjustment.Y); }
+        /// <summary>
+        /// Updates the <see cref="Scale"/> of the current <see cref="Camera"/> instance to the specified value.
+        /// </summary>
+        /// <param name="scale">The new value for the <see cref="Scale"/> value of the <see cref="Camera"/>.</param>
         public void SetScale(float scale) { Scale = scale; }
+        /// <summary>
+        /// Alters the <see cref="Scale"/> of the current <see cref="Camera"/> instance by the specified value.
+        /// </summary>
+        /// <param name="adjustment">The value representing how much to zoom/unzoom the <see cref="Camera"/>.</param>
         public void ScaleCamera(float adjustment) { Scale += adjustment; }
 
         private void OnPositionChanged(PositionChangedEventArgs e) { var handler = PositionChanged; if (handler != null) { handler(this, e); } }
 
-        public static bool operator ==(Camera a, Camera b) { return a.Position == b.Position && a.Size == b.Size && a.Scale == b.Scale; }
-        public static bool operator !=(Camera a, Camera b) { return !(a == b); }
-
-        public static Camera Empty = new Camera(null, RectangleF.Empty);
-
+        /// <summary>
+        /// An event that may be subscribed to for notification of when the <see cref="Position"/> property of this <see cref="Camera"/> instance changes.
+        /// </summary>
         public event EventHandler<PositionChangedEventArgs> PositionChanged;
     }
 }
