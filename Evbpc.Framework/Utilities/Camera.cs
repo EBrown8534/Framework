@@ -51,7 +51,7 @@ namespace Evbpc.Framework.Utilities
         /// <remarks>
         /// This is effectively the same as the <see cref="CenterCamera(float)"/> method with an value of <c>0</c> specified.
         /// </remarks>
-        public void CenterCamera() { }
+        public void CenterCamera() { CenterCamera(0); }
         /// <summary>
         /// This method will smoothly center the <see cref="Camera"/> to the <see cref="ITrackableObject"/>.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Evbpc.Framework.Utilities
         /// <remarks>
         /// If a value of <c>0</c> is provided for the <c>animationTime</c>, then this has the same effect as the <see cref="CenterCamera()"/> method.
         /// </remarks>
-        public void CenterCamera(float animationTime) { }
+        public void CenterCamera(float animationTime) { /* TODO: Implement this method. */ }
         public void SetPosition(PointF position) { Position = position; }
         public void MoveCamera(Vector2F vector) { Position = new PointF(Position.X + vector.X, Position.Y + vector.Y); }
         public void SetSize(SizeF size) { Size = size; }
