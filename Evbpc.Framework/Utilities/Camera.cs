@@ -123,6 +123,33 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="adjustment">The value representing how much to zoom/unzoom the <see cref="Camera"/>.</param>
         public void ScaleCamera(float adjustment) { Scale += adjustment; }
+        /// <summary>
+        /// Determines if the current <see cref="Camera"/> instances contains the <see cref="ITrackableObject"/>.
+        /// </summary>
+        /// <param name="testObject">The <see cref="ITrackableObject"/> to test.</param>
+        /// <param name="entirelyContained">If true, will only return true if the testObject is entirely contained in the <see cref="Camera.Bounds"/>, otherwise will return true if any part of the testObject is contained.</param>
+        /// <returns>If entirelyContained is true, returns true only if the entire testObject is contained within <see cref="Camera.Bounds"/>. If entirelyContained is false, returns true if any part of the testObject is contained within <see cref="Camera.Bounds"/>.</returns>
+        public bool Contains(ITrackableObject testObject, bool entirelyContained)
+        {
+            if (entirelyContained)
+                return Bounds.Contains(new RectangleF(testObject.Position, testObject.Size));
+            else
+            {
+                if (Bounds.Contains(testObject.Position))
+                    return true;
+
+                if (Bounds.Contains(testObject.Position.X, testObject.Size.Height))
+                    return true;
+
+                if (Bounds.Contains(testObject.Size.Width, testObject.Position.Y))
+                    return true;
+
+                if (Bounds.Contains(testObject.Size.Width, testObject.Size.Height))
+                    return true;
+            }
+
+            return false;
+        }
 
         private void OnPositionChanged(PositionChangedEventArgs e) { var handler = PositionChanged; if (handler != null) { handler(this, e); } }
 
