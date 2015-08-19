@@ -102,7 +102,6 @@
     <Compile Include="Utilities\Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Utilities\FpsCounter.cs" />
     <Compile Include="Utilities\ITrackableObject.cs" />
-    <Compile Include="Utilities\EventHandlerDelegates.cs" />
     <Compile Include="Utilities\Logging\ConsoleLogger.cs" />
     <Compile Include="Utilities\Logging\ILogger.cs" />
     <Compile Include="Utilities\Logging\LoggingType.cs" />
