@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Utilities
 {
-    public class Camera
+    public class Camera : ITrackableObject
     {
+        private PointF _Position;
+
         public ITrackableObject TrackObject { get; private set; }
-        public PointF Position { get; private set; }
+        public PointF Position { get { return _Position; } private set { if (_Position != value) { var oldPosition = _Position; _Position = value; OnPositionChanged(new PositionChangedEventArgs(oldPosition, _Position)); } } }
         public SizeF Size { get; private set; }
         public float Scale { get; private set; }
 
@@ -67,9 +69,13 @@ namespace Evbpc.Framework.Utilities
         public void SetScale(float scale) { Scale = scale; }
         public void ScaleCamera(float adjustment) { Scale += adjustment; }
 
+        private void OnPositionChanged(PositionChangedEventArgs e) { var handler = PositionChanged; if (handler != null) { handler(this, e); } }
+
         public static bool operator ==(Camera a, Camera b) { return a.Position == b.Position && a.Size == b.Size && a.Scale == b.Scale; }
         public static bool operator !=(Camera a, Camera b) { return !(a == b); }
 
         public static Camera Empty = new Camera(null, RectangleF.Empty);
+
+        public event EventHandler<PositionChangedEventArgs> PositionChanged;
     }
 }
