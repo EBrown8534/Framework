@@ -17,22 +17,22 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public abstract class Control : Component, IComponent, IDisposable
     {
-        private AnchorStyles _Anchor;
-        private Color _BackColor;
-        private bool _Capture;
-        private ControlCollection _Controls;
-        private bool _Enabled;
-        private Color _ForeColor;
-        private Point _Location;
-        private Size _MaximumSize;
-        private Size _MinimumSize;
-        private string _Name;
-        private Control _Parent;
-        protected Size _Size;
-        private int _TabIndex;
-        private bool _TabStop;
-        private string _Text;
-        private bool _Visible;
+        private AnchorStyles _anchor;
+        private Color _backColor;
+        private bool _capture;
+        private ControlCollection _controls;
+        private bool _enabled;
+        private Color _foreColor;
+        private Point _location;
+        private Size _maximumSize;
+        private Size _minimumSize;
+        private string _name;
+        private Control _parent;
+        protected Size _size;
+        private int _tabIndex;
+        private bool _tabStop;
+        private string _text;
+        private bool _visible;
 
         #region Constructors
         /// <summary>
@@ -43,22 +43,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// </remarks>
         public Control()
         {
-            _Text = "";
-            _BackColor = DefaultBackColor;
-            _ForeColor = DefaultForeColor;
-            _Anchor = AnchorStyles.None;
-            _Capture = true;
-            _Controls = new ControlCollection(this);
-            _Enabled = true;
-            _Location = new Point();
-            _MaximumSize = DefaultMaximumSize;
-            _MinimumSize = DefaultMinimumSize;
-            _Name = "";
-            _Parent = null;
-            _Size = DefaultSize;
-            _TabIndex = int.MaxValue;
-            _TabStop = true;
-            _Visible = true;
+            _text = "";
+            _backColor = DefaultBackColor;
+            _foreColor = DefaultForeColor;
+            _anchor = AnchorStyles.None;
+            _capture = true;
+            _controls = new ControlCollection(this);
+            _enabled = true;
+            _location = new Point();
+            _maximumSize = DefaultMaximumSize;
+            _minimumSize = DefaultMinimumSize;
+            _name = "";
+            _parent = null;
+            _size = DefaultSize;
+            _tabIndex = int.MaxValue;
+            _tabStop = true;
+            _visible = true;
         }
         /// <summary>
         /// Initializes a new instance of the Control class with specific text.
@@ -69,22 +69,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// </remarks>
         public Control(string text)
         {
-            _Text = text;
-            _BackColor = DefaultBackColor;
-            _ForeColor = DefaultForeColor;
-            _Anchor = AnchorStyles.None;
-            _Capture = true;
-            _Controls = new ControlCollection(this);
-            _Enabled = true;
-            _Location = new Point();
-            _MaximumSize = DefaultMaximumSize;
-            _MinimumSize = DefaultMinimumSize;
-            _Name = "";
-            _Parent = null;
-            _Size = DefaultSize;
-            _TabIndex = int.MaxValue;
-            _TabStop = true;
-            _Visible = true;
+            _text = text;
+            _backColor = DefaultBackColor;
+            _foreColor = DefaultForeColor;
+            _anchor = AnchorStyles.None;
+            _capture = true;
+            _controls = new ControlCollection(this);
+            _enabled = true;
+            _location = new Point();
+            _maximumSize = DefaultMaximumSize;
+            _minimumSize = DefaultMinimumSize;
+            _name = "";
+            _parent = null;
+            _size = DefaultSize;
+            _tabIndex = int.MaxValue;
+            _tabStop = true;
+            _visible = true;
         }
         /// <summary>
         /// Initializes a new instance of the Control class as a child control, with specific text.
@@ -96,22 +96,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// </remarks>
         public Control(Control parent, string text)
         {
-            _Text = text;
-            _BackColor = DefaultBackColor;
-            _ForeColor = DefaultForeColor;
-            _Anchor = AnchorStyles.None;
-            _Capture = true;
-            _Controls = new ControlCollection(this);
-            _Enabled = true;
-            _Location = new Point();
-            _MaximumSize = DefaultMaximumSize;
-            _MinimumSize = DefaultMinimumSize;
-            _Name = "";
-            _Parent = parent;
-            _Size = DefaultSize;
-            _TabIndex = int.MaxValue;
-            _TabStop = true;
-            _Visible = true;
+            _text = text;
+            _backColor = DefaultBackColor;
+            _foreColor = DefaultForeColor;
+            _anchor = AnchorStyles.None;
+            _capture = true;
+            _controls = new ControlCollection(this);
+            _enabled = true;
+            _location = new Point();
+            _maximumSize = DefaultMaximumSize;
+            _minimumSize = DefaultMinimumSize;
+            _name = "";
+            _parent = parent;
+            _size = DefaultSize;
+            _tabIndex = int.MaxValue;
+            _tabStop = true;
+            _visible = true;
         }
         /// <summary>
         /// Initializes a new instance of the Control class with specific text, size, and location.
@@ -126,22 +126,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// </remarks>
         public Control(string text, int left, int top, int width, int height)
         {
-            _Text = text;
-            _BackColor = DefaultBackColor;
-            _ForeColor = DefaultForeColor;
-            _Anchor = AnchorStyles.None;
-            _Capture = true;
-            _Controls = new ControlCollection(this);
-            _Enabled = true;
-            _Location = new Point(left, top);
-            _MaximumSize = DefaultMaximumSize;
-            _MinimumSize = DefaultMinimumSize;
-            _Name = "";
-            _Parent = null;
-            _Size = new Drawing.Size(width, height);
-            _TabIndex = int.MaxValue;
-            _TabStop = true;
-            _Visible = true;
+            _text = text;
+            _backColor = DefaultBackColor;
+            _foreColor = DefaultForeColor;
+            _anchor = AnchorStyles.None;
+            _capture = true;
+            _controls = new ControlCollection(this);
+            _enabled = true;
+            _location = new Point(left, top);
+            _maximumSize = DefaultMaximumSize;
+            _minimumSize = DefaultMinimumSize;
+            _name = "";
+            _parent = null;
+            _size = new Drawing.Size(width, height);
+            _tabIndex = int.MaxValue;
+            _tabStop = true;
+            _visible = true;
         }
         /// <summary>
         /// Initializes a new instance of the Control class as a child control, with specific text, size, and location.
@@ -157,22 +157,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// </remarks>
         public Control(Control parent, string text, int left, int top, int width, int height)
         {
-            _Text = text;
-            _BackColor = DefaultBackColor;
-            _ForeColor = DefaultForeColor;
-            _Anchor = AnchorStyles.None;
-            _Capture = true;
-            _Controls = new ControlCollection(this);
-            _Enabled = true;
-            _Location = new Point(left, top);
-            _MaximumSize = DefaultMaximumSize;
-            _MinimumSize = DefaultMinimumSize;
-            _Name = "";
-            _Parent = parent;
-            _Size = new Size(width, height);
-            _TabIndex = int.MaxValue;
-            _TabStop = true;
-            _Visible = true;
+            _text = text;
+            _backColor = DefaultBackColor;
+            _foreColor = DefaultForeColor;
+            _anchor = AnchorStyles.None;
+            _capture = true;
+            _controls = new ControlCollection(this);
+            _enabled = true;
+            _location = new Point(left, top);
+            _maximumSize = DefaultMaximumSize;
+            _minimumSize = DefaultMinimumSize;
+            _name = "";
+            _parent = parent;
+            _size = new Size(width, height);
+            _tabIndex = int.MaxValue;
+            _tabStop = true;
+            _visible = true;
         }
         #endregion
 
@@ -183,14 +183,14 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.anchor(v=vs.110).aspx
         /// </remarks>
-        public virtual AnchorStyles Anchor { get { return _Anchor; } set { _Anchor = value; } }
+        public virtual AnchorStyles Anchor { get { return _anchor; } set { _anchor = value; } }
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.backcolor(v=vs.110).aspx
         /// </remarks>
-        public virtual Color BackColor { get { return _BackColor; } set { _BackColor = value; } }
+        public virtual Color BackColor { get { return _backColor; } set { _backColor = value; } }
 
         /// <summary>
         /// Gets the distance, in pixels, between the bottom edge of the control and the top edge of its container's client area.
@@ -199,7 +199,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.bottom(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public int Bottom { get { return _Location.Y + _Size.Height; } }
+        public int Bottom { get { return _location.Y + _size.Height; } }
 
         /// <summary>
         /// Gets or sets the size and location of the control including its nonclient elements, in pixels, relative to the parent control.
@@ -208,7 +208,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.bounds(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Rectangle Bounds { get { return new Rectangle(_Location, _Size); } set { _Location = value.Location; _Size = value.Size; } }
+        public Rectangle Bounds { get { return new Rectangle(_location, _size); } set { _location = value.Location; _size = value.Size; } }
 
         /// <summary>
         /// Gets a value indicating whether the control can receive focus.
@@ -217,7 +217,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.canfocus(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool CanFocus { get { return ((_Parent != null && _Parent.CanFocus) || (_Parent == null && this is Form)) && Enabled && Visible; } }
+        public bool CanFocus { get { return ((_parent != null && _parent.CanFocus) || (_parent == null && this is Form)) && Enabled && Visible; } }
 
         /// <summary>
         /// Gets a value indicating whether the control can be selected.
@@ -226,7 +226,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.canselect(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool CanSelect { get { return _Parent != null && _Parent.CanFocus && Visible && Enabled; } }
+        public bool CanSelect { get { return _parent != null && _parent.CanFocus && Visible && Enabled; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has captured the mouse.
@@ -235,7 +235,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.capture(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool Capture { get { return _Capture; } set { _Capture = value; } }
+        public bool Capture { get { return _capture; } set { _capture = value; } }
 
         /// <summary>
         /// Gets the rectangle that represents the client area of the control.
@@ -253,7 +253,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.clientsize(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Size ClientSize { get { return _Size; } set { _Size = value; } }
+        public Size ClientSize { get { return _size; } set { _size = value; } }
 
         /// <summary>
         /// Gets a value indicating whether the control, or one of its child controls, currently has the input focus.
@@ -262,7 +262,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.containsfocus(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool ContainsFocus { get { if ((_Parent != null)) { foreach (Control c in _Controls) { if (c.ContainsFocus) { return true; } } if (FindForm().ActiveControl == this) { return true; } } return false; } }
+        public bool ContainsFocus { get { if ((_parent != null)) { foreach (Control c in _controls) { if (c.ContainsFocus) { return true; } } if (FindForm().ActiveControl == this) { return true; } } return false; } }
 
         /// <summary>
         /// Gets the collection of controls contained within the control.
@@ -271,7 +271,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controls(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Control.ControlCollection Controls { get { return _Controls; } }
+        public Control.ControlCollection Controls { get { return _controls; } }
 
         /// <summary>
         /// Gets the default background color of the control.
@@ -324,7 +324,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.enabled(v=vs.110).aspx
         /// </remarks>
-        public bool Enabled { get { return _Enabled; } set { _Enabled = value; } }
+        public bool Enabled { get { return _enabled; } set { _enabled = value; } }
 
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
@@ -333,7 +333,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.focused(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public virtual bool Focused { get { return (_Parent != null) && ContainsFocus; } }
+        public virtual bool Focused { get { return (_parent != null) && ContainsFocus; } }
 
         /// <summary>
         /// Gets or sets the foreground color of the control.
@@ -341,7 +341,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.forecolor(v=vs.110).aspx
         /// </remarks>
-        public virtual Color ForeColor { get { return _ForeColor; } set { _ForeColor = value; } }
+        public virtual Color ForeColor { get { return _foreColor; } set { _foreColor = value; } }
 
         /// <summary>
         /// Gets a value indicating whether the control contains one or more child controls.
@@ -350,7 +350,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.haschildren(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool HasChildren { get { return _Controls.Count > 0; } }
+        public bool HasChildren { get { return _controls.Count > 0; } }
 
         /// <summary>
         /// Gets or sets the height of the control.
@@ -359,7 +359,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.height(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public int Height { get { return _Size.Height; } set { _Size = new Size(_Size.Width, value); } }
+        public int Height { get { return _size.Height; } set { _size = new Size(_size.Width, value); } }
 
         /// <summary>
         /// Gets or sets the distance, in pixels, between the left edge of the control and the left edge of its container's client area.
@@ -368,7 +368,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.left(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public int Left { get { return _Location.X; } set { _Location = new Point(Left, _Location.Y); } }
+        public int Left { get { return _location.X; } set { _location = new Point(Left, _location.Y); } }
 
         /// <summary>
         /// Gets or sets the coordinates of the upper-left corner of the control relative to the upper-left corner of its container.
@@ -376,21 +376,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.location(v=vs.110).aspx
         /// </remarks>
-        public Point Location { get { return _Location; } set { _Location = value; } }
+        public Point Location { get { return _location; } set { _location = value; } }
         /// <summary>
         /// Gets or sets the size that is the upper limit that GetPreferredSize can specify.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.maximumsize(v=vs.110).aspx
         /// </remarks>
-        public virtual Size MaximumSize { get { return _MaximumSize; } set { _MaximumSize = value; } }
+        public virtual Size MaximumSize { get { return _maximumSize; } set { _maximumSize = value; } }
         /// <summary>
         /// Gets or sets the size that is the lower limit that GetPreferredSize can specify.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.minimumsize(v=vs.110).aspx
         /// </remarks>
-        public virtual Size MinimumSize { get { return _MinimumSize; } set { _MinimumSize = value; } }
+        public virtual Size MinimumSize { get { return _minimumSize; } set { _minimumSize = value; } }
 
         /// <summary>
         /// Gets or sets the name of the control.
@@ -399,7 +399,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.name(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public string Name { get { return _Name; } set { _Name = value; } }
+        public string Name { get { return _name; } set { _name = value; } }
 
         /// <summary>
         /// Gets or sets the parent container of the control.
@@ -408,7 +408,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.parent(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Control Parent { get { return _Parent; } set { _Parent = value; } }
+        public Control Parent { get { return _parent; } set { _parent = value; } }
 
         /// <summary>
         /// Gets the size of a rectangular area into which the control can fit.
@@ -417,7 +417,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.preferredsize(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Size PreferredSize { get { return _Size; } }
+        public Size PreferredSize { get { return _size; } }
 
         /// <summary>
         /// Gets the distance, in pixels, between the right edge of the control and the left edge of its container's client area.
@@ -426,7 +426,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.right(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public int Right { get { return _Location.X + _Size.Width; } }
+        public int Right { get { return _location.X + _size.Width; } }
 
         /// <summary>
         /// Gets or sets the height and width of the control.
@@ -434,21 +434,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.size(v=vs.110).aspx
         /// </remarks>
-        public Size Size { get { return _Size; } set { _Size = value; } }
+        public Size Size { get { return _size; } set { _size = value; } }
         /// <summary>
         /// Gets or sets the tab order of the control within its container.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.tabindex(v=vs.110).aspx
         /// </remarks>
-        public int TabIndex { get { return _TabIndex; } set { _TabIndex = value; } }
+        public int TabIndex { get { return _tabIndex; } set { _tabIndex = value; } }
         /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.tabstop(v=vs.110).aspx
         /// </remarks>
-        public bool TabStop { get { return _TabStop; } set { _TabStop = value; } }
+        public bool TabStop { get { return _tabStop; } set { _tabStop = value; } }
 
         /// <summary>
         /// Gets or sets the text associated with this control.
@@ -457,7 +457,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.text(v=vs.110).aspx
         /// </remarks>
         [BindableAttribute(true)]
-        public virtual string Text { get { return _Text; } set { _Text = value; } }
+        public virtual string Text { get { return _text; } set { _text = value; } }
 
         /// <summary>
         /// Gets or sets the distance, in pixels, between the top edge of the control and the top edge of its container's client area.
@@ -466,7 +466,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.top(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public int Top { get { return _Location.X; } set { _Location = new Point(_Location.X, value); } }
+        public int Top { get { return _location.X; } set { _location = new Point(_location.X, value); } }
 
         /// <summary>
         /// Gets the parent control that is not parented by another Windows Forms control. Typically, this is the outermost Form that the control is contained in.
@@ -475,7 +475,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.toplevelcontrol(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Control TopLevelControl { get { if (_Parent == null) { if (this is Form) { return this; } } else { return _Parent.TopLevelControl; } return null; } }
+        public Control TopLevelControl { get { if (_parent == null) { if (this is Form) { return this; } } else { return _parent.TopLevelControl; } return null; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
@@ -483,7 +483,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.visible(v=vs.110).aspx
         /// </remarks>
-        public bool Visible { get { return _Visible; } set { _Visible = value; } }
+        public bool Visible { get { return _visible; } set { _visible = value; } }
 
         /// <summary>
         /// Gets or sets the width of the control.
@@ -492,7 +492,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.width(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public int Width { get { return _Size.Width; } set { _Size = new Size(value, _Size.Height); } }
+        public int Width { get { return _size.Width; } set { _size = new Size(value, _size.Height); } }
         #endregion
 
         #region Methods
@@ -512,7 +512,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.findform(v=vs.110).aspx
         /// </remarks>
         [UIPermissionAttribute(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
-        public Form FindForm() { if (this is Form) { return (Form)this; } else { if (_Parent != null) { return _Parent.FindForm(); } } return null; }
+        public Form FindForm() { if (this is Form) { return (Form)this; } else { if (_parent != null) { return _parent.FindForm(); } } return null; }
 
         /// <summary>
         /// Sets input focus to the control.
@@ -521,7 +521,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.focus(v=vs.110).aspx
         /// </remarks>
-        public bool Focus() { if (_Parent != null) { if (CanFocus) { FindForm().ActiveControl = this; } } return ContainsFocus; }
+        public bool Focus() { if (_parent != null) { if (CanFocus) { FindForm().ActiveControl = this; } } return ContainsFocus; }
         /// <summary>
         /// Retrieves the next control forward or back in the tab order of child controls.
         /// </summary>
@@ -811,21 +811,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.resetbackcolor(v=vs.110).aspx
         /// </remarks>
-        public virtual void ResetBackColor() { _BackColor = DefaultBackColor; }
+        public virtual void ResetBackColor() { _backColor = DefaultBackColor; }
         /// <summary>
         /// Resets the <see cref="ForeColor"/> property to its default value.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.resetforecolor(v=vs.110).aspx
         /// </remarks>
-        public virtual void ResetForeColor() { _ForeColor = DefaultForeColor; }
+        public virtual void ResetForeColor() { _foreColor = DefaultForeColor; }
         /// <summary>
         /// Resets the <see cref="Text"/> property to its default value.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.resettext(v=vs.110).aspx
         /// </remarks>
-        public virtual void ResetText() { _Text = ""; }
+        public virtual void ResetText() { _text = ""; }
         /// <summary>
         /// Activates the control.
         /// </summary>
@@ -872,7 +872,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/z0tayb1b(v=vs.110).aspx
         /// </remarks>
-        public void SetBounds(int x, int y, int width, int height) { _Location = new Point(x, y); _Size = new Size(width, height); }
+        public void SetBounds(int x, int y, int width, int height) { _location = new Point(x, y); _size = new Size(width, height); }
         /// <summary>
         /// Sets the control as the top-level control.
         /// </summary>
@@ -887,7 +887,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.show(v=vs.110).aspx
         /// </remarks>
-        public void Show() { _Visible = true; Select(); }
+        public void Show() { _visible = true; Select(); }
         #endregion
 
         #region Events
@@ -1184,7 +1184,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/s1865435(v=vs.110).aspx
             /// </remarks>
-            public virtual Control this[string key] { get { foreach (Control c in _Controls) { if (c._Name == key) { return c; } } throw new KeyNotFoundException(); } }
+            public virtual Control this[string key] { get { foreach (Control c in _Controls) { if (c._name == key) { return c; } } throw new KeyNotFoundException(); } }
             /// <summary>
             /// Gets the control that owns this <see cref="Control.ControlCollection"/>.
             /// </summary>
@@ -1232,7 +1232,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.containskey(v=vs.110).aspx
             /// </remarks>
-            public virtual bool ContainsKey(string key) { foreach (Control c in _Controls) { if (c._Name == key) { return true; } } return false; }
+            public virtual bool ContainsKey(string key) { foreach (Control c in _Controls) { if (c._name == key) { return true; } } return false; }
             /// <summary>
             /// Copies the entire contents of this collection to a compatible one-dimensional <see cref="Array"/>, starting at the specified index of the target array.
             /// </summary>

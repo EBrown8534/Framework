@@ -14,31 +14,31 @@ namespace Evbpc.Framework.Drawing
     public struct Point : ISerializableByteArray
     {
         [FieldOffset(0)]
-        private ulong _PackedValue;
+        private ulong _packedValue;
         [FieldOffset(0)]
-        private int _X;
+        private int _x;
         [FieldOffset(4)]
-        private int _Y;
+        private int _y;
 
         public Point(Size sz)
             : this()
         {
-            _X = sz.Width;
-            _Y = sz.Height;
+            _x = sz.Width;
+            _y = sz.Height;
         }
 
         public Point(int x, int y)
             : this()
         {
-            _X = x;
-            _Y = y;
+            _x = x;
+            _y = y;
         }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public int X { get { return _X; } set { _X = value; } }
-        public int Y { get { return _Y; } set { _Y = value; } }
+        public int X { get { return _x; } set { _x = value; } }
+        public int Y { get { return _y; } set { _y = value; } }
 
         public int SizeInBytes { get { return 8; } }
 
@@ -46,11 +46,11 @@ namespace Evbpc.Framework.Drawing
         public static Point Ceiling(PointF value) { return new Point((int)Math.Ceiling(value.X), (int)Math.Ceiling(value.Y)); }
         public override bool Equals(Object obj) { if (obj.GetType() == typeof(Point)) { return (Point)obj == this; } else { return false; } }
         public override int GetHashCode() { return base.GetHashCode(); }
-        public void Offset(Point p) { _X += p.X; _Y += p.Y; }
-        public void Offset(int dx, int dy) { _X += dx; _Y += dy; }
+        public void Offset(Point p) { _x += p.X; _y += p.Y; }
+        public void Offset(int dx, int dy) { _x += dx; _y += dy; }
         public static Point Round(PointF value) { return new Point((int)Math.Round(value.X), (int)Math.Round(value.Y)); }
         public static Point Subtract(Point pt, Size sz) { return pt - sz; }
-        public override string ToString() { return "(" + _X + "," + _Y + ")"; }
+        public override string ToString() { return "(" + _x + "," + _y + ")"; }
         public static Point Truncate(PointF value) { return new Point((int)(value.X), (int)(value.Y)); }
 
         public static Point operator +(Point pt, Size sz) { return new Point(pt.X + sz.Width, pt.Y + sz.Height); }
@@ -66,14 +66,14 @@ namespace Evbpc.Framework.Drawing
         {
             byte[] bytes = new byte[SizeInBytes];
 
-            bytes[0] = (byte)(_X & 0xFF000000 >> 24);
-            bytes[1] = (byte)(_X & 0x00FF0000 >> 16);
-            bytes[2] = (byte)(_X & 0x0000FF00 >> 8);
-            bytes[3] = (byte)(_X & 0x000000FF >> 0);
-            bytes[4] = (byte)(_Y & 0xFF000000 >> 24);
-            bytes[5] = (byte)(_Y & 0x00FF0000 >> 16);
-            bytes[6] = (byte)(_Y & 0x0000FF00 >> 8);
-            bytes[7] = (byte)(_Y & 0x000000FF >> 0);
+            bytes[0] = (byte)(_x & 0xFF000000 >> 24);
+            bytes[1] = (byte)(_x & 0x00FF0000 >> 16);
+            bytes[2] = (byte)(_x & 0x0000FF00 >> 8);
+            bytes[3] = (byte)(_x & 0x000000FF >> 0);
+            bytes[4] = (byte)(_y & 0xFF000000 >> 24);
+            bytes[5] = (byte)(_y & 0x00FF0000 >> 16);
+            bytes[6] = (byte)(_y & 0x0000FF00 >> 8);
+            bytes[7] = (byte)(_y & 0x000000FF >> 0);
 
             return bytes;
         }
@@ -83,8 +83,8 @@ namespace Evbpc.Framework.Drawing
             if (data.Length != SizeInBytes)
                 throw new ArgumentException("The parameter `data` must be a " + SizeInBytes + " index byte-array.");
 
-            _X = ((int)data[0] << 24 | (int)data[1] << 16 | (int)data[2] << 8 | (int)data[3] << 0);
-            _Y = ((int)data[4] << 24 | (int)data[5] << 16 | (int)data[6] << 8 | (int)data[7] << 0);
+            _x = ((int)data[0] << 24 | (int)data[1] << 16 | (int)data[2] << 8 | (int)data[3] << 0);
+            _y = ((int)data[4] << 24 | (int)data[5] << 16 | (int)data[6] << 8 | (int)data[7] << 0);
         }
     }
 }

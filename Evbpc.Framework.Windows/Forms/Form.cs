@@ -16,29 +16,29 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class Form : ContainerControl
     {
-        protected static Form _ActiveForm;
-        protected static List<Form> _Forms = new List<Form>();
-        private bool _AllowTransparency;
-        private Size _DefaultSize;
-        private FormBorderStyle _FormBorderStyle;
-        private bool _MaximizeBox;
-        private Rectangle _MaximizedBounds;
-        private Size _MaximumSize;
-        private bool _MinimizeBox;
-        private Size _MinimumSize;
-        private double _Opacity;
-        private Form[] _OwnedForms;
-        private Form _Owner;
-        private bool _ShowInTaskbar;
-        private SizeGripStyle _SizeGripStyle;
-        private FormStartPosition _StartPosition;
-        private bool _TopLevel;
-        private bool _TopMost;
-        private Color _TransparencyKey;
-        private FormWindowState _WindowState;
+        protected static Form ActiveForm;
+        protected static List<Form> Forms = new List<Form>();
+        private bool _allowTransparency;
+        private Size _defaultSize;
+        private FormBorderStyle _formBorderStyle;
+        private bool _maximizeBox;
+        private Rectangle _maximizedBounds;
+        private Size _maximumSize;
+        private bool _minimizeBox;
+        private Size _minimumSize;
+        private double _opacity;
+        private Form[] _ownedForms;
+        private Form _owner;
+        private bool _showInTaskbar;
+        private SizeGripStyle _sizeGripStyle;
+        private FormStartPosition _startPosition;
+        private bool _topLevel;
+        private bool _topMost;
+        private Color _transparencyKey;
+        private FormWindowState _windowState;
 
         #region Constructors
-        public Form() { _OwnedForms = null; }
+        public Form() { _ownedForms = null; }
         #endregion
 
         #region Properties
@@ -48,7 +48,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.activeform(v=vs.110).aspx
         /// </remarks>
-        public static Form ActiveForm { get { return _ActiveForm; } }
+        public static Form ActiveForm { get { return ActiveForm; } }
 
         /// <summary>
         /// Infrastructure. Gets or sets a value indicating whether the opacity of the form can be adjusted.
@@ -57,7 +57,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.allowtransparency(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool AllowTransparency { get { return _AllowTransparency; } set { _AllowTransparency = value; } }
+        public bool AllowTransparency { get { return _allowTransparency; } set { _allowTransparency = value; } }
 
         /// <summary>
         /// Gets the default size of the control. (Overrides <see cref="Control.DefaultSize"/>.)
@@ -65,7 +65,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.defaultsize(v=vs.110).aspx
         /// </remarks>
-        protected override Size DefaultSize { get { return _DefaultSize; } }
+        protected override Size DefaultSize { get { return _defaultSize; } }
 
         /// <summary>
         /// Gets or sets the size and location of the form on the Windows desktop.
@@ -91,7 +91,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.formborderstyle(v=vs.110).aspx
         /// </remarks>
-        public FormBorderStyle FormBorderStyle { get { return _FormBorderStyle; } set { _FormBorderStyle = value; } }
+        public FormBorderStyle FormBorderStyle { get { return _formBorderStyle; } set { _formBorderStyle = value; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Maximize</b> button is displayed in the caption bar of the form.
@@ -99,35 +99,35 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.maximizebox(v=vs.110).aspx
         /// </remarks>
-        public bool MaximizeBox { get { return _MaximizeBox; } set { _MaximizeBox = value; } }
+        public bool MaximizeBox { get { return _maximizeBox; } set { _maximizeBox = value; } }
         /// <summary>
         /// Gets and sets the size of the form when it is maximized.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.maximizedbounds(v=vs.110).aspx
         /// </remarks>
-        protected Rectangle MaximizedBounds { get { return _MaximizedBounds; } set { _MaximizedBounds = value; } }
+        protected Rectangle MaximizedBounds { get { return _maximizedBounds; } set { _maximizedBounds = value; } }
         /// <summary>
         /// Gets the maximum size the form can be resized to. (Overrides <see cref="Control.MaximumSize"/>.)
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.maximumsize(v=vs.110).aspx
         /// </remarks>
-        public override Size MaximumSize { get { return _MaximumSize; } set { _MaximumSize = value; } }
+        public override Size MaximumSize { get { return _maximumSize; } set { _maximumSize = value; } }
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Minimize</b> button is displayed in the caption bar of the form.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.minimizebox(v=vs.110).aspx
         /// </remarks>
-        public bool MinimizeBox { get { return _MinimizeBox; } set { _MinimizeBox = value; } }
+        public bool MinimizeBox { get { return _minimizeBox; } set { _minimizeBox = value; } }
         /// <summary>
         /// Gets or sets the minimum size the form can be resized to. (Overrides <see cref="Control.MinimumSize"/>.)
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.minimumsize(v=vs.110).aspx
         /// </remarks>
-        public override Size MinimumSize { get { return _MinimumSize; } set { _MinimumSize = value; } }
+        public override Size MinimumSize { get { return _minimumSize; } set { _minimumSize = value; } }
 
         /// <summary>
         /// Gets or sets the opacity level of the form.
@@ -135,7 +135,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.opacity(v=vs.110).aspx
         /// </remarks>
-        public double Opacity { get { return _Opacity; } set { _Opacity = value; } }
+        public double Opacity { get { return _opacity; } set { _opacity = value; } }
 
         /// <summary>
         /// Gets an array of Form objects that represent all forms that are owned by this form.
@@ -144,7 +144,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.ownedforms(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Form[] OwnedForms { get { return _OwnedForms; } }
+        public Form[] OwnedForms { get { return _ownedForms; } }
 
         /// <summary>
         /// Gets or sets the form that owns this form.
@@ -153,7 +153,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.owner(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Form Owner { get { return _Owner; } set { _Owner = value; } }
+        public Form Owner { get { return _owner; } set { _owner = value; } }
 
         /// <summary>
         /// Gets the location and size of the form in its normal window state.
@@ -170,21 +170,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.showintaskbar(v=vs.110).aspx
         /// </remarks>
-        public bool ShowInTaskbar { get { return _ShowInTaskbar; } set { _ShowInTaskbar = value; } }
+        public bool ShowInTaskbar { get { return _showInTaskbar; } set { _showInTaskbar = value; } }
         /// <summary>
         /// Gets or sets the style of the size grip to display in the lower-right corner of the form.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.sizegripstyle(v=vs.110).aspx
         /// </remarks>
-        public SizeGripStyle SizeGripStyle { get { return _SizeGripStyle; } set { _SizeGripStyle = value; } }
+        public SizeGripStyle SizeGripStyle { get { return _sizeGripStyle; } set { _sizeGripStyle = value; } }
         /// <summary>
         /// Gets or sets the starting position of the form at run time.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.startposition(v=vs.110).aspx
         /// </remarks>
-        public FormStartPosition StartPosition { get { return _StartPosition; } set { _StartPosition = value; } }
+        public FormStartPosition StartPosition { get { return _startPosition; } set { _startPosition = value; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether to display the form as a top-level window.
@@ -193,7 +193,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.toplevel(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public bool TopLevel { get { return _TopLevel; } set { _TopLevel = value; } }
+        public bool TopLevel { get { return _topLevel; } set { _topLevel = value; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether the form should be displayed as a topmost form.
@@ -201,47 +201,47 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.topmost(v=vs.110).aspx
         /// </remarks>
-        public bool TopMost { get { return _TopMost; } set { _TopMost = value; } }
+        public bool TopMost { get { return _topMost; } set { _topMost = value; } }
         /// <summary>
         /// Gets or sets the color that will represent transparent areas of the form.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.transparencykey(v=vs.110).aspx
         /// </remarks>
-        public Color TransparencyKey { get { return _TransparencyKey; } set { _TransparencyKey = value; } }
+        public Color TransparencyKey { get { return _transparencyKey; } set { _transparencyKey = value; } }
         /// <summary>
         /// Gets or sets a value that indicates whether form is minimized, maximized, or normal.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.windowstate(v=vs.110).aspx
         /// </remarks>
-        public FormWindowState WindowState { get { return _WindowState; } set { _WindowState = value; } }
+        public FormWindowState WindowState { get { return _windowState; } set { _windowState = value; } }
         #endregion
 
         #region Methods
         public void Activate()
         {
-            _ActiveForm = this;
+            ActiveForm = this;
             List<Form> l2 = new List<Form>();
 
-            for (int i = 0; i < _Forms.Count; i++)
+            for (int i = 0; i < Forms.Count; i++)
             {
-                l2.Add(_Forms[i]);
+                l2.Add(Forms[i]);
             }
 
-            _Forms.Clear();
-            _Forms.Add(this);
+            Forms.Clear();
+            Forms.Add(this);
 
             for (int i = 0; i < l2.Count; i++)
             {
                 if (l2[i] != this)
-                    _Forms.Add(l2[i]);
+                    Forms.Add(l2[i]);
             }
         }
-        public void AddOwnedForm(Form ownedForm) { Form[] tForms = new Form[_OwnedForms.Length + 1]; for (int i = 0; i < _OwnedForms.Length; i++) { tForms[i] = _OwnedForms[i]; } tForms[tForms.Length - 1] = ownedForm; _OwnedForms = tForms; }
-        public void Close() { OnClosing(new CancelEventArgs()); OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false)); OnClosed(new EventArgs()); OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing)); _Forms.Remove(this); }
+        public void AddOwnedForm(Form ownedForm) { Form[] tForms = new Form[_ownedForms.Length + 1]; for (int i = 0; i < _ownedForms.Length; i++) { tForms[i] = _ownedForms[i]; } tForms[tForms.Length - 1] = ownedForm; _ownedForms = tForms; }
+        public void Close() { OnClosing(new CancelEventArgs()); OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false)); OnClosed(new EventArgs()); OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing)); Forms.Remove(this); }
 
-        public static Form FindForm(string key) { foreach (Form f in _Forms) { if (f.Name == key) { return f; } } throw new KeyNotFoundException(); }
+        public static Form FindForm(string key) { foreach (Form f in Forms) { if (f.Name == key) { return f; } } throw new KeyNotFoundException(); }
 
         [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool IsInputChar(char charCode) { throw new NotImplementedException(); }
@@ -267,7 +267,7 @@ namespace Evbpc.Framework.Windows.Forms
         protected virtual void OnShown(EventArgs e) { Shown(this, e); }
         protected override void OnTextChanged(EventArgs e) { base.OnTextChanged(e); }
         protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e); }
-        public void RemoveOwnedForm(Form ownedForm) { Form[] tForms = new Form[_OwnedForms.Length - 1]; int tIndex = 0; foreach (Form f in _OwnedForms) { if (!f.Equals(ownedForm)) { tForms[tIndex] = f; tIndex++; } } }
+        public void RemoveOwnedForm(Form ownedForm) { Form[] tForms = new Form[_ownedForms.Length - 1]; int tIndex = 0; foreach (Form f in _ownedForms) { if (!f.Equals(ownedForm)) { tForms[tIndex] = f; tIndex++; } } }
         protected override void Select(bool directed, bool forward) { Activate(); SetTopLevel(true); }
         public void SetDesktopBounds(int x, int y, int width, int height) { OnResizeBegin(new EventArgs()); base.Location = new Point(x, y); base.Size = new Size(width, height); OnResize(new EventArgs()); OnResizeEnd(new EventArgs()); }
         public void SetDesktopLocation(int x, int y) { base.Location = new Point(x, y); }
@@ -279,7 +279,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// 
         /// If you do not need to add controls, programmatically change anything on the form, or programmatically operate on it, then it is not necessary to hold on to the variable. You may still subscribe to events and will be informed when an event is triggered.
         /// </remarks>
-        public void Show() { if (_Forms.Contains(this)) { throw new InvalidOperationException("The Form.Show() method has already been called on this Form."); } _Forms.Add(this); base.Show(); Enabled = true; Visible = true; }
+        public void Show() { if (Forms.Contains(this)) { throw new InvalidOperationException("The Form.Show() method has already been called on this Form."); } Forms.Add(this); base.Show(); Enabled = true; Visible = true; }
         #endregion
 
         #region Events

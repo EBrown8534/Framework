@@ -15,27 +15,27 @@ namespace Evbpc.Framework.Xna.Utilities
     /// </summary>
     public class KeyboardStateManager
     {
-        private KeyboardState _kPrev;
-        private KeyboardState _kNow;
-        private TimeSpan _HoldRepeatTrigger = new TimeSpan(0, 0, 0, 0, 250); // Default to 250ms
-        private TimeSpan _HoldRepeatDelay = new TimeSpan(0, 0, 0, 0, 35); // Default to 35ms
+        private KeyboardState _keyboardStatePrevious;
+        private KeyboardState _keyboardStateNow;
+        private TimeSpan _holdRepeatTrigger = new TimeSpan(0, 0, 0, 0, 250); // Default to 250ms
+        private TimeSpan _holdRepeatDelay = new TimeSpan(0, 0, 0, 0, 35); // Default to 35ms
 
         /// <summary>
         /// Gets the <code>KeyboardState</code> from the previous update.
         /// </summary>
-        public KeyboardState KeyStatePrevious { get { return _kPrev; } }
+        public KeyboardState KeyStatePrevious { get { return _keyboardStatePrevious; } }
         /// <summary>
         /// Gets the <code>KeyboardState</code> from the current update.
         /// </summary>
-        public KeyboardState KeyStateNow { get { return _kNow; } }
+        public KeyboardState KeyStateNow { get { return _keyboardStateNow; } }
         /// <summary>
         /// Determines how long a key must be held for to begin triggering a repeated keypress.
         /// </summary>
-        public TimeSpan HoldRepeatTrigger { get { return _HoldRepeatTrigger; } set { _HoldRepeatTrigger = value; } }
+        public TimeSpan HoldRepeatTrigger { get { return _holdRepeatTrigger; } set { _holdRepeatTrigger = value; } }
         /// <summary>
         /// Determines how long between repeated keypresses a key must be held for to continue the repeat.
         /// </summary>
-        public TimeSpan HoldRepeatDelay { get { return _HoldRepeatDelay; } set { _HoldRepeatDelay = value; } }
+        public TimeSpan HoldRepeatDelay { get { return _holdRepeatDelay; } set { _holdRepeatDelay = value; } }
 
         /// <summary>
         /// Updates the internal <code>KeyboardState</code> and fires relevant events.
@@ -43,11 +43,11 @@ namespace Evbpc.Framework.Xna.Utilities
         /// <param name="kState">The new <code>KeyboardState</code>.</param>
         public void Update(KeyboardState kState)
         {
-            _kPrev = _kNow;
-            _kNow = kState;
+            _keyboardStatePrevious = _keyboardStateNow;
+            _keyboardStateNow = kState;
 
-            var keysDownNow = GetPressedKeys(_kNow);
-            var keysDownPrev = GetPressedKeys(_kPrev);
+            var keysDownNow = GetPressedKeys(_keyboardStateNow);
+            var keysDownPrev = GetPressedKeys(_keyboardStatePrevious);
             var keysPressed = GetPressedKeys();
 
             foreach (Keys key in keysDownNow)
@@ -191,8 +191,8 @@ namespace Evbpc.Framework.Xna.Utilities
             }
         }
 
-        private static Dictionary<Keys, DateTime> keysPressedAt = new Dictionary<Keys, DateTime>();
-        private static Dictionary<Keys, DateTime> keyLastTickAt = new Dictionary<Keys, DateTime>();
+        private static Dictionary<Keys, DateTime> _keysPressedAt = new Dictionary<Keys, DateTime>();
+        private static Dictionary<Keys, DateTime> _keyLastTickAt = new Dictionary<Keys, DateTime>();
 
         private List<Keys> GetPressedKeys(KeyboardState k)
         {
@@ -202,8 +202,8 @@ namespace Evbpc.Framework.Xna.Utilities
             {
                 pressedKeys.Add(XnaKeyToKey(key));
 
-                if (!keysPressedAt.ContainsKey(XnaKeyToKey(key)))
-                    keysPressedAt.Add(XnaKeyToKey(key), DateTime.UtcNow);
+                if (!_keysPressedAt.ContainsKey(XnaKeyToKey(key)))
+                    _keysPressedAt.Add(XnaKeyToKey(key), DateTime.UtcNow);
             }
 
             return pressedKeys;
@@ -258,8 +258,8 @@ namespace Evbpc.Framework.Xna.Utilities
 
         private List<Keys> GetPressedKeys()
         {
-            var pressedKeys = GetPressedKeys(_kNow);
-            var prevPressedKeys = GetPressedKeys(_kPrev);
+            var pressedKeys = GetPressedKeys(_keyboardStateNow);
+            var prevPressedKeys = GetPressedKeys(_keyboardStatePrevious);
 
             var result = new List<Keys>();
             bool shiftPressed = false;
@@ -274,32 +274,32 @@ namespace Evbpc.Framework.Xna.Utilities
                     {
                         result.Add(key);
 
-                        if (keysPressedAt.ContainsKey(key))
-                            keysPressedAt.Remove(key);
+                        if (_keysPressedAt.ContainsKey(key))
+                            _keysPressedAt.Remove(key);
 
-                        if (keyLastTickAt.ContainsKey(key))
-                            keyLastTickAt.Remove(key);
+                        if (_keyLastTickAt.ContainsKey(key))
+                            _keyLastTickAt.Remove(key);
                     }
                     else
                     {
-                        if (keysPressedAt.ContainsKey(key))
+                        if (_keysPressedAt.ContainsKey(key))
                         {
-                            TimeSpan timeDifference = DateTime.UtcNow - keysPressedAt[key];
+                            TimeSpan timeDifference = DateTime.UtcNow - _keysPressedAt[key];
 
-                            if (timeDifference > _HoldRepeatTrigger && (keyLastTickAt.ContainsKey(key) && DateTime.UtcNow - keyLastTickAt[key] > _HoldRepeatDelay || !keyLastTickAt.ContainsKey(key)))
+                            if (timeDifference > _holdRepeatTrigger && (_keyLastTickAt.ContainsKey(key) && DateTime.UtcNow - _keyLastTickAt[key] > _holdRepeatDelay || !_keyLastTickAt.ContainsKey(key)))
                             {
                                 result.Add(key);
 
-                                if (keyLastTickAt.ContainsKey(key))
-                                    keyLastTickAt[key] = DateTime.UtcNow;
+                                if (_keyLastTickAt.ContainsKey(key))
+                                    _keyLastTickAt[key] = DateTime.UtcNow;
                                 else
-                                    keyLastTickAt.Add(key, DateTime.UtcNow);
+                                    _keyLastTickAt.Add(key, DateTime.UtcNow);
                             }
                         }
                     }
 
-                    if (!keysPressedAt.ContainsKey(key))
-                        keysPressedAt.Add(key, DateTime.UtcNow);
+                    if (!_keysPressedAt.ContainsKey(key))
+                        _keysPressedAt.Add(key, DateTime.UtcNow);
                 }
             }
 

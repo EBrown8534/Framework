@@ -9,38 +9,38 @@ namespace Evbpc.Framework.Drawing
     [SerializableAttribute]
     public struct RectangleF
     {
-        private PointF _Location;
-        private SizeF _Size;
+        private PointF _location;
+        private SizeF _size;
 
-        public RectangleF(PointF location, SizeF size) { _Location = location; _Size = size; }
-        public RectangleF(float x, float y, float width, float height) { _Location = new PointF(x, y); _Size = new SizeF(width, height); }
+        public RectangleF(PointF location, SizeF size) { _location = location; _size = size; }
+        public RectangleF(float x, float y, float width, float height) { _location = new PointF(x, y); _size = new SizeF(width, height); }
 
         [BrowsableAttribute(false)]
-        public float Bottom { get { return _Location.Y + _Size.Height; } }
+        public float Bottom { get { return _location.Y + _size.Height; } }
 
-        public float Height { get { return _Size.Height; } set { _Size.Height = value; } }
+        public float Height { get { return _size.Height; } set { _size.Height = value; } }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
         [BrowsableAttribute(false)]
-        public float Left { get { return _Location.X; } }
+        public float Left { get { return _location.X; } }
 
         [BrowsableAttribute(false)]
-        public PointF Location { get { return _Location; } set { _Location = value; } }
+        public PointF Location { get { return _location; } set { _location = value; } }
 
         [BrowsableAttribute(false)]
-        public float Right { get { return _Location.X + _Size.Width; } }
+        public float Right { get { return _location.X + _size.Width; } }
 
         [BrowsableAttribute(false)]
-        public SizeF Size { get { return _Size; } set { _Size = value; } }
+        public SizeF Size { get { return _size; } set { _size = value; } }
 
         [BrowsableAttribute(false)]
-        public float Top { get { return _Location.Y; } }
+        public float Top { get { return _location.Y; } }
 
-        public float Width { get { return _Size.Width; } set { _Size.Width = value; } }
-        public float X { get { return _Location.X; } set { _Location.X = value; } }
-        public float Y { get { return _Location.Y; } set { _Location.Y = value; } }
+        public float Width { get { return _size.Width; } set { _size.Width = value; } }
+        public float X { get { return _location.X; } set { _location.X = value; } }
+        public float Y { get { return _location.Y; } set { _location.Y = value; } }
 
         /// <summary>
         /// Determines if a <see cref="PointF"/> is contained within the current <see cref="RectangleF"/>.
@@ -63,12 +63,12 @@ namespace Evbpc.Framework.Drawing
         /// <remarks>
         /// This method is entirely inclusive. If the position represented by the x and y values is on the edge of, or entirely within the current <see cref="RectangleF"/>, then this method will return true.
         /// </remarks>
-        public bool Contains(float x, float y) { return _Location.X <= x && _Location.X + _Size.Width >= x && _Location.Y <= y && _Location.Y + _Size.Height >= y; }
+        public bool Contains(float x, float y) { return _location.X <= x && _location.X + _size.Width >= x && _location.Y <= y && _location.Y + _size.Height >= y; }
         public override bool Equals(Object obj) { if (obj.GetType() == typeof(RectangleF)) { return (RectangleF)obj == this; } else { return false; } }
         public static RectangleF FromLTRB(float left, float top, float right, float bottom) { return new RectangleF(new PointF(top, left), new SizeF(bottom - top, right - left)); }
         public override int GetHashCode() { return base.GetHashCode(); }
-        public void Inflate(SizeF size) { _Size += size; }
-        public void Inflate(float x, float y) { _Size += new SizeF(x, y); }
+        public void Inflate(SizeF size) { _size += size; }
+        public void Inflate(float x, float y) { _size += new SizeF(x, y); }
         public static RectangleF Inflate(RectangleF rect, float x, float y) { RectangleF nr = new RectangleF(rect.Location, rect.Size); nr.Inflate(x, y); return nr; }
         public void Intersect(RectangleF rect) { this = Intersect(this, rect); }
         public static RectangleF Intersect(RectangleF a, RectangleF b)
@@ -123,9 +123,9 @@ namespace Evbpc.Framework.Drawing
             else { return Empty; }
         }
         public bool IntersectsWith(RectangleF rect) { return Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right); }
-        public void Offset(PointF pos) { _Location = new PointF(_Location.X + pos.X, _Location.Y + pos.Y); }
-        public void Offset(float x, float y) { _Location = new PointF(_Location.X + x, _Location.Y + y); }
-        public override string ToString() { return "(" + _Location.X + "," + _Location.Y + "," + _Size.Width + "," + _Size.Height + ")"; }
+        public void Offset(PointF pos) { _location = new PointF(_location.X + pos.X, _location.Y + pos.Y); }
+        public void Offset(float x, float y) { _location = new PointF(_location.X + x, _location.Y + y); }
+        public override string ToString() { return "(" + _location.X + "," + _location.Y + "," + _size.Width + "," + _size.Height + ")"; }
         public static RectangleF Union(RectangleF a, RectangleF b) { return new RectangleF(Math.Min(a.X, b.X), Math.Min(a.Y, b.Y), Math.Max(a.X + a.Width, b.X + b.Width), Math.Max(a.Y + a.Height, b.Y + b.Height)); }
 
         public static bool operator ==(RectangleF left, RectangleF right) { return left.Location == right.Location && left.Size == right.Size; }

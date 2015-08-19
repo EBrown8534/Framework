@@ -16,40 +16,40 @@ namespace Evbpc.Framework.Drawing
     {
 
         [FieldOffset(0)]
-        private uint _PackedValue;
+        private uint _packedValue;
         [FieldOffset(0)]
-        private byte _A;
+        private byte _a;
         [FieldOffset(1)]
-        private byte _R;
+        private byte _r;
         [FieldOffset(2)]
-        private byte _G;
+        private byte _g;
         [FieldOffset(3)]
-        private byte _B;
+        private byte _b;
         //private uint _PackedValue;
 
         /// <summary>
         /// Gets or sets the Alpha component of the <see cref="Color"/>.
         /// </summary>
         //public byte A { get { return (byte)((_PackedValue & 0xFF000000u) >> 0x18); } set { _PackedValue = (_PackedValue & ~0xFF000000u) | ((uint)value << 0x18); } }
-        public byte A { get { return _A; } set { _A = value; } }
+        public byte A { get { return _a; } set { _a = value; } }
 
         /// <summary>
         /// Gets or sets the Red component of the <see cref="Color"/>.
         /// </summary>
         //public byte R { get { return (byte)((_PackedValue & 0x00FF0000u) >> 0x10); } set { _PackedValue = (_PackedValue & ~0x00FF0000u) | ((uint)value << 0x10); } }
-        public byte R { get { return _R; } set { _R = value; } }
+        public byte R { get { return _r; } set { _r = value; } }
 
         /// <summary>
         /// Gets or sets the Green component of the <see cref="Color"/>.
         /// </summary>
         //public byte G { get { return (byte)((_PackedValue & 0x0000FF00u) >> 0x08); } set { _PackedValue = (_PackedValue & ~0x0000FF00u) | ((uint)value << 0x08); } }
-        public byte G { get { return _G; } set { _G = value; } }
+        public byte G { get { return _g; } set { _g = value; } }
 
         /// <summary>
         /// Gets or sets the Blue component of the <see cref="Color"/>.
         /// </summary>
         //public byte B { get { return (byte)((_PackedValue & 0x000000FFu) >> 0x00); } set { _PackedValue = (_PackedValue & ~0x000000FFu) | ((uint)value << 0x00); } }
-        public byte B { get { return _B; } set { _B = value; } }
+        public byte B { get { return _b; } set { _b = value; } }
 
         /// <summary>
         /// Creates an instance of a <see cref="Color"/>.
@@ -86,7 +86,7 @@ namespace Evbpc.Framework.Drawing
         public Color(uint packedValue)
             : this()
         {
-            _PackedValue = packedValue;
+            _packedValue = packedValue;
             //A = (byte)((packedValue & 0xFF000000u) >> 0x18);
             //R = (byte)((packedValue & 0x00FF0000u) >> 0x10);
             //G = (byte)((packedValue & 0x0000FF00u) >> 0x08);
@@ -99,7 +99,7 @@ namespace Evbpc.Framework.Drawing
         /// <returns>A <c>uint</c> representing this <see cref="Color"/> instance.</returns>
         public uint GetPackedValue()
         {
-            return _PackedValue;
+            return _packedValue;
             //return ((uint)A << 0x18) | ((uint)R << 0x10) | ((uint)G << 0x08) | ((uint)B << 0x00);
         }
 
@@ -111,7 +111,7 @@ namespace Evbpc.Framework.Drawing
         /// <returns>True if the objects have the same values, false otherwise.</returns>
         public static bool operator ==(Color a, Color b)
         {
-            return a._PackedValue == b._PackedValue;
+            return a._packedValue == b._packedValue;
             //return a.A == b.A && a.R == b.R && a.G == b.G && a.B == b.B;
         }
 
@@ -123,7 +123,7 @@ namespace Evbpc.Framework.Drawing
         /// <returns>True if the objects do not have the same values, false otherwise.</returns>
         public static bool operator !=(Color a, Color b)
         {
-            return a._PackedValue != b._PackedValue;
+            return a._packedValue != b._packedValue;
             //return a.A != b.A || a.R != b.R || a.G != b.G || a.B != b.B;
         }
 
@@ -145,7 +145,7 @@ namespace Evbpc.Framework.Drawing
         {
             //return _PackedValue.GetHashCode();
             // Since PackedValue is a `uint`, it is guaranteed to be unique
-            return (int)_PackedValue;
+            return (int)_packedValue;
         }
 
         /// <summary>

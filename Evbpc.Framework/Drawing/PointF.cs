@@ -12,24 +12,24 @@ namespace Evbpc.Framework.Drawing
     public struct PointF
     {
         [FieldOffset(0)]
-        private ulong _PackedValue;
+        private ulong _packedValue;
         [FieldOffset(0)]
-        private float _X;
+        private float _x;
         [FieldOffset(4)]
-        private float _Y;
+        private float _y;
 
         public PointF(float x, float y)
             : this()
         {
-            _X = x;
-            _Y = y;
+            _x = x;
+            _y = y;
         }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public float X { get { return _X; } set { _X = value; } }
-        public float Y { get { return _Y; } set { _Y = value; } }
+        public float X { get { return _x; } set { _x = value; } }
+        public float Y { get { return _y; } set { _y = value; } }
 
         public static PointF Add(PointF pt, Size sz) { return pt + sz; }
         public static PointF Add(PointF pt, SizeF sz) { return pt + sz; }
@@ -37,7 +37,7 @@ namespace Evbpc.Framework.Drawing
         public override int GetHashCode() { return base.GetHashCode(); }
         public static PointF Subtract(PointF pt, Size sz) { return pt - sz; }
         public static PointF Subtract(PointF pt, SizeF sz) { return pt - sz; }
-        public override string ToString() { return "(" + _X + "," + _Y + ")"; }
+        public override string ToString() { return "(" + _x + "," + _y + ")"; }
 
         public static PointF operator +(PointF pt, Size sz) { return new PointF(pt.X + sz.Width, pt.Y + sz.Height); }
         public static PointF operator +(PointF pt, SizeF sz) { return new PointF(pt.X + sz.Width, pt.Y + sz.Height); }

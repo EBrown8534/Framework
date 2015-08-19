@@ -15,7 +15,7 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class ContainerControl : ScrollableControl, IContainerControl
     { 
-        private Control _ActiveControl;
+        private Control _activeControl;
 
         #region Constructors
         /// <summary>
@@ -35,7 +35,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.containercontrol.activecontrol(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(false)]
-        public Control ActiveControl { get { return _ActiveControl; } set { if (this.Controls.Contains(value)) { _ActiveControl = value; } } }
+        public Control ActiveControl { get { return _activeControl; } set { if (this.Controls.Contains(value)) { _activeControl = value; } } }
 
         /// <summary>
         /// Gets the form that the container control is assigned to.
@@ -56,7 +56,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/bb339151(v=vs.110).aspx
         /// </remarks>
-        public bool ActivateControl(Control active) { if (this.Controls.Contains(active)) { active.Select(); this._ActiveControl = active; return true; } return false; }
+        public bool ActivateControl(Control active) { if (this.Controls.Contains(active)) { active.Select(); this._activeControl = active; return true; } return false; }
 
         /// <summary>
         /// Selects the next available control and makes it the active control.
@@ -69,9 +69,9 @@ namespace Evbpc.Framework.Windows.Forms
         [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool ProcessTabKey(bool forward)
         {
-            if (_ActiveControl != null)
+            if (_activeControl != null)
             {
-                int tIndex = _ActiveControl.TabIndex;
+                int tIndex = _activeControl.TabIndex;
             }
 
             return false;

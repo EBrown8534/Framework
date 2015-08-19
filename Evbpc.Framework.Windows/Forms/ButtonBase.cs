@@ -15,13 +15,13 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public abstract class ButtonBase : Control
     {
-        private bool _AutoEllipsis;
-        private Color _BackColor;
-        private FlatButtonAppearance _FlatAppearance;
-        private FlatStyle _FlatStyle;
-        private bool _IsDefault;
-        private string _Text;
-        private ContentAlignment _TextAlign;
+        private bool _autoEllipsis;
+        private Color _backColor;
+        private FlatButtonAppearance _flatAppearance;
+        private FlatStyle _flatStyle;
+        private bool _isDefault;
+        private string _text;
+        private ContentAlignment _textAlign;
 
         #region Constructors
         /// <summary>
@@ -41,7 +41,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.autoellipsis(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(true)]
-        public bool AutoEllipsis { get { return _AutoEllipsis; } set { _AutoEllipsis = value; } }
+        public bool AutoEllipsis { get { return _autoEllipsis; } set { _autoEllipsis = value; } }
 
         /// <summary>
         /// Gets or sets the background color of the control.
@@ -49,7 +49,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/ms158232(v=vs.110).aspx
         /// </remarks>
-        public override Color BackColor { get { return _BackColor; } set { _BackColor = value; } }
+        public override Color BackColor { get { return _backColor; } set { _backColor = value; } }
 
         /// <summary>
         /// This member overrides <see cref="Control.DefaultSize"/>, and more complete documentation might be available in that topic.
@@ -64,7 +64,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.flatappearance(v=vs.110).aspx
         /// </remarks>
         [BrowsableAttribute(true)]
-        public FlatButtonAppearance FlatAppearance { get { return _FlatAppearance; } }
+        public FlatButtonAppearance FlatAppearance { get { return _flatAppearance; } }
 
         /// <summary>
         /// Gets or sets the flat style appearance of the button control.
@@ -72,7 +72,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.flatstyle(v=vs.110).aspx
         /// </remarks>
-        public FlatStyle FlatStyle { get { return _FlatStyle; } set { _FlatStyle = value; } }
+        public FlatStyle FlatStyle { get { return _flatStyle; } set { _flatStyle = value; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether the button control is the default button.
@@ -80,7 +80,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.isdefault(v=vs.110).aspx
         /// </remarks>
-        protected internal bool IsDefault { get { return _IsDefault; } set { _IsDefault = value; } }
+        protected internal bool IsDefault { get { return _isDefault; } set { _isDefault = value; } }
 
         /// <summary>
         /// This member overrides <see cref="Control.Text"/>, and more complete documentation might be available in that topic.
@@ -90,7 +90,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/ms158234(v=vs.110).aspx
         /// </remarks>
         [SettingsBindableAttribute(true)]
-        public override string Text { get { return _Text; } set { _Text = value; } }
+        public override string Text { get { return _text; } set { _text = value; } }
 
         /// <summary>
         /// Gets or sets the alignment of the text on the button control.
@@ -98,7 +98,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.textalign(v=vs.110).aspx
         /// </remarks>
-        public virtual ContentAlignment TextAlign { get { return _TextAlign; } set { _TextAlign = value; } }
+        public virtual ContentAlignment TextAlign { get { return _textAlign; } set { _textAlign = value; } }
         #endregion
 
         #region Methods

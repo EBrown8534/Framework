@@ -10,19 +10,19 @@ namespace Evbpc.Framework.Drawing
     [Serializable]
     public struct SizeShort : ISerializableByteArray
     {
-        private short _Width;
-        private short _Height;
+        private short _width;
+        private short _height;
 
-        public SizeShort(Point pt) { _Width = (short)(pt.X); _Height = (short)(pt.Y); }
-        public SizeShort(PointShort pt) { _Width = (pt.X); _Height = (pt.Y); }
-        public SizeShort(short width, short height) { _Width = width; _Height = height; }
+        public SizeShort(Point pt) { _width = (short)(pt.X); _height = (short)(pt.Y); }
+        public SizeShort(PointShort pt) { _width = (pt.X); _height = (pt.Y); }
+        public SizeShort(short width, short height) { _width = width; _height = height; }
 
-        public short Height { get { return _Height; } set { _Height = value; } }
+        public short Height { get { return _height; } set { _height = value; } }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public short Width { get { return _Width; } set { _Width = value; } }
+        public short Width { get { return _width; } set { _width = value; } }
 
         public static SizeShort Add(SizeShort sz1, SizeShort sz2) { return sz1 + sz2; }
         public static SizeShort Ceiling(SizeF value) { return new SizeShort((short)Math.Ceiling(value.Width), (short)Math.Ceiling(value.Height)); }
@@ -30,7 +30,7 @@ namespace Evbpc.Framework.Drawing
         public override int GetHashCode() { return base.GetHashCode(); }
         public static SizeShort Round(SizeF value) { return new SizeShort((short)Math.Round(value.Width), (short)Math.Round(value.Height)); }
         public static SizeShort Subtract(SizeShort sz1, SizeShort sz2) { return sz1 - sz2; }
-        public override string ToString() { return "(" + _Width + "," + _Height + ")"; }
+        public override string ToString() { return "(" + _width + "," + _height + ")"; }
         public static SizeShort Truncate(SizeF value) { return new SizeShort((short)(value.Width), (short)(value.Height)); }
 
         public static SizeShort operator +(SizeShort sz1, SizeShort sz2) { return new SizeShort((short)(sz1.Width + sz2.Width), (short)(sz1.Height + sz2.Height)); }
@@ -51,15 +51,15 @@ namespace Evbpc.Framework.Drawing
         /// <returns>A byte-array representing the current <see cref="SizeShort"/>.</returns>
         public byte[] GetBytes()
         {
-            return new byte[] { (byte)((_Width & 0x0000FF00) >> 8), (byte)((_Width & 0x000000FF) >> 0), (byte)((_Height & 0x0000FF00) >> 8), (byte)((_Height & 0x000000FF) >> 0) };
+            return new byte[] { (byte)((_width & 0x0000FF00) >> 8), (byte)((_width & 0x000000FF) >> 0), (byte)((_height & 0x0000FF00) >> 8), (byte)((_height & 0x000000FF) >> 0) };
         }
 
         public void FromBytes(byte[] data)
         {
             if (data.Length == this.SizeInBytes)
             {
-                this._Width = (short)(((uint)data[0]) << 8 | ((uint)data[1]));
-                this._Height = (short)(((uint)data[2]) << 8 | ((uint)data[3]));
+                this._width = (short)(((uint)data[0]) << 8 | ((uint)data[1]));
+                this._height = (short)(((uint)data[2]) << 8 | ((uint)data[3]));
             }
             else
                 throw new ArgumentException("Parameter \"data\" must be exactly " + SizeInBytes + " bytes.");

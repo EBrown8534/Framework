@@ -9,18 +9,18 @@ namespace Evbpc.Framework.Drawing
     [Serializable]
     public struct SizeByte
     {
-        private byte _Width;
-        private byte _Height;
+        private byte _width;
+        private byte _height;
 
-        public SizeByte(Point pt) { _Width = (byte)(pt.X); _Height = (byte)(pt.Y); }
-        public SizeByte(byte width, byte height) { _Width = width; _Height = height; }
+        public SizeByte(Point pt) { _width = (byte)(pt.X); _height = (byte)(pt.Y); }
+        public SizeByte(byte width, byte height) { _width = width; _height = height; }
 
-        public byte Height { get { return _Height; } set { _Height = value; } }
+        public byte Height { get { return _height; } set { _height = value; } }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public byte Width { get { return _Width; } set { _Width = value; } }
+        public byte Width { get { return _width; } set { _width = value; } }
 
         public static SizeByte Add(SizeByte sz1, SizeByte sz2) { return sz1 + sz2; }
         public static SizeByte Ceiling(SizeF value) { return new SizeByte((byte)Math.Ceiling(value.Width), (byte)Math.Ceiling(value.Height)); }
@@ -28,7 +28,7 @@ namespace Evbpc.Framework.Drawing
         public override int GetHashCode() { return base.GetHashCode(); }
         public static SizeByte Round(SizeF value) { return new SizeByte((byte)Math.Round(value.Width), (byte)Math.Round(value.Height)); }
         public static SizeByte Subtract(SizeByte sz1, SizeByte sz2) { return sz1 - sz2; }
-        public override string ToString() { return "(" + _Width + "," + _Height + ")"; }
+        public override string ToString() { return "(" + _width + "," + _height + ")"; }
         public static SizeByte Truncate(SizeF value) { return new SizeByte((byte)(value.Width), (byte)(value.Height)); }
 
         public static SizeByte operator +(SizeByte sz1, SizeByte sz2) { return new SizeByte((byte)(sz1.Width + sz2.Width), (byte)(sz1.Height + sz2.Height)); }

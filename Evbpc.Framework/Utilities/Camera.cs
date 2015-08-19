@@ -13,8 +13,8 @@ namespace Evbpc.Framework.Utilities
     /// </summary>
     public class Camera : ITrackableObject
     {
-        private PointF _Position;
-        private SizeF _Size;
+        private PointF _position;
+        private SizeF _size;
 
         /// <summary>
         /// Gets the <see cref="ITrackableObject"/> that is being tracked by this <see cref="Camera"/> instance.
@@ -23,11 +23,11 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// Gets the <see cref="PointF"/> that is the current location of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF Position { get { return _Position; } private set { if (_Position != value) { var oldPosition = _Position; _Position = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(_Position, oldPosition, Size, Size)); } } }
+        public PointF Position { get { return _position; } private set { if (_position != value) { var oldPosition = _position; _position = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(_position, oldPosition, Size, Size)); } } }
         /// <summary>
         /// Gets the <see cref="SizeF"/> of this <see cref="Camera"/> instance.
         /// </summary>
-        public SizeF Size { get { return _Size; } private set { if (_Size != value) { var oldSize = _Size; _Size = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(Position, Position, _Size, oldSize)); } } }
+        public SizeF Size { get { return _size; } private set { if (_size != value) { var oldSize = _size; _size = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(Position, Position, _size, oldSize)); } } }
         /// <summary>
         /// Gets the <code>float</code> value that represents how this <see cref="Camera"/> instance should scale (or zoom). A value of <code>1.0f</code> is the default, and indicates that it should not be zoomed.
         /// </summary>
@@ -74,7 +74,7 @@ namespace Evbpc.Framework.Utilities
         private void trackObject_TrackableObjectChanged(object sender, TrackableObjectChangedEventArgs e)
         {
             // We should make the new camera position the same as the position of the entity, minus the centering
-            _Position = new PointF((e.NewPosition.X + e.NewSize.Width) / 2.0f - RelativeCenter.X, (e.NewPosition.Y + e.NewSize.Height) / 2.0f - RelativeCenter.Y);
+            _position = new PointF((e.NewPosition.X + e.NewSize.Width) / 2.0f - RelativeCenter.X, (e.NewPosition.Y + e.NewSize.Height) / 2.0f - RelativeCenter.Y);
         }
 
         /// <summary>

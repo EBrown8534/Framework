@@ -7,25 +7,25 @@ namespace Evbpc.Framework.Windows.Forms
 {
     public class KeyEventArgs : EventArgs
     {
-        private Keys _KeyData;
-        private bool _Handled;
-        private bool _SuppressKeyPress;
-        private bool _Shift;
+        private Keys _keyData;
+        private bool _handled;
+        private bool _suppressKeyPress;
+        private bool _shift;
 
         #region Constructors
-        public KeyEventArgs(Keys keyData) { _Shift = false; _KeyData = keyData; if ((_KeyData & Keys.Shift) == Keys.Shift) { _KeyData = _KeyData ^ Keys.Shift; _Shift = true; } }
+        public KeyEventArgs(Keys keyData) { _shift = false; _keyData = keyData; if ((_keyData & Keys.Shift) == Keys.Shift) { _keyData = _keyData ^ Keys.Shift; _shift = true; } }
         #endregion
 
         #region Properties
-        public virtual bool Alt { get { return (_KeyData & Keys.Alt) == Keys.Alt; } }
-        public bool Control { get { return (_KeyData & Keys.Control) == Keys.Control; } }
-        public bool Handled { get { return _Handled; } set { _Handled = value; } }
-        public Keys KeyCode { get { return _KeyData; } }
-        public Keys KeyData { get { return _KeyData; } }
-        public int KeyValue { get { return (int)_KeyData; } }
-        public Keys Modifiers { get { return _KeyData & Keys.Modifiers; } }
-        public virtual bool Shift { get { return _Shift; } }
-        public bool SuppressKeyPress { get { return _SuppressKeyPress; } set { _SuppressKeyPress = value; } }
+        public virtual bool Alt { get { return (_keyData & Keys.Alt) == Keys.Alt; } }
+        public bool Control { get { return (_keyData & Keys.Control) == Keys.Control; } }
+        public bool Handled { get { return _handled; } set { _handled = value; } }
+        public Keys KeyCode { get { return _keyData; } }
+        public Keys KeyData { get { return _keyData; } }
+        public int KeyValue { get { return (int)_keyData; } }
+        public Keys Modifiers { get { return _keyData & Keys.Modifiers; } }
+        public virtual bool Shift { get { return _shift; } }
+        public bool SuppressKeyPress { get { return _suppressKeyPress; } set { _suppressKeyPress = value; } }
         #endregion
     }
 }

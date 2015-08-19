@@ -41,7 +41,6 @@ namespace Evbpc.Framework.Windows.Forms
 
         // These are not the fields you're looking for.
         #region Fields
-        // Accualy is Dolan
         //protected const int ScrollStateHScrollVisible;
         //protected const int ScrollStateUserHasScrolled;
         //protected const int ScrollStateVScrollVisible;

@@ -7,14 +7,14 @@ namespace Evbpc.Framework.Windows.Forms
 {
     public class FormClosedEventArgs : EventArgs
     {
-        private CloseReason _CloseReason;
+        private CloseReason _closeReason;
 
         #region Constructors
-        public FormClosedEventArgs(CloseReason closeReason) { _CloseReason = closeReason; }
+        public FormClosedEventArgs(CloseReason closeReason) { _closeReason = closeReason; }
         #endregion
 
         #region Properties
-        public CloseReason CloseReason { get { return _CloseReason; } }
+        public CloseReason CloseReason { get { return _closeReason; } }
         #endregion
     }
 }

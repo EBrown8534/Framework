@@ -8,16 +8,16 @@ namespace Evbpc.Framework.Utilities
 {
     public class TrackableObjectChangedEventArgs : EventArgs
     {
-        private PointF _NewPosition;
-        private PointF _OldPosition;
-        private SizeF _NewSize;
-        private SizeF _OldSize;
+        private PointF _newPosition;
+        private PointF _oldPosition;
+        private SizeF _newSize;
+        private SizeF _oldSize;
 
-        public PointF NewPosition { get { return _NewPosition; } }
-        public PointF OldPosition { get { return _OldPosition; } }
-        public SizeF NewSize { get { return _NewSize; } }
-        public SizeF OldSize { get { return _OldSize; } }
+        public PointF NewPosition { get { return _newPosition; } }
+        public PointF OldPosition { get { return _oldPosition; } }
+        public SizeF NewSize { get { return _newSize; } }
+        public SizeF OldSize { get { return _oldSize; } }
 
-        public TrackableObjectChangedEventArgs(PointF newPosition, PointF oldPosition, SizeF newSize, SizeF oldSize) { _NewPosition = newPosition; _OldPosition = oldPosition; _NewSize = newSize; _OldSize = oldSize; }
+        public TrackableObjectChangedEventArgs(PointF newPosition, PointF oldPosition, SizeF newSize, SizeF oldSize) { _newPosition = newPosition; _oldPosition = oldPosition; _newSize = newSize; _oldSize = oldSize; }
     }
 }
