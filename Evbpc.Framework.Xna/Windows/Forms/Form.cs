@@ -176,7 +176,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
                     if (m.LeftButton == ButtonState.Released && _mPrev.LeftButton == ButtonState.Pressed)
                     {
-                        if (DateTime.Now - _ClickStart <= _ClickTrigger)
+                        if (DateTime.UtcNow - _ClickStart <= _ClickTrigger)
                             OnClick(new EventArgs());
 
                         _InDrag = false;
@@ -185,7 +185,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                     }
                     else if (m.LeftButton == ButtonState.Pressed && _mPrev.LeftButton == ButtonState.Released)
                     {
-                        _ClickStart = DateTime.Now;
+                        _ClickStart = DateTime.UtcNow;
 
                         if (_ShowTitleBar)
                         {
