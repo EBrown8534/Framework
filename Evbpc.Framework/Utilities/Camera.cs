@@ -74,7 +74,7 @@ namespace Evbpc.Framework.Utilities
         private void trackObject_TrackableObjectChanged(object sender, TrackableObjectChangedEventArgs e)
         {
             // We should make the new camera position the same as the position of the entity, minus the centering
-            _Position = new PointF((TrackObject.Position.X + TrackObject.Size.Width) / 2.0f - RelativeCenter.X, (TrackObject.Position.Y + TrackObject.Size.Height) / 2.0f - RelativeCenter.Y);
+            _Position = new PointF((e.NewPosition.X + e.NewSize.Width) / 2.0f - RelativeCenter.X, (e.NewPosition.Y + e.NewSize.Height) / 2.0f - RelativeCenter.Y);
         }
 
         /// <summary>
