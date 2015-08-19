@@ -25,6 +25,6 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// An event that objects tracking the current <see cref="ITrackableObject"/> can subscribe to in order to receive notifications of changes to the <see cref="Position"/>.
         /// </summary>
-        event EventHandler<TrackableObjectChangedEventArgs> TrackableObjectChanged;
+        event EventHandler<PositionChangedEventArgs> PositionChanged;
     }
 }
