@@ -224,21 +224,11 @@ namespace Evbpc.Framework.Windows.Forms
         public void Activate()
         {
             ActiveForm = this;
-            List<Form> l2 = new List<Form>();
 
-            for (int i = 0; i < Forms.Count; i++)
-            {
-                l2.Add(Forms[i]);
-            }
+            if (Forms.Contains(this))
+                Forms.Remove(this);
 
-            Forms.Clear();
-            Forms.Add(this);
-
-            for (int i = 0; i < l2.Count; i++)
-            {
-                if (l2[i] != this)
-                    Forms.Add(l2[i]);
-            }
+            Forms.Insert(0, this);
         }
         public void AddOwnedForm(Form ownedForm) { Form[] tForms = new Form[_ownedForms.Length + 1]; for (int i = 0; i < _ownedForms.Length; i++) { tForms[i] = _ownedForms[i]; } tForms[tForms.Length - 1] = ownedForm; _ownedForms = tForms; }
         public void Close() { OnClosing(new CancelEventArgs()); OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false)); OnClosed(new EventArgs()); OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing)); Forms.Remove(this); }
