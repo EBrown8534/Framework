@@ -66,7 +66,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         ///// </summary>
         //public EFD.Size WindowSize { get { return _WindowSize; } set { _WindowSize = value; } }
 
-        public override bool Focused { get { return _ActiveForm == this; } }
+        public override bool Focused { get { return ActiveForm == this; } }
 
         /// <summary>
         /// Creates a new instance of the <see cref="Form"/> class.
@@ -124,24 +124,24 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             {
                 int f = GetActiveForm(new Point(m.X, m.Y));
 
-                if (f > 0 || (f > -1 && _ActiveForm == null))
+                if (f > 0 || (f > -1 && ActiveForm == null))
                 {
-                    _Forms[f].Activate();
+                    Forms[f].Activate();
                 }
                 else if (f < 0)
                 {
-                    _ActiveForm = null;
+                    ActiveForm = null;
                 }
             }
 
-            if (_ActiveForm != null)
+            if (ActiveForm != null)
             {
-                ((Form)_ActiveForm).Update(m, hasFocus, gt);
+                ((Form)ActiveForm).Update(m, hasFocus, gt);
             }
 
-            for (int i = 0; i < _Forms.Count; i++)
+            for (int i = 0; i < Forms.Count; i++)
             {
-                ((Form)_Forms[i]).Update(m, false, gt);
+                ((Form)Forms[i]).Update(m, false, gt);
             }
 
             _mouseStatePrevious = m;
@@ -153,7 +153,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <param name="s">The SpriteBatch to do the drawing.</param>
         public static void DrawAll(SpriteBatch s)
         {
-            foreach (Form form in _Forms)
+            foreach (Form form in Forms)
                 form.Draw(s);
 
             //for (int i = _Forms.Count - 1; i >= 0; i--)
@@ -221,14 +221,14 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
         private static int GetActiveForm(Point p)
         {
-            for (int i = 0; i < _Forms.Count; i++)
+            for (int i = 0; i < Forms.Count; i++)
             {
-                if (p.X >= _Forms[i].Bounds.Left
-                    && p.X < _Forms[i].Bounds.Right
-                    && p.Y >= _Forms[i].Bounds.Top
-                    && p.Y < _Forms[i].Bounds.Bottom
-                    && _Forms[i].Visible
-                    && _Forms[i].Enabled)
+                if (p.X >= Forms[i].Bounds.Left
+                    && p.X < Forms[i].Bounds.Right
+                    && p.Y >= Forms[i].Bounds.Top
+                    && p.Y < Forms[i].Bounds.Bottom
+                    && Forms[i].Visible
+                    && Forms[i].Enabled)
                 {
                     return i;
                 }
