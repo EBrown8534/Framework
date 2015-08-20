@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Evbpc.Framework.Physics
 {
-    public struct Vector2
+    public struct Vector2 : IVector2
     {
         private int _x;
         private int _y;

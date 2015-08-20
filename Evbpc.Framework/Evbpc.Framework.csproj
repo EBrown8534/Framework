@@ -89,6 +89,7 @@
     <Compile Include="Drawing\SizeConverter.cs" />
     <Compile Include="Drawing\SizeF.cs" />
     <Compile Include="Drawing\SizeFConverter.cs" />
+    <Compile Include="Physics\IVector2.cs" />
     <Compile Include="Physics\Vector2.cs" />
     <Compile Include="Physics\Vector2F.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
