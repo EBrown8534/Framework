@@ -9,9 +9,11 @@ using System.Text;
 namespace Evbpc.Framework.Windows.Forms
 {
     /// <summary>
-    /// Represents a form (collection of <see cref="Control"/> objects) to be used for display in a project. This class should not be directly inherited, as it is infrastructure for other, more graphics related, projects. You should, instead, inherit a form that is shipped with the related Graphics Library extension for your project.
+    /// Represents a form (collection of <see cref="Control"/> objects) to be used for display in a project.
     /// </summary>
     /// <remarks>
+    /// This class should not be directly inherited, as it is infrastructure for other, more graphics related, projects. You should, instead, inherit a form that is shipped with the related Graphics Library extension for your project.
+    /// 
     /// I spent a lot of time typing out this class. I just started typing and typing, and I didn't stop typing.
     /// </remarks>
     public class Form : ContainerControl
