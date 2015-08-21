@@ -13,6 +13,7 @@ namespace Evbpc.Framework.Utilities
     /// </summary>
     public class Cryptography
     {
+        // TODO: remove the default salt.
         private static byte[] _aesSalt = new byte[] {
             0x49, 0x76, 0x61, 0x6E, 0x20, 0x4D, 
             0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 
@@ -20,7 +21,7 @@ namespace Evbpc.Framework.Utilities
         };
 
         /// <summary>
-        /// Gets or sets the salt to use with AES encryption.
+        /// Gets or sets the salt to use with AES encryption. Note: you should *never* use the default salt.
         /// </summary>
         public static byte[] AesSalt { get { return _aesSalt; } set { _aesSalt = value; } }
 
