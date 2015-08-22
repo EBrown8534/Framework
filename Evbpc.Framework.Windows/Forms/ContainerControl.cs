@@ -56,7 +56,17 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/bb339151(v=vs.110).aspx
         /// </remarks>
-        public bool ActivateControl(Control active) { if (this.Controls.Contains(active)) { active.Select(); this._activeControl = active; return true; } return false; }
+        public bool ActivateControl(Control active)
+        {
+            if (this.Controls.Contains(active))
+            {
+                active.Select();
+                this._activeControl = active;
+                return true;
+            }
+            
+            return false;
+        }
 
         /// <summary>
         /// Selects the next available control and makes it the active control.
