@@ -35,134 +35,216 @@ namespace Evbpc.Framework.Utilities
             int result = 0;
 
             for (int i = 0; i < roman.Length; i++)
+            {
                 switch (roman[i])
                 {
                     case 'I':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'V')
-                                if (allowShorthand)
-                                {
-                                    result += 4;
-                                    i++;
-                                }
-                                else
-                                    if (throwErrors)
-                                        throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by a V.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'V':
+                                    if (allowShorthand)
+                                    {
+                                        result += 4;
+                                        i++;
+                                    }
                                     else
-                                        return -1;
-                            else if (roman[i + 1] == 'X')
-                                if (allowShorthand)
-                                {
-                                    result += 9;
-                                    i++;
-                                }
-                                else
-                                    if (throwErrors)
-                                        throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by an X.");
+                                    {
+                                        if (throwErrors)
+                                            throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by a V.");
+                                        else
+                                            return -1;
+                                    }
+                                    break;
+                                case 'X':
+                                    if (allowShorthand)
+                                    {
+                                        result += 9;
+                                        i++;
+                                    }
                                     else
-                                        return -1;
-                            else if (roman[i + 1] == 'I')
-                                result += 1;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: an I was succeeded by a character which was not an I, V or X.");
+                                    {
+                                        if (throwErrors)
+                                            throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by an X.");
+                                        else
+                                            return -1;
+                                    }
+                                    break;
+                                case 'I':
+                                    result += 1;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: an I was succeeded by a character which was not an I, V or X.");
+                            }
+                        }
                         else
                             result += 1;
                         break;
                     case 'V':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'V' || roman[i + 1] == 'I')
-                                result += 5;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: a V was succeeded by a character which was not an I or a V.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'V':
+                                case 'I':
+                                    result += 5;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: a V was succeeded by a character which was not an I or a V.");
+                            }
+                        }
                         else
                             result += 5;
                         break;
                     case 'X':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'L')
-                                if (allowShorthand)
-                                {
-                                    result += 40;
-                                    i++;
-                                }
-                                else
-                                    if (throwErrors)
-                                        throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by an L.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'L':
+                                    if (allowShorthand)
+                                    {
+                                        result += 40;
+                                        i++;
+                                    }
                                     else
-                                        return -1;
-                            else if (roman[i + 1] == 'C')
-                                if (allowShorthand)
-                                {
-                                    result += 90;
-                                    i++;
-                                }
-                                else
-                                    if (throwErrors)
-                                        throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by a C.");
+                                    {
+                                        if (throwErrors)
+                                            throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by an L.");
+                                        else
+                                            return -1;
+                                    }
+                                    break;
+                                case 'C':
+                                    if (allowShorthand)
+                                    {
+                                        result += 90;
+                                        i++;
+                                    }
                                     else
-                                        return -1;
-                            else if (roman[i + 1] == 'X' || roman[i + 1] == 'V' || roman[i + 1] == 'I')
-                                result += 10;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: an X was succeeded by a character which was not an I, V, X, C or L.");
+                                    {
+                                        if (throwErrors)
+                                            throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by a C.");
+                                        else
+                                            return -1;
+                                    }
+                                    break;
+                                case 'X':
+                                case 'V':
+                                case 'I':
+                                    result += 10;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: an X was succeeded by a character which was not an I, V, X, C or L.");
+                            }
+                        }
                         else
                             result += 10;
                         break;
                     case 'L':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'L' || roman[i + 1] == 'X' || roman[i + 1] == 'V' || roman[i + 1] == 'I')
-                                result += 50;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: an L was succeeded by a character which was not an I, V, X, or L.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'L':
+                                case 'X':
+                                case 'V':
+                                case 'I':
+                                    result += 50;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: an L was succeeded by a character which was not an I, V, X, or L.");
+                            }
+                        }
                         else
                             result += 50;
                         break;
                     case 'C':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'D')
-                                if (allowShorthand)
-                                {
-                                    result += 400;
-                                    i++;
-                                }
-                                else
-                                    if (throwErrors)
-                                        throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by a D.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'D':
+                                    if (allowShorthand)
+                                    {
+                                        result += 400;
+                                        i++;
+                                    }
                                     else
-                                        return -1;
-                            else if (roman[i + 1] == 'M')
-                                if (allowShorthand)
-                                {
-                                    result += 900;
-                                    i++;
-                                }
-                                else
-                                    if (throwErrors)
-                                        throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by an M.");
+                                    {
+                                        if (throwErrors)
+                                            throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by a D.");
+                                        else
+                                            return -1;
+                                    }
+                                    break;
+                                case 'M':
+                                    if (allowShorthand)
+                                    {
+                                        result += 900;
+                                        i++;
+                                    }
                                     else
-                                        return -1;
-                            else if (roman[i + 1] == 'C' || roman[i + 1] == 'L' || roman[i + 1] == 'X' || roman[i + 1] == 'V' || roman[i + 1] == 'I')
-                                result += 100;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: a C was succeeded by a character which was not an I, V, X, L, C, D or M.");
+                                    {
+                                        if (throwErrors)
+                                            throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by an M.");
+                                        else
+                                            return -1;
+                                    }
+                                    break;
+                                case 'C':
+                                case 'L':
+                                case 'X':
+                                case 'V':
+                                case 'I':
+                                    result += 100;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: a C was succeeded by a character which was not an I, V, X, L, C, D or M.");
+                            }
+                        }
                         else
                             result += 100;
                         break;
                     case 'D':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'D' || roman[i + 1] == 'C' || roman[i + 1] == 'L' || roman[i + 1] == 'X' || roman[i + 1] == 'V' || roman[i + 1] == 'I')
-                                result += 500;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: a D was succeeded by a character which was not an I, V, X, L, C, or D.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'D':
+                                case 'C':
+                                case 'L':
+                                case 'X':
+                                case 'V':
+                                case 'I':
+                                    result += 500;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: a D was succeeded by a character which was not an I, V, X, L, C, or D.");
+                            }
+                        }
                         else
                             result += 500;
                         break;
                     case 'M':
                         if (roman.Length > i + 1)
-                            if (roman[i + 1] == 'M' || roman[i + 1] == 'D' || roman[i + 1] == 'C' || roman[i + 1] == 'L' || roman[i + 1] == 'X' || roman[i + 1] == 'V' || roman[i + 1] == 'I')
-                                result += 1000;
-                            else
-                                throw new ArgumentException("An invalid sequence of characters was discovered: an M was succeeded by a character which was not an I, V, X, L, C, D or M.");
+                        {
+                            switch (roman[i + 1])
+                            {
+                                case 'M':
+                                case 'D':
+                                case 'C':
+                                case 'L':
+                                case 'X':
+                                case 'V':
+                                case 'I':
+                                    result += 1000;
+                                    break;
+                                default:
+                                    throw new ArgumentException("An invalid sequence of characters was discovered: an M was succeeded by a character which was not an I, V, X, L, C, D or M.");
+                            }
+                        }
                         else
                             result += 1000;
                         break;
@@ -172,6 +254,7 @@ namespace Evbpc.Framework.Utilities
                         else
                             return -1;
                 }
+            }
 
             return result;
         }
