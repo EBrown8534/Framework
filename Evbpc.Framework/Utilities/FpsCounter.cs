@@ -49,10 +49,12 @@ namespace Evbpc.Framework.Utilities
             _frames.Add(DateTime.UtcNow);
 
             for (int i = 0; i < _frames.Count; i++)
+            {
                 if (_frames[i] - DateTime.UtcNow > _expirationTime)
                     _frames.RemoveAt(i);
                 else
                     break;
+            }
         }
 
         /// <summary>
@@ -74,20 +76,7 @@ namespace Evbpc.Framework.Utilities
         /// <returns>The average FPS for the time interval.</returns>
         public int LastSeconds(int previousSeconds = 1)
         {
-            DateTime now = DateTime.UtcNow;
-            int n = 0;
-            TimeSpan difference = new TimeSpan(0, 0, previousSeconds);
-
-            for (int i = _frames.Count - 1; i >= 0; i--)
-                if (now - _frames[i] < difference)
-                    n++;
-                else
-                    break;
-
-            if (n > 1)
-                return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
-
-            return 0;
+            return LastTimeSpan(new TimeSpan(0, 0, previousSeconds));
         }
 
         /// <summary>
@@ -97,20 +86,7 @@ namespace Evbpc.Framework.Utilities
         /// <returns>The average FPS for the time interval.</returns>
         public int LastMinutes(int previousMinutes = 1)
         {
-            DateTime now = DateTime.UtcNow;
-            int n = 0;
-            TimeSpan difference = new TimeSpan(0, previousMinutes, 0);
-
-            for (int i = _frames.Count - 1; i >= 0; i--)
-                if (now - _frames[i] < difference)
-                    n++;
-                else
-                    break;
-
-            if (n > 1)
-                return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
-
-            return 0;
+            return LastTimeSpan(new TimeSpan(0, previousMinutes, 0));
         }
 
         /// <summary>
@@ -120,20 +96,7 @@ namespace Evbpc.Framework.Utilities
         /// <returns>The average FPS for the time interval.</returns>
         public int LastHours(int previousHours = 1)
         {
-            DateTime now = DateTime.UtcNow;
-            int n = 0;
-            TimeSpan difference = new TimeSpan(previousHours, 0, 0);
-
-            for (int i = _frames.Count - 1; i >= 0; i--)
-                if (now - _frames[i] < difference)
-                    n++;
-                else
-                    break;
-
-            if (n > 1)
-                return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
-
-            return 0;
+            return LastTimeSpan(new TimeSpan(previousHours, 0, 0));
         }
 
         /// <summary>
@@ -148,10 +111,12 @@ namespace Evbpc.Framework.Utilities
             TimeSpan difference = previousTime;
 
             for (int i = _frames.Count - 1; i >= 0; i--)
+            {
                 if (now - _frames[i] < difference)
                     n++;
                 else
                     break;
+            }
 
             if (n > 1)
                 return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
@@ -171,10 +136,12 @@ namespace Evbpc.Framework.Utilities
             TimeSpan difference = end - start;
 
             for (int i = _frames.Count - 1; i >= 0; i--)
+            {
                 if (_frames[i] >= start && _frames[i] <= end)
                     n++;
                 else if (_frames[i] < start)
                     break;
+            }
 
             if (n > 1)
                 return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
