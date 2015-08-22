@@ -26,17 +26,17 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             Form.KeyStateMan.KeyUp += KeyStateMan_KeyUp;
         }
 
-        void KeyStateMan_KeyUp(object sender, KeyEventArgs e) { OnKeyUp(e); }
-
-        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
-
-        void KeyStateMan_KeyDown(object sender, KeyEventArgs e) { OnKeyDown(e); }
-
         public TextBox(SpriteFont font, string name, string text)
             : this(font, name)
         {
             Text = text;
         }
+
+        void KeyStateMan_KeyUp(object sender, KeyEventArgs e) { OnKeyUp(e); }
+
+        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
+
+        void KeyStateMan_KeyDown(object sender, KeyEventArgs e) { OnKeyDown(e); }
 
         void IDrawableControl.Draw(SpriteBatch s, Evbpc.Framework.Drawing.Point initialLocation)
         {
