@@ -13,7 +13,6 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class ScrollEventArgs : EventArgs
     {
-        private int _newValue;
         private int _oldValue;
         private ScrollOrientation _scrollOrientation;
         private ScrollEventType _type;
@@ -27,7 +26,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/3t1y9bcb(v=vs.110).aspx
         /// </remarks>
-        public ScrollEventArgs(ScrollEventType type, int newValue) { _type = type; _newValue = newValue; }
+        public ScrollEventArgs(ScrollEventType type, int newValue)
+        { 
+            _type = type;
+            NewValue = newValue;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollEventArgs"/> class using the given values for the <see cref="Type"/>, <see cref="OldValue"/>, and <see cref="NewValue"/> properties.
         /// </summary>
@@ -37,7 +41,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/4kfeedwb(v=vs.110).aspx
         /// </remarks>
-        public ScrollEventArgs(ScrollEventType type, int oldValue, int newValue) { _type = type; _newValue = newValue; _oldValue = oldValue; }
+        public ScrollEventArgs(ScrollEventType type, int oldValue, int newValue)
+            : this(type, newValue)
+        {
+            _oldValue = oldValue;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollEventArgs"/> class using the given values for the <see cref="Type"/>, <see cref="NewValue"/>, and <see cref="ScrollOrientation"/> properties.
         /// </summary>
@@ -47,7 +56,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/yc9axxs4(v=vs.110).aspx
         /// </remarks>
-        public ScrollEventArgs(ScrollEventType type, int newValue, ScrollOrientation scroll) { _type = type; _newValue = newValue; _scrollOrientation = scroll; }
+        public ScrollEventArgs(ScrollEventType type, int newValue, ScrollOrientation scroll)
+            : this(type, newValue)
+        {
+            _scrollOrientation = scroll;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollEventArgs"/> class using the given values for the <see cref="Type"/>, <see cref="OldValue"/>, <see cref="NewValue"/>, and <see cref="ScrollOrientation"/> properties.
         /// </summary>
@@ -58,7 +72,11 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/wy4h3cfs(v=vs.110).aspx
         /// </remarks>
-        public ScrollEventArgs(ScrollEventType type, int oldValue, int newValue, ScrollOrientation scroll) { _type = type; _newValue = newValue; _oldValue = oldValue; _scrollOrientation = scroll; }
+        public ScrollEventArgs(ScrollEventType type, int oldValue, int newValue, ScrollOrientation scroll)
+            : this(type, oldValue, newValue)
+        {
+            _scrollOrientation = scroll;
+        }
         #endregion
 
         #region Properties
@@ -68,7 +86,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.scrolleventargs.newvalue(v=vs.110).aspx
         /// </remarks>
-        public int NewValue { get { return _newValue; } set { _newValue = value; } }
+        public int NewValue { get; set; }
         /// <summary>
         /// Gets the old <see cref="ScrollBar.Value"/> of the scroll bar.
         /// </summary>
