@@ -13,9 +13,6 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class KeyPressEventArgs : EventArgs
     {
-        private bool _handled;
-        private char _keyChar;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
@@ -24,18 +21,18 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.keypresseventargs.keypresseventargs(v=vs.110).aspx
         /// </remarks>
-        public KeyPressEventArgs(char keyChar) { _keyChar = keyChar; }
+        public KeyPressEventArgs(char keyChar) { KeyChar = keyChar; }
         #endregion
 
         #region Properties
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Control.KeyPress"/> event was handled.
         /// </summary>
-        public bool Handled { get { return _handled; } set { _handled = value; } }
+        public bool Handled { get; set; }
         /// <summary>
         /// Gets or sets the character corresponding to the key pressed.
         /// </summary>
-        public char KeyChar { get { return _keyChar; } set { _keyChar = value; } }
+        public char KeyChar { get; set; }
         #endregion
     }
 }
