@@ -21,15 +21,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
     /// </summary>
     public class Form : Evbpc.Framework.Windows.Forms.Form
     {
-        private Texture2D _backgroundTexture;
-        private Texture2D _titleTexture;
         private static MouseState _mouseStatePrevious;
-        private bool _showTitleBar;
-        private int _titleBarHeight;
-        private EFD.Color _titleBarColor;
         private TimeSpan _clickTrigger = new TimeSpan(0, 0, 0, 0, 500);
         private DateTime _clickStart;
-        private bool _allowDrag;
         private EFD.Point _dragMouseStart;
         private EFD.Point _dragPosStart;
         private bool _inDrag;
@@ -40,27 +34,27 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <summary>
         /// The Texture2D to use as the background of the form. If the <see cref="Size"/> does not match the Texture2D size, clipping or resizing may occur.
         /// </summary>
-        public Texture2D BackgroundTexture { get { return _backgroundTexture; } set { _backgroundTexture = value; } }
+        public Texture2D BackgroundTexture { get; set; }
         /// <summary>
         /// The Texture2D to use as the background for the <see cref="Title"/> of the form. If the <see cref="Size"/> does not match the Texture2D size, clipping or resizing may occur.
         /// </summary>
-        public Texture2D TitleTexture { get { return _titleTexture; } set { _titleTexture = value; } }
+        public Texture2D TitleTexture { get; set; }
         /// <summary>
         /// Determines whether or not the <see cref="Title"/> will be rendered. If this is false, the entire title will not be rendered, and the content will be moved up if the <see cref="TitleBarHeight"/> is not 0.
         /// </summary>
-        public bool ShowTitleBar { get { return _showTitleBar; } set { _showTitleBar = value; } }
+        public bool ShowTitleBar { get; set; }
         /// <summary>
         /// Determines the height of the <see cref="Title"/> when <see cref="ShowTitleBar"/> is not false.
         /// </summary>
-        public int TitleBarHeight { get { return _titleBarHeight; } set { _titleBarHeight = value; } }
+        public int TitleBarHeight { get; set; }
         /// <summary>
         /// Determines the <see cref="Evbpc.Framework.Drawing.Color"/> the <see cref="TitleTexture"/> will be rendered as.
         /// </summary>
-        public EFD.Color TitleBarColor { get { return _titleBarColor; } set { _titleBarColor = value; } }
+        public EFD.Color TitleBarColor { get; set; }
         /// <summary>
         /// Determines of the <see cref="Form"/> can be moved.
         /// </summary>
-        public bool AllowDrag { get { return _allowDrag; } set { _allowDrag = value; } }
+        public bool AllowDrag { get; set; }
         ///// <summary>
         ///// Determines the <see cref="Evbpc.Framework.Drawing.Size"/> of the <see cref="Form"/>.
         ///// </summary>
@@ -89,22 +83,22 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         {
             if (Visible && Enabled)
             {
-                if (_showTitleBar)
+                if (ShowTitleBar)
                 {
-                    s.Draw(_titleTexture, new XnaF.Rectangle(Location.X, Location.Y, Size.Width, _titleBarHeight), TitleBarColor.ToXnaColor());
-                    s.Draw(_backgroundTexture, new XnaF.Rectangle(Location.X, Location.Y + _titleBarHeight, Size.Width, Size.Height - _titleBarHeight), BackColor.ToXnaColor());
+                    s.Draw(TitleTexture, new XnaF.Rectangle(Location.X, Location.Y, Size.Width, TitleBarHeight), TitleBarColor.ToXnaColor());
+                    s.Draw(BackgroundTexture, new XnaF.Rectangle(Location.X, Location.Y + TitleBarHeight, Size.Width, Size.Height - TitleBarHeight), BackColor.ToXnaColor());
                 }
                 else
                 {
-                    s.Draw(_backgroundTexture, new XnaF.Rectangle(Location.X, Location.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
+                    s.Draw(BackgroundTexture, new XnaF.Rectangle(Location.X, Location.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
                 }
 
                 foreach (Control c in Controls)
                 {
                     if (c is IDrawableControl)
                     {
-                        if (_showTitleBar)
-                            ((IDrawableControl)c).Draw(s, new EFD.Point(Location.X, Location.Y + _titleBarHeight));
+                        if (ShowTitleBar)
+                            ((IDrawableControl)c).Draw(s, new EFD.Point(Location.X, Location.Y + TitleBarHeight));
                         else
                             ((IDrawableControl)c).Draw(s, Location);
                     }
@@ -120,7 +114,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <param name="hasFocus">A value indicating whether or not the application has focus.</param>
         public static void UpdateAll(MouseState m, bool hasFocus, GameTime gt)
         {
-            if ((m.LeftButton == ButtonState.Pressed && _mouseStatePrevious.LeftButton == ButtonState.Released) || (m.RightButton == ButtonState.Pressed && _mouseStatePrevious.RightButton == ButtonState.Released) || (m.MiddleButton == ButtonState.Pressed && _mouseStatePrevious.MiddleButton == ButtonState.Released))
+            if ((m.LeftButton == ButtonState.Pressed && _mouseStatePrevious.LeftButton == ButtonState.Released)
+                || (m.RightButton == ButtonState.Pressed && _mouseStatePrevious.RightButton == ButtonState.Released)
+                || (m.MiddleButton == ButtonState.Pressed && _mouseStatePrevious.MiddleButton == ButtonState.Released))
             {
                 int f = GetActiveForm(new Point(m.X, m.Y));
 
@@ -167,14 +163,19 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             // We should only process things that require input if the game is focused, the form is visible, and the form is enabled.
             if (Enabled && Visible && hasFocus)
             {
-                if (m.X >= this.Bounds.Left && m.X < this.Bounds.Right && m.Y >= this.Bounds.Top && m.Y < this.Bounds.Bottom)
+                if (m.X >= this.Bounds.Left
+                    && m.X < this.Bounds.Right
+                    && m.Y >= this.Bounds.Top
+                    && m.Y < this.Bounds.Bottom)
                 {
-                    if (m.LeftButton == ButtonState.Pressed && m.RightButton == ButtonState.Pressed)
+                    if (m.LeftButton == ButtonState.Pressed
+                        && m.RightButton == ButtonState.Pressed)
                     {
                         Select();
                     }
 
-                    if (m.LeftButton == ButtonState.Released && _mouseStatePrevious.LeftButton == ButtonState.Pressed)
+                    if (m.LeftButton == ButtonState.Released
+                        && _mouseStatePrevious.LeftButton == ButtonState.Pressed)
                     {
                         if (DateTime.UtcNow - _clickStart <= _clickTrigger)
                             OnClick(new EventArgs());
@@ -183,13 +184,17 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
                         OnMouseUp(new MouseEventArgs(MouseButtons.Left, 0, m.X, m.Y, m.ScrollWheelValue - _mouseStatePrevious.ScrollWheelValue));
                     }
-                    else if (m.LeftButton == ButtonState.Pressed && _mouseStatePrevious.LeftButton == ButtonState.Released)
+                    else if (m.LeftButton == ButtonState.Pressed
+                        && _mouseStatePrevious.LeftButton == ButtonState.Released)
                     {
                         _clickStart = DateTime.UtcNow;
 
-                        if (_showTitleBar)
+                        if (ShowTitleBar)
                         {
-                            if (m.X >= this.Bounds.Left && m.X < this.Bounds.Right && m.Y >= this.Location.Y && m.Y < this.Location.Y + this.TitleBarHeight)
+                            if (m.X >= this.Bounds.Left
+                                && m.X < this.Bounds.Right
+                                && m.Y >= this.Location.Y
+                                && m.Y < this.Location.Y + this.TitleBarHeight)
                             {
                                 _dragMouseStart = new EFD.Point(m.X, m.Y);
                                 _dragPosStart = this.Location;
@@ -203,15 +208,17 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
                 if (m.LeftButton == ButtonState.Pressed)
                 {
-                    if (_allowDrag && _inDrag && _showTitleBar)
+                    if (AllowDrag && _inDrag && ShowTitleBar)
                     {
                         this.Location = _dragPosStart + new Evbpc.Framework.Drawing.Size(m.X - _dragMouseStart.X, m.Y - _dragMouseStart.Y);
                     }
                 }
 
                 for (int i = 0; i < Controls.Count; i++)
+                {
                     if (Controls[i] is IUpdateableControl)
                         ((IUpdateableControl)Controls[i]).Update(m, Controls[i] == ActiveControl, gt);
+                }
             }
             else if (Enabled && Visible)
             {
