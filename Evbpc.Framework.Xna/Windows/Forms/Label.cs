@@ -22,9 +22,8 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         }
 
         public Label(SpriteFont font, string name, string text)
+            : this(font, name)
         {
-            _font = font;
-            Name = name;
             Text = text;
         }
 
