@@ -55,9 +55,13 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             // Add padding (If required)
             if ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter)
+            {
                 if (os != ns)
+                {
                     for (int p = 0; p < ns - os; p++)
                         workingResult += alphabet[64];
+                }
+            }
 
             // Break lines (If required)
             int lineBreaks = 0;
@@ -68,9 +72,12 @@ namespace Evbpc.Framework.Utilities.Extensions
                 lineBreaks = 76;
 
             string result = "";
+
             if (lineBreaks > 0)
+            {
                 for (int l = 0; l < workingResult.Length / lineBreaks; l++)
                     result += workingResult.Substring(l * lineBreaks, lineBreaks) + "\r\n";
+            }
             else
                 result = workingResult;
 
@@ -128,9 +135,13 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             // Add padding (If required)
             if ((options & Base32FormattingOptions.RequirePaddingCharacter) == Base32FormattingOptions.RequirePaddingCharacter)
+            {
                 if (os != ns)
+                {
                     for (int p = 0; p < ns - os; p++)
                         workingResult += alphabet[32];
+                }
+            }
 
             string result = "";
 
@@ -169,10 +180,12 @@ namespace Evbpc.Framework.Utilities.Extensions
             ns = ns / 4 * 3;
 
             if (input[os - 1] == alphabet[64])
+            {
                 if (input[os - 2] == alphabet[64])
                     ns -= 2;
                 else
                     ns -= 1;
+            }
 
             // Create the result
             byte[] workingResult = new byte[ns];
@@ -214,11 +227,13 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static ushort GetUShortMask(this byte bits)
         {
             ushort result = 0x0000;
+
             while (bits > 0x00)
             {
                 bits--;
                 result = (ushort)(result | (0x0001u << bits));
             }
+
             return result;
         }
     }
