@@ -20,14 +20,47 @@ namespace Evbpc.Framework.Utilities
         /// Gets the <see cref="ITrackableObject"/> that is being tracked by this <see cref="Camera"/> instance.
         /// </summary>
         public ITrackableObject TrackObject { get; private set; }
+
         /// <summary>
         /// Gets the <see cref="PointF"/> that is the current location of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF Position { get { return _position; } private set { if (_position != value) { var oldPosition = _position; _position = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(_position, oldPosition, Size, Size)); } } }
+        public PointF Position
+        {
+            get
+            {
+                return _position;
+            }
+            private set 
+            {
+                if (_position != value)
+                { 
+                    var oldPosition = _position;
+                    _position = value;
+                    OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(_position, oldPosition, Size, Size));
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the <see cref="SizeF"/> of this <see cref="Camera"/> instance.
         /// </summary>
-        public SizeF Size { get { return _size; } private set { if (_size != value) { var oldSize = _size; _size = value; OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(Position, Position, _size, oldSize)); } } }
+        public SizeF Size
+        {
+            get
+            {
+                return _size;
+            }
+            private set
+            {
+                if (_size != value)
+                {
+                    var oldSize = _size;
+                    _size = value;
+                    OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(Position, Position, _size, oldSize));
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the <code>float</code> value that represents how this <see cref="Camera"/> instance should scale (or zoom). A value of <code>1.0f</code> is the default, and indicates that it should not be zoomed.
         /// </summary>
@@ -151,7 +184,13 @@ namespace Evbpc.Framework.Utilities
             return false;
         }
 
-        private void OnTrackableObjectChanged(TrackableObjectChangedEventArgs e) { var handler = TrackableObjectChanged; if (handler != null) { handler(this, e); } }
+        private void OnTrackableObjectChanged(TrackableObjectChangedEventArgs e)
+        {
+            var handler = TrackableObjectChanged;
+            
+            if (handler != null)
+                handler(this, e);
+        }
 
         /// <summary>
         /// An event that may be subscribed to for notification of when the <see cref="Position"/> property of this <see cref="Camera"/> instance changes.
