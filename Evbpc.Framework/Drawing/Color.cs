@@ -14,7 +14,6 @@ namespace Evbpc.Framework.Drawing
     [StructLayout(LayoutKind.Explicit)]
     public struct Color : ISerializableByteArray
     {
-
         [FieldOffset(0)]
         private uint _packedValue;
         [FieldOffset(0)]
@@ -130,7 +129,6 @@ namespace Evbpc.Framework.Drawing
         /// <returns>The hash code that represents the current <see cref="Color"/> object.</returns>
         public override int GetHashCode()
         {
-            // Since PackedValue is a `uint`, it is guaranteed to be unique
             return (int)_packedValue;
         }
 
