@@ -8,7 +8,10 @@ namespace Evbpc.Framework.Windows.Forms
     public class HScrollProperties : ScrollProperties
     {
         #region Constructors
-        public HScrollProperties(ScrollableControl container) : base(container) { throw new NotImplementedException(); }
+        public HScrollProperties(ScrollableControl container) 
+            : base(container)
+        {
+        }
         #endregion
     }
 }

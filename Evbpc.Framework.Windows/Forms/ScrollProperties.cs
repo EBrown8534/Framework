@@ -8,22 +8,24 @@ namespace Evbpc.Framework.Windows.Forms
 {
     public abstract class ScrollProperties
     {
+        private ScrollableControl _parentControl;
+
         #region Constructors
-        protected ScrollProperties(ScrollableControl container) { throw new NotImplementedException(); }
+        protected ScrollProperties(ScrollableControl container) { _parentControl = container; }
         #endregion
 
         #region Properties
-        public bool Enabled { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
-        public int LargeChange { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
-        public int Maximum { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
-        public int Minimum { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
-        protected ScrollableControl ParentControl { get { throw new NotImplementedException(); } }
-        public int SmallChange { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
+        public bool Enabled { get; set; }
+        public int LargeChange { get; set; }
+        public int Maximum { get; set; }
+        public int Minimum { get; set; }
+        protected ScrollableControl ParentControl { get { return _parentControl; } }
+        public int SmallChange { get; set; }
 
         [BindableAttribute(true)]
-        public int Value { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
+        public int Value { get; set; }
 
-        public bool Visible { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
+        public bool Visible { get; set; }
         #endregion
     }
 }

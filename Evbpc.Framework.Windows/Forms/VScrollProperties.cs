@@ -21,7 +21,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.vscrollproperties.vscrollproperties(v=vs.110).aspx
         /// </remarks>
-        public VScrollProperties(ScrollableControl container) : base(container) { throw new NotImplementedException(); }
+        public VScrollProperties(ScrollableControl container)
+            : base(container)
+        {
+        }
         #endregion
     }
 }
