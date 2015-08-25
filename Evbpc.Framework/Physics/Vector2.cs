@@ -35,7 +35,6 @@ namespace Evbpc.Framework.Physics
 
         public static Vector2 operator +(Vector2 v1, Vector2 v2) { return new Vector2(v1._x + v2._x, v1._y + v2._y); }
         public static bool operator ==(Vector2 left, Vector2 right) { return left.X == right.X && left.Y == right.Y; }
-        //public static explicit operator Size(Point p) { return new Size(p.X, p.Y); }
         public static implicit operator Vector2F(Vector2 p) { return new Vector2F(p._x, p._y); }
         public static bool operator !=(Vector2 left, Vector2 right) { return left._x != right._x || left._y != right._y; }
         public static Vector2 operator -(Vector2 v1, Vector2 v2) { return new Vector2(v1._x - v2._x, v1._y - v2._y); }
