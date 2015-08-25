@@ -8,16 +8,16 @@ namespace Evbpc.Framework.Physics
 {
     public struct Vector2F : IVector2
     {
-        private float _x;
-        private float _y;
+        private readonly float _x;
+        private readonly float _y;
 
         public Vector2F(float x, float y) { _x = x; _y = y; }
         
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public float X { get { return _x; } private set { _x = value; } }
-        public float Y { get { return _y; } private set { _y = value; } }
+        public float X { get { return _x; } }
+        public float Y { get { return _y; } }
         public double R { get { return Math.Sqrt((double)_x * _x + (double)_y * _y); } }
         public double Theta { get { return Math.Atan2((double)_y, (double)_x); } }
         
@@ -29,8 +29,11 @@ namespace Evbpc.Framework.Physics
         {
             int hash = 17;
 
-            hash = hash * 23 + _x.GetHashCode();
-            hash = hash * 23 + _y.GetHashCode();
+            unchecked
+            {
+                hash = hash * 23 + _x.GetHashCode();
+                hash = hash * 23 + _y.GetHashCode();
+            }
 
             return hash;
         }
