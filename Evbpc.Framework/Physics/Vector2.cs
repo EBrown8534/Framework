@@ -17,13 +17,13 @@ namespace Evbpc.Framework.Physics
             _y = y;
         }
 
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
         public int X { get { return _x; } }
         public int Y { get { return _y; } }
         public double R { get { return Math.Sqrt((double)_x * _x + (double)_y * _y); } }
-        public double Theta { get { return Math.Atan2((double)_y, (double)_x); } }
+        public double Theta { get { return Math.Atan2(_y, _x); } }
 
         public static Vector2 Add(Vector2 v1, Vector2 v2)
         {
@@ -35,7 +35,7 @@ namespace Evbpc.Framework.Physics
             return new Vector2((int)Math.Ceiling(value.X), (int)Math.Ceiling(value.Y));
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (obj is Vector2)
             {
