@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Utilities
 {
-    class NumericHelpers
+    public class NumericHelpers
     {
         public static float UInt16ToFloat(ushort value, byte decimalBits = 0)
         {
