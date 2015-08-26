@@ -49,7 +49,7 @@ namespace Evbpc.Framework.Utilities
                             cs.Write(clearBytes, 0, clearBytes.Length);
                             cs.Close();
                         }
-                        clearText = ms.ToArray().ToBase64String();
+                        clearText = StringConverters.ToBase64String(ms.ToArray());
                     }
                 }
             }
@@ -90,7 +90,7 @@ namespace Evbpc.Framework.Utilities
 
         private static string AesDecryptInternal(string cipherText, string passphrase)
         {
-            byte[] cipherBytes = cipherText.FromBase64String();
+            byte[] cipherBytes = StringConverters.FromBase64String(cipherText);
 
             using (Aes encryptor = Aes.Create())
             {

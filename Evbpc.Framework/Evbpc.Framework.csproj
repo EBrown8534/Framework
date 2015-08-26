@@ -97,7 +97,7 @@
     <Compile Include="Utilities\Base64FormattingOptions.cs" />
     <Compile Include="Utilities\Extensions\BigIntegerExtensions.cs" />
     <Compile Include="Utilities\Camera.cs" />
-    <Compile Include="Utilities\Extensions\ConvertExtensions.cs" />
+    <Compile Include="Utilities\Extensions\StringConverters.cs" />
     <Compile Include="Utilities\Cryptography.cs" />
     <Compile Include="Utilities\DateTimeHelpers.cs" />
     <Compile Include="Utilities\Extensions\TimeSpanExtensions.cs" />

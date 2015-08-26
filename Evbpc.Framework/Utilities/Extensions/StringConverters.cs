@@ -9,7 +9,7 @@ namespace Evbpc.Framework.Utilities.Extensions
     /// <summary>
     /// Provides extensions to convert certain objects to certain other objects.
     /// </summary>
-    public static class ConvertExtensions
+    public static class StringConverters
     {
         /// <summary>
         /// Converts a byte-array to an RFC4648 (https://tools.ietf.org/html/rfc4648) Base64 string.
@@ -17,7 +17,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="input">The input byte-array.</param>
         /// <param name="options">Any of <see cref="Base64FormattingOptions"/> enumeration values.</param>
         /// <returns>The input byte-array encoded into a Base64 string, following the provided options.</returns>
-        public static string ToBase64String(this byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
+        public static string ToBase64String(byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
         {
             // Setup the alphabets
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -157,7 +157,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="input">The input string.</param>
         /// <param name="options">Any of <see cref="Base64FormattingOptions"/> enumeration values.</param>
         /// <returns>The input Base64 string decoded into a byte-array string, following the provided options.</returns>
-        public static byte[] FromBase64String(this string input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
+        public static byte[] FromBase64String(string input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
         {
             // Setup the alphabets
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -207,7 +207,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static float UInt16ToFloat(ushort value, byte decimalBits = 0)
         {
             float result = 0;
-            ushort mask = decimalBits.GetUShortMask();
+            ushort mask = GetUShortMask(decimalBits);
 
             float.Parse((value >> decimalBits).ToString() + "." + (((value & mask) / (float)(mask + 1)).ToString().Replace("0.", "")));
             return result;
@@ -216,7 +216,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static ushort FloatToUInt16(float value, byte decimalBits = 0)
         {
             ushort result = 0;
-            ushort mask = decimalBits.GetUShortMask();
+            ushort mask = GetUShortMask(decimalBits);
 
             string[] split = value.ToString().Split('.');
             result = (ushort)((ushort.Parse(split[0]) << decimalBits) | (ushort)(1000u / ushort.Parse(split[1])));
@@ -224,7 +224,7 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
-        public static ushort GetUShortMask(this byte bits)
+        public static ushort GetUShortMask(byte bits)
         {
             ushort result = 0x0000;
 
