@@ -16,8 +16,31 @@ Anyone is free to use this to their own purposes, I only request that if you mak
 
 ## How do I use it
 
-This solution requires Visual Studio 2013, XNA 4.0, and .NET 4.5. Detailed setup instructions are below.
+This solution requires Visual Studio 2015, XNA 4.0, and .NET 4.5. Detailed setup instructions are below.
 
 ## Setting up XNA 4.0
 
-To setup XNA 4.0 on your PC for integration with Visual Studio 2013, please read [this article](https://mxa.codeplex.com/wikipage?title=How%20install%20XNA%204.0%20on%20Visual%20Studio%202013&referringTitle=Documentation) on the issue.
+To setup XNA 4.0 with Visual Studio 2015 you should follow the guidelines [in this article](http://rbwhitaker.wikidot.com/setting-up-xna) with the exception of using the [XnaFor2015.ps1](https://github.com/EBrown8534/Framework/blob/master/XnaFor2015.ps1) script provided in this project instead.
+
+If you do not wish to download the script from this repository directly, you may download the script from that article and make the following modification:
+
+Add: 
+
+    $appName = "Visual Studio 2015 Enterprise";
+	$pathToExe = "${Env:VS140COMNTOOLS}..\IDE\devenv.exe";
+	$installLocation = "${Env:VS140COMNTOOLS}..\IDE\Extensions\Microsoft"
+	$extensionCacheLocation = "$home\AppData\Local\Microsoft\VisualStudio\14.0\Extensions";
+	$version = "14.0";
+	InstallXna $appName $pathToExe $installLocation $extensionCacheLocation $version;
+
+Before:
+
+	Write-Host "Step 4/4: Cleanup";
+	Write-Host "  Deleting extracted temporary files.";
+	RemoveIfExists("$currentLocation\XNA");
+	RemoveIfExists("C:\XNA-temp\");
+	RemoveIfExists("C:\xnags_visualstudio.msi");
+	
+	Write-Host "`r`nInstallation Complete.";
+
+This is confirmed working with Visual Studio 2015 Enterprise RC.
