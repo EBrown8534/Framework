@@ -16,13 +16,13 @@ namespace Evbpc.Framework.Drawing
     {
         [FieldOffset(0)]
         private uint _packedValue;
-        [FieldOffset(0)]
-        private byte _a;
-        [FieldOffset(1)]
-        private byte _r;
-        [FieldOffset(2)]
-        private byte _g;
         [FieldOffset(3)]
+        private byte _a;
+        [FieldOffset(2)]
+        private byte _r;
+        [FieldOffset(1)]
+        private byte _g;
+        [FieldOffset(0)]
         private byte _b;
 
         /// <summary>
