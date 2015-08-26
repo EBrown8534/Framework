@@ -12,7 +12,7 @@ This repository was originally created for another project of mine, hence the na
 
 ## What can you do with it
 
-Anyone is free to use this to their own purposes, I only request that if you make substantial changes you create a pull-request to include them in this repository.
+Anyone is free to use this to their own purposes, I only request that if you make substantial changes or improvements you create a pull-request to include them in this repository. (Though you are not required to, this project is under an [MIT License](https://github.com/EBrown8534/Framework/blob/master/LICENSE).)
 
 ## How do I use it
 
