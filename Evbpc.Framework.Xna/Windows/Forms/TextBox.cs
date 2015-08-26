@@ -21,9 +21,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         {
             _font = font;
             Name = name;
-            Form.KeyStateMan.KeyDown += KeyStateMan_KeyDown;
-            Form.KeyStateMan.KeyPress += KeyStateMan_KeyPress;
-            Form.KeyStateMan.KeyUp += KeyStateMan_KeyUp;
+            Form.KeyboardStateManager.KeyDown += KeyStateMan_KeyDown;
+            Form.KeyboardStateManager.KeyPress += KeyStateMan_KeyPress;
+            Form.KeyboardStateManager.KeyUp += KeyStateMan_KeyUp;
         }
 
         public TextBox(SpriteFont font, string name, string text)

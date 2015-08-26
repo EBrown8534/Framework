@@ -29,7 +29,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         private bool _inDrag;
         //private EFD.Size _WindowSize;
 
-        public static KeyboardStateManager KeyStateMan { get; set; }
+        public static KeyboardStateManager KeyboardStateManager { get; set; }
 
         /// <summary>
         /// The Texture2D to use as the background of the form. If the <see cref="Size"/> does not match the Texture2D size, clipping or resizing may occur.
@@ -68,9 +68,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         public Form(string name)
         {
             Name = name;
-            KeyStateMan.KeyDown += KeyStateMan_KeyDown;
-            KeyStateMan.KeyPress += KeyStateMan_KeyPress;
-            KeyStateMan.KeyUp += KeyStateMan_KeyUp;
+            KeyboardStateManager.KeyDown += KeyStateMan_KeyDown;
+            KeyboardStateManager.KeyPress += KeyStateMan_KeyPress;
+            KeyboardStateManager.KeyUp += KeyStateMan_KeyUp;
         }
 
         void KeyStateMan_KeyUp(object sender, KeyEventArgs e) { OnKeyUp(e); }
