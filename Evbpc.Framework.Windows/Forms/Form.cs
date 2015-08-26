@@ -248,27 +248,33 @@ namespace Evbpc.Framework.Windows.Forms
         }
 
         [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
-        protected virtual bool IsInputChar(char charCode) { throw new NotImplementedException(); }
+        protected virtual bool IsInputChar(char charCode)
+        {
+            throw new NotImplementedException();
+        }
 
         [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
-        protected virtual bool IsInputKey(Keys keyData) { throw new NotImplementedException(); }
+        protected virtual bool IsInputKey(Keys keyData)
+        {
+            throw new NotImplementedException();
+        }
 
-        protected virtual void OnActivated(EventArgs e) { Activated(this, e); }
-        protected virtual void OnClosed(EventArgs e) { Closed(this, e); }
-        protected virtual void OnClosing(CancelEventArgs e) { Closing(this, e); }
-        protected virtual void OnDeactivate(EventArgs e) { Deactivate(this, e); }
+        protected virtual void OnActivated(EventArgs e) { var evenHandler = Activated; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnClosed(EventArgs e) { var evenHandler = Closed; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnClosing(CancelEventArgs e) { var evenHandler = Closing; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnDeactivate(EventArgs e) { var evenHandler = Deactivate; if (evenHandler != null) { evenHandler(this, e); } }
         protected override void OnEnabledChanged(EventArgs e) { base.OnEnabledChanged(e); }
         protected override void OnEnter(EventArgs e) { base.OnEnter(e); }
-        protected virtual void OnFormClosed(FormClosedEventArgs e) { FormClosed(this, e); }
-        protected virtual void OnFormClosing(FormClosingEventArgs e) { FormClosing(this, e); }
-        protected virtual void OnLoad(EventArgs e) { Load(this, e); }
-        protected virtual void OnMaximizedBoundsChanged(EventArgs e) { MaximizedBoundsChanged(this, e); }
-        protected virtual void OnMaximumSizeChanged(EventArgs e) { MaximumSizeChanged(this, e); }
-        protected virtual void OnMinimumSizeChanged(EventArgs e) { MinimumSizeChanged(this, e); }
+        protected virtual void OnFormClosed(FormClosedEventArgs e) { var evenHandler = FormClosed; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnFormClosing(FormClosingEventArgs e) { var evenHandler = FormClosing; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnLoad(EventArgs e) { var evenHandler = Load; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnMaximizedBoundsChanged(EventArgs e) { var evenHandler = MaximizedBoundsChanged; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnMaximumSizeChanged(EventArgs e) { var evenHandler = MaximumSizeChanged; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnMinimumSizeChanged(EventArgs e) { var evenHandler = MinimumSizeChanged; if (evenHandler != null) { evenHandler(this, e); } }
         protected override void OnResize(EventArgs e) { base.OnResize(e); }
-        protected virtual void OnResizeBegin(EventArgs e) { ResizeBegin(this, e); }
-        protected virtual void OnResizeEnd(EventArgs e) { ResizeEnd(this, e); }
-        protected virtual void OnShown(EventArgs e) { Shown(this, e); }
+        protected virtual void OnResizeBegin(EventArgs e) { var evenHandler = ResizeBegin; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnResizeEnd(EventArgs e) { var evenHandler = ResizeEnd; if (evenHandler != null) { evenHandler(this, e); } }
+        protected virtual void OnShown(EventArgs e) { var evenHandler = Shown; if (evenHandler != null) { evenHandler(this, e); } }
         protected override void OnTextChanged(EventArgs e) { base.OnTextChanged(e); }
         protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e); }
 
@@ -288,7 +294,11 @@ namespace Evbpc.Framework.Windows.Forms
             }
         }
 
-        protected override void Select(bool directed, bool forward) { Activate(); SetTopLevel(true); }
+        protected override void Select(bool directed, bool forward)
+        {
+            Activate();
+            SetTopLevel(true);
+        }
 
         public void SetDesktopBounds(int x, int y, int width, int height)
         {
@@ -299,7 +309,10 @@ namespace Evbpc.Framework.Windows.Forms
             OnResizeEnd(new EventArgs());
         }
 
-        public void SetDesktopLocation(int x, int y) { base.Location = new Point(x, y); }
+        public void SetDesktopLocation(int x, int y)
+        {
+            base.Location = new Point(x, y);
+        }
 
         /// <summary>
         /// Calling this method will add the form for processing. Once a form has been shown, you should call <see cref="Close"/> to dispose of resources properly.
