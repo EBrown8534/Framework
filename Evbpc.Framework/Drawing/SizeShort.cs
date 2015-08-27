@@ -51,7 +51,14 @@ namespace Evbpc.Framework.Drawing
         /// <returns>A byte-array representing the current <see cref="SizeShort"/>.</returns>
         public byte[] GetBytes()
         {
-            return new byte[] { (byte)((_width & 0x0000FF00) >> 8), (byte)((_width & 0x000000FF) >> 0), (byte)((_height & 0x0000FF00) >> 8), (byte)((_height & 0x000000FF) >> 0) };
+            byte[] result = new byte[4];
+
+            result[0] = (byte)((_width & 0xFF00) >> 8);
+            result[1] = (byte)((_width & 0x00FF) >> 0);
+            result[2] = (byte)((_height & 0xFF00) >> 8);
+            result[3] = (byte)((_height & 0x00FF) >> 0);
+
+            return result;
         }
 
         public void FromBytes(byte[] data)
