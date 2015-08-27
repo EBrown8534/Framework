@@ -66,14 +66,14 @@ namespace Evbpc.Framework.Drawing
         {
             byte[] bytes = new byte[SizeInBytes];
 
-            bytes[0] = (byte)(_x & 0xFF000000 >> 24);
-            bytes[1] = (byte)(_x & 0x00FF0000 >> 16);
-            bytes[2] = (byte)(_x & 0x0000FF00 >> 8);
-            bytes[3] = (byte)(_x & 0x000000FF >> 0);
-            bytes[4] = (byte)(_y & 0xFF000000 >> 24);
-            bytes[5] = (byte)(_y & 0x00FF0000 >> 16);
-            bytes[6] = (byte)(_y & 0x0000FF00 >> 8);
-            bytes[7] = (byte)(_y & 0x000000FF >> 0);
+            bytes[0] = (byte)((_x & 0xFF000000) >> 24);
+            bytes[1] = (byte)((_x & 0x00FF0000) >> 16);
+            bytes[2] = (byte)((_x & 0x0000FF00) >> 8);
+            bytes[3] = (byte)((_x & 0x000000FF) >> 0);
+            bytes[4] = (byte)((_y & 0xFF000000) >> 24);
+            bytes[5] = (byte)((_y & 0x00FF0000) >> 16);
+            bytes[6] = (byte)((_y & 0x0000FF00) >> 8);
+            bytes[7] = (byte)((_y & 0x000000FF) >> 0);
 
             return bytes;
         }
