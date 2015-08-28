@@ -9,6 +9,7 @@ This repository was originally created for another project of mine, hence the na
 * `Evbpc.Framework`: contains the root utilities, classes and structures to replicate certain portions of the `System.Drawing` namespace, as well as limited support for certain physics operations, and a small list of additional utilities (for serialization, logging, etc.).
 * `Evbpc.Framework.Windows`: contains the additional features required to create `Form` objects within XNA (or other graphics libraries, this project is library agnostic).
 * `Evbpc.Framework.Xna`: contains the wrapping of the `Evbpc.Framework` and `Evbpc.Framework.Windows` projects to XNA-compatible formats, as well as other XNA-specific utilities.
+* `Evbpc.Framework.Test`: contains the unit tests requried for verifying that any code changes have the desired effects. Some tests may seem unnecessary, but all of them are used to verify that changes to specific classes and structures do not cause undesired consequences.
 
 ## What can you do with it
 
