@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Drawing\ColorTests.cs" />
     <Compile Include="Drawing\PointTests.cs" />
+    <Compile Include="Drawing\PointFTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
