@@ -44,3 +44,5 @@ Before:
 	Write-Host "`r`nInstallation Complete.";
 
 This is confirmed working with Visual Studio 2015 Enterprise RC.
+
+Note: this process also works with Visual Studio 2012 (all versions) and Visual Studio 2013 (all versions). This repository, however, uses features available **only** in C#6.0, which mandates the use of Visual Studio 2015.
