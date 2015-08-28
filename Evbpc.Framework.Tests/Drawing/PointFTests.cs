@@ -17,12 +17,12 @@ namespace Evbpc.Framework.Tests.Drawing
         }
 
         [TestMethod, TestCategory("PointF Tests")]
-        public void CreatePointFStructure_0_1f_1_34f()
+        public void CreatePointFStructure_0_1f_1_56f()
         {
-            PointF point = new PointF(0.1f, 1.34f);
+            PointF point = new PointF(0.1f, 1.56f);
 
             Assert.AreEqual(point.X, 0.1f);
-            Assert.AreEqual(point.Y, 1.34f);
+            Assert.AreEqual(point.Y, 1.56f);
         }
     }
 }

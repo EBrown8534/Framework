@@ -60,5 +60,15 @@ namespace Evbpc.Framework.Tests.Drawing
 
             Assert.AreEqual(point1 != point2, true);
         }
+
+        [TestMethod, TestCategory("Point Tests")]
+        public void Round_0_1f_1_56f()
+        {
+            PointF point = new PointF(0.1f, 1.56f);
+            Point rounded = Point.Round(point);
+
+            Assert.AreEqual(rounded.X, 0x00);
+            Assert.AreEqual(rounded.Y, 0x02);
+        }
     }
 }
