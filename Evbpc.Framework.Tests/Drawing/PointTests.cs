@@ -70,5 +70,25 @@ namespace Evbpc.Framework.Tests.Drawing
             Assert.AreEqual(rounded.X, 0x00);
             Assert.AreEqual(rounded.Y, 0x02);
         }
+
+        [TestMethod, TestCategory("Point Tests")]
+        public void Truncate_0_1f_1_56f()
+        {
+            PointF point = new PointF(0.1f, 1.56f);
+            Point rounded = Point.Truncate(point);
+
+            Assert.AreEqual(rounded.X, 0x00);
+            Assert.AreEqual(rounded.Y, 0x01);
+        }
+
+        [TestMethod, TestCategory("Point Tests")]
+        public void Ceiling_0_1f_1_56f()
+        {
+            PointF point = new PointF(0.1f, 1.56f);
+            Point rounded = Point.Ceiling(point);
+
+            Assert.AreEqual(rounded.X, 0x01);
+            Assert.AreEqual(rounded.Y, 0x02);
+        }
     }
 }
