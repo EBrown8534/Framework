@@ -51,7 +51,15 @@ namespace Evbpc.Framework.Drawing
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            int hash = 17;
+
+            unchecked
+            {
+                hash = hash * 23 + _x.GetHashCode();
+                hash = hash * 23 + _y.GetHashCode();
+            }
+
+            return hash;
         }
 
         public static PointF Subtract(PointF pt, Size sz)
