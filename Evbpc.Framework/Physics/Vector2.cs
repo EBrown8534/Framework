@@ -128,7 +128,7 @@ namespace Evbpc.Framework.Physics
         /// <returns>A string representing the values of the <see cref="X"/> and <see cref="Y"/> properties of the current <see cref="Vector2"/>.</returns>
         public override string ToString()
         {
-            return string.Format("({0},{1})", _x, _y);
+            return $"({_x},{_y})";
         }
 
         /// <summary>
