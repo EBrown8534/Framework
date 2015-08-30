@@ -10,37 +10,102 @@ namespace Evbpc.Framework.Drawing
     [Serializable]
     public struct SizeShort : ISerializableByteArray
     {
-        private short _width;
-        private short _height;
+        private readonly short _width;
+        private readonly short _height;
 
         public SizeShort(Point pt) { _width = (short)(pt.X); _height = (short)(pt.Y); }
         public SizeShort(PointShort pt) { _width = (pt.X); _height = (pt.Y); }
         public SizeShort(short width, short height) { _width = width; _height = height; }
 
-        public short Height { get { return _height; } set { _height = value; } }
+        public short Height { get { return _height; } set { this = new SizeShort(_width, value); } }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public short Width { get { return _width; } set { _width = value; } }
+        public short Width { get { return _width; } set { this = new SizeShort(value, _height); } }
 
-        public static SizeShort Add(SizeShort sz1, SizeShort sz2) { return sz1 + sz2; }
-        public static SizeShort Ceiling(SizeF value) { return new SizeShort((short)Math.Ceiling(value.Width), (short)Math.Ceiling(value.Height)); }
-        public override bool Equals(Object obj) { if (obj.GetType() == typeof(SizeShort)) { return (SizeShort)obj == this; } else { return false; } }
-        public override int GetHashCode() { return base.GetHashCode(); }
-        public static SizeShort Round(SizeF value) { return new SizeShort((short)Math.Round(value.Width), (short)Math.Round(value.Height)); }
-        public static SizeShort Subtract(SizeShort sz1, SizeShort sz2) { return sz1 - sz2; }
-        public override string ToString() { return "(" + _width + "," + _height + ")"; }
-        public static SizeShort Truncate(SizeF value) { return new SizeShort((short)(value.Width), (short)(value.Height)); }
+        public static SizeShort Add(SizeShort sz1, SizeShort sz2)
+        {
+            return sz1 + sz2;
+        }
 
-        public static SizeShort operator +(SizeShort sz1, SizeShort sz2) { return new SizeShort((short)(sz1.Width + sz2.Width), (short)(sz1.Height + sz2.Height)); }
-        public static bool operator ==(SizeShort sz1, SizeShort sz2) { return sz1.Width == sz2.Width && sz1.Height == sz2.Height; }
-        public static explicit operator Point(SizeShort size) { return new Point(size.Width, size.Height); }
-        public static explicit operator PointShort(SizeShort size) { return new PointShort(size.Width, size.Height); }
-        public static implicit operator SizeF(SizeShort p) { return new SizeF(p.Width, p.Height); }
-        public static implicit operator Size(SizeShort p) { return new Size(p.Width, p.Height); }
-        public static bool operator !=(SizeShort sz1, SizeShort sz2) { return sz1.Width != sz2.Width || sz1.Height != sz2.Height; }
-        public static SizeShort operator -(SizeShort sz1, SizeShort sz2) { return new SizeShort((short)(sz1.Width - sz2.Width), (short)(sz1.Height - sz2.Height)); }
+        public static SizeShort Ceiling(SizeF value)
+        {
+            return new SizeShort((short)Math.Ceiling(value.Width), (short)Math.Ceiling(value.Height));
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj is SizeShort)
+                return (SizeShort)obj == this;
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static SizeShort Round(SizeF value)
+        {
+            return new SizeShort((short)Math.Round(value.Width), (short)Math.Round(value.Height));
+        }
+
+        public static SizeShort Subtract(SizeShort sz1, SizeShort sz2)
+        {
+            return sz1 - sz2;
+        }
+
+        public override string ToString()
+        {
+            return $"({_width},{_height})";
+        }
+
+        public static SizeShort Truncate(SizeF value)
+        {
+            return new SizeShort((short)(value.Width), (short)(value.Height));
+        }
+
+        public static SizeShort operator +(SizeShort sz1, SizeShort sz2)
+        {
+            return new SizeShort((short)(sz1.Width + sz2.Width), (short)(sz1.Height + sz2.Height));
+        }
+
+        public static bool operator ==(SizeShort sz1, SizeShort sz2)
+        {
+            return sz1.Width == sz2.Width && sz1.Height == sz2.Height;
+        }
+
+        public static explicit operator Point(SizeShort size)
+        {
+            return new Point(size.Width, size.Height);
+        }
+
+        public static explicit operator PointShort(SizeShort size)
+        {
+            return new PointShort(size.Width, size.Height);
+        }
+
+        public static implicit operator SizeF(SizeShort p)
+        {
+            return new SizeF(p.Width, p.Height);
+        }
+
+        public static implicit operator Size(SizeShort p)
+        {
+            return new Size(p.Width, p.Height);
+        }
+
+        public static bool operator !=(SizeShort sz1, SizeShort sz2)
+        {
+            return sz1.Width != sz2.Width || sz1.Height != sz2.Height;
+        }
+
+        public static SizeShort operator -(SizeShort sz1, SizeShort sz2)
+        {
+            return new SizeShort((short)(sz1.Width - sz2.Width), (short)(sz1.Height - sz2.Height));
+        }
 
         public static readonly SizeShort Empty = new SizeShort(0, 0);
 
@@ -65,11 +130,12 @@ namespace Evbpc.Framework.Drawing
         {
             if (data.Length == this.SizeInBytes)
             {
-                this._width = (short)(((uint)data[0]) << 8 | ((uint)data[1]));
-                this._height = (short)(((uint)data[2]) << 8 | ((uint)data[3]));
+                this = new SizeShort(
+                    (short)(((uint)data[0]) << 8 | ((uint)data[1])),
+                    (short)(((uint)data[2]) << 8 | ((uint)data[3])));
             }
             else
-                throw new ArgumentException("Parameter \"data\" must be exactly " + SizeInBytes + " bytes.");
+                throw new ArgumentException($"Parameter \"data\" must be exactly {SizeInBytes} bytes.");
         }
 
         public int SizeInBytes { get { return 4; } }
