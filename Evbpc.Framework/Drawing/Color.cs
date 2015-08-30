@@ -15,35 +15,35 @@ namespace Evbpc.Framework.Drawing
     public struct Color : ISerializableByteArray
     {
         [FieldOffset(0)]
-        private uint _packedValue;
+        private readonly uint _packedValue;
         [FieldOffset(3)]
-        private byte _a;
+        private readonly byte _a;
         [FieldOffset(2)]
-        private byte _r;
+        private readonly byte _r;
         [FieldOffset(1)]
-        private byte _g;
+        private readonly byte _g;
         [FieldOffset(0)]
-        private byte _b;
+        private readonly byte _b;
 
         /// <summary>
         /// Gets or sets the Alpha component of the <see cref="Color"/>.
         /// </summary>
-        public byte A { get { return _a; } set { _a = value; } }
+        public byte A { get { return _a; } }
 
         /// <summary>
         /// Gets or sets the Red component of the <see cref="Color"/>.
         /// </summary>
-        public byte R { get { return _r; } set { _r = value; } }
+        public byte R { get { return _r; } }
 
         /// <summary>
         /// Gets or sets the Green component of the <see cref="Color"/>.
         /// </summary>
-        public byte G { get { return _g; } set { _g = value; } }
+        public byte G { get { return _g; } }
 
         /// <summary>
         /// Gets or sets the Blue component of the <see cref="Color"/>.
         /// </summary>
-        public byte B { get { return _b; } set { _b = value; } }
+        public byte B { get { return _b; } }
 
         /// <summary>
         /// Creates an instance of a <see cref="Color"/>.
@@ -55,10 +55,10 @@ namespace Evbpc.Framework.Drawing
         public Color(byte r, byte g, byte b, byte a)
             : this()
         {
-            R = r;
-            G = g;
-            B = b;
-            A = a;
+            _r = r;
+            _g = g;
+            _b = b;
+            _a = a;
         }
 
         /// <summary>
@@ -217,13 +217,10 @@ namespace Evbpc.Framework.Drawing
         {
             if (data.Length == SizeInBytes)
             {
-                A = data[0];
-                R = data[1];
-                G = data[2];
-                B = data[3];
+                this = new Color(data[1], data[2], data[3], data[4]);
             }
             else
-                throw new ArgumentException("Parameter \"data\" must be exactly " + SizeInBytes + " bytes.");
+                throw new ArgumentException($"Parameter \"data\" must be exactly {SizeInBytes} bytes.");
         }
 
         /// <summary>
