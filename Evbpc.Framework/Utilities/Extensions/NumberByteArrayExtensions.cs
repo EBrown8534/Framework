@@ -5,8 +5,16 @@ using System.Text;
 
 namespace Evbpc.Framework.Utilities.Extensions
 {
+    /// <summary>
+    /// Provides extension methods to convert certian base types to and from a byte-array.
+    /// </summary>
     public static class NumberByteArrayExtensions
     {
+        /// <summary>
+        /// Converts a <code>uint</code> value to a <code>byte[]</code>.
+        /// </summary>
+        /// <param name="value">The <code>uint</code> value to convert.</param>
+        /// <returns>A <code>byte[]</code> representing the <code>uint</code> value.</returns>
         public static byte[] ToByteArray(this uint value)
         {
             byte[] result = new byte[4];
@@ -21,10 +29,15 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts a <code>byte[]</code> to a <code>uint</code> value.
+        /// </summary>
+        /// <param name="data">The <code>byte[]</code> to convert.</param>
+        /// <returns>A <code>uint</code> that represents the converted <code>byte[]</code>.</returns>
         public static uint ToUInt32(this byte[] data)
         {
             if (data.Length != 4)
-                throw new ArgumentException("The byte-array 'data' must be exactly four bytes.");
+                throw new ArgumentException("The byte-array \"data\" must be exactly four bytes.");
 
             uint result = 0;
 
@@ -33,6 +46,11 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts an <code>int</code> value to a <code>byte[]</code>.
+        /// </summary>
+        /// <param name="value">The <code>int</code> to convert.</param>
+        /// <returns>A <code>byte[]</code> representing the <code>int</code> value.</returns>
         public static byte[] ToByteArray(this int value)
         {
             byte[] result = new byte[4];
@@ -47,10 +65,15 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts a <code>byte[]</code> to an <code>int</code> value.
+        /// </summary>
+        /// <param name="data">The <code>byte[]</code> to convert.</param>
+        /// <returns>An <code>int</code> value representing the <code>byte[]</code>.</returns>
         public static int ToInt32(this byte[] data)
         {
             if (data.Length != 4)
-                throw new ArgumentException("The byte-array 'data' must be exactly four bytes.");
+                throw new ArgumentException("The byte-array \"data\" must be exactly four bytes.");
 
             int result = 0;
 
@@ -59,6 +82,11 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts a <code>ulong</code> to a <code>byte[]</code>.
+        /// </summary>
+        /// <param name="value">The <code>ulong</code> to convert.</param>
+        /// <returns>A <code>byte[]</code> representing the <code>ulong</code>.</returns>
         public static byte[] ToByteArray(this ulong value)
         {
             byte[] result = new byte[8];
@@ -77,10 +105,15 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts a <code>byte[]</code> to a <code>ulong</code>.
+        /// </summary>
+        /// <param name="data">The <code>byte[]</code> to convert.</param>
+        /// <returns>A <code>ulong</code> reprented by the <code>byte[]</code>.</returns>
         public static ulong ToUInt64(this byte[] data)
         {
             if (data.Length != 8)
-                throw new ArgumentException("The byte-array 'data' must be exactly eight bytes.");
+                throw new ArgumentException("The byte-array \"data\" must be exactly eight bytes.");
 
             ulong result = 0;
 
@@ -89,6 +122,11 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts a <code>long</code> value to a <code>byte[]</code>.
+        /// </summary>
+        /// <param name="value">The <code>long</code> value to convert.</param>
+        /// <returns>A <code>byte[]</code> representing the <code>long</code> value.</returns>
         public static byte[] ToByteArray(this long value)
         {
             byte[] result = new byte[8];
@@ -107,10 +145,15 @@ namespace Evbpc.Framework.Utilities.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts a <code>byte[]</code> to a <code>long</code> value.
+        /// </summary>
+        /// <param name="data">The <code>byte[]</code> to convert.</param>
+        /// <returns>A <code>long</code> value represented by the <code>byte[]</code>.</returns>
         public static long ToInt64(this byte[] data)
         {
             if (data.Length != 8)
-                throw new ArgumentException("The byte-array 'data' must be exactly eight bytes.");
+                throw new ArgumentException("The byte-array \"data\" must be exactly eight bytes.");
 
             long result = 0;
 

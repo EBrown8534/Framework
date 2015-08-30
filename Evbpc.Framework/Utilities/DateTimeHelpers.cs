@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Evbpc.Framework.Utilities
 {
+    /// <summary>
+    /// A collection of methods which may be used with the <code>DateTime</code> structure.
+    /// </summary>
     public class DateTimeHelpers
     {
         /// <summary>

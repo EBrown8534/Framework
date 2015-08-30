@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Evbpc.Framework.Utilities
 {
+    /// <summary>
+    /// A series of values that may be used in any combination to determine how a Base32 string will be formatted.
+    /// </summary>
     [Flags]
     public enum Base32FormattingOptions
     {
