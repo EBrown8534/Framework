@@ -328,9 +328,9 @@ namespace Evbpc.Framework.Windows.Forms
                 throw new InvalidOperationException("The Form.Show() method has already been called on this Form.");
             
             Forms.Add(this);
-            base.Show();
             Enabled = true;
             Visible = true;
+            base.Show();
         }
         #endregion
 

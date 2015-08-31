@@ -175,21 +175,69 @@ namespace Evbpc.Framework.Drawing
         /// </remarks>
         public enum Preset : int
         {
+            /// <summary>
+            /// A completely black colour. (RGB: 0, 0, 0)
+            /// </summary>
             Black = 0,
+            /// <summary>
+            /// A dark blue colour. (RGB: 0, 0, 128)
+            /// </summary>
             DarkBlue = 1,
+            /// <summary>
+            /// A dark green colour. (RGB: 0, 128, 0)
+            /// </summary>
             DarkGreen = 2,
+            /// <summary>
+            /// A dark cyan colour. (RGB: 0, 128, 128)
+            /// </summary>
             DarkCyan = 3,
+            /// <summary>
+            /// A dark red colour. (RGB: 128, 0, 0)
+            /// </summary>
             DarkRed = 4,
+            /// <summary>
+            /// A dark magenta colour. (RGB: 128, 0, 128)
+            /// </summary>
             DarkMagenta = 5,
+            /// <summary>
+            /// A dark yellow colour. (RGB: 128, 128, 0)
+            /// </summary>
             DarkYellow = 6,
+            /// <summary>
+            /// A gray colour. (RGB: 192, 192, 192)
+            /// </summary>
             Gray = 7,
+            /// <summary>
+            /// A dark gray colour. (RGB: 128, 128, 128)
+            /// </summary>
             DarkGray = 8,
+            /// <summary>
+            /// A blue colour. (RGB: 0, 0, 255)
+            /// </summary>
             Blue = 9,
+            /// <summary>
+            /// A green colour. (RGB: 0, 255, 0)
+            /// </summary>
             Green = 10,
+            /// <summary>
+            /// A cyan colour. (RGB: 0, 255, 255)
+            /// </summary>
             Cyan = 11,
+            /// <summary>
+            /// A red colour. (RGB: 255, 0, 0)
+            /// </summary>
             Red = 12,
+            /// <summary>
+            /// A magenta colour. (RGB: 255, 0, 255)
+            /// </summary>
             Magenta = 13,
+            /// <summary>
+            /// A yellow colour. (RGB: 255, 255, 0)
+            /// </summary>
             Yellow = 14,
+            /// <summary>
+            /// A white colour. (RGB: 255, 255, 255)
+            /// </summary>
             White = 15,
         }
 
