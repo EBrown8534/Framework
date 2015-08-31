@@ -17,9 +17,9 @@ using Evbpc.Framework.Xna.Utilities;
 namespace Evbpc.Framework.Xna.Windows.Forms
 {
     /// <summary>
-    /// Represents a <see cref="Evbpc.Framework.Windows.Forms.Form"/> that can be drawn with an XNA <code>SpriteBatch</code>.
+    /// Represents a <see cref="Framework.Windows.Forms.Form"/> that can be drawn with an XNA <code>SpriteBatch</code>.
     /// </summary>
-    public class Form : Evbpc.Framework.Windows.Forms.Form
+    public class Form : Framework.Windows.Forms.Form
     {
         private static MouseState _mouseStatePrevious;
         private TimeSpan _clickTrigger = new TimeSpan(0, 0, 0, 0, 500);
@@ -29,26 +29,29 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         private bool _inDrag;
         //private EFD.Size _WindowSize;
 
+        /// <summary>
+        /// Gets or sets the <see cref="Utilities.KeyboardStateManager"/> used by all instances of the <see cref="Form"/> class.
+        /// </summary>
         public static KeyboardStateManager KeyboardStateManager { get; set; }
 
         /// <summary>
-        /// The Texture2D to use as the background of the form. If the <see cref="Size"/> does not match the Texture2D size, clipping or resizing may occur.
+        /// The Texture2D to use as the background of the form. If the <see cref="Control.Size"/> does not match the Texture2D size, clipping or resizing may occur.
         /// </summary>
         public Texture2D BackgroundTexture { get; set; }
         /// <summary>
-        /// The Texture2D to use as the background for the <see cref="Title"/> of the form. If the <see cref="Size"/> does not match the Texture2D size, clipping or resizing may occur.
+        /// The Texture2D to use as the background for the title of the form. If the <see cref="Control.Size"/> does not match the Texture2D size, clipping or resizing may occur.
         /// </summary>
         public Texture2D TitleTexture { get; set; }
         /// <summary>
-        /// Determines whether or not the <see cref="Title"/> will be rendered. If this is false, the entire title will not be rendered, and the content will be moved up if the <see cref="TitleBarHeight"/> is not 0.
+        /// Determines whether or not the title will be rendered. If this is false, the entire title will not be rendered, and the content will be moved up if the <see cref="TitleBarHeight"/> is not 0.
         /// </summary>
         public bool ShowTitleBar { get; set; }
         /// <summary>
-        /// Determines the height of the <see cref="Title"/> when <see cref="ShowTitleBar"/> is not false.
+        /// Determines the height of the title when <see cref="ShowTitleBar"/> is not false.
         /// </summary>
         public int TitleBarHeight { get; set; }
         /// <summary>
-        /// Determines the <see cref="Evbpc.Framework.Drawing.Color"/> the <see cref="TitleTexture"/> will be rendered as.
+        /// Determines the <see cref="Color"/> the <see cref="TitleTexture"/> will be rendered as.
         /// </summary>
         public EFD.Color TitleBarColor { get; set; }
         /// <summary>
@@ -60,6 +63,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         ///// </summary>
         //public EFD.Size WindowSize { get { return _WindowSize; } set { _WindowSize = value; } }
 
+        /// <summary>
+        /// Gets a value indicating whether or not this <see cref="Form"/> has focus.
+        /// </summary>
         public override bool Focused { get { return ActiveForm == this; } }
 
         /// <summary>
@@ -110,8 +116,8 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// This should update anything that requires mouse, keyboard, gamepad, joystick, or other input controls. (Dragging, etc.)
         /// </summary>
         /// <param name="m">The current MouseState object.</param>
-        /// <param name="k">The current KeyboardState object.</param>
         /// <param name="hasFocus">A value indicating whether or not the application has focus.</param>
+        /// <param name="gt">A value representing the elapsed <code>GameTime</code> since the last update.</param>
         public static void UpdateAll(MouseState m, bool hasFocus, GameTime gt)
         {
             if ((m.LeftButton == ButtonState.Pressed && _mouseStatePrevious.LeftButton == ButtonState.Released)

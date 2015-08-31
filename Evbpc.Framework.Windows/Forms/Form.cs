@@ -41,7 +41,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.allowtransparency(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public bool AllowTransparency { get; set; }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.desktopbounds(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Rectangle DesktopBounds { get { return base.Bounds; } set { base.Bounds = value; } }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.desktoplocation(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Point DesktopLocation { get { return base.Location; } set { base.Location = value; } }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.ownedforms(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Form[] OwnedForms { get { return _ownedForms; } }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.owner(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Form Owner { get; set; }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.restorebounds(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Rectangle RestoreBounds { get { throw new NotImplementedException(); } }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.toplevel(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public bool TopLevel { get; set; }
 
         /// <summary>
@@ -247,13 +247,13 @@ namespace Evbpc.Framework.Windows.Forms
             throw new KeyNotFoundException();
         }
 
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
+        [UIPermission(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool IsInputChar(char charCode)
         {
             throw new NotImplementedException();
         }
 
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
+        [UIPermission(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool IsInputKey(Keys keyData)
         {
             throw new NotImplementedException();
@@ -322,7 +322,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// 
         /// If you do not need to add controls, programmatically change anything on the form, or programmatically operate on it, then it is not necessary to hold on to the variable. You may still subscribe to events and will be informed when an event is triggered.
         /// </remarks>
-        public void Show()
+        public new void Show()
         { 
             if (Forms.Contains(this))
                 throw new InvalidOperationException("The Form.Show() method has already been called on this Form.");
@@ -337,10 +337,10 @@ namespace Evbpc.Framework.Windows.Forms
         #region Events
         public event EventHandler Activated;
 
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public event EventHandler Closed;
 
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public event CancelEventHandler Closing;
 
         public event EventHandler Deactivate;
