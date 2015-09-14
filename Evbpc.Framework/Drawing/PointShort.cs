@@ -40,43 +40,22 @@ namespace Evbpc.Framework.Drawing
         }
 
         [Browsable(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public bool IsEmpty => this == Empty;
 
-        public short X { get { return _x; } }
-        public short Y { get { return _y; } }
+        public short X => _x;
+        public short Y => _y;
 
-        public static PointShort Add(PointShort pt, Size sz)
-        {
-            return pt + sz;
-        }
+        public static PointShort Add(PointShort pt, Size sz) => pt + sz;
 
-        public static PointShort Add(PointShort pt, SizeByte sz)
-        {
-            return pt + sz;
-        }
+        public static PointShort Add(PointShort pt, SizeByte sz) => pt + sz;
 
-        public static PointShort Add(PointShort pt, SizeShort sz)
-        {
-            return pt + sz;
-        }
+        public static PointShort Add(PointShort pt, SizeShort sz) => pt + sz;
 
-        public static PointShort Ceiling(PointF value)
-        {
-            return new PointShort((short)Math.Ceiling(value.X), (short)Math.Ceiling(value.Y));
-        }
+        public static PointShort Ceiling(PointF value) => new PointShort((short)Math.Ceiling(value.X), (short)Math.Ceiling(value.Y));
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is PointShort)
-                return (PointShort)obj == this;
+        public override bool Equals(Object obj) => obj is PointShort && (PointShort)obj == this;
 
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return (int)_packedValue;
-        }
+        public override int GetHashCode() => (int)_packedValue;
 
         public void Offset(PointShort p)
         {
@@ -88,95 +67,44 @@ namespace Evbpc.Framework.Drawing
             this = new PointShort((short)(_x + dx), (short)(_y + dy));
         }
 
-        public static PointShort Round(PointF value)
-        {
-            return new PointShort((short)Math.Round(value.X), (short)Math.Round(value.Y));
-        }
+        public static PointShort Round(PointF value) => new PointShort((short)Math.Round(value.X), (short)Math.Round(value.Y));
 
         public static PointShort Subtract(PointShort pt, Size sz)
         {
             return pt - sz;
         }
 
-        public static PointShort Subtract(PointShort pt, SizeByte sz)
-        {
-            return pt - sz;
-        }
+        public static PointShort Subtract(PointShort pt, SizeByte sz) => pt - sz;
 
-        public static PointShort Subtract(PointShort pt, SizeShort sz)
-        {
-            return pt - sz;
-        }
+        public static PointShort Subtract(PointShort pt, SizeShort sz) => pt - sz;
 
-        public override string ToString()
-        {
-            return $"({_x},{_y})";
-        }
+        public override string ToString() => $"({_x},{_y})";
 
-        public static PointShort Truncate(PointF value)
-        {
-            return new PointShort((short)(value.X), (short)(value.Y));
-        }
+        public static PointShort Truncate(PointF value) => new PointShort((short)(value.X), (short)(value.Y));
 
-        public uint GetPackedValue()
-        {
-            return _packedValue;
-        }
+        public uint GetPackedValue() => _packedValue;
 
-        public static PointShort operator +(PointShort pt, Size sz)
-        {
-            return new PointShort((short)(pt.X + sz.Width), (short)(pt.Y + sz.Height));
-        }
+        public static PointShort operator +(PointShort pt, Size sz) => new PointShort((short)(pt.X + sz.Width), (short)(pt.Y + sz.Height));
 
-        public static PointShort operator +(PointShort pt, SizeByte sz)
-        {
-            return new PointShort((short)(pt.X + sz.Width), (short)(pt.Y + sz.Height));
-        }
+        public static PointShort operator +(PointShort pt, SizeByte sz) => new PointShort((short)(pt.X + sz.Width), (short)(pt.Y + sz.Height));
 
-        public static PointShort operator +(PointShort pt, SizeShort sz)
-        {
-            return new PointShort((short)(pt.X + sz.Width), (short)(pt.Y + sz.Height));
-        }
+        public static PointShort operator +(PointShort pt, SizeShort sz) => new PointShort((short)(pt.X + sz.Width), (short)(pt.Y + sz.Height));
 
-        public static bool operator ==(PointShort left, PointShort right)
-        {
-            return left.X == right.X && left.Y == right.Y;
-        }
+        public static bool operator ==(PointShort left, PointShort right) => left.X == right.X && left.Y == right.Y;
 
-        public static explicit operator Size(PointShort p)
-        {
-            return new Size(p.X, p.Y);
-        }
+        public static explicit operator Size(PointShort p) => new Size(p.X, p.Y);
 
-        public static explicit operator SizeShort(PointShort p)
-        {
-            return new SizeShort(p.X, p.Y);
-        }
+        public static explicit operator SizeShort(PointShort p) => new SizeShort(p.X, p.Y);
 
-        public static implicit operator PointF(PointShort p)
-        {
-            return new PointF(p.X, p.Y);
-        }
+        public static implicit operator PointF(PointShort p) => new PointF(p.X, p.Y);
 
-        public static bool operator !=(PointShort left, PointShort right)
-        {
-            return left.X != right.X || left.Y != right.Y;
-        }
+        public static bool operator !=(PointShort left, PointShort right) => left.X != right.X || left.Y != right.Y;
 
-        public static PointShort operator -(PointShort pt, Size sz)
-        {
-            return new PointShort((short)(pt.X - sz.Width), (short)(pt.Y - sz.Height));
-        }
+        public static PointShort operator -(PointShort pt, Size sz) => new PointShort((short)(pt.X - sz.Width), (short)(pt.Y - sz.Height));
 
-        public static PointShort operator -(PointShort pt, SizeByte sz)
-        {
-            return new PointShort((short)(pt.X - sz.Width), (short)(pt.Y - sz.Height));
-        }
+        public static PointShort operator -(PointShort pt, SizeByte sz) => new PointShort((short)(pt.X - sz.Width), (short)(pt.Y - sz.Height));
 
-        public static PointShort operator -(PointShort pt, SizeShort sz)
-        {
-            return new PointShort((short)(pt.X - sz.Width), (short)(pt.Y - sz.Height));
-        }
+        public static PointShort operator -(PointShort pt, SizeShort sz) => new PointShort((short)(pt.X - sz.Width), (short)(pt.Y - sz.Height));
 
         public static readonly PointShort Empty = new PointShort(0, 0);
     }

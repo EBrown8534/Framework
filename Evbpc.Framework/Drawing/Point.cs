@@ -35,22 +35,16 @@ namespace Evbpc.Framework.Drawing
         }
 
         [Browsable(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public bool IsEmpty => this == Empty;
 
-        public int X { get { return _x; } }
-        public int Y { get { return _y; } }
+        public int X => _x;
+        public int Y => _y;
 
-        public int SizeInBytes { get { return 8; } }
+        public int SizeInBytes => 8;
 
-        public static Point Add(Point pt, Size sz)
-        {
-            return pt + sz;
-        }
+        public static Point Add(Point pt, Size sz) => pt + sz;
 
-        public static Point Ceiling(PointF value)
-        {
-            return new Point((int)Math.Ceiling(value.X), (int)Math.Ceiling(value.Y));
-        }
+        public static Point Ceiling(PointF value) => new Point((int)Math.Ceiling(value.X), (int)Math.Ceiling(value.Y));
 
         public override bool Equals(Object obj)
         {
@@ -83,55 +77,25 @@ namespace Evbpc.Framework.Drawing
             this = new Point(_x + dx, _y + dy);
         }
 
-        public static Point Round(PointF value)
-        {
-            return new Point((int)Math.Round(value.X), (int)Math.Round(value.Y));
-        }
+        public static Point Round(PointF value) => new Point((int)Math.Round(value.X), (int)Math.Round(value.Y));
 
-        public static Point Subtract(Point pt, Size sz)
-        {
-            return pt - sz;
-        }
+        public static Point Subtract(Point pt, Size sz) => pt - sz;
 
-        public override string ToString()
-        {
-            return $"({_x},{_y})";
-        }
+        public override string ToString() => $"({_x},{_y})";
 
-        public static Point Truncate(PointF value)
-        {
-            return new Point((int)(value.X), (int)(value.Y));
-        }
-        
-        public static Point operator +(Point pt, Size sz)
-        {
-            return new Point(pt.X + sz.Width, pt.Y + sz.Height);
-        }
+        public static Point Truncate(PointF value) => new Point((int)(value.X), (int)(value.Y));
 
-        public static bool operator ==(Point left, Point right)
-        {
-            return left.X == right.X && left.Y == right.Y;
-        }
+        public static Point operator +(Point pt, Size sz) => new Point(pt.X + sz.Width, pt.Y + sz.Height);
 
-        public static explicit operator Size(Point p)
-        {
-            return new Size(p.X, p.Y);
-        }
+        public static bool operator ==(Point left, Point right) => left.X == right.X && left.Y == right.Y;
 
-        public static implicit operator PointF(Point p)
-        {
-            return new PointF(p.X, p.Y);
-        }
+        public static explicit operator Size(Point p) => new Size(p.X, p.Y);
 
-        public static bool operator !=(Point left, Point right)
-        {
-            return left.X != right.X || left.Y != right.Y;
-        }
+        public static implicit operator PointF(Point p) => new PointF(p.X, p.Y);
 
-        public static Point operator -(Point pt, Size sz)
-        {
-            return new Point(pt.X - sz.Width, pt.Y - sz.Height);
-        }
+        public static bool operator !=(Point left, Point right) => left.X != right.X || left.Y != right.Y;
+
+        public static Point operator -(Point pt, Size sz) => new Point(pt.X - sz.Width, pt.Y - sz.Height);
 
         public static readonly Point Empty = new Point(0, 0);
 

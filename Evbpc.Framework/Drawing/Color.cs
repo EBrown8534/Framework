@@ -28,22 +28,22 @@ namespace Evbpc.Framework.Drawing
         /// <summary>
         /// Gets or sets the Alpha component of the <see cref="Color"/>.
         /// </summary>
-        public byte A { get { return _a; } }
+        public byte A => _a;
 
         /// <summary>
         /// Gets or sets the Red component of the <see cref="Color"/>.
         /// </summary>
-        public byte R { get { return _r; } }
+        public byte R => _r;
 
         /// <summary>
         /// Gets or sets the Green component of the <see cref="Color"/>.
         /// </summary>
-        public byte G { get { return _g; } }
+        public byte G => _g;
 
         /// <summary>
         /// Gets or sets the Blue component of the <see cref="Color"/>.
         /// </summary>
-        public byte B { get { return _b; } }
+        public byte B => _b;
 
         /// <summary>
         /// Creates an instance of a <see cref="Color"/>.
@@ -86,10 +86,7 @@ namespace Evbpc.Framework.Drawing
         /// Returns the packed <c>uint</c> for storage.
         /// </summary>
         /// <returns>A <c>uint</c> representing this <see cref="Color"/> instance.</returns>
-        public uint GetPackedValue()
-        {
-            return _packedValue;
-        }
+        public uint GetPackedValue() => _packedValue;
 
         /// <summary>
         /// Determines whether two <see cref="Color"/> objects have the same value.
@@ -97,10 +94,7 @@ namespace Evbpc.Framework.Drawing
         /// <param name="a">The first <see cref="Color"/> object.</param>
         /// <param name="b">The second <see cref="Color"/> object.</param>
         /// <returns>True if the objects have the same values, false otherwise.</returns>
-        public static bool operator ==(Color a, Color b)
-        {
-            return a._packedValue == b._packedValue;
-        }
+        public static bool operator ==(Color a, Color b) => a._packedValue == b._packedValue;
 
         /// <summary>
         /// Determines whether two <see cref="Color"/> objects do not have the same value.
@@ -108,29 +102,20 @@ namespace Evbpc.Framework.Drawing
         /// <param name="a">The first <see cref="Color"/> object.</param>
         /// <param name="b">The second <see cref="Color"/> object.</param>
         /// <returns>True if the objects do not have the same values, false otherwise.</returns>
-        public static bool operator !=(Color a, Color b)
-        {
-            return a._packedValue != b._packedValue;
-        }
+        public static bool operator !=(Color a, Color b) => a._packedValue != b._packedValue;
 
         /// <summary>
         /// Determines whether an object is a <see cref="Color"/> and is equal to the current <see cref="Color"/> object.
         /// </summary>
         /// <param name="obj">The object to compare.</param>
         /// <returns>True if the object is a <see cref="Color"/> object and has the same value as the current <see cref="Color"/> object.</returns>
-        public override bool Equals(object obj)
-        {
-            return obj is Color && this == (Color)obj;
-        }
+        public override bool Equals(object obj) => obj is Color && this == (Color)obj;
 
         /// <summary>
         /// Gets the hash code for the current <see cref="Color"/> object.
         /// </summary>
         /// <returns>The hash code that represents the current <see cref="Color"/> object.</returns>
-        public override int GetHashCode()
-        {
-            return (int)_packedValue;
-        }
+        public override int GetHashCode() => (int)_packedValue;
 
         /// <summary>
         /// Implicitly materializes a <see cref="Color.Preset"/> to a <see cref="Color"/>.
@@ -140,10 +125,7 @@ namespace Evbpc.Framework.Drawing
         /// <remarks>
         /// This method is equivalent to calling <code>Color.Presets[(int)preset];</code>.
         /// </remarks>
-        public static implicit operator Color(Color.Preset preset)
-        {
-            return Presets[(int)preset];
-        }
+        public static implicit operator Color(Preset preset) => Presets[(int)preset];
 
         /// <summary>
         /// A list of <see cref="Color"/> objects that correspond to the <see cref="Color.Preset"/> enumeration values.
@@ -274,9 +256,6 @@ namespace Evbpc.Framework.Drawing
         /// <summary>
         /// Gets the number of bytes the <see cref="Color"/> will consume.
         /// </summary>
-        public int SizeInBytes
-        {
-            get { return 4; }
-        }
+        public int SizeInBytes => 4;
     }
 }

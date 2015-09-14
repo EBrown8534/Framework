@@ -10,102 +10,62 @@ namespace Evbpc.Framework.Drawing
     [Serializable]
     public struct SizeShort : ISerializableByteArray
     {
-        private readonly short _width;
-        private readonly short _height;
+        public SizeShort(Point pt)
+        {
+            Width = (short)(pt.X);
+            Height = (short)(pt.Y);
+        }
 
-        public SizeShort(Point pt) { _width = (short)(pt.X); _height = (short)(pt.Y); }
-        public SizeShort(PointShort pt) { _width = (pt.X); _height = (pt.Y); }
-        public SizeShort(short width, short height) { _width = width; _height = height; }
+        public SizeShort(PointShort pt)
+        {
+            Width = (pt.X);
+            Height = (pt.Y);
+        }
 
-        public short Height { get { return _height; } set { this = new SizeShort(_width, value); } }
+        public SizeShort(short width, short height)
+        {
+            Width = width;
+            Height = height;
+        }
+
+        public short Height { get; }
 
         [BrowsableAttribute(false)]
         public bool IsEmpty { get { return this == Empty; } }
 
-        public short Width { get { return _width; } set { this = new SizeShort(value, _height); } }
+        public short Width { get; }
 
-        public static SizeShort Add(SizeShort sz1, SizeShort sz2)
-        {
-            return sz1 + sz2;
-        }
+        public static SizeShort Add(SizeShort sz1, SizeShort sz2) => sz1 + sz2;
 
-        public static SizeShort Ceiling(SizeF value)
-        {
-            return new SizeShort((short)Math.Ceiling(value.Width), (short)Math.Ceiling(value.Height));
-        }
+        public static SizeShort Ceiling(SizeF value) => new SizeShort((short)Math.Ceiling(value.Width), (short)Math.Ceiling(value.Height));
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is SizeShort)
-                return (SizeShort)obj == this;
+        public override bool Equals(Object obj) => obj is SizeShort && (SizeShort)obj == this;
 
-            return false;
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public static SizeShort Round(SizeF value) => new SizeShort((short)Math.Round(value.Width), (short)Math.Round(value.Height));
 
-        public static SizeShort Round(SizeF value)
-        {
-            return new SizeShort((short)Math.Round(value.Width), (short)Math.Round(value.Height));
-        }
+        public static SizeShort Subtract(SizeShort sz1, SizeShort sz2) => sz1 - sz2;
 
-        public static SizeShort Subtract(SizeShort sz1, SizeShort sz2)
-        {
-            return sz1 - sz2;
-        }
+        public override string ToString() => $"({Width},{Height})";
 
-        public override string ToString()
-        {
-            return $"({_width},{_height})";
-        }
+        public static SizeShort Truncate(SizeF value) => new SizeShort((short)(value.Width), (short)(value.Height));
 
-        public static SizeShort Truncate(SizeF value)
-        {
-            return new SizeShort((short)(value.Width), (short)(value.Height));
-        }
+        public static SizeShort operator +(SizeShort sz1, SizeShort sz2) => new SizeShort((short)(sz1.Width + sz2.Width), (short)(sz1.Height + sz2.Height));
 
-        public static SizeShort operator +(SizeShort sz1, SizeShort sz2)
-        {
-            return new SizeShort((short)(sz1.Width + sz2.Width), (short)(sz1.Height + sz2.Height));
-        }
+        public static bool operator ==(SizeShort sz1, SizeShort sz2) => sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
-        public static bool operator ==(SizeShort sz1, SizeShort sz2)
-        {
-            return sz1.Width == sz2.Width && sz1.Height == sz2.Height;
-        }
+        public static explicit operator Point(SizeShort size) => new Point(size.Width, size.Height);
 
-        public static explicit operator Point(SizeShort size)
-        {
-            return new Point(size.Width, size.Height);
-        }
+        public static explicit operator PointShort(SizeShort size) => new PointShort(size.Width, size.Height);
 
-        public static explicit operator PointShort(SizeShort size)
-        {
-            return new PointShort(size.Width, size.Height);
-        }
+        public static implicit operator SizeF(SizeShort p) => new SizeF(p.Width, p.Height);
 
-        public static implicit operator SizeF(SizeShort p)
-        {
-            return new SizeF(p.Width, p.Height);
-        }
+        public static implicit operator Size(SizeShort p) => new Size(p.Width, p.Height);
 
-        public static implicit operator Size(SizeShort p)
-        {
-            return new Size(p.Width, p.Height);
-        }
+        public static bool operator !=(SizeShort sz1, SizeShort sz2) => sz1.Width != sz2.Width || sz1.Height != sz2.Height;
 
-        public static bool operator !=(SizeShort sz1, SizeShort sz2)
-        {
-            return sz1.Width != sz2.Width || sz1.Height != sz2.Height;
-        }
-
-        public static SizeShort operator -(SizeShort sz1, SizeShort sz2)
-        {
-            return new SizeShort((short)(sz1.Width - sz2.Width), (short)(sz1.Height - sz2.Height));
-        }
+        public static SizeShort operator -(SizeShort sz1, SizeShort sz2) => new SizeShort((short)(sz1.Width - sz2.Width), (short)(sz1.Height - sz2.Height));
 
         public static readonly SizeShort Empty = new SizeShort(0, 0);
 
@@ -118,10 +78,10 @@ namespace Evbpc.Framework.Drawing
         {
             byte[] result = new byte[4];
 
-            result[0] = (byte)((_width & 0xFF00) >> 8);
-            result[1] = (byte)((_width & 0x00FF) >> 0);
-            result[2] = (byte)((_height & 0xFF00) >> 8);
-            result[3] = (byte)((_height & 0x00FF) >> 0);
+            result[0] = (byte)((Width & 0xFF00) >> 8);
+            result[1] = (byte)((Width & 0x00FF) >> 0);
+            result[2] = (byte)((Height & 0xFF00) >> 8);
+            result[3] = (byte)((Height & 0x00FF) >> 0);
 
             return result;
         }
@@ -138,7 +98,7 @@ namespace Evbpc.Framework.Drawing
                 throw new ArgumentException($"Parameter \"data\" must be exactly {SizeInBytes} bytes.");
         }
 
-        public int SizeInBytes { get { return 4; } }
+        public int SizeInBytes => 4;
         #endregion
     }
 }

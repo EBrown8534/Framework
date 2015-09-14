@@ -9,67 +9,58 @@ namespace Evbpc.Framework.Drawing
     [Serializable]
     public struct RectangleF
     {
-        private readonly PointF _location;
-        private readonly SizeF _size;
-
         public RectangleF(PointF location, SizeF size)
         {
-            _location = location;
-            _size = size;
+            Location = location;
+            Size = size;
         }
 
         public RectangleF(float x, float y, float width, float height)
         {
-            _location = new PointF(x, y);
-            _size = new SizeF(width, height);
+            Location = new PointF(x, y);
+            Size = new SizeF(width, height);
         }
 
         [Browsable(false)]
-        public float Bottom { get { return _location.Y + _size.Height; } }
+        public float Bottom => Location.Y + Size.Height;
 
-        public float Height { get { return _size.Height; } set { this = new RectangleF(_location, new SizeF(_size.Width, value)); } }
-
-        [Browsable(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public float Height => Size.Height;
 
         [Browsable(false)]
-        public float Left { get { return _location.X; } }
+        public bool IsEmpty => this == Empty;
 
         [Browsable(false)]
-        public PointF Location { get { return _location; } set { this = new RectangleF(value, _size); } }
+        public float Left => Location.X;
 
         [Browsable(false)]
-        public float Right { get { return _location.X + _size.Width; } }
+        public PointF Location { get; }
 
         [Browsable(false)]
-        public SizeF Size { get { return _size; } set { this = new RectangleF(_location, value); } }
+        public float Right => Location.X + Size.Width;
 
         [Browsable(false)]
-        public float Top { get { return _location.Y; } }
+        public SizeF Size { get; }
 
-        public float Width { get { return _size.Width; } set { this = new RectangleF(_location, new SizeF(value, _size.Width)); } }
-        public float X { get { return _location.X; } set { this = new RectangleF(new PointF(value, _location.Y), _size); } }
-        public float Y { get { return _location.Y; } set { this = new RectangleF(new PointF(_location.X, value), _size); } }
+        [Browsable(false)]
+        public float Top => Location.Y;
+
+        public float Width => Size.Width;
+        public float X => Location.X;
+        public float Y => Location.Y;
 
         /// <summary>
         /// Determines if a <see cref="PointF"/> is contained within the current <see cref="RectangleF"/>.
         /// </summary>
         /// <param name="pt">The <see cref="PointF"/> to test.</param>
         /// <returns>True if pt is contained within this <see cref="RectangleF"/>.</returns>
-        public bool Contains(PointF pt)
-        {
-            return Contains(pt.X, pt.Y);
-        }
+        public bool Contains(PointF pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
         /// Determines if a <see cref="RectangleF"/> is entirely contained within this <see cref="RectangleF"/>.
         /// </summary>
         /// <param name="rect">The <see cref="RectangleF"/> to test.</param>
         /// <returns>True if rect is entirely contained within this <see cref="RectangleF"/>.</returns>
-        public bool Contains(RectangleF rect)
-        {
-            return Contains(rect.Top, rect.Left) && Contains(rect.Top, rect.Right) && Contains(rect.Bottom, rect.Left) && Contains(rect.Bottom, rect.Right);
-        }
+        public bool Contains(RectangleF rect) => Contains(rect.Top, rect.Left) && Contains(rect.Top, rect.Right) && Contains(rect.Bottom, rect.Left) && Contains(rect.Bottom, rect.Right);
 
         /// <summary>
         /// Determines if the position represented by x and y is contained within the current <see cref="RectangleF"/>.
@@ -80,50 +71,21 @@ namespace Evbpc.Framework.Drawing
         /// <remarks>
         /// This method is entirely inclusive. If the position represented by the x and y values is on the edge of, or entirely within the current <see cref="RectangleF"/>, then this method will return true.
         /// </remarks>
-        public bool Contains(float x, float y)
-        {
-            return _location.X <= x && _location.X + _size.Width >= x && _location.Y <= y && _location.Y + _size.Height >= y;
-        }
+        public bool Contains(float x, float y) => Location.X <= x && Location.X + Size.Width >= x && Location.Y <= y && Location.Y + Size.Height >= y;
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is RectangleF)
-                return (RectangleF)obj == this;
+        public override bool Equals(Object obj) => obj is RectangleF && (RectangleF)obj == this;
 
-            return false;
-        }
+        public static RectangleF FromLTRB(float left, float top, float right, float bottom) => new RectangleF(new PointF(top, left), new SizeF(bottom - top, right - left));
 
-        public static RectangleF FromLTRB(float left, float top, float right, float bottom)
-        {
-            return new RectangleF(new PointF(top, left), new SizeF(bottom - top, right - left));
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public RectangleF Inflate(SizeF size) => new RectangleF(Location, Size + size);
 
-        public void Inflate(SizeF size)
-        {
-            this = new RectangleF(_location, _size + size);
-        }
+        public RectangleF Inflate(float x, float y) => new RectangleF(Location, Size + new SizeF(x, y));
 
-        public void Inflate(float x, float y)
-        {
-            this = new RectangleF(_location, _size + new SizeF(x, y));
-        }
+        public static RectangleF Inflate(RectangleF rect, float x, float y) => rect.Inflate(x, y);
 
-        public static RectangleF Inflate(RectangleF rect, float x, float y)
-        {
-            RectangleF nr = new RectangleF(rect.Location, rect.Size);
-            nr.Inflate(x, y);
-            return nr;
-        }
-
-        public void Intersect(RectangleF rect)
-        {
-            this = Intersect(this, rect);
-        }
+        public RectangleF Intersect(RectangleF rect) => Intersect(this, rect);
 
         public static RectangleF Intersect(RectangleF a, RectangleF b)
         {
@@ -177,46 +139,28 @@ namespace Evbpc.Framework.Drawing
             else { return Empty; }
         }
 
-        public bool IntersectsWith(RectangleF rect)
-        {
-            return Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right);
-        }
+        public bool IntersectsWith(RectangleF rect) => Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right);
 
         public void Offset(PointF pos)
         {
-            this = new RectangleF(new PointF(_location.X + pos.X, _location.Y + pos.Y), _size);
+            this = new RectangleF(new PointF(Location.X + pos.X, Location.Y + pos.Y), Size);
         }
 
         public void Offset(float x, float y)
         {
-            this = new RectangleF(new PointF(_location.X + x, _location.Y + y), _size);
+            this = new RectangleF(new PointF(Location.X + x, Location.Y + y), Size);
         }
 
-        public override string ToString()
-        {
-            return $"({_location.X},{_location.Y},{_size.Width},{_size.Height})";
-        }
+        public override string ToString() => $"({Location.X},{Location.Y},{Size.Width},{Size.Height})";
 
-        public static RectangleF Union(RectangleF a, RectangleF b)
-        {
-            return new RectangleF(Math.Min(a.X, b.X), Math.Min(a.Y, b.Y), Math.Max(a.X + a.Width, b.X + b.Width), Math.Max(a.Y + a.Height, b.Y + b.Height));
-        }
+        public static RectangleF Union(RectangleF a, RectangleF b) => new RectangleF(Math.Min(a.X, b.X), Math.Min(a.Y, b.Y), Math.Max(a.X + a.Width, b.X + b.Width), Math.Max(a.Y + a.Height, b.Y + b.Height));
 
-        public static bool operator ==(RectangleF left, RectangleF right)
-        {
-            return left.Location == right.Location && left.Size == right.Size;
-        }
+        public static bool operator ==(RectangleF left, RectangleF right) => left.Location == right.Location && left.Size == right.Size;
 
-        public static implicit operator RectangleF(Rectangle r)
-        {
-            return new RectangleF(r.Location, r.Size);
-        }
+        public static implicit operator RectangleF(Rectangle r) => new RectangleF(r.Location, r.Size);
 
-        public static bool operator !=(RectangleF left, RectangleF right)
-        {
-            return left.Location != right.Location || left.Size != right.Size;
-        }
-        
+        public static bool operator !=(RectangleF left, RectangleF right) => left.Location != right.Location || left.Size != right.Size;
+
         public static readonly RectangleF Empty = new RectangleF(0, 0, 0, 0);
     }
 }

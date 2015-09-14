@@ -10,105 +10,66 @@ namespace Evbpc.Framework.Drawing
     [TypeConverter(typeof(RectangleConverter))]
     public struct Rectangle
     {
-        private readonly Point _location;
-        private readonly Size _size;
-
         public Rectangle(Point location, Size size)
         {
-            _location = location;
-            _size = size;
+            Location = location;
+            Size = size;
         }
 
         public Rectangle(int x, int y, int width, int height)
         {
-            _location = new Point(x, y);
-            _size = new Size(width, height);
+            Location = new Point(x, y);
+            Size = new Size(width, height);
         }
 
         [Browsable(false)]
-        public int Bottom { get { return _location.Y + _size.Height; } }
+        public int Bottom => Location.Y + Size.Height;
 
-        public int Height { get { return _size.Height; } set { this = new Rectangle(_location, new Size(_size.Width, value)); } }
-
-        [Browsable(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public int Height => Size.Height;
 
         [Browsable(false)]
-        public int Left { get { return _location.X; } }
+        public bool IsEmpty => this == Empty;
 
         [Browsable(false)]
-        public Point Location { get { return _location; } set { this = new Rectangle(value, _size); } }
+        public int Left => Location.X;
 
         [Browsable(false)]
-        public int Right { get { return _location.X + _size.Width; } }
+        public Point Location { get; }
 
         [Browsable(false)]
-        public Size Size { get { return _size; } set { this = new Rectangle(_location, value); } }
+        public int Right => Location.X + Size.Width;
 
         [Browsable(false)]
-        public int Top { get { return _location.Y; } }
+        public Size Size { get; }
 
-        public int Width { get { return _size.Width; } set { this = new Rectangle(_location, new Size(value, _size.Height)); } }
-        public int X { get { return _location.X; } set { this = new Rectangle(new Point(value, _location.Y), _size); } }
-        public int Y { get { return _location.Y; } set { this = new Rectangle(new Point(_location.X, value), _size); } }
+        [Browsable(false)]
+        public int Top => Location.Y;
 
-        public static Rectangle Ceiling(RectangleF value)
-        {
-            return new Rectangle(Point.Ceiling(value.Location), Size.Ceiling(value.Size));
-        }
+        public int Width => Size.Width;
+        public int X => Location.X;
+        public int Y => Location.Y;
 
-        public bool Contains(Point pt)
-        {
-            return Contains(pt.X, pt.Y);
-        }
+        public static Rectangle Ceiling(RectangleF value) => new Rectangle(Point.Ceiling(value.Location), Size.Ceiling(value.Size));
 
-        public bool Contains(Rectangle rect)
-        {
-            return Contains(rect.Top, rect.Left) && Contains(rect.Top, rect.Right) && Contains(rect.Bottom, rect.Left) && Contains(rect.Bottom, rect.Right);
-        }
+        public bool Contains(Point pt) => Contains(pt.X, pt.Y);
 
-        public bool Contains(int x, int y)
-        {
-            return _location.X <= x && _location.X + _size.Width >= x && _location.Y <= y && _location.Y + _size.Height >= y;
-        }
+        public bool Contains(Rectangle rect) => Contains(rect.Top, rect.Left) && Contains(rect.Top, rect.Right) && Contains(rect.Bottom, rect.Left) && Contains(rect.Bottom, rect.Right);
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is Rectangle)
-                return (Rectangle)obj == this;
+        public bool Contains(int x, int y) => Location.X <= x && Location.X + Size.Width >= x && Location.Y <= y && Location.Y + Size.Height >= y;
 
-            return false; 
-        }
+        public override bool Equals(Object obj) => obj is Rectangle && (Rectangle)obj == this;
 
-        public static Rectangle FromLTRB(int left, int top, int right, int bottom)
-        {
-            return new Rectangle(new Point(top, left), new Size(bottom - top, right - left));
-        }
+        public static Rectangle FromLTRB(int left, int top, int right, int bottom) => new Rectangle(new Point(top, left), new Size(bottom - top, right - left));
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
-        public void Inflate(Size size)
-        {
-            this = new Rectangle(_location, _size + size);
-        }
+        public Rectangle Inflate(Size size) => new Rectangle(Location, Size + size);
 
-        public void Inflate(int width, int height)
-        {
-            this = new Rectangle(_location, _size + new Size(width, height));
-        }
+        public Rectangle Inflate(int width, int height) => new Rectangle(Location, Size + new Size(width, height));
 
-        public static Rectangle Inflate(Rectangle rect, int x, int y)
-        {
-            Rectangle nr = new Rectangle(rect.Location, rect.Size); nr.Inflate(x, y); return nr;
-        }
+        public static Rectangle Inflate(Rectangle rect, int x, int y) => rect.Inflate(x, y);
 
-        public void Intersect(Rectangle rect)
-        {
-            this = Intersect(this, rect);
-        }
+        public Rectangle Intersect(Rectangle rect) => Intersect(this, rect);
 
         public static Rectangle Intersect(Rectangle a, Rectangle b)
         {
@@ -162,51 +123,24 @@ namespace Evbpc.Framework.Drawing
             else { return Empty; }
         }
 
-        public bool IntersectsWith(Rectangle rect)
-        {
-            return Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right);
-        }
+        public bool IntersectsWith(Rectangle rect) => Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right);
 
-        public void Offset(Point pos)
-        {
-            this = new Rectangle(new Point(_location.X + pos.X, _location.Y + pos.Y), _size);
-        }
+        public Rectangle Offset(Point pos)=>new Rectangle(new Point(Location.X + pos.X, Location.Y + pos.Y), Size);
 
-        public void Offset(int x, int y)
-        {
-            this = new Rectangle(new Point(_location.X + x, _location.Y + y), _size);
-        }
+        public Rectangle Offset(int x, int y)=>new Rectangle(new Point(Location.X + x, Location.Y + y), Size);
 
-        public static Rectangle Round(RectangleF value)
-        {
-            return new Rectangle(Point.Round(value.Location), Size.Round(value.Size));
-        }
+        public static Rectangle Round(RectangleF value) => new Rectangle(Point.Round(value.Location), Size.Round(value.Size));
 
-        public override string ToString()
-        {
-            return $"({_location.X},{_location.Y},{_size.Width},{_size.Height})";
-        }
+        public override string ToString() => $"({Location.X},{Location.Y},{Size.Width},{Size.Height})";
 
-        public static Rectangle Truncate(RectangleF value)
-        {
-            return new Rectangle(Point.Truncate(value.Location), Size.Truncate(value.Size));
-        }
+        public static Rectangle Truncate(RectangleF value) => new Rectangle(Point.Truncate(value.Location), Size.Truncate(value.Size));
 
-        public static Rectangle Union(Rectangle a, Rectangle b)
-        {
-            return new Rectangle(Math.Min(a.X, b.X), Math.Min(a.Y, b.Y), Math.Max(a.X + a.Width, b.X + b.Width), Math.Max(a.Y + a.Height, b.Y + b.Height));
-        }
+        public static Rectangle Union(Rectangle a, Rectangle b) => new Rectangle(Math.Min(a.X, b.X), Math.Min(a.Y, b.Y), Math.Max(a.X + a.Width, b.X + b.Width), Math.Max(a.Y + a.Height, b.Y + b.Height));
 
-        public static bool operator ==(Rectangle left, Rectangle right)
-        {
-            return left.Location == right.Location && left.Size == right.Size;
-        }
+        public static bool operator ==(Rectangle left, Rectangle right) => left.Location == right.Location && left.Size == right.Size;
 
-        public static bool operator !=(Rectangle left, Rectangle right)
-        {
-            return left.Location != right.Location || left.Size != right.Size;
-        }
-        
+        public static bool operator !=(Rectangle left, Rectangle right) => left.Location != right.Location || left.Size != right.Size;
+
         public static readonly Rectangle Empty = new Rectangle(0, 0, 0, 0);
     }
 }

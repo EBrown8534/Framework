@@ -26,28 +26,16 @@ namespace Evbpc.Framework.Drawing
         }
 
         [Browsable(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public bool IsEmpty => this == Empty;
 
-        public float X { get { return _x; } set { _x = value; } }
-        public float Y { get { return _y; } set { _y = value; } }
+        public float X => _x;
+        public float Y => _y;
 
-        public static PointF Add(PointF pt, Size sz)
-        {
-            return pt + sz;
-        }
+        public static PointF Add(PointF pt, Size sz) => pt + sz;
 
-        public static PointF Add(PointF pt, SizeF sz)
-        {
-            return pt + sz;
-        }
+        public static PointF Add(PointF pt, SizeF sz) => pt + sz;
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is PointF)
-                return (PointF)obj == this;
-
-            return false;
-        }
+        public override bool Equals(Object obj) => obj is PointF && (PointF)obj == this;
 
         public override int GetHashCode()
         {
@@ -62,50 +50,23 @@ namespace Evbpc.Framework.Drawing
             return hash;
         }
 
-        public static PointF Subtract(PointF pt, Size sz)
-        {
-            return pt - sz;
-        }
+        public static PointF Subtract(PointF pt, Size sz)=>pt - sz;
 
-        public static PointF Subtract(PointF pt, SizeF sz)
-        {
-            return pt - sz;
-        }
+        public static PointF Subtract(PointF pt, SizeF sz) => pt - sz;
 
-        public override string ToString()
-        {
-            return $"({_x},{_y})";
-        }
+        public override string ToString() => $"({_x},{_y})";
 
-        public static PointF operator +(PointF pt, Size sz)
-        {
-            return new PointF(pt.X + sz.Width, pt.Y + sz.Height);
-        }
-        
-        public static PointF operator +(PointF pt, SizeF sz)
-        {
-            return new PointF(pt.X + sz.Width, pt.Y + sz.Height);
-        }
+        public static PointF operator +(PointF pt, Size sz) => new PointF(pt.X + sz.Width, pt.Y + sz.Height);
 
-        public static bool operator ==(PointF left, PointF right)
-        {
-            return left.X == right.X && left.Y == right.Y;
-        }
+        public static PointF operator +(PointF pt, SizeF sz) => new PointF(pt.X + sz.Width, pt.Y + sz.Height);
 
-        public static bool operator !=(PointF left, PointF right)
-        {
-            return left.X != right.X || left.Y != right.Y;
-        }
+        public static bool operator ==(PointF left, PointF right) => left.X == right.X && left.Y == right.Y;
 
-        public static PointF operator -(PointF pt, Size sz)
-        {
-            return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
-        }
+        public static bool operator !=(PointF left, PointF right) => left.X != right.X || left.Y != right.Y;
 
-        public static PointF operator -(PointF pt, SizeF sz)
-        {
-            return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
-        }
+        public static PointF operator -(PointF pt, Size sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
+
+        public static PointF operator -(PointF pt, SizeF sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
 
         public static readonly PointF Empty = new PointF(0, 0);
     }

@@ -10,82 +10,54 @@ namespace Evbpc.Framework.Drawing
     [TypeConverter(typeof(SizeFConverter))]
     public struct SizeF
     {
-        private readonly float _width;
-        private readonly float _height;
+        public SizeF(PointF pt)
+        {
+            Width = pt.X;
+            Height = pt.Y;
+        }
 
-        public SizeF(PointF pt) { _width = pt.X; _height = pt.Y; }
-        public SizeF(SizeF size) { _width = size.Width; _height = size.Height; }
-        public SizeF(float width, float height) { _width = width; _height = height; }
+        public SizeF(SizeF size)
+        {
+            Width = size.Width;
+            Height = size.Height;
+        }
 
-        public float Height { get { return _height; } set { this = new SizeF(_width, value); } }
+        public SizeF(float width, float height)
+        {
+            Width = width;
+            Height = height;
+        }
+
+        public float Height { get; }
 
         [Browsable(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public bool IsEmpty => this == Empty;
 
-        public float Width { get { return _width; } set { this = new SizeF(value, _height); } }
+        public float Width { get; }
 
-        public static SizeF Add(SizeF sz1, SizeF sz2)
-        {
-            return sz1 + sz2;
-        }
+        public static SizeF Add(SizeF sz1, SizeF sz2) => sz1 + sz2;
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is SizeF)
-                return (SizeF)obj == this;
+        public override bool Equals(Object obj) => obj is SizeF && (SizeF)obj == this;
 
-            return false;
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public static SizeF Subtract(SizeF sz1, SizeF sz2) => sz1 - sz2;
 
-        public static SizeF Subtract(SizeF sz1, SizeF sz2)
-        {
-            return sz1 - sz2;
-        }
+        public PointF ToPointF() => new PointF(Width, Height);
 
-        public PointF ToPointF()
-        {
-            return new PointF(_width, _height);
-        }
+        public Size ToSize() => new Size((int)Width, (int)Height);
 
-        public Size ToSize()
-        {
-            return new Size((int)_width, (int)_height);
-        }
+        public override string ToString() => $"({Width},{Height})";
 
-        public override string ToString()
-        {
-            return $"({_width},{_height})";
-        }
+        public static SizeF operator +(SizeF sz1, SizeF sz2) => new SizeF(sz1.Width + sz2.Width, sz1.Height + sz2.Height);
 
-        public static SizeF operator +(SizeF sz1, SizeF sz2)
-        {
-            return new SizeF(sz1.Width + sz2.Width, sz1.Height + sz2.Height);
-        }
+        public static bool operator ==(SizeF sz1, SizeF sz2) => sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
-        public static bool operator ==(SizeF sz1, SizeF sz2)
-        {
-            return sz1.Width == sz2.Width && sz1.Height == sz2.Height;
-        }
+        public static explicit operator PointF(SizeF size) => new PointF(size.Width, size.Height);
 
-        public static explicit operator PointF(SizeF size)
-        {
-            return new PointF(size.Width, size.Height);
-        }
+        public static bool operator !=(SizeF sz1, SizeF sz2) => sz1.Width != sz2.Width || sz1.Height != sz2.Height;
 
-        public static bool operator !=(SizeF sz1, SizeF sz2)
-        {
-            return sz1.Width != sz2.Width || sz1.Height != sz2.Height;
-        }
-
-        public static SizeF operator -(SizeF sz1, SizeF sz2)
-        {
-            return new SizeF(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
-        }
+        public static SizeF operator -(SizeF sz1, SizeF sz2) => new SizeF(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
 
         public static readonly SizeF Empty = new SizeF(0, 0);
     }
