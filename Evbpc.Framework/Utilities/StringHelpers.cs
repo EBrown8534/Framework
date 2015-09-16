@@ -43,19 +43,17 @@ namespace Evbpc.Framework.Utilities
 
             for (int g = 0; g < newLength / 3; g++)
             {
-                workingResult.Append(alphabet[((workingSet[(g * 3)] & 0xFC) >> 2)]);
-                workingResult.Append(alphabet[((workingSet[(g * 3)] & 0x03) << 4) | ((workingSet[(g * 3) + 1] & 0xF0) >> 4)]);
-                workingResult.Append(alphabet[((workingSet[(g * 3) + 1] & 0x0F) << 2) | ((workingSet[(g * 3) + 2] & 0xC0) >> 6)]);
-                workingResult.Append(alphabet[((workingSet[(g * 3) + 2] & 0x3F))]);
+                int indexOffset = g * 3;
+                workingResult.Append(alphabet[((workingSet[indexOffset] & 0xFC) >> 2)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset] & 0x03) << 4) | ((workingSet[indexOffset + 1] & 0xF0) >> 4)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 1] & 0x0F) << 2) | ((workingSet[indexOffset + 2] & 0xC0) >> 6)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 2] & 0x3F))]);
             }
 
-            if ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter)
+            if (((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter) && originalLength != newLength)
             {
-                if (originalLength != newLength)
-                {
-                    for (int p = 0; p < newLength - originalLength; p++)
-                        workingResult.Append(alphabet[64]);
-                }
+                for (int padCount = 0; padCount < newLength - originalLength; padCount++)
+                    workingResult.Append(alphabet[64]);
             }
 
             int lineBreaks = 0;
@@ -71,10 +69,21 @@ namespace Evbpc.Framework.Utilities
 
             if (lineBreaks > 0)
             {
-                for (int l = 0; l < workingResult.Length / lineBreaks; l++)
+                for (int line = 0; line < workingResult.Length / lineBreaks; line++)
                 {
-                    result.Append(workingString.Substring(l * lineBreaks, lineBreaks));
-                    result.Append("\r\n");
+                    result.Append(workingString.Substring(line * lineBreaks, lineBreaks));
+
+                    string lineBreak = "";
+
+                    if ((options & Base64FormattingOptions.UseCarraigeReturnNewline) == Base64FormattingOptions.UseCarraigeReturnNewline)
+                        lineBreak += "\r";
+                    if ((options & Base64FormattingOptions.UseLineBreakNewLine) == Base64FormattingOptions.UseLineBreakNewLine)
+                        lineBreak += "\n";
+
+                    if (lineBreak == "")
+                        lineBreak = "\r\n";
+
+                    result.Append(lineBreak);
                 }
             }
             else
@@ -117,30 +126,24 @@ namespace Evbpc.Framework.Utilities
 
             for (int g = 0; g < newLength / 5; g++)
             {
-                workingResult.Append(alphabet[((workingSet[(g * 5)] & 0xF4) >> 3)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5)] & 0x03) << 2) | ((workingSet[(g * 5) + 1] & 0xC0) >> 6)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5) + 1] & 0x3E) >> 1)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5) + 1] & 0x01) << 4) | ((workingSet[(g * 5) + 2] & 0xF0) >> 4)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5) + 2] & 0x0F) << 1) | ((workingSet[(g * 5) + 3] & 0x80) >> 7)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5) + 3] & 0x7C) >> 2)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5) + 3] & 0x03) << 3) | ((workingSet[(g * 5) + 4] & 0xE0) >> 5)]);
-                workingResult.Append(alphabet[((workingSet[(g * 5) + 4] & 0x1F))]);
+                int indexOffset = g * 5;
+                workingResult.Append(alphabet[((workingSet[indexOffset] & 0xF4) >> 3)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset] & 0x03) << 2) | ((workingSet[indexOffset + 1] & 0xC0) >> 6)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 1] & 0x3E) >> 1)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 1] & 0x01) << 4) | ((workingSet[indexOffset + 2] & 0xF0) >> 4)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 2] & 0x0F) << 1) | ((workingSet[indexOffset + 3] & 0x80) >> 7)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 3] & 0x7C) >> 2)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 3] & 0x03) << 3) | ((workingSet[indexOffset + 4] & 0xE0) >> 5)]);
+                workingResult.Append(alphabet[((workingSet[indexOffset + 4] & 0x1F))]);
             }
 
-            if ((options & Base32FormattingOptions.RequirePaddingCharacter) == Base32FormattingOptions.RequirePaddingCharacter)
+            if (((options & Base32FormattingOptions.RequirePaddingCharacter) == Base32FormattingOptions.RequirePaddingCharacter) && (originalLength != newLength))
             {
-                if (originalLength != newLength)
-                {
-                    for (int p = 0; p < newLength - originalLength; p++)
-                        workingResult.Append(alphabet[32]);
-                }
+                for (int padCount = 0; padCount < newLength - originalLength; padCount++)
+                    workingResult.Append(alphabet[32]);
             }
 
-            string result = "";
-
-            result = workingResult.ToString();
-
-            return result;
+            return workingResult.ToString();
         }
 
         /// <summary>
@@ -158,32 +161,28 @@ namespace Evbpc.Framework.Utilities
             else if ((options & Base64FormattingOptions.UnixCryptAlphabet) == Base64FormattingOptions.UnixCryptAlphabet)
                 alphabet = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz=";
 
-            string workingSet = input.Replace("\r\n", "");
+            string workingSet = input.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
 
             int originalLength = input.Length;
             int newLength = originalLength;
 
-            if (newLength % 4 != 0)
-                if ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter)
-                    throw new ArgumentException("The input string did not contain a required padding character.");
+            if (newLength % 4 != 0 && ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter))
+                throw new ArgumentException("The input string did not contain a required padding character.", nameof(input));
 
             newLength = newLength / 4 * 3;
 
-            if (input[originalLength - 1] == alphabet[64])
-            {
-                if (input[originalLength - 2] == alphabet[64])
-                    newLength -= 2;
-                else
-                    newLength -= 1;
-            }
+            while (input[originalLength - 1] == alphabet[64])
+                newLength -= 1;
 
             byte[] workingResult = new byte[newLength];
 
             for (int g = 0; g < newLength / 3; g++)
             {
-                workingResult[g * 3] = (byte)(((alphabet.IndexOf(workingSet[g * 4])) << 2) | ((alphabet.IndexOf(workingSet[g * 4 + 1])) >> 4));
-                workingResult[g * 3 + 1] = (byte)(((alphabet.IndexOf(workingSet[g * 4 + 1])) << 4) | ((alphabet.IndexOf(workingSet[g * 4 + 2])) >> 2));
-                workingResult[g * 3 + 2] = (byte)(((alphabet.IndexOf(workingSet[g * 4 + 2])) << 6) | ((alphabet.IndexOf(workingSet[g * 4 + 3]))));
+                int workingResultIndexOffset = g * 3;
+                int workingSetIndexOffset = g * 4;
+                workingResult[workingResultIndexOffset] = (byte)(((alphabet.IndexOf(workingSet[workingSetIndexOffset])) << 2) | ((alphabet.IndexOf(workingSet[workingSetIndexOffset + 1])) >> 4));
+                workingResult[workingResultIndexOffset + 1] = (byte)(((alphabet.IndexOf(workingSet[workingSetIndexOffset + 1])) << 4) | ((alphabet.IndexOf(workingSet[workingSetIndexOffset + 2])) >> 2));
+                workingResult[workingResultIndexOffset + 2] = (byte)(((alphabet.IndexOf(workingSet[workingSetIndexOffset + 2])) << 6) | ((alphabet.IndexOf(workingSet[workingSetIndexOffset + 3]))));
             }
 
             byte[] result = workingResult;
