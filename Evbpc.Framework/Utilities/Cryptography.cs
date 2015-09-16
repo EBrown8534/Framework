@@ -13,17 +13,17 @@ namespace Evbpc.Framework.Utilities
     /// </summary>
     public class Cryptography
     {
-        // TODO: remove the default salt.
-        private static byte[] _aesSalt = new byte[] {
-            0x49, 0x76, 0x61, 0x6E, 0x20, 0x4D, 
-            0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 
-            0x76
-        };
-
         /// <summary>
         /// Gets or sets the salt to use with AES encryption. Note: you should *never* use the default salt.
         /// </summary>
-        public static byte[] AesSalt { get { return _aesSalt; } set { _aesSalt = value; } }
+        public static byte[] AesSalt { get; set; }
+
+        // Example salt.
+        //private static byte[] _aesSalt = new byte[] {
+        //    0x49, 0x76, 0x61, 0x6E, 0x20, 0x4D,
+        //    0x65, 0x64, 0x76, 0x65, 0x64, 0x65,
+        //    0x76
+        //};
 
         /// <summary>
         /// Uses AES encryption to encrypt a string of data.
@@ -39,7 +39,7 @@ namespace Evbpc.Framework.Utilities
 
                 using (Aes encryptor = Aes.Create())
                 {
-                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(passphrase, _aesSalt);
+                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(passphrase, AesSalt);
                     encryptor.Key = pdb.GetBytes(32);
                     encryptor.IV = pdb.GetBytes(16);
                     using (MemoryStream ms = new MemoryStream())
@@ -94,7 +94,7 @@ namespace Evbpc.Framework.Utilities
 
             using (Aes encryptor = Aes.Create())
             {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(passphrase, _aesSalt);
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(passphrase, AesSalt);
                 encryptor.Key = pdb.GetBytes(32);
                 encryptor.IV = pdb.GetBytes(16);
                 using (MemoryStream ms = new MemoryStream())
