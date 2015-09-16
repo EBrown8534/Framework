@@ -31,7 +31,7 @@ namespace Evbpc.Framework.Drawing
         public short Height { get; }
 
         [BrowsableAttribute(false)]
-        public bool IsEmpty { get { return this == Empty; } }
+        public bool IsEmpty => this == Empty;
 
         public short Width { get; }
 

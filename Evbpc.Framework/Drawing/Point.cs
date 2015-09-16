@@ -46,13 +46,7 @@ namespace Evbpc.Framework.Drawing
 
         public static Point Ceiling(PointF value) => new Point((int)Math.Ceiling(value.X), (int)Math.Ceiling(value.Y));
 
-        public override bool Equals(Object obj)
-        {
-            if (obj is Point)
-                return (Point)obj == this;
-
-            return false;
-        }
+        public override bool Equals(Object obj) => obj is Point && (Point)obj == this;
 
         public override int GetHashCode()
         {
@@ -67,15 +61,9 @@ namespace Evbpc.Framework.Drawing
             return hash;
         }
 
-        public void Offset(Point p)
-        {
-            this = new Point(_x + p.X, _y + p.Y);
-        }
+        public Point Offset(Point p) => new Point(_x + p.X, _y + p.Y);
 
-        public void Offset(int dx, int dy)
-        {
-            this = new Point(_x + dx, _y + dy);
-        }
+        public Point Offset(int dx, int dy) => new Point(_x + dx, _y + dy);
 
         public static Point Round(PointF value) => new Point((int)Math.Round(value.X), (int)Math.Round(value.Y));
 

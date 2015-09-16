@@ -57,22 +57,13 @@ namespace Evbpc.Framework.Drawing
 
         public override int GetHashCode() => (int)_packedValue;
 
-        public void Offset(PointShort p)
-        {
-            this = new PointShort((short)(_x + p.X), (short)(_y + p.Y));
-        }
+        public PointShort Offset(PointShort p) => new PointShort((short)(_x + p.X), (short)(_y + p.Y));
 
-        public void Offset(short dx, short dy)
-        {
-            this = new PointShort((short)(_x + dx), (short)(_y + dy));
-        }
+        public PointShort Offset(short dx, short dy) => new PointShort((short)(_x + dx), (short)(_y + dy));
 
         public static PointShort Round(PointF value) => new PointShort((short)Math.Round(value.X), (short)Math.Round(value.Y));
 
-        public static PointShort Subtract(PointShort pt, Size sz)
-        {
-            return pt - sz;
-        }
+        public static PointShort Subtract(PointShort pt, Size sz) => pt - sz;
 
         public static PointShort Subtract(PointShort pt, SizeByte sz) => pt - sz;
 
