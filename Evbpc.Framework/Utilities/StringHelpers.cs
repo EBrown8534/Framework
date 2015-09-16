@@ -16,8 +16,9 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="input">The input byte-array.</param>
         /// <param name="options">Any of <see cref="Base64FormattingOptions"/> enumeration values.</param>
+        /// <param name="charactersPerLine">If this is a non-zero uinteger, than the number of characters per line will be equivalent to this value.</param>
         /// <returns>The input byte-array encoded into a Base64 string, following the provided options.</returns>
-        public static string ToBase64String(byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
+        public static string ToBase64String(byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter, uint charactersPerLine = 0)
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -56,9 +57,11 @@ namespace Evbpc.Framework.Utilities
                     workingResult.Append(alphabet[64]);
             }
 
-            int lineBreaks = 0;
+            uint lineBreaks = 0;
 
-            if ((options & Base64FormattingOptions.BreakLinesAt64Characters) == Base64FormattingOptions.BreakLinesAt64Characters)
+            if (charactersPerLine > 0)
+                lineBreaks = charactersPerLine;
+            else if ((options & Base64FormattingOptions.BreakLinesAt64Characters) == Base64FormattingOptions.BreakLinesAt64Characters)
                 lineBreaks = 64;
             else if ((options & Base64FormattingOptions.BreakLinesAt76Characters) == Base64FormattingOptions.BreakLinesAt76Characters)
                 lineBreaks = 76;
@@ -69,9 +72,9 @@ namespace Evbpc.Framework.Utilities
 
             if (lineBreaks > 0)
             {
-                for (int line = 0; line < workingResult.Length / lineBreaks; line++)
+                for (uint line = 0; line < workingResult.Length / lineBreaks; line++)
                 {
-                    result.Append(workingString.Substring(line * lineBreaks, lineBreaks));
+                    result.Append(workingString.Substring((int)(line * lineBreaks), (int)lineBreaks));
 
                     string lineBreak = "";
 
