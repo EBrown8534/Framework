@@ -25,9 +25,9 @@ namespace Evbpc.Framework.Utilities
                 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=";
             else if ((options & Base64FormattingOptions.UnixCryptAlphabet) == Base64FormattingOptions.UnixCryptAlphabet)
                 alphabet = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz=";
-            
-            string workingResult = "";
-            
+
+            StringBuilder workingResult = new StringBuilder();
+
             int originalLength = input.Length;
             int newLength = originalLength;
 
@@ -40,24 +40,24 @@ namespace Evbpc.Framework.Utilities
             {
                 workingSet[i] = input[i];
             }
-            
+
             for (int g = 0; g < newLength / 3; g++)
             {
-                workingResult += alphabet[((workingSet[(g * 3)] & 0xFC) >> 2)];
-                workingResult += alphabet[((workingSet[(g * 3)] & 0x03) << 4) | ((workingSet[(g * 3) + 1] & 0xF0) >> 4)];
-                workingResult += alphabet[((workingSet[(g * 3) + 1] & 0x0F) << 2) | ((workingSet[(g * 3) + 2] & 0xC0) >> 6)];
-                workingResult += alphabet[((workingSet[(g * 3) + 2] & 0x3F))];
+                workingResult.Append(alphabet[((workingSet[(g * 3)] & 0xFC) >> 2)]);
+                workingResult.Append(alphabet[((workingSet[(g * 3)] & 0x03) << 4) | ((workingSet[(g * 3) + 1] & 0xF0) >> 4)]);
+                workingResult.Append(alphabet[((workingSet[(g * 3) + 1] & 0x0F) << 2) | ((workingSet[(g * 3) + 2] & 0xC0) >> 6)]);
+                workingResult.Append(alphabet[((workingSet[(g * 3) + 2] & 0x3F))]);
             }
-            
+
             if ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter)
             {
                 if (originalLength != newLength)
                 {
                     for (int p = 0; p < newLength - originalLength; p++)
-                        workingResult += alphabet[64];
+                        workingResult.Append(alphabet[64]);
                 }
             }
-            
+
             int lineBreaks = 0;
 
             if ((options & Base64FormattingOptions.BreakLinesAt64Characters) == Base64FormattingOptions.BreakLinesAt64Characters)
@@ -65,17 +65,22 @@ namespace Evbpc.Framework.Utilities
             else if ((options & Base64FormattingOptions.BreakLinesAt76Characters) == Base64FormattingOptions.BreakLinesAt76Characters)
                 lineBreaks = 76;
 
-            string result = "";
+            StringBuilder result = new StringBuilder();
+
+            string workingString = workingResult.ToString();
 
             if (lineBreaks > 0)
             {
                 for (int l = 0; l < workingResult.Length / lineBreaks; l++)
-                    result += workingResult.Substring(l * lineBreaks, lineBreaks) + "\r\n";
+                {
+                    result.Append(workingString.Substring(l * lineBreaks, lineBreaks));
+                    result.Append("\r\n");
+                }
             }
             else
-                result = workingResult;
-            
-            return result;
+                result.Append(workingResult);
+
+            return result.ToString();
         }
 
         /// <summary>
@@ -94,8 +99,8 @@ namespace Evbpc.Framework.Utilities
                 alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUV=";
             else if ((options & Base32FormattingOptions.VowelSafeAlphabet) == Base32FormattingOptions.VowelSafeAlphabet)
                 alphabet = "0123456789bcdfhjkmnpqrtvxyDFGHJL=";
-            
-            string workingResult = "";
+
+            StringBuilder workingResult = new StringBuilder();
 
             int originalLength = input.Length;
             int newLength = originalLength;
@@ -109,32 +114,32 @@ namespace Evbpc.Framework.Utilities
             {
                 workingSet[i] = input[i];
             }
-            
+
             for (int g = 0; g < newLength / 5; g++)
             {
-                workingResult += alphabet[((workingSet[(g * 5)] & 0xF4) >> 3)];
-                workingResult += alphabet[((workingSet[(g * 5)] & 0x03) << 2) | ((workingSet[(g * 5) + 1] & 0xC0) >> 6)];
-                workingResult += alphabet[((workingSet[(g * 5) + 1] & 0x3E) >> 1)];
-                workingResult += alphabet[((workingSet[(g * 5) + 1] & 0x01) << 4) | ((workingSet[(g * 5) + 2] & 0xF0) >> 4)];
-                workingResult += alphabet[((workingSet[(g * 5) + 2] & 0x0F) << 1) | ((workingSet[(g * 5) + 3] & 0x80) >> 7)];
-                workingResult += alphabet[((workingSet[(g * 5) + 3] & 0x7C) >> 2)];
-                workingResult += alphabet[((workingSet[(g * 5) + 3] & 0x03) << 3) | ((workingSet[(g * 5) + 4] & 0xE0) >> 5)];
-                workingResult += alphabet[((workingSet[(g * 5) + 4] & 0x1F))];
+                workingResult.Append(alphabet[((workingSet[(g * 5)] & 0xF4) >> 3)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5)] & 0x03) << 2) | ((workingSet[(g * 5) + 1] & 0xC0) >> 6)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5) + 1] & 0x3E) >> 1)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5) + 1] & 0x01) << 4) | ((workingSet[(g * 5) + 2] & 0xF0) >> 4)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5) + 2] & 0x0F) << 1) | ((workingSet[(g * 5) + 3] & 0x80) >> 7)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5) + 3] & 0x7C) >> 2)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5) + 3] & 0x03) << 3) | ((workingSet[(g * 5) + 4] & 0xE0) >> 5)]);
+                workingResult.Append(alphabet[((workingSet[(g * 5) + 4] & 0x1F))]);
             }
-            
+
             if ((options & Base32FormattingOptions.RequirePaddingCharacter) == Base32FormattingOptions.RequirePaddingCharacter)
             {
                 if (originalLength != newLength)
                 {
                     for (int p = 0; p < newLength - originalLength; p++)
-                        workingResult += alphabet[32];
+                        workingResult.Append(alphabet[32]);
                 }
             }
 
             string result = "";
 
-            result = workingResult;
-            
+            result = workingResult.ToString();
+
             return result;
         }
 
@@ -152,7 +157,7 @@ namespace Evbpc.Framework.Utilities
                 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=";
             else if ((options & Base64FormattingOptions.UnixCryptAlphabet) == Base64FormattingOptions.UnixCryptAlphabet)
                 alphabet = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz=";
-            
+
             string workingSet = input.Replace("\r\n", "");
 
             int originalLength = input.Length;
@@ -171,9 +176,9 @@ namespace Evbpc.Framework.Utilities
                 else
                     newLength -= 1;
             }
-            
+
             byte[] workingResult = new byte[newLength];
-            
+
             for (int g = 0; g < newLength / 3; g++)
             {
                 workingResult[g * 3] = (byte)(((alphabet.IndexOf(workingSet[g * 4])) << 2) | ((alphabet.IndexOf(workingSet[g * 4 + 1])) >> 4));
@@ -182,7 +187,7 @@ namespace Evbpc.Framework.Utilities
             }
 
             byte[] result = workingResult;
-            
+
             return result;
         }
     }
