@@ -23,9 +23,13 @@ namespace Evbpc.Framework.Utilities
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
             if ((options & Base64FormattingOptions.UrlFilenameSafeAlphabet) == Base64FormattingOptions.UrlFilenameSafeAlphabet)
+            {
                 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=";
+            }
             else if ((options & Base64FormattingOptions.UnixCryptAlphabet) == Base64FormattingOptions.UnixCryptAlphabet)
+            {
                 alphabet = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz=";
+            }
 
             StringBuilder workingResult = new StringBuilder();
 
@@ -33,7 +37,9 @@ namespace Evbpc.Framework.Utilities
             int newLength = originalLength;
 
             if (input.Length % 3 != 0)
+            {
                 newLength += 3 - (originalLength % 3);
+            }
 
             byte[] workingSet = new byte[newLength];
 
@@ -54,17 +60,25 @@ namespace Evbpc.Framework.Utilities
             if (((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter) && originalLength != newLength)
             {
                 for (int padCount = 0; padCount < newLength - originalLength; padCount++)
+                {
                     workingResult.Append(alphabet[64]);
+                }
             }
 
             uint lineBreaks = 0;
 
             if (charactersPerLine > 0)
+            {
                 lineBreaks = charactersPerLine;
+            }
             else if ((options & Base64FormattingOptions.BreakLinesAt64Characters) == Base64FormattingOptions.BreakLinesAt64Characters)
+            {
                 lineBreaks = 64;
+            }
             else if ((options & Base64FormattingOptions.BreakLinesAt76Characters) == Base64FormattingOptions.BreakLinesAt76Characters)
+            {
                 lineBreaks = 76;
+            }
 
             StringBuilder result = new StringBuilder();
 
@@ -79,18 +93,27 @@ namespace Evbpc.Framework.Utilities
                     string lineBreak = "";
 
                     if ((options & Base64FormattingOptions.UseCarraigeReturnNewline) == Base64FormattingOptions.UseCarraigeReturnNewline)
+                    {
                         lineBreak += "\r";
+                    }
+
                     if ((options & Base64FormattingOptions.UseLineBreakNewLine) == Base64FormattingOptions.UseLineBreakNewLine)
+                    {
                         lineBreak += "\n";
+                    }
 
                     if (lineBreak == "")
+                    {
                         lineBreak = "\r\n";
+                    }
 
                     result.Append(lineBreak);
                 }
             }
             else
+            {
                 result.Append(workingResult);
+            }
 
             return result.ToString();
         }
@@ -106,11 +129,17 @@ namespace Evbpc.Framework.Utilities
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
 
             if ((options & Base32FormattingOptions.CrockfordAlphabet) == Base32FormattingOptions.CrockfordAlphabet)
+            {
                 alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ=";
+            }
             else if ((options & Base32FormattingOptions.Hex32Alphabet) == Base32FormattingOptions.Hex32Alphabet)
+            {
                 alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUV=";
+            }
             else if ((options & Base32FormattingOptions.VowelSafeAlphabet) == Base32FormattingOptions.VowelSafeAlphabet)
+            {
                 alphabet = "0123456789bcdfhjkmnpqrtvxyDFGHJL=";
+            }
 
             StringBuilder workingResult = new StringBuilder();
 
@@ -118,7 +147,9 @@ namespace Evbpc.Framework.Utilities
             int newLength = originalLength;
 
             if (input.Length % 5 != 0)
+            {
                 newLength += originalLength % 5;
+            }
 
             byte[] workingSet = new byte[newLength];
 
@@ -143,7 +174,9 @@ namespace Evbpc.Framework.Utilities
             if (((options & Base32FormattingOptions.RequirePaddingCharacter) == Base32FormattingOptions.RequirePaddingCharacter) && (originalLength != newLength))
             {
                 for (int padCount = 0; padCount < newLength - originalLength; padCount++)
+                {
                     workingResult.Append(alphabet[32]);
+                }
             }
 
             return workingResult.ToString();
@@ -160,9 +193,13 @@ namespace Evbpc.Framework.Utilities
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
             if ((options & Base64FormattingOptions.UrlFilenameSafeAlphabet) == Base64FormattingOptions.UrlFilenameSafeAlphabet)
+            {
                 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=";
+            }
             else if ((options & Base64FormattingOptions.UnixCryptAlphabet) == Base64FormattingOptions.UnixCryptAlphabet)
+            {
                 alphabet = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz=";
+            }
 
             string workingSet = input.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
 
@@ -170,12 +207,16 @@ namespace Evbpc.Framework.Utilities
             int newLength = originalLength;
 
             if (newLength % 4 != 0 && ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter))
+            {
                 throw new ArgumentException("The input string did not contain a required padding character.", nameof(input));
+            }
 
             newLength = newLength / 4 * 3;
 
             while (input[originalLength - 1] == alphabet[64])
+            {
                 newLength -= 1;
+            }
 
             byte[] workingResult = new byte[newLength];
 
