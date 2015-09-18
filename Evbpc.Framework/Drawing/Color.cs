@@ -250,7 +250,9 @@ namespace Evbpc.Framework.Drawing
                 this = new Color(data[1], data[2], data[3], data[4]);
             }
             else
+            {
                 throw new ArgumentException($"Parameter \"data\" must be exactly {SizeInBytes} bytes.");
+            }
         }
 
         /// <summary>
