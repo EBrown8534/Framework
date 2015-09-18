@@ -11,17 +11,16 @@ namespace Evbpc.Framework.Utilities
     public class FpsCounter
     {
         private List<DateTime> _frames;
-        private TimeSpan _expirationTime = new TimeSpan(1, 0, 0);
 
         /// <summary>
         /// Gets the amount of time after which a frame would expire.
         /// </summary>
-        public TimeSpan ExpirationTime { get { return _expirationTime; } }
+        public TimeSpan ExpirationTime { get; } = new TimeSpan(1, 0, 0);
 
         /// <summary>
         /// Returns the list of Frames that are stored within the <see cref="FpsCounter"/>.
         /// </summary>
-        public IEnumerable<DateTime> Frames { get { return _frames.ToArray(); /* prevent the internal `List<DateTime>` from being modified by the outside */ } }
+        public IEnumerable<DateTime> Frames => _frames.ToArray(); /* prevent the internal `List<DateTime>` from being modified by the outside */
 
         /// <summary>
         /// Creates a new instance of the <see cref="FpsCounter"/>.
@@ -38,7 +37,7 @@ namespace Evbpc.Framework.Utilities
         public FpsCounter(TimeSpan expirationTime)
             : this()
         {
-            _expirationTime = expirationTime;
+            ExpirationTime = expirationTime;
         }
 
         /// <summary>
@@ -50,7 +49,7 @@ namespace Evbpc.Framework.Utilities
 
             for (int i = 0; i < _frames.Count; i++)
             {
-                if (_frames[i] - DateTime.UtcNow > _expirationTime)
+                if (_frames[i] - DateTime.UtcNow > ExpirationTime)
                     _frames.RemoveAt(i);
                 else
                     break;
@@ -74,30 +73,21 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="previousSeconds">The number of seconds previous to now that should be measured.</param>
         /// <returns>The average FPS for the time interval.</returns>
-        public int LastSeconds(int previousSeconds = 1)
-        {
-            return LastTimeSpan(new TimeSpan(0, 0, previousSeconds));
-        }
+        public int LastSeconds(int previousSeconds = 1) => LastTimeSpan(new TimeSpan(0, 0, previousSeconds));
 
         /// <summary>
         /// Gets the average FPS over the last specified number of minutes.
         /// </summary>
         /// <param name="previousMinutes">The number of minutes before now that should be included.</param>
         /// <returns>The average FPS for the time interval.</returns>
-        public int LastMinutes(int previousMinutes = 1)
-        {
-            return LastTimeSpan(new TimeSpan(0, previousMinutes, 0));
-        }
+        public int LastMinutes(int previousMinutes = 1) => LastTimeSpan(new TimeSpan(0, previousMinutes, 0));
 
         /// <summary>
         /// Gets the average FPS over the last specified number of hours.
         /// </summary>
         /// <param name="previousHours">The number of hours before now that should be included.</param>
         /// <returns>The average FPS for the time interval.</returns>
-        public int LastHours(int previousHours = 1)
-        {
-            return LastTimeSpan(new TimeSpan(previousHours, 0, 0));
-        }
+        public int LastHours(int previousHours = 1) => LastTimeSpan(new TimeSpan(previousHours, 0, 0));
 
         /// <summary>
         /// Gets the average FPS over the last specified <code>TimeSpan</code>.
