@@ -31,14 +31,7 @@ namespace Evbpc.Framework.Utilities
 
             if (ipv4Strings.Length == 4)
             {
-                string[] ipv4Bytes = new string[4];
-
-                int i = 0;
-                foreach (string ipv4String in ipv4Strings)
-                {
-                    ipv4Bytes[i] = Hex(ipv4String).PadLeft(2, '0');
-                    i++;
-                }
+                string[] ipv4Bytes = StringArrayToHexArray(ip.Split('.'));
 
                 return "::" + ipv4Bytes[0] + ipv4Bytes[1] + ":" + ipv4Bytes[2] + ipv4Bytes[3];
             }
@@ -46,16 +39,9 @@ namespace Evbpc.Framework.Utilities
             throw new ArgumentException($"The provided IP of {ip} is not a valid IP address.");
         }
 
-        public static string Hex(string input)
+        public static string[] StringArrayToHexArray(string[] input)
         {
-            string result = "";
-
-            for (int i = input.Length / 2 - 1; i >= 0; i++)
-            {
-                result += Convert.ToByte(input.Substring(i * 2, 2), 16) + result;
-            }
-
-            return result;
+            return input.ToList().Select(x => Convert.ToByte(x, 0x10).ToString("x")).ToArray();
         }
 
         public static string Ip6ToHex(string ip)
