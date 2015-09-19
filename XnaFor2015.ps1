@@ -142,7 +142,7 @@ InstallXna $appName $pathToExe $installLocation $extensionCacheLocation $version
 
 # The modification below enables XNA 4.0 Refresh on Visual Studio 2015 Enterprise. Changes may need to be made for Visual Studio 2015 Community.
 
-$appName = "Visual Studio 2015 Enterprise";
+$appName = "Visual Studio 2015";
 $pathToExe = "${Env:VS140COMNTOOLS}..\IDE\devenv.exe";
 $installLocation = "${Env:VS140COMNTOOLS}..\IDE\Extensions\Microsoft"
 $extensionCacheLocation = "$home\AppData\Local\Microsoft\VisualStudio\14.0\Extensions";
