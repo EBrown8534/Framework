@@ -15,27 +15,22 @@ namespace Evbpc.Framework.Xna.Utilities
     /// </summary>
     public class KeyboardStateManager
     {
-        private KeyboardState _keyboardStatePrevious;
-        private KeyboardState _keyboardStateNow;
-        private TimeSpan _holdRepeatTrigger = new TimeSpan(0, 0, 0, 0, 250); // Default to 250ms
-        private TimeSpan _holdRepeatDelay = new TimeSpan(0, 0, 0, 0, 35); // Default to 35ms
-
         /// <summary>
         /// Gets the <code>KeyboardState</code> from the previous update.
         /// </summary>
-        public KeyboardState KeyStatePrevious { get { return _keyboardStatePrevious; } }
+        public KeyboardState KeyStatePrevious { get; private set; }
         /// <summary>
         /// Gets the <code>KeyboardState</code> from the current update.
         /// </summary>
-        public KeyboardState KeyStateNow { get { return _keyboardStateNow; } }
+        public KeyboardState KeyStateNow { get; private set; }
         /// <summary>
         /// Determines how long a key must be held for to begin triggering a repeated keypress.
         /// </summary>
-        public TimeSpan HoldRepeatTrigger { get { return _holdRepeatTrigger; } set { _holdRepeatTrigger = value; } }
+        public TimeSpan HoldRepeatTrigger { get; private set; } = new TimeSpan(0, 0, 0, 0, 250);
         /// <summary>
         /// Determines how long between repeated keypresses a key must be held for to continue the repeat.
         /// </summary>
-        public TimeSpan HoldRepeatDelay { get { return _holdRepeatDelay; } set { _holdRepeatDelay = value; } }
+        public TimeSpan HoldRepeatDelay { get; set; } = new TimeSpan(0, 0, 0, 0, 35);
 
         /// <summary>
         /// Updates the internal <code>KeyboardState</code> and fires relevant events.
@@ -43,11 +38,11 @@ namespace Evbpc.Framework.Xna.Utilities
         /// <param name="kState">The new <code>KeyboardState</code>.</param>
         public void Update(KeyboardState kState)
         {
-            _keyboardStatePrevious = _keyboardStateNow;
-            _keyboardStateNow = kState;
+            KeyStatePrevious = KeyStateNow;
+            KeyStateNow = kState;
 
-            var keysDownNow = GetPressedKeys(_keyboardStateNow);
-            var keysDownPrev = GetPressedKeys(_keyboardStatePrevious);
+            var keysDownNow = GetPressedKeys(KeyStateNow);
+            var keysDownPrev = GetPressedKeys(KeyStatePrevious);
             var keysPressed = GetPressedKeys();
 
             foreach (Keys key in keysDownNow)
@@ -258,8 +253,8 @@ namespace Evbpc.Framework.Xna.Utilities
 
         private List<Keys> GetPressedKeys()
         {
-            var pressedKeys = GetPressedKeys(_keyboardStateNow);
-            var prevPressedKeys = GetPressedKeys(_keyboardStatePrevious);
+            var pressedKeys = GetPressedKeys(KeyStateNow);
+            var prevPressedKeys = GetPressedKeys(KeyStatePrevious);
 
             var result = new List<Keys>();
             bool shiftPressed = false;
@@ -286,7 +281,7 @@ namespace Evbpc.Framework.Xna.Utilities
                         {
                             TimeSpan timeDifference = DateTime.UtcNow - _keysPressedAt[key];
 
-                            if (timeDifference > _holdRepeatTrigger && (_keyLastTickAt.ContainsKey(key) && DateTime.UtcNow - _keyLastTickAt[key] > _holdRepeatDelay || !_keyLastTickAt.ContainsKey(key)))
+                            if (timeDifference > HoldRepeatTrigger && (_keyLastTickAt.ContainsKey(key) && DateTime.UtcNow - _keyLastTickAt[key] > HoldRepeatDelay || !_keyLastTickAt.ContainsKey(key)))
                             {
                                 result.Add(key);
 
