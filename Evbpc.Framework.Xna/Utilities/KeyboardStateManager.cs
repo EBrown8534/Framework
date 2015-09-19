@@ -46,15 +46,25 @@ namespace Evbpc.Framework.Xna.Utilities
             var keysPressed = GetPressedKeys();
 
             foreach (Keys key in keysDownNow)
+            {
                 if (!keysDownPrev.Contains(key))
+                {
                     OnKeyDown(new KeyEventArgs(key));
+                }
+            }
 
             foreach (Keys key in keysDownPrev)
+            {
                 if (!keysDownNow.Contains(key))
+                {
                     OnKeyUp(new KeyEventArgs(key));
+                }
+            }
 
             foreach (Keys key in keysPressed)
+            {
                 OnKeyPress(new KeyPressEventArgs(GetKeyChar(key)));
+            }
         }
 
         /// <summary>
@@ -131,9 +141,13 @@ namespace Evbpc.Framework.Xna.Utilities
             else
             {
                 if ((int)key >= 0x41 && (int)key <= 0x5A)
+                {
                     return (char)((int)key + 32);
+                }
                 if ((int)key >= 0x30 && (int)key <= 0x39)
+                {
                     return (char)key;
+                }
 
                 switch (key)
                 {
@@ -262,7 +276,9 @@ namespace Evbpc.Framework.Xna.Utilities
             foreach (Keys key in pressedKeys)
             {
                 if ((key & Keys.Shift) == Keys.Shift)
+                {
                     shiftPressed = true;
+                }
                 else
                 {
                     if (IsKeyUp(prevPressedKeys, key))
@@ -270,10 +286,14 @@ namespace Evbpc.Framework.Xna.Utilities
                         result.Add(key);
 
                         if (_keysPressedAt.ContainsKey(key))
+                        {
                             _keysPressedAt.Remove(key);
+                        }
 
                         if (_keyLastTickAt.ContainsKey(key))
+                        {
                             _keyLastTickAt.Remove(key);
+                        }
                     }
                     else
                     {
@@ -286,21 +306,31 @@ namespace Evbpc.Framework.Xna.Utilities
                                 result.Add(key);
 
                                 if (_keyLastTickAt.ContainsKey(key))
+                                {
                                     _keyLastTickAt[key] = DateTime.UtcNow;
+                                }
                                 else
+                                {
                                     _keyLastTickAt.Add(key, DateTime.UtcNow);
+                                }
                             }
                         }
                     }
 
                     if (!_keysPressedAt.ContainsKey(key))
+                    {
                         _keysPressedAt.Add(key, DateTime.UtcNow);
+                    }
                 }
             }
 
             if (shiftPressed)
+            {
                 for (int i = 0; i < result.Count; i++)
+                {
                     result[i] |= Keys.Shift;
+                }
+            }
 
             return result;
         }
@@ -308,8 +338,12 @@ namespace Evbpc.Framework.Xna.Utilities
         private static bool IsPressedState(List<Keys> pressedKeys, Keys key, bool state)
         {
             for (int i = 0; i < pressedKeys.Count; i++)
+            {
                 if (pressedKeys[i] == key)
+                {
                     return state;
+                }
+            }
 
             return !state;
         }
@@ -341,14 +375,20 @@ namespace Evbpc.Framework.Xna.Utilities
                     break;
                 default:
                     if (Enum.IsDefined(typeof(Keys), key.ToString()) | key.ToString().Contains(","))
+                    {
                         kv |= (Keys)Enum.Parse(typeof(Keys), key.ToString());
+                    }
                     break;
             }
 
             if (key == XnaKeys.LeftShift)
+            {
                 kv = Keys.LShiftKey | Keys.Shift;
+            }
             if (key == XnaKeys.RightShift)
+            {
                 kv = Keys.RShiftKey | Keys.Shift;
+            }
 
             return kv;
         }
