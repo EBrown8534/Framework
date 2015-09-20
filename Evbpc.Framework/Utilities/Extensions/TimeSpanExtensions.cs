@@ -16,9 +16,6 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="t">The <code>TimeSpan</code> to test.</param>
         /// <param name="target">The target <code>TimeSpan</code>.</param>
         /// <returns>A <code>double</code> value representing how long into the target the <code>TimeSpan</code> is.</returns>
-        public static double PercentComplete(this TimeSpan t, TimeSpan target)
-        {
-            return t.TotalMilliseconds / target.TotalMilliseconds;
-        }
+        public static double PercentComplete(this TimeSpan t, TimeSpan target) => t.TotalMilliseconds / target.TotalMilliseconds;
     }
 }

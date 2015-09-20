@@ -16,9 +16,6 @@ namespace Evbpc.Framework.Xna.Drawing.Extensions
         /// </summary>
         /// <param name="color">The color to convert from.</param>
         /// <returns>A <code>Microsoft.Xna.Framework.Color</code> build with the values from the <see cref="Framework.Drawing.Color"/>.</returns>
-        public static Microsoft.Xna.Framework.Color ToXnaColor(this Framework.Drawing.Color color)
-        {
-            return new Microsoft.Xna.Framework.Color(color.R, color.G, color.B, color.A);
-        }
+        public static Microsoft.Xna.Framework.Color ToXnaColor(this Framework.Drawing.Color color) => new Microsoft.Xna.Framework.Color(color.R, color.G, color.B, color.A);
     }
 }

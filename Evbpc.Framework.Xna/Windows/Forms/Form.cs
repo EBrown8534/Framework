@@ -66,7 +66,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <summary>
         /// Gets a value indicating whether or not this <see cref="Form"/> has focus.
         /// </summary>
-        public override bool Focused { get { return ActiveForm == this; } }
+        public override bool Focused => ActiveForm == this;
 
         /// <summary>
         /// Creates a new instance of the <see cref="Form"/> class.
@@ -156,7 +156,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         public static void DrawAll(SpriteBatch s)
         {
             foreach (Form form in Forms)
+            {
                 form.Draw(s);
+            }
 
             //for (int i = _Forms.Count - 1; i >= 0; i--)
             //{

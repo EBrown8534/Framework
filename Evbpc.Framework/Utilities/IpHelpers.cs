@@ -33,10 +33,7 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="ip">The IP to convert.</param>
         /// <returns>The hexadecimal representation of the IP address.</returns>
-        public static string Ip4ToHex(string ip)
-        {
-            return Ip6ToHex(Ip4ToIp6(ip));
-        }
+        public static string Ip4ToHex(string ip) => Ip6ToHex(Ip4ToIp6(ip));
 
         /// <summary>
         /// Converts an IPv4 address to the IPv6 equivalent.
@@ -62,10 +59,7 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="input">The array to convert.</param>
         /// <returns>The hexadecimal equivalent.</returns>
-        public static string[] StringArrayToHexArray(string[] input)
-        {
-            return input.ToList().Select(x => Convert.ToByte(x, 0x10).ToString("x")).ToArray();
-        }
+        public static string[] StringArrayToHexArray(string[] input) => input.ToList().Select(x => Convert.ToByte(x, 0x10).ToString("x")).ToArray();
 
         /// <summary>
         /// Convets an IPv6 address to a hexadecimal string.

@@ -13,7 +13,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
     public class Label : Evbpc.Framework.Windows.Forms.Label, IDrawableControl
     {
         private SpriteFont _font;
-        public SpriteFont Font { get { return _font; } }
+        public SpriteFont Font => _font;
 
         public Label(SpriteFont font, string name)
         {

@@ -30,10 +30,10 @@ namespace Evbpc.Framework.Utilities
             {
                 return _position;
             }
-            private set 
+            private set
             {
                 if (_position != value)
-                { 
+                {
                     var oldPosition = _position;
                     _position = value;
                     OnTrackableObjectChanged(new TrackableObjectChangedEventArgs(_position, oldPosition, Size, Size));
@@ -79,15 +79,15 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// Gets the <see cref="RectangleF"/> that represents the entire covered portion of this <see cref="Camera"/> instance.
         /// </summary>
-        public RectangleF Bounds { get { return new RectangleF(Position, Size); } }
+        public RectangleF Bounds => new RectangleF(Position, Size);
         /// <summary>
         /// Gets the <see cref="PointF"/> that represents the global center position of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF AbsoluteCenter { get { return new PointF(Position.X + Size.Width / 2.0f, Position.Y + Size.Height / 2.0f); } }
+        public PointF AbsoluteCenter => new PointF(Position.X + Size.Width / 2.0f, Position.Y + Size.Height / 2.0f);
         /// <summary>
         /// Gets the <see cref="PointF"/> that represents the center of the <see cref="Size"/> of this <see cref="Camera"/> instance.
         /// </summary>
-        public PointF RelativeCenter { get { return new PointF(Size.Width / 2.0f, Size.Height / 2.0f); } }
+        public PointF RelativeCenter => new PointF(Size.Width / 2.0f, Size.Height / 2.0f);
 
         /// <summary>
         /// Creates a new instance of the <see cref="Camera"/> class from the specified <see cref="TrackObject"/> and <see cref="TriggerBounds"/>.
@@ -116,7 +116,11 @@ namespace Evbpc.Framework.Utilities
         /// <remarks>
         /// This is effectively the same as the <see cref="CenterCamera(float)"/> method with an value of <c>0</c> specified.
         /// </remarks>
-        public void CenterCamera() { CenterCamera(0); }
+        public void CenterCamera()
+        {
+            CenterCamera(0);
+        }
+
         /// <summary>
         /// This method will smoothly center the <see cref="Camera"/> to the <see cref="ITrackableObject"/>.
         /// </summary>
@@ -124,37 +128,65 @@ namespace Evbpc.Framework.Utilities
         /// <remarks>
         /// If a value of <c>0</c> is provided for the <c>animationTime</c>, then this has the same effect as the <see cref="CenterCamera()"/> method.
         /// </remarks>
-        public void CenterCamera(float animationTime) { /* TODO: Implement this method. */ }
+        public void CenterCamera(float animationTime)
+        {
+            /* TODO: Implement this method. */
+        }
+
         /// <summary>
         /// Updates the <see cref="Position"/> of the current <see cref="Camera"/> instance to the value specified.
         /// </summary>
         /// <param name="position">A <see cref="PointF"/> representing the new <see cref="Position"/> of the <see cref="Camera"/>.</param>
-        public void SetPosition(PointF position) { Position = position; }
+        public void SetPosition(PointF position)
+        {
+            Position = position;
+        }
+
         /// <summary>
         /// Alters the <see cref="Position"/> of the current <see cref="Camera"/> instance by the specified <see cref="Vector2F"/>.
         /// </summary>
         /// <param name="vector">The distance to move the <see cref="Camera"/>.</param>
-        public void MoveCamera(Vector2F vector) { Position = new PointF(Position.X + vector.X, Position.Y + vector.Y); }
+        public void MoveCamera(Vector2F vector)
+        {
+            Position = new PointF(Position.X + vector.X, Position.Y + vector.Y);
+        }
+
         /// <summary>
         /// Updates the <see cref="Size"/> of the current <see cref="Camera"/> instance.
         /// </summary>
         /// <param name="size">A <see cref="SizeF"/> representing the new <see cref="Size"/> of the <see cref="Camera"/>.</param>
-        public void SetSize(SizeF size) { Size = size; }
+        public void SetSize(SizeF size)
+        {
+            Size = size;
+        }
+
         /// <summary>
         /// Alters the <see cref="Size"/> of the current <see cref="Camera"/> instance by the specified <see cref="Vector2F"/>.
         /// </summary>
         /// <param name="adjustment">The <see cref="Vector2F"/> representing how much to increase/decrease the <see cref="Size"/>.</param>
-        public void ResizeCamera(Vector2F adjustment) { Size = new SizeF(Size.Width + adjustment.X, Size.Height + adjustment.Y); }
+        public void ResizeCamera(Vector2F adjustment)
+        {
+            Size = new SizeF(Size.Width + adjustment.X, Size.Height + adjustment.Y);
+        }
+
         /// <summary>
         /// Updates the <see cref="Scale"/> of the current <see cref="Camera"/> instance to the specified value.
         /// </summary>
         /// <param name="scale">The new value for the <see cref="Scale"/> value of the <see cref="Camera"/>.</param>
-        public void SetScale(float scale) { Scale = scale; }
+        public void SetScale(float scale)
+        {
+            Scale = scale;
+        }
+
         /// <summary>
         /// Alters the <see cref="Scale"/> of the current <see cref="Camera"/> instance by the specified value.
         /// </summary>
         /// <param name="adjustment">The value representing how much to zoom/unzoom the <see cref="Camera"/>.</param>
-        public void ScaleCamera(float adjustment) { Scale += adjustment; }
+        public void ScaleCamera(float adjustment)
+        {
+            Scale += adjustment;
+        }
+        
         /// <summary>
         /// Determines if the current <see cref="Camera"/> instances contains the <see cref="ITrackableObject"/>.
         /// </summary>
@@ -187,7 +219,7 @@ namespace Evbpc.Framework.Utilities
         private void OnTrackableObjectChanged(TrackableObjectChangedEventArgs e)
         {
             var handler = TrackableObjectChanged;
-            
+
             if (handler != null)
                 handler(this, e);
         }

@@ -15,7 +15,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
     public class TextBox : Framework.Windows.Forms.TextBox, IDrawableControl, IUpdateableControl
     {
         private SpriteFont _font;
-        public SpriteFont Font { get { return _font; } }
+        public SpriteFont Font => _font;
         
         public TextBox(SpriteFont font, string name)
         {

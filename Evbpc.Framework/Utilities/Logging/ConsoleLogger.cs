@@ -120,10 +120,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The <code>string</code> to be formatted.</param>
         /// <param name="args">An array of valus to be replaced into the message.</param>
         /// <returns>The formatted <code>string</code>.</returns>
-        public string FormatMessage(string message, params object[] args)
-        {
-            return string.Format(message, args);
-        }
+        public string FormatMessage(string message, params object[] args) => string.Format(message, args);
 
         /// <summary>
         /// Inherited from <see cref="ILogger"/>. Logs a message with <see cref="LoggingType.Information"/> and the specified arguments to the <see cref="ConsoleLogger"/>.
