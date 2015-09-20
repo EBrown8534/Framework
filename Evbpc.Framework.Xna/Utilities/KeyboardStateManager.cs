@@ -348,15 +348,9 @@ namespace Evbpc.Framework.Xna.Utilities
             return !state;
         }
 
-        private static bool IsKeyDown(List<Keys> pressedKeys, Keys key)
-        {
-            return IsPressedState(pressedKeys, key, true);
-        }
+        private static bool IsKeyDown(List<Keys> pressedKeys, Keys key) => IsPressedState(pressedKeys, key, true);
 
-        private static bool IsKeyUp(List<Keys> pressedKeys, Keys key)
-        {
-            return IsPressedState(pressedKeys, key, false);
-        }
+        private static bool IsKeyUp(List<Keys> pressedKeys, Keys key) => IsPressedState(pressedKeys, key, false);
 
         private static Keys XnaKeyToKey(XnaKeys key)
         {
