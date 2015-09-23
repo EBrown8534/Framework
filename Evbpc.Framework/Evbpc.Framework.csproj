@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -89,6 +90,53 @@
     <Compile Include="Drawing\SizeConverter.cs" />
     <Compile Include="Drawing\SizeF.cs" />
     <Compile Include="Drawing\SizeFConverter.cs" />
+    <Compile Include="Integrations\GitHub\Events\GollumEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\IssueCommentEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\IssuesEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\MemberEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\MembershipEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\PageBuildEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\PublicEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\PullRequestEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\PullRequestReviewCommentEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\ReleaseEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\RepositoryEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\StatusEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\TeamAddEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\WatchEvent.cs" />
+    <Compile Include="Integrations\GitHub\Models\Base.cs" />
+    <Compile Include="Integrations\GitHub\Models\Branch.cs" />
+    <Compile Include="Integrations\GitHub\Models\Build.cs" />
+    <Compile Include="Integrations\GitHub\Models\Comment.cs" />
+    <Compile Include="Integrations\GitHub\Events\CommitCommentEvent.cs" />
+    <Compile Include="Integrations\GitHub\Models\Author.cs" />
+    <Compile Include="Integrations\GitHub\Models\Commit.cs" />
+    <Compile Include="Integrations\GitHub\Events\CreateEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\DeleteEvent.cs" />
+    <Compile Include="Integrations\GitHub\Models\CommitAuthor.cs" />
+    <Compile Include="Integrations\GitHub\Models\Deployment.cs" />
+    <Compile Include="Integrations\GitHub\Events\DeploymentEvent.cs" />
+    <Compile Include="Integrations\GitHub\Models\DeploymentStatus.cs" />
+    <Compile Include="Integrations\GitHub\Events\DeploymentStatusEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\ForkEvent.cs" />
+    <Compile Include="Integrations\GitHub\Events\PushEvent.cs" />
+    <Compile Include="Integrations\GitHub\Models\Error.cs" />
+    <Compile Include="Integrations\GitHub\Models\Head.cs" />
+    <Compile Include="Integrations\GitHub\Models\Issue.cs" />
+    <Compile Include="Integrations\GitHub\Models\IssueComment.cs" />
+    <Compile Include="Integrations\GitHub\Models\Label.cs" />
+    <Compile Include="Integrations\GitHub\Models\Links.cs" />
+    <Compile Include="Integrations\GitHub\Models\MiniCommit.cs" />
+    <Compile Include="Integrations\GitHub\Models\Organization.cs" />
+    <Compile Include="Integrations\GitHub\Models\Page.cs" />
+    <Compile Include="Integrations\GitHub\Models\PullRequest.cs" />
+    <Compile Include="Integrations\GitHub\Models\PullRequestComment.cs" />
+    <Compile Include="Integrations\GitHub\Models\Release.cs" />
+    <Compile Include="Integrations\GitHub\Models\Repository.cs" />
+    <Compile Include="Integrations\GitHub\Models\Sender.cs" />
+    <Compile Include="Integrations\GitHub\Models\StatusCommit.cs" />
+    <Compile Include="Integrations\GitHub\Models\Team.cs" />
+    <Compile Include="Integrations\GitHub\Models\Tree.cs" />
     <Compile Include="Physics\IVector2.cs" />
     <Compile Include="Physics\Vector2.cs" />
     <Compile Include="Physics\Vector2F.cs" />
@@ -116,7 +164,9 @@
     <Compile Include="Utilities\Serialization\JsonSerialization.cs" />
     <Compile Include="Utilities\Serialization\XmlSerialization.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Integrations\Bitbucket\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
