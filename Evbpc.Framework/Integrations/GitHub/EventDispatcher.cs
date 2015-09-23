@@ -1,7 +1,10 @@
-﻿using Evbpc.Framework.Integrations.GitHub.Events.Args;
+﻿using Evbpc.Framework.Integrations.GitHub.Events;
+using Evbpc.Framework.Integrations.GitHub.Events.Args;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +12,86 @@ namespace Evbpc.Framework.Integrations.GitHub
 {
     public class EventDispatcher
     {
+        public void Dispatch(string eventKey, string json)
+        {
+            switch (eventKey)
+            {
+                case CommitCommentEvent.WebhookEventName:
+                    OnCommitCommentReceived(new CommitCommentEventArgs(Deserialze<CommitCommentEvent>(json)));
+                    break;
+                case CreateEvent.WebhookEventName:
+                    OnCreateReceived(new CreateEventArgs(Deserialze<CreateEvent>(json)));
+                    break;
+                case DeleteEvent.WebhookEventName:
+                    OnDeleteReceived(new DeleteEventArgs(Deserialze<DeleteEvent>(json)));
+                    break;
+                case DeploymentEvent.WebhookEventName:
+                    OnDeploymentReceived(new DeploymentEventArgs(Deserialze<DeploymentEvent>(json)));
+                    break;
+                case DeploymentStatusEvent.WebhookEventName:
+                    OnDeploymentStatusReceived(new DeploymentStatusEventArgs(Deserialze<DeploymentStatusEvent>(json)));
+                    break;
+                case ForkEvent.WebhookEventName:
+                    OnForkReceived(new ForkEventArgs(Deserialze<ForkEvent>(json)));
+                    break;
+                case GollumEvent.WebhookEventName:
+                    OnGollumReceived(new GollumEventArgs(Deserialze<GollumEvent>(json)));
+                    break;
+                case IssueCommentEvent.WebhookEventName:
+                    OnIssueCommentReceived(new IssueCommentEventArgs(Deserialze<IssueCommentEvent>(json)));
+                    break;
+                case IssuesEvent.WebhookEventName:
+                    OnIssuesReceived(new IssuesEventArgs(Deserialze<IssuesEvent>(json)));
+                    break;
+                case MemberEvent.WebhookEventName:
+                    OnMemberReceived(new MemberEventArgs(Deserialze<MemberEvent>(json)));
+                    break;
+                case MembershipEvent.WebhookEventName:
+                    OnMembershipReceived(new MembershipEventArgs(Deserialze<MembershipEvent>(json)));
+                    break;
+                case PageBuildEvent.WebhookEventName:
+                    OnPageBuildReceived(new PageBuildEventArgs(Deserialze<PageBuildEvent>(json)));
+                    break;
+                case PublicEvent.WebhookEventName:
+                    OnPublicReceived(new PublicEventArgs(Deserialze<PublicEvent>(json)));
+                    break;
+                case PullRequestEvent.WebhookEventName:
+                    OnPullRequestReceived(new PullRequestEventArgs(Deserialze<PullRequestEvent>(json)));
+                    break;
+                case PullRequestReviewCommentEvent.WebhookEventName:
+                    OnPullRequestReviewCommentReceived(new PullRequestReviewCommentEventArgs(Deserialze<PullRequestReviewCommentEvent>(json)));
+                    break;
+                case PushEvent.WebhookEventName:
+                    OnPushReceived(new PushEventArgs(Deserialze<PushEvent>(json)));
+                    break;
+                case ReleaseEvent.WebhookEventName:
+                    OnReleaseReceived(new ReleaseEventArgs(Deserialze<ReleaseEvent>(json)));
+                    break;
+                case RepositoryEvent.WebhookEventName:
+                    OnRepositoryReceived(new RepositoryEventArgs(Deserialze<RepositoryEvent>(json)));
+                    break;
+                case StatusEvent.WebhookEventName:
+                    OnStatusReceived(new StatusEventArgs(Deserialze<StatusEvent>(json)));
+                    break;
+                case TeamAddEvent.WebhookEventName:
+                    OnTeamAddReceived(new TeamAddEventArgs(Deserialze<TeamAddEvent>(json)));
+                    break;
+                case WatchEvent.WebhookEventName:
+                    OnWatchReceived(new WatchEventArgs(Deserialze<WatchEvent>(json)));
+                    break;
+            }
+        }
+
+        public T Deserialze<T>(string json)
+        {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                ms.Position = 0;
+                return (T)serializer.ReadObject(ms);
+            }
+        }
+
         protected void OnCommitCommentReceived(CommitCommentEventArgs e)
         {
             var del = CommitCommentEventReceived;

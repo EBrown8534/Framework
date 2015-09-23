@@ -11,7 +11,7 @@ namespace Evbpc.Framework.Integrations.GitHub.Events
     [DataContract]
     public class DeleteEvent
     {
-        public const string WebhookEventName = "create";
+        public const string WebhookEventName = "delete";
 
         [DataMember(Name = "ref")]
         public string Ref { get; set; }
