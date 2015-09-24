@@ -2,6 +2,8 @@
 
 This repository is a bulk repository for cloning many functions of `System.Drawing`, `System.Windows` and `System.Windows.Forms` in an XNA-compatible form, as well as other various utilities and objects for performing various tasks.
 
+It also includes utilities for integrating GitHub's Webhook API with your applications, and soon will feature Bitbucket integration.
+
 This repository was originally created for another project of mine, hence the naming.
 
 ## Included projects
