@@ -32,7 +32,7 @@ namespace Evbpc.Framework.Integrations.Google
         /// <summary>
         /// Use this to get or set any extra classes that should be added to the <code>&lt;div&gt;</code> that is created by the <see cref="BodyDivInclude"/>.
         /// </summary>
-        public List<string> ExtraClasses { get; } = new List<string>();
+        public List<string> ExtraClasses => new List<string>();
 
         /// <summary>
         /// Returns the <code>&lt;div&gt;</code> that should be inserted in the HTML where the reCAPTCHA should be rendered.

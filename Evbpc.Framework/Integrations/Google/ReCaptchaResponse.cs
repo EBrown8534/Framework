@@ -50,11 +50,14 @@ namespace Evbpc.Framework.Integrations.Google
             if (deserializedJson.ContainsKey("error-codes"))
             {
                 ReCaptchaErrors? errors = ErrorsToEnum(deserializedJson["error-codes"]);
-
-                if (errors.HasValue)
+                
+                if (!errors.HasValue)
                 {
-                    resultResponse._errors = errors.Value;
+                    result = null;
+                    return false;
                 }
+
+                resultResponse._errors = errors.Value;
             }
 
             result = resultResponse;
