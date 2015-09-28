@@ -23,7 +23,6 @@ namespace Evbpc.Framework.Integrations.Google
 
         private readonly string _reCaptchaSecret;
         private readonly string _reCaptchaSiteKey;
-        private readonly List<string> _extraClasses = new List<string>();
 
         /// <summary>
         /// Returns the script to be included in the <code>&lt;head&gt;</code> of the page.
@@ -33,15 +32,15 @@ namespace Evbpc.Framework.Integrations.Google
         /// <summary>
         /// Use this to get or set any extra classes that should be added to the <code>&lt;div&gt;</code> that is created by the <see cref="BodyDivInclude"/>.
         /// </summary>
-        public List<string> ExtraClasses => _extraClasses;
+        public List<string> ExtraClasses { get; } = new List<string>();
 
         /// <summary>
         /// Returns the <code>&lt;div&gt;</code> that should be inserted in the HTML where the reCAPTCHA should be rendered.
         /// </summary>
         /// <remarks>
-        /// This is equivalent to calling <see cref="GetBodyDivContent(List{string})"/> with <see cref="ExtraClasses"/> as the parameter.
+        /// This is equivalent to calling <see cref="GetBodyDivContent()"/>.
         /// </remarks>
-        public string BodyDivInclude => GetBodyDivContent(this.ExtraClasses);
+        public string BodyDivInclude => GetBodyDivContent();
 
         /// <summary>
         /// Creates a new instance of the <see cref="ReCaptchaValidator"/>.
@@ -65,31 +64,45 @@ namespace Evbpc.Framework.Integrations.Google
         /// </remarks>
         public ReCaptchaResponse Validate(NameValueCollection form, string remoteIp = null)
         {
-            string reCaptchaSecret = _reCaptchaSecret;
-            string reCaptchaResponse = form[ReCaptchaValidator._reCaptchaFormCode];
+            string reCaptchaFormResponse = form[ReCaptchaValidator._reCaptchaFormCode];
 
+            NameValueCollection postParameters = GetPostParameters(reCaptchaFormResponse, remoteIp);
+            ReCaptchaResponse result;
+            ReCaptchaResponse.TryParseJson(ReCaptchaValidator.UploadRecaptchaResponse(postParameters), out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Uploads a request to the Google API for reCAPTCHA data to be validated.
+        /// </summary>
+        /// <param name="postParameters">The parameters to send in the POST message.</param>
+        /// <returns>A string representing the returned response.</returns>
+        protected static string UploadRecaptchaResponse(NameValueCollection postParameters)
+        {
             using (WebClient client = new WebClient())
             {
-                NameValueCollection postParameters = new NameValueCollection() { { "secret", reCaptchaSecret }, { "response", reCaptchaResponse } };
-
-                if (remoteIp != null)
-                {
-                    postParameters.Add("remoteip", remoteIp);
-                }
-
                 byte[] response = client.UploadValues(ReCaptchaValidator._googleApiEndpoint, postParameters);
-
                 string reCaptchaResult = System.Text.Encoding.UTF8.GetString(response);
-
-                ReCaptchaResponse result = new ReCaptchaResponse();
-
-                if (result.ParseJson(reCaptchaResult))
-                {
-                    return result;
-                }
-
-                return null;
+                return reCaptchaResult;
             }
+        }
+
+        /// <summary>
+        /// Returns the parameters to be placed within the post body of a validation message.
+        /// </summary>
+        /// <param name="reCaptchaFormResponse">The response from the reCAPTCHA form.</param>
+        /// <param name="remoteIp">An optional IP to include as the origin of the reCAPTCHA form.</param>
+        /// <returns>The <code>NameValueCollection</code> that should be included in the post body.</returns>
+        protected NameValueCollection GetPostParameters(string reCaptchaFormResponse, string remoteIp = null)
+        {
+            NameValueCollection postParameters = new NameValueCollection() { { "secret", _reCaptchaSecret }, { "response", reCaptchaFormResponse } };
+
+            if (remoteIp != null)
+            {
+                postParameters.Add("remoteip", remoteIp);
+            }
+
+            return postParameters;
         }
 
         /// <summary>
@@ -100,15 +113,15 @@ namespace Evbpc.Framework.Integrations.Google
         /// <remarks>
         /// This method allows you to pass an arbitrary list of extra classes, regardless of what the current instance may contain.
         /// </remarks>
-        public string GetBodyDivContent(List<string> extraClasses)
+        public string GetBodyDivContent()
         {
             string result = ReCaptchaValidator._bodyDivInclude;
 
             result = result.Replace("%SITEKEY%", _reCaptchaSiteKey);
 
-            if (extraClasses != null)
+            if (ExtraClasses != null)
             {
-                result = result.Replace("%EXTRACLASSES%", string.Join(" ", extraClasses));
+                result = result.Replace("%EXTRACLASSES%", string.Join(" ", ExtraClasses));
             }
 
             return result;
@@ -126,7 +139,7 @@ namespace Evbpc.Framework.Integrations.Google
         /// <summary>
         /// Returns a value indicating if the <see cref="ReCaptchaValidator"/> succeeded in validating the reCAPTCHA response or not.
         /// </summary>
-        public bool Success => _success; 
+        public bool Success => _success;
 
         /// <summary>
         /// Returns any <see cref="ReCaptchaErrors"/> that occurred during the reCAPTCHA response validation.
@@ -137,16 +150,18 @@ namespace Evbpc.Framework.Integrations.Google
         /// Parses a JSON string into the current <see cref="ReCaptchaResponse"/>.
         /// </summary>
         /// <param name="jsonResponse">The JSON string to transform.</param>
+        /// <param name="result">The parsed result.</param>
         /// <returns>True if no errors were encountered during parsing, or false if the JSON appeared to be malformed.</returns>
-        public bool ParseJson(string jsonResponse)
+        public static bool TryParseJson(string jsonResponse, out ReCaptchaResponse result)
         {
             JavaScriptSerializer jss = new JavaScriptSerializer();
             dynamic deserializedJson = jss.DeserializeObject(jsonResponse);
+            ReCaptchaResponse resultResponse = new ReCaptchaResponse();
 
             if (deserializedJson.ContainsKey("success"))
             {
-                _success = deserializedJson["success"];
-                _errors = ReCaptchaErrors.None;
+                resultResponse._success = deserializedJson["success"];
+                resultResponse._errors = ReCaptchaErrors.None;
 
                 if (deserializedJson.ContainsKey("error-codes"))
                 {
@@ -165,10 +180,11 @@ namespace Evbpc.Framework.Integrations.Google
 
                         if (Enum.IsDefined(typeof(ReCaptchaErrors), errorEnumName))
                         {
-                            _errors = _errors | (ReCaptchaErrors)Enum.Parse(typeof(ReCaptchaErrors), errorEnumName);
+                            resultResponse._errors = resultResponse._errors | (ReCaptchaErrors)Enum.Parse(typeof(ReCaptchaErrors), errorEnumName);
                         }
                         else
                         {
+                            result = null;
                             return false;
                         }
                     }
@@ -176,9 +192,11 @@ namespace Evbpc.Framework.Integrations.Google
             }
             else
             {
+                result = null;
                 return false;
             }
 
+            result = resultResponse;
             return true;
         }
     }
