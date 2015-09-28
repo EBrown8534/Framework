@@ -97,7 +97,7 @@ namespace Evbpc.Framework.Integrations.Google
         {
             NameValueCollection postParameters = new NameValueCollection() { { "secret", _reCaptchaSecret }, { "response", reCaptchaFormResponse } };
 
-            if (remoteIp != null)
+            if (!string.IsNullOrWhiteSpace(remoteIp))
             {
                 postParameters.Add("remoteip", remoteIp);
             }
@@ -115,120 +115,14 @@ namespace Evbpc.Framework.Integrations.Google
         /// </remarks>
         public string GetBodyDivContent()
         {
-            string result = ReCaptchaValidator._bodyDivInclude;
+            string result = ReCaptchaValidator._bodyDivInclude.Replace("%SITEKEY%", _reCaptchaSiteKey);
 
-            result = result.Replace("%SITEKEY%", _reCaptchaSiteKey);
-
-            if (ExtraClasses != null)
+            if (ExtraClasses != null && ExtraClasses.Count > 0)
             {
                 result = result.Replace("%EXTRACLASSES%", string.Join(" ", ExtraClasses));
             }
 
             return result;
         }
-    }
-
-    /// <summary>
-    /// This class is used by the <see cref="ReCaptchaValidator"/> to return a proper response to a reCAPTCHA validation request.
-    /// </summary>
-    public class ReCaptchaResponse
-    {
-        private bool _success = false;
-        private ReCaptchaErrors _errors = ReCaptchaErrors.None;
-
-        /// <summary>
-        /// Returns a value indicating if the <see cref="ReCaptchaValidator"/> succeeded in validating the reCAPTCHA response or not.
-        /// </summary>
-        public bool Success => _success;
-
-        /// <summary>
-        /// Returns any <see cref="ReCaptchaErrors"/> that occurred during the reCAPTCHA response validation.
-        /// </summary>
-        public ReCaptchaErrors Errors => _errors;
-
-        /// <summary>
-        /// Parses a JSON string into the current <see cref="ReCaptchaResponse"/>.
-        /// </summary>
-        /// <param name="jsonResponse">The JSON string to transform.</param>
-        /// <param name="result">The parsed result.</param>
-        /// <returns>True if no errors were encountered during parsing, or false if the JSON appeared to be malformed.</returns>
-        public static bool TryParseJson(string jsonResponse, out ReCaptchaResponse result)
-        {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            dynamic deserializedJson = jss.DeserializeObject(jsonResponse);
-            ReCaptchaResponse resultResponse = new ReCaptchaResponse();
-
-            if (deserializedJson.ContainsKey("success"))
-            {
-                resultResponse._success = deserializedJson["success"];
-                resultResponse._errors = ReCaptchaErrors.None;
-
-                if (deserializedJson.ContainsKey("error-codes"))
-                {
-                    foreach (string error in deserializedJson["error-codes"])
-                    {
-                        // Our `ReCaptchaErrors` enum contains the exact same strings as the returned `error` text would be, with the following transformations:
-                        // 1. The words are transformed to PascalCase;
-                        // 2. The dashes are stripped;
-                        string[] errorWords = error.Split('-');
-
-                        string errorEnumName = "";
-                        foreach (string errorWord in errorWords)
-                        {
-                            errorEnumName += errorWord[0].ToString().ToUpper() + errorWord.Substring(1);
-                        }
-
-                        if (Enum.IsDefined(typeof(ReCaptchaErrors), errorEnumName))
-                        {
-                            resultResponse._errors = resultResponse._errors | (ReCaptchaErrors)Enum.Parse(typeof(ReCaptchaErrors), errorEnumName);
-                        }
-                        else
-                        {
-                            result = null;
-                            return false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                result = null;
-                return false;
-            }
-
-            result = resultResponse;
-            return true;
-        }
-    }
-
-    /// <summary>
-    /// Indicates errors that could be returned by the reCAPTCHA API.
-    /// </summary>
-    /// <remarks>
-    /// See: https://developers.google.com/recaptcha/docs/verify
-    /// </remarks>
-    [Flags]
-    public enum ReCaptchaErrors
-    {
-        /// <summary>
-        /// No errors occurred.
-        /// </summary>
-        None = 0x00,
-        /// <summary>
-        /// The secret parameter is missing.
-        /// </summary>
-        MissingInputSecret = 1 << 0,
-        /// <summary>
-        /// The secret parameter is invalid or malformed.
-        /// </summary>
-        InvalidInputSecret = 1 << 1,
-        /// <summary>
-        /// The response parameter is missing.
-        /// </summary>
-        MissingInputResponse = 1 << 2,
-        /// <summary>
-        /// The response parameter is invalid or malformed.
-        /// </summary>
-        InvalidInputResponse = 1 << 3,
     }
 }
