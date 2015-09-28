@@ -11,6 +11,8 @@ namespace Evbpc.Framework.Integrations.Bitbucket.Events
     [DataContract]
     public class PushEvent
     {
+        public const string WebhookEventName = "repo:push";
+
         [DataMember(Name = "actor")]
         public Actor Actor { get; set; }
 

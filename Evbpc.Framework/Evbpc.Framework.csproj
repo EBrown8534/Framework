@@ -90,6 +90,8 @@
     <Compile Include="Drawing\SizeConverter.cs" />
     <Compile Include="Drawing\SizeF.cs" />
     <Compile Include="Drawing\SizeFConverter.cs" />
+    <Compile Include="Integrations\Bitbucket\EventDispatcher.cs" />
+    <Compile Include="Integrations\Bitbucket\Events\Args\PushEventArgs.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Parent.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Actor.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Author.cs" />
