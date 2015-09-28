@@ -62,13 +62,13 @@ namespace Evbpc.Framework.Integrations.Google.ReCaptcha
         /// <remarks>
         /// If the returned <see cref="ReCaptchaResponse"/> is null, then a severe error occurred during the exchange.
         /// </remarks>
-        public ReCaptchaResponse Validate(NameValueCollection form, string remoteIp = null)
+        public Response Validate(NameValueCollection form, string remoteIp = null)
         {
             string reCaptchaFormResponse = form[Validator._reCaptchaFormCode];
 
             NameValueCollection postParameters = GetPostParameters(reCaptchaFormResponse, remoteIp);
-            ReCaptchaResponse result;
-            ReCaptchaResponse.TryParseJson(Validator.UploadRecaptchaResponse(postParameters), out result);
+            Response result;
+            Response.TryParseJson(Validator.UploadRecaptchaResponse(postParameters), out result);
             return result;
         }
 
