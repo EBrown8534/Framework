@@ -97,7 +97,9 @@ namespace Evbpc.Framework.Utilities
         public Camera(ITrackableObject trackObject, RectangleF triggerBounds)
         {
             if (trackObject == null || trackObject == this)
+            {
                 throw new ArgumentException("The trackObject must not be null or this instance.");
+            }
 
             TrackObject = trackObject;
             TriggerBounds = triggerBounds;

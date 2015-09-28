@@ -116,9 +116,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// This should update anything that requires mouse, keyboard, gamepad, joystick, or other input controls. (Dragging, etc.)
         /// </summary>
         /// <param name="m">The current MouseState object.</param>
-        /// <param name="hasFocus">A value indicating whether or not the application has focus.</param>
         /// <param name="gt">A value representing the elapsed <code>GameTime</code> since the last update.</param>
-        public static void UpdateAll(MouseState m, bool hasFocus, GameTime gt)
+        /// <param name="hasFocus">A value indicating whether or not the application has focus.</param>
+        public static void UpdateAll(MouseState m, GameTime gt, bool hasFocus)
         {
             if ((m.LeftButton == ButtonState.Pressed && _mouseStatePrevious.LeftButton == ButtonState.Released)
                 || (m.RightButton == ButtonState.Pressed && _mouseStatePrevious.RightButton == ButtonState.Released)
