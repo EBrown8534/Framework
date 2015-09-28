@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evbpc.Framework.Integrations.Google
+namespace Evbpc.Framework.Integrations.Google.ReCaptcha
 {
     /// <summary>
     /// Indicates errors that could be returned by the reCAPTCHA API.
@@ -13,7 +13,7 @@ namespace Evbpc.Framework.Integrations.Google
     /// See: https://developers.google.com/recaptcha/docs/verify
     /// </remarks>
     [Flags]
-    public enum ReCaptchaErrors
+    public enum Errors
     {
         /// <summary>
         /// No errors occurred.

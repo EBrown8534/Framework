@@ -159,9 +159,9 @@
     <Compile Include="Integrations\GitHub\Models\StatusCommit.cs" />
     <Compile Include="Integrations\GitHub\Models\Team.cs" />
     <Compile Include="Integrations\GitHub\Models\Tree.cs" />
-    <Compile Include="Integrations\Google\ReCaptchaErrors.cs" />
-    <Compile Include="Integrations\Google\ReCaptchaResponse.cs" />
-    <Compile Include="Integrations\Google\ReCaptchaValidator.cs" />
+    <Compile Include="Integrations\Google\ReCaptcha\Errors.cs" />
+    <Compile Include="Integrations\Google\ReCaptcha\Response.cs" />
+    <Compile Include="Integrations\Google\ReCaptcha\Validator.cs" />
     <Compile Include="Physics\IVector2.cs" />
     <Compile Include="Physics\Vector2.cs" />
     <Compile Include="Physics\Vector2F.cs" />
