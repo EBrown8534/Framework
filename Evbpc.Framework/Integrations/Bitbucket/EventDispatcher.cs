@@ -44,9 +44,9 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         }
 
         /// <summary>
-        /// Throws the <see cref="WatchEventReceived"/> event.
+        /// Throws the <see cref="PushReceived"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="WatchEventArgs"/> to throw into the event.</param>
+        /// <param name="e">The <see cref="PushEventArgs"/> to throw into the event.</param>
         protected void OnPushReceived(PushEventArgs e)
         {
             var del = PushReceived;
@@ -54,7 +54,7 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         }
 
         /// <summary>
-        /// Fired when a <see cref="CommitCommentEvent"/> event is received.
+        /// Fired when a <see cref="PushEvent"/> event is received.
         /// </summary>
         public event EventHandler<PushEventArgs> PushReceived;
     }
