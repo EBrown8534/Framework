@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.Bitbucket
 {
-    public class EventDispatcher
+    public class EventDispatcher : IEventDispatcher
     {
         /// <summary>
         /// Determines what event has happened and triggers event as appropriate.

@@ -13,7 +13,7 @@ namespace Evbpc.Framework.Integrations.GitHub
     /// <summary>
     /// A utilitarian class for dispatching GitHub Webhook events.
     /// </summary>
-    public class EventDispatcher
+    public class EventDispatcher : IEventDispatcher
     {
         /// <summary>
         /// Determines what event has happened and triggers event as appropriate.
