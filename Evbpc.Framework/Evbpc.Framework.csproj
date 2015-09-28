@@ -90,6 +90,18 @@
     <Compile Include="Drawing\SizeConverter.cs" />
     <Compile Include="Drawing\SizeF.cs" />
     <Compile Include="Drawing\SizeFConverter.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Parent.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Actor.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Author.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Change.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Changes.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Commit.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Link.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Links.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\PushData.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Push.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Repository.cs" />
+    <Compile Include="Integrations\Bitbucket\Models\Target.cs" />
     <Compile Include="Integrations\GitHub\EventDispatcher.cs" />
     <Compile Include="Integrations\GitHub\Events\Args\CommitCommentEventArgs.cs" />
     <Compile Include="Integrations\GitHub\Events\Args\CreateEventArgs.cs" />
@@ -191,7 +203,7 @@
     <Compile Include="Utilities\Serialization\XmlSerialization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Integrations\Bitbucket\" />
+    <Folder Include="Integrations\Bitbucket\Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
