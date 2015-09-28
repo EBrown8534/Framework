@@ -99,7 +99,7 @@
     <Compile Include="Integrations\Bitbucket\Models\Link.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Links.cs" />
     <Compile Include="Integrations\Bitbucket\Models\PushData.cs" />
-    <Compile Include="Integrations\Bitbucket\Models\Push.cs" />
+    <Compile Include="Integrations\Bitbucket\Events\PushEvent.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Repository.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Target.cs" />
     <Compile Include="Integrations\GitHub\EventDispatcher.cs" />
@@ -202,9 +202,7 @@
     <Compile Include="Utilities\Serialization\JsonSerialization.cs" />
     <Compile Include="Utilities\Serialization\XmlSerialization.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integrations\Bitbucket\Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

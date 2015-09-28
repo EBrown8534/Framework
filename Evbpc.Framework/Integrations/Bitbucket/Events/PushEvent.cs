@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Evbpc.Framework.Integrations.Bitbucket.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evbpc.Framework.Integrations.Bitbucket.Models
+namespace Evbpc.Framework.Integrations.Bitbucket.Events
 {
     [DataContract]
-    public class Push
+    public class PushEvent
     {
         [DataMember(Name = "actor")]
         public Actor Actor { get; set; }
