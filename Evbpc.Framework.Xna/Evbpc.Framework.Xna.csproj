@@ -79,7 +79,7 @@
       <Project>{c4e27e9e-b586-4f9f-8cdb-dd8128adda33}</Project>
       <Name>Evbpc.Framework.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="I:\Projects\The Ancients\Common\Evbpc.Framework.csproj">
+    <ProjectReference Include="..\Evbpc.Framework\Evbpc.Framework.csproj">
       <Project>{91b3b072-1736-4684-853b-a9682b06c8b6}</Project>
       <Name>Evbpc.Framework</Name>
     </ProjectReference>
