@@ -24,6 +24,15 @@ namespace Evbpc.Framework.Integrations.Bitbucket
                 case PushEvent.WebhookEventName:
                     OnPushReceived(new PushEventArgs(Deserialze<PushEvent>(json)));
                     break;
+                case IssueCommentCreatedEvent.WebhookEventName:
+                    OnIssueCommentCreatedReceived(new IssueCommentCreatedEventArgs(Deserialze<IssueCommentCreatedEvent>(json)));
+                    break;
+                case IssueCreatedEvent.WebhookEventName:
+                    OnIssueCreatedEventReceived(new IssueCreatedEventArgs(Deserialze<IssueCreatedEvent>(json)));
+                    break;
+                case IssueUpdatedEvent.WebhookEventName:
+                    OnIssueUpdatedEventReceived(new IssueUpdatedEventArgs(Deserialze<IssueUpdatedEvent>(json)));
+                    break;
             }
         }
 
@@ -54,8 +63,53 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         }
 
         /// <summary>
+        /// Throws the <see cref="IssueCommentCreatedReceived"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="IssueCommentCreatedEventArgs"/> to throw into the event.</param>
+        protected void OnIssueCommentCreatedReceived(IssueCommentCreatedEventArgs e)
+        {
+            var del = IssueCommentCreatedReceived;
+            del?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Throws the <see cref="IssueCreatedEventReceived"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="IssueCreatedEventArgs"/> to throw into the event.</param>
+        protected void OnIssueCreatedEventReceived(IssueCreatedEventArgs e)
+        {
+            var del = IssueCreatedEventReceived;
+            del?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Throws the <see cref="IssueUpdatedEventReceived"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="IssueUpdatedEventArgs"/> to throw into the event.</param>
+        protected void OnIssueUpdatedEventReceived(IssueUpdatedEventArgs e)
+        {
+            var del = IssueUpdatedEventReceived;
+            del?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Fired when a <see cref="PushEvent"/> event is received.
         /// </summary>
         public event EventHandler<PushEventArgs> PushReceived;
+
+        /// <summary>
+        /// Fired when a <see cref="IssueCommentCreatedEvent"/> event is received.
+        /// </summary>
+        public event EventHandler<IssueCommentCreatedEventArgs> IssueCommentCreatedReceived;
+
+        /// <summary>
+        /// Fired when a <see cref="IssueCreatedEvent"/> event is received.
+        /// </summary>
+        public event EventHandler<IssueCreatedEventArgs> IssueCreatedEventReceived;
+
+        /// <summary>
+        /// Fired when a <see cref="IssueUpdatedEvent"/> event is received.
+        /// </summary>
+        public event EventHandler<IssueUpdatedEventArgs> IssueUpdatedEventReceived;
     }
 }

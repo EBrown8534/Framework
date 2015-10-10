@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.Bitbucket.Events.Args
 {
-    public class PushEventArgs : EventArgs
+    public class IssueCreatedEventArgs : EventArgs
     {
-        public PushEvent Event { get; }
+        public IssueCreatedEvent Event { get; }
 
-        public PushEventArgs(PushEvent e)
+        public IssueCreatedEventArgs(IssueCreatedEvent e)
         {
             Event = e;
         }
