@@ -201,6 +201,9 @@
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Utilities\IpHelpers.cs" />
     <Compile Include="Utilities\Logging\EmptyLogger.cs" />
+    <Compile Include="Utilities\Prompting\ConsolePrompt.cs" />
+    <Compile Include="Utilities\Prompting\IPrompt.cs" />
+    <Compile Include="Utilities\Prompting\PromptOptions.cs" />
     <Compile Include="Utilities\StringHelpers.cs" />
     <Compile Include="Utilities\Cryptography.cs" />
     <Compile Include="Utilities\DateTimeHelpers.cs" />
