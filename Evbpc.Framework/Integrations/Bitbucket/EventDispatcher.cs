@@ -21,16 +21,16 @@ namespace Evbpc.Framework.Integrations.Bitbucket
             switch (eventKey)
             {
                 case PushEvent.WebhookEventName:
-                    OnPushReceived(new GenericEventArgs<PushEvent>(Deserialze<PushEvent>(json)));
+                    OnPushReceived(new EventArgs<PushEvent>(Deserialze<PushEvent>(json)));
                     break;
                 case IssueCommentCreatedEvent.WebhookEventName:
-                    OnIssueCommentCreatedReceived(new GenericEventArgs<IssueCommentCreatedEvent>(Deserialze<IssueCommentCreatedEvent>(json)));
+                    OnIssueCommentCreatedReceived(new EventArgs<IssueCommentCreatedEvent>(Deserialze<IssueCommentCreatedEvent>(json)));
                     break;
                 case IssueCreatedEvent.WebhookEventName:
-                    OnIssueCreatedEventReceived(new GenericEventArgs<IssueCreatedEvent>(Deserialze<IssueCreatedEvent>(json)));
+                    OnIssueCreatedEventReceived(new EventArgs<IssueCreatedEvent>(Deserialze<IssueCreatedEvent>(json)));
                     break;
                 case IssueUpdatedEvent.WebhookEventName:
-                    OnIssueUpdatedEventReceived(new GenericEventArgs<IssueUpdatedEvent>(Deserialze<IssueUpdatedEvent>(json)));
+                    OnIssueUpdatedEventReceived(new EventArgs<IssueUpdatedEvent>(Deserialze<IssueUpdatedEvent>(json)));
                     break;
             }
         }
@@ -55,7 +55,7 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// Throws the <see cref="PushReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnPushReceived(GenericEventArgs<PushEvent> e)
+        protected void OnPushReceived(EventArgs<PushEvent> e)
         {
             var del = PushReceived;
             del?.Invoke(this, e);
@@ -65,7 +65,7 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// Throws the <see cref="IssueCommentCreatedReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnIssueCommentCreatedReceived(GenericEventArgs<IssueCommentCreatedEvent> e)
+        protected void OnIssueCommentCreatedReceived(EventArgs<IssueCommentCreatedEvent> e)
         {
             var del = IssueCommentCreatedReceived;
             del?.Invoke(this, e);
@@ -75,7 +75,7 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// Throws the <see cref="IssueCreatedEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnIssueCreatedEventReceived(GenericEventArgs<IssueCreatedEvent> e)
+        protected void OnIssueCreatedEventReceived(EventArgs<IssueCreatedEvent> e)
         {
             var del = IssueCreatedEventReceived;
             del?.Invoke(this, e);
@@ -85,7 +85,7 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// Throws the <see cref="IssueUpdatedEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnIssueUpdatedEventReceived(GenericEventArgs<IssueUpdatedEvent> e)
+        protected void OnIssueUpdatedEventReceived(EventArgs<IssueUpdatedEvent> e)
         {
             var del = IssueUpdatedEventReceived;
             del?.Invoke(this, e);
@@ -94,21 +94,21 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// <summary>
         /// Fired when a <see cref="PushEvent"/> event is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<PushEvent>> PushReceived;
+        public event EventHandler<EventArgs<PushEvent>> PushReceived;
 
         /// <summary>
         /// Fired when a <see cref="IssueCommentCreatedEvent"/> event is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<IssueCommentCreatedEvent>> IssueCommentCreatedReceived;
+        public event EventHandler<EventArgs<IssueCommentCreatedEvent>> IssueCommentCreatedReceived;
 
         /// <summary>
         /// Fired when a <see cref="IssueCreatedEvent"/> event is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<IssueCreatedEvent>> IssueCreatedEventReceived;
+        public event EventHandler<EventArgs<IssueCreatedEvent>> IssueCreatedEventReceived;
 
         /// <summary>
         /// Fired when a <see cref="IssueUpdatedEvent"/> event is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<IssueUpdatedEvent>> IssueUpdatedEventReceived;
+        public event EventHandler<EventArgs<IssueUpdatedEvent>> IssueUpdatedEventReceived;
     }
 }

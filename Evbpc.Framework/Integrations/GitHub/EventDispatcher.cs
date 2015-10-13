@@ -24,67 +24,67 @@ namespace Evbpc.Framework.Integrations.GitHub
             switch (eventKey)
             {
                 case CommitCommentEvent.WebhookEventName:
-                    OnCommitCommentReceived(new GenericEventArgs<CommitCommentEvent>(Deserialze<CommitCommentEvent>(json)));
+                    OnCommitCommentReceived(new EventArgs<CommitCommentEvent>(Deserialze<CommitCommentEvent>(json)));
                     break;
                 case CreateEvent.WebhookEventName:
-                    OnCreateReceived(new GenericEventArgs<CreateEvent>(Deserialze<CreateEvent>(json)));
+                    OnCreateReceived(new EventArgs<CreateEvent>(Deserialze<CreateEvent>(json)));
                     break;
                 case DeleteEvent.WebhookEventName:
-                    OnDeleteReceived(new GenericEventArgs<DeleteEvent>(Deserialze<DeleteEvent>(json)));
+                    OnDeleteReceived(new EventArgs<DeleteEvent>(Deserialze<DeleteEvent>(json)));
                     break;
                 case DeploymentEvent.WebhookEventName:
-                    OnDeploymentReceived(new GenericEventArgs<DeploymentEvent>(Deserialze<DeploymentEvent>(json)));
+                    OnDeploymentReceived(new EventArgs<DeploymentEvent>(Deserialze<DeploymentEvent>(json)));
                     break;
                 case DeploymentStatusEvent.WebhookEventName:
-                    OnDeploymentStatusReceived(new GenericEventArgs<DeploymentStatusEvent>(Deserialze<DeploymentStatusEvent>(json)));
+                    OnDeploymentStatusReceived(new EventArgs<DeploymentStatusEvent>(Deserialze<DeploymentStatusEvent>(json)));
                     break;
                 case ForkEvent.WebhookEventName:
-                    OnForkReceived(new GenericEventArgs<ForkEvent>(Deserialze<ForkEvent>(json)));
+                    OnForkReceived(new EventArgs<ForkEvent>(Deserialze<ForkEvent>(json)));
                     break;
                 case GollumEvent.WebhookEventName:
-                    OnGollumReceived(new GenericEventArgs<GollumEvent>(Deserialze<GollumEvent>(json)));
+                    OnGollumReceived(new EventArgs<GollumEvent>(Deserialze<GollumEvent>(json)));
                     break;
                 case IssueCommentEvent.WebhookEventName:
-                    OnIssueCommentReceived(new GenericEventArgs<IssueCommentEvent>(Deserialze<IssueCommentEvent>(json)));
+                    OnIssueCommentReceived(new EventArgs<IssueCommentEvent>(Deserialze<IssueCommentEvent>(json)));
                     break;
                 case IssuesEvent.WebhookEventName:
-                    OnIssuesReceived(new GenericEventArgs<IssuesEvent>(Deserialze<IssuesEvent>(json)));
+                    OnIssuesReceived(new EventArgs<IssuesEvent>(Deserialze<IssuesEvent>(json)));
                     break;
                 case MemberEvent.WebhookEventName:
-                    OnMemberReceived(new GenericEventArgs<MemberEvent>(Deserialze<MemberEvent>(json)));
+                    OnMemberReceived(new EventArgs<MemberEvent>(Deserialze<MemberEvent>(json)));
                     break;
                 case MembershipEvent.WebhookEventName:
-                    OnMembershipReceived(new GenericEventArgs<MembershipEvent>(Deserialze<MembershipEvent>(json)));
+                    OnMembershipReceived(new EventArgs<MembershipEvent>(Deserialze<MembershipEvent>(json)));
                     break;
                 case PageBuildEvent.WebhookEventName:
-                    OnPageBuildReceived(new GenericEventArgs<PageBuildEvent>(Deserialze<PageBuildEvent>(json)));
+                    OnPageBuildReceived(new EventArgs<PageBuildEvent>(Deserialze<PageBuildEvent>(json)));
                     break;
                 case PublicEvent.WebhookEventName:
-                    OnPublicReceived(new GenericEventArgs<PublicEvent>(Deserialze<PublicEvent>(json)));
+                    OnPublicReceived(new EventArgs<PublicEvent>(Deserialze<PublicEvent>(json)));
                     break;
                 case PullRequestEvent.WebhookEventName:
-                    OnPullRequestReceived(new GenericEventArgs<PullRequestEvent>(Deserialze<PullRequestEvent>(json)));
+                    OnPullRequestReceived(new EventArgs<PullRequestEvent>(Deserialze<PullRequestEvent>(json)));
                     break;
                 case PullRequestReviewCommentEvent.WebhookEventName:
-                    OnPullRequestReviewCommentReceived(new GenericEventArgs<PullRequestReviewCommentEvent>(Deserialze<PullRequestReviewCommentEvent>(json)));
+                    OnPullRequestReviewCommentReceived(new EventArgs<PullRequestReviewCommentEvent>(Deserialze<PullRequestReviewCommentEvent>(json)));
                     break;
                 case PushEvent.WebhookEventName:
-                    OnPushReceived(new GenericEventArgs<PushEvent>(Deserialze<PushEvent>(json)));
+                    OnPushReceived(new EventArgs<PushEvent>(Deserialze<PushEvent>(json)));
                     break;
                 case ReleaseEvent.WebhookEventName:
-                    OnReleaseReceived(new GenericEventArgs<ReleaseEvent>(Deserialze<ReleaseEvent>(json)));
+                    OnReleaseReceived(new EventArgs<ReleaseEvent>(Deserialze<ReleaseEvent>(json)));
                     break;
                 case RepositoryEvent.WebhookEventName:
-                    OnRepositoryReceived(new GenericEventArgs<RepositoryEvent>(Deserialze<RepositoryEvent>(json)));
+                    OnRepositoryReceived(new EventArgs<RepositoryEvent>(Deserialze<RepositoryEvent>(json)));
                     break;
                 case StatusEvent.WebhookEventName:
-                    OnStatusReceived(new GenericEventArgs<StatusEvent>(Deserialze<StatusEvent>(json)));
+                    OnStatusReceived(new EventArgs<StatusEvent>(Deserialze<StatusEvent>(json)));
                     break;
                 case TeamAddEvent.WebhookEventName:
-                    OnTeamAddReceived(new GenericEventArgs<TeamAddEvent>(Deserialze<TeamAddEvent>(json)));
+                    OnTeamAddReceived(new EventArgs<TeamAddEvent>(Deserialze<TeamAddEvent>(json)));
                     break;
                 case WatchEvent.WebhookEventName:
-                    OnWatchReceived(new GenericEventArgs<WatchEvent>(Deserialze<WatchEvent>(json)));
+                    OnWatchReceived(new EventArgs<WatchEvent>(Deserialze<WatchEvent>(json)));
                     break;
             }
         }
@@ -109,7 +109,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="CommitCommentEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnCommitCommentReceived(GenericEventArgs<CommitCommentEvent> e)
+        protected void OnCommitCommentReceived(EventArgs<CommitCommentEvent> e)
         {
             var del = CommitCommentEventReceived;
             del?.Invoke(this, e);
@@ -119,7 +119,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="CreateEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnCreateReceived(GenericEventArgs<CreateEvent> e)
+        protected void OnCreateReceived(EventArgs<CreateEvent> e)
         {
             var del = CreateEventReceived;
             del?.Invoke(this, e);
@@ -129,7 +129,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="DeleteEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnDeleteReceived(GenericEventArgs<DeleteEvent> e)
+        protected void OnDeleteReceived(EventArgs<DeleteEvent> e)
         {
             var del = DeleteEventReceived;
             del?.Invoke(this, e);
@@ -139,7 +139,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="DeploymentEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnDeploymentReceived(GenericEventArgs<DeploymentEvent> e)
+        protected void OnDeploymentReceived(EventArgs<DeploymentEvent> e)
         {
             var del = DeploymentEventReceived;
             del?.Invoke(this, e);
@@ -149,7 +149,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="DeploymentStatusEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnDeploymentStatusReceived(GenericEventArgs<DeploymentStatusEvent> e)
+        protected void OnDeploymentStatusReceived(EventArgs<DeploymentStatusEvent> e)
         {
             var del = DeploymentStatusEventReceived;
             del?.Invoke(this, e);
@@ -159,7 +159,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="ForkEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnForkReceived(GenericEventArgs<ForkEvent> e)
+        protected void OnForkReceived(EventArgs<ForkEvent> e)
         {
             var del = ForkEventReceived;
             del?.Invoke(this, e);
@@ -169,7 +169,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="GollumEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnGollumReceived(GenericEventArgs<GollumEvent> e)
+        protected void OnGollumReceived(EventArgs<GollumEvent> e)
         {
             var del = GollumEventReceived;
             del?.Invoke(this, e);
@@ -179,7 +179,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="IssueCommentEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnIssueCommentReceived(GenericEventArgs<IssueCommentEvent> e)
+        protected void OnIssueCommentReceived(EventArgs<IssueCommentEvent> e)
         {
             var del = IssueCommentEventReceived;
             del?.Invoke(this, e);
@@ -189,7 +189,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="IssuesEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnIssuesReceived(GenericEventArgs<IssuesEvent> e)
+        protected void OnIssuesReceived(EventArgs<IssuesEvent> e)
         {
             var del = IssuesEventReceived;
             del?.Invoke(this, e);
@@ -199,7 +199,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="MemberEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnMemberReceived(GenericEventArgs<MemberEvent> e)
+        protected void OnMemberReceived(EventArgs<MemberEvent> e)
         {
             var del = MemberEventReceived;
             del?.Invoke(this, e);
@@ -209,7 +209,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="MembershipEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnMembershipReceived(GenericEventArgs<MembershipEvent> e)
+        protected void OnMembershipReceived(EventArgs<MembershipEvent> e)
         {
             var del = MembershipEventReceived;
             del?.Invoke(this, e);
@@ -219,7 +219,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="PageBuildEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnPageBuildReceived(GenericEventArgs<PageBuildEvent> e)
+        protected void OnPageBuildReceived(EventArgs<PageBuildEvent> e)
         {
             var del = PageBuildEventReceived;
             del?.Invoke(this, e);
@@ -229,7 +229,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="PublicEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnPublicReceived(GenericEventArgs<PublicEvent> e)
+        protected void OnPublicReceived(EventArgs<PublicEvent> e)
         {
             var del = PublicEventReceived;
             del?.Invoke(this, e);
@@ -239,7 +239,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="PullRequestEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnPullRequestReceived(GenericEventArgs<PullRequestEvent> e)
+        protected void OnPullRequestReceived(EventArgs<PullRequestEvent> e)
         {
             var del = PullRequestEventReceived;
             del?.Invoke(this, e);
@@ -249,7 +249,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="PullRequestReviewCommentEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnPullRequestReviewCommentReceived(GenericEventArgs<PullRequestReviewCommentEvent> e)
+        protected void OnPullRequestReviewCommentReceived(EventArgs<PullRequestReviewCommentEvent> e)
         {
             var del = PullRequestReviewCommentEventReceived;
             del?.Invoke(this, e);
@@ -259,7 +259,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="PushEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnPushReceived(GenericEventArgs<PushEvent> e)
+        protected void OnPushReceived(EventArgs<PushEvent> e)
         {
             var del = PushEventReceived;
             del?.Invoke(this, e);
@@ -269,7 +269,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="ReleaseEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnReleaseReceived(GenericEventArgs<ReleaseEvent> e)
+        protected void OnReleaseReceived(EventArgs<ReleaseEvent> e)
         {
             var del = ReleaseEventReceived;
             del?.Invoke(this, e);
@@ -279,7 +279,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="RepositoryEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnRepositoryReceived(GenericEventArgs<RepositoryEvent> e)
+        protected void OnRepositoryReceived(EventArgs<RepositoryEvent> e)
         {
             var del = RepositoryEventReceived;
             del?.Invoke(this, e);
@@ -289,7 +289,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="StatusEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnStatusReceived(GenericEventArgs<StatusEvent> e)
+        protected void OnStatusReceived(EventArgs<StatusEvent> e)
         {
             var del = StatusEventReceived;
             del?.Invoke(this, e);
@@ -299,7 +299,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="TeamAddEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnTeamAddReceived(GenericEventArgs<TeamAddEvent> e)
+        protected void OnTeamAddReceived(EventArgs<TeamAddEvent> e)
         {
             var del = TeamAddEventReceived;
             del?.Invoke(this, e);
@@ -309,7 +309,7 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// Throws the <see cref="WatchEventReceived"/> event.
         /// </summary>
         /// <param name="e">The args to throw into the event.</param>
-        protected void OnWatchReceived(GenericEventArgs<WatchEvent> e)
+        protected void OnWatchReceived(EventArgs<WatchEvent> e)
         {
             var del = WatchEventReceived;
             del?.Invoke(this, e);
@@ -318,106 +318,106 @@ namespace Evbpc.Framework.Integrations.GitHub
         /// <summary>
         /// Fired when a <see cref="CommitCommentEvent"/> event is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<CommitCommentEvent>> CommitCommentEventReceived;
+        public event EventHandler<EventArgs<CommitCommentEvent>> CommitCommentEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="CreateEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<CreateEvent>> CreateEventReceived;
+        public event EventHandler<EventArgs<CreateEvent>> CreateEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="DeleteEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<DeleteEvent>> DeleteEventReceived;
+        public event EventHandler<EventArgs<DeleteEvent>> DeleteEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="DeploymentEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<DeploymentEvent>> DeploymentEventReceived;
+        public event EventHandler<EventArgs<DeploymentEvent>> DeploymentEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="DeploymentStatusEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<DeploymentStatusEvent>> DeploymentStatusEventReceived;
+        public event EventHandler<EventArgs<DeploymentStatusEvent>> DeploymentStatusEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="ForkEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<ForkEvent>> ForkEventReceived;
+        public event EventHandler<EventArgs<ForkEvent>> ForkEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="GollumEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<GollumEvent>> GollumEventReceived;
+        public event EventHandler<EventArgs<GollumEvent>> GollumEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="IssueCommentEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<IssueCommentEvent>> IssueCommentEventReceived;
+        public event EventHandler<EventArgs<IssueCommentEvent>> IssueCommentEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="IssuesEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<IssuesEvent>> IssuesEventReceived;
+        public event EventHandler<EventArgs<IssuesEvent>> IssuesEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="MemberEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<MemberEvent>> MemberEventReceived;
+        public event EventHandler<EventArgs<MemberEvent>> MemberEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="MembershipEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<MembershipEvent>> MembershipEventReceived;
+        public event EventHandler<EventArgs<MembershipEvent>> MembershipEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="PageBuildEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<PageBuildEvent>> PageBuildEventReceived;
+        public event EventHandler<EventArgs<PageBuildEvent>> PageBuildEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="PublicEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<PublicEvent>> PublicEventReceived;
+        public event EventHandler<EventArgs<PublicEvent>> PublicEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="PullRequestEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<PullRequestEvent>> PullRequestEventReceived;
+        public event EventHandler<EventArgs<PullRequestEvent>> PullRequestEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="PullRequestReviewCommentEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<PullRequestReviewCommentEvent>> PullRequestReviewCommentEventReceived;
+        public event EventHandler<EventArgs<PullRequestReviewCommentEvent>> PullRequestReviewCommentEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="PushEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<PushEvent>> PushEventReceived;
+        public event EventHandler<EventArgs<PushEvent>> PushEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="ReleaseEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<ReleaseEvent>> ReleaseEventReceived;
+        public event EventHandler<EventArgs<ReleaseEvent>> ReleaseEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="RepositoryEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<RepositoryEvent>> RepositoryEventReceived;
+        public event EventHandler<EventArgs<RepositoryEvent>> RepositoryEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="StatusEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<StatusEvent>> StatusEventReceived;
+        public event EventHandler<EventArgs<StatusEvent>> StatusEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="TeamAddEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<TeamAddEvent>> TeamAddEventReceived;
+        public event EventHandler<EventArgs<TeamAddEvent>> TeamAddEventReceived;
 
         /// <summary>
         /// Fires when a <see cref="WatchEvent"/> is received.
         /// </summary>
-        public event EventHandler<GenericEventArgs<WatchEvent>> WatchEventReceived;
+        public event EventHandler<EventArgs<WatchEvent>> WatchEventReceived;
     }
 }

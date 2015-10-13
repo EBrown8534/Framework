@@ -10,7 +10,7 @@ namespace Evbpc.Framework.Integrations
     /// Represents a generic event that has only one field.
     /// </summary>
     /// <typeparam name="T">The type of the event.</typeparam>
-    public class GenericEventArgs<T> : EventArgs
+    public class EventArgs<T> : EventArgs
     {
         /// <summary>
         /// Represents the data associated with the event.
@@ -18,10 +18,10 @@ namespace Evbpc.Framework.Integrations
         public T Event { get; }
 
         /// <summary>
-        /// Constructs a new instance of <see cref="GenericEventArgs{T}"/> with the specified <see cref="Event"/>.
+        /// Constructs a new instance of <see cref="EventArgs{T}"/> with the specified <see cref="Event"/>.
         /// </summary>
         /// <param name="thisEvent">The object to be put in the <see cref="Event"/>.</param>
-        public GenericEventArgs(T thisEvent)
+        public EventArgs(T thisEvent)
         {
             Event = thisEvent;
         }
