@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Evbpc.Framework.Integrations.Bitbucket.Models
 {
     [DataContract]
-    public class PushData
+    public class Push
     {
         [DataMember(Name = "changes")]
         public List<Changes> Changes { get; set; }

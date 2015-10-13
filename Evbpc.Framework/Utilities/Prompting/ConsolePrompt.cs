@@ -7,13 +7,23 @@ using Evbpc.Framework.Utilities.Logging;
 
 namespace Evbpc.Framework.Utilities.Prompting
 {
+    /// <summary>
+    /// Represents an <see cref="IPrompt"/> that prompts the user with <code>Console</code> input.
+    /// </summary>
     public class ConsolePrompt : IPrompt
     {
+        /// <summary>
+        /// Constructs a new instance of the <see cref="ConsolePrompt"/> with the specified <see cref="ILogger"/>.
+        /// </summary>
+        /// <param name="logger">The <see cref="ILogger"/> that should be used for the <see cref="Logger"/>.</param>
         public ConsolePrompt (ILogger logger)
         {
             Logger = logger;
         }
 
+        /// <summary>
+        /// A <see cref="ILogger"/> that <see cref="ConsolePrompt"/> errors/messages should be posted to.
+        /// </summary>
         public ILogger Logger { get; }
 
         /// <summary>
@@ -90,7 +100,7 @@ namespace Evbpc.Framework.Utilities.Prompting
 
             return result;
         }
-
+        
         private static bool Retrieve<T>(string line, out T resultValue)
             where T : IConvertible
         {

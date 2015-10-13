@@ -1,5 +1,4 @@
 ﻿using Evbpc.Framework.Integrations.Bitbucket.Events;
-using Evbpc.Framework.Integrations.Bitbucket.Events.Args;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,16 +21,16 @@ namespace Evbpc.Framework.Integrations.Bitbucket
             switch (eventKey)
             {
                 case PushEvent.WebhookEventName:
-                    OnPushReceived(new PushEventArgs(Deserialze<PushEvent>(json)));
+                    OnPushReceived(new GenericEventArgs<PushEvent>(Deserialze<PushEvent>(json)));
                     break;
                 case IssueCommentCreatedEvent.WebhookEventName:
-                    OnIssueCommentCreatedReceived(new IssueCommentCreatedEventArgs(Deserialze<IssueCommentCreatedEvent>(json)));
+                    OnIssueCommentCreatedReceived(new GenericEventArgs<IssueCommentCreatedEvent>(Deserialze<IssueCommentCreatedEvent>(json)));
                     break;
                 case IssueCreatedEvent.WebhookEventName:
-                    OnIssueCreatedEventReceived(new IssueCreatedEventArgs(Deserialze<IssueCreatedEvent>(json)));
+                    OnIssueCreatedEventReceived(new GenericEventArgs<IssueCreatedEvent>(Deserialze<IssueCreatedEvent>(json)));
                     break;
                 case IssueUpdatedEvent.WebhookEventName:
-                    OnIssueUpdatedEventReceived(new IssueUpdatedEventArgs(Deserialze<IssueUpdatedEvent>(json)));
+                    OnIssueUpdatedEventReceived(new GenericEventArgs<IssueUpdatedEvent>(Deserialze<IssueUpdatedEvent>(json)));
                     break;
             }
         }
@@ -55,8 +54,8 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// <summary>
         /// Throws the <see cref="PushReceived"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="PushEventArgs"/> to throw into the event.</param>
-        protected void OnPushReceived(PushEventArgs e)
+        /// <param name="e">The args to throw into the event.</param>
+        protected void OnPushReceived(GenericEventArgs<PushEvent> e)
         {
             var del = PushReceived;
             del?.Invoke(this, e);
@@ -65,8 +64,8 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// <summary>
         /// Throws the <see cref="IssueCommentCreatedReceived"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="IssueCommentCreatedEventArgs"/> to throw into the event.</param>
-        protected void OnIssueCommentCreatedReceived(IssueCommentCreatedEventArgs e)
+        /// <param name="e">The args to throw into the event.</param>
+        protected void OnIssueCommentCreatedReceived(GenericEventArgs<IssueCommentCreatedEvent> e)
         {
             var del = IssueCommentCreatedReceived;
             del?.Invoke(this, e);
@@ -75,8 +74,8 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// <summary>
         /// Throws the <see cref="IssueCreatedEventReceived"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="IssueCreatedEventArgs"/> to throw into the event.</param>
-        protected void OnIssueCreatedEventReceived(IssueCreatedEventArgs e)
+        /// <param name="e">The args to throw into the event.</param>
+        protected void OnIssueCreatedEventReceived(GenericEventArgs<IssueCreatedEvent> e)
         {
             var del = IssueCreatedEventReceived;
             del?.Invoke(this, e);
@@ -85,8 +84,8 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// <summary>
         /// Throws the <see cref="IssueUpdatedEventReceived"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="IssueUpdatedEventArgs"/> to throw into the event.</param>
-        protected void OnIssueUpdatedEventReceived(IssueUpdatedEventArgs e)
+        /// <param name="e">The args to throw into the event.</param>
+        protected void OnIssueUpdatedEventReceived(GenericEventArgs<IssueUpdatedEvent> e)
         {
             var del = IssueUpdatedEventReceived;
             del?.Invoke(this, e);
@@ -95,21 +94,21 @@ namespace Evbpc.Framework.Integrations.Bitbucket
         /// <summary>
         /// Fired when a <see cref="PushEvent"/> event is received.
         /// </summary>
-        public event EventHandler<PushEventArgs> PushReceived;
+        public event EventHandler<GenericEventArgs<PushEvent>> PushReceived;
 
         /// <summary>
         /// Fired when a <see cref="IssueCommentCreatedEvent"/> event is received.
         /// </summary>
-        public event EventHandler<IssueCommentCreatedEventArgs> IssueCommentCreatedReceived;
+        public event EventHandler<GenericEventArgs<IssueCommentCreatedEvent>> IssueCommentCreatedReceived;
 
         /// <summary>
         /// Fired when a <see cref="IssueCreatedEvent"/> event is received.
         /// </summary>
-        public event EventHandler<IssueCreatedEventArgs> IssueCreatedEventReceived;
+        public event EventHandler<GenericEventArgs<IssueCreatedEvent>> IssueCreatedEventReceived;
 
         /// <summary>
         /// Fired when a <see cref="IssueUpdatedEvent"/> event is received.
         /// </summary>
-        public event EventHandler<IssueUpdatedEventArgs> IssueUpdatedEventReceived;
+        public event EventHandler<GenericEventArgs<IssueUpdatedEvent>> IssueUpdatedEventReceived;
     }
 }
