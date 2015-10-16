@@ -206,7 +206,7 @@ namespace Evbpc.Framework.Drawing
                     (short)(((uint)data[2]) << 8 | ((uint)data[3])));
             }
             else
-                throw new ArgumentException($"Parameter \"data\" must be exactly {SizeInBytes} bytes.");
+                throw new ArgumentException($"Parameter {nameof(data)} must be exactly {SizeInBytes} bytes.");
         }
 
         /// <summary>

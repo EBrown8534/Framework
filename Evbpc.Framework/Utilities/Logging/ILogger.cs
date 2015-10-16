@@ -27,16 +27,18 @@ namespace Evbpc.Framework.Utilities.Logging
         /// Logs a message to the <see cref="ILogger"/> with the given type, and colours if appropriate.
         /// </summary>
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
-        /// <param name="type">The <see cref="LoggingType"/> the message is, for filtering.</param>
+        /// <param name="type">The <see cref="Logging.LoggingType"/> the message is, for filtering.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
         void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Information"/> message to the <see cref="ILogger"/>, formatted with the specified args.
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
         void LogInformation(string message, params object[] args);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Information"/> message to the <see cref="ILogger"/> with the specified colours if appropriate.
         /// </summary>
@@ -44,12 +46,14 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
         void LogInformation(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Warning"/> message to the <see cref="ILogger"/>, formatted with the specified args.
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
         void LogWarning(string message, params object[] args);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Warning"/> message to the <see cref="ILogger"/> with the specified colours if appropriate.
         /// </summary>
@@ -57,12 +61,14 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
         void LogWarning(string message, Color.Preset foreColor = Color.Preset.DarkYellow, Color.Preset backColor = Color.Preset.Black);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Error"/> message to the <see cref="ILogger"/>, formatted with the specified args.
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
         void LogError(string message, params object[] args);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Error"/> message to the <see cref="ILogger"/> with the specified colours if appropriate.
         /// </summary>
@@ -70,12 +76,14 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
         void LogError(string message, Color.Preset foreColor = Color.Preset.DarkRed, Color.Preset backColor = Color.Preset.DarkRed);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Verbose"/> message to the <see cref="ILogger"/>, formatted with the specified args.
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
         void LogVerbose(string message, params object[] args);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Verbose"/> message to the <see cref="ILogger"/> with the specified colours if appropriate.
         /// </summary>
@@ -83,12 +91,14 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
         void LogVerbose(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Important"/> message to the <see cref="ILogger"/>, formatted with the specified args.
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
         void LogImportant(string message, params object[] args);
+
         /// <summary>
         /// Logs a <see cref="LoggingType.Important"/> message to the <see cref="ILogger"/> with the specified colours if appropriate.
         /// </summary>

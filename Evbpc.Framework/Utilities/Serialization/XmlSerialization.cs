@@ -31,7 +31,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             try
             {
                 if (value == null)
-                    throw new ArgumentNullException(string.Format("The value is expected to be a non-null {0}.", typeof(T)));
+                {
+                    throw new ArgumentNullException($"The value is expected to be a non-null {typeof(T)}.");
+                }
 
                 XmlSerializer xmlserializer = new XmlSerializer(typeof(T));
 
@@ -48,7 +50,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             catch
             {
                 if (throwExceptions)
+                {
                     throw;
+                }
 
                 return false;
             }
@@ -72,7 +76,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             try
             {
                 if (value == null)
+                {
                     throw new ArgumentNullException("The value is expected to be a non-null string.");
+                }
 
                 XmlSerializer xmlserializer = new XmlSerializer(typeof(T));
 
@@ -80,7 +86,9 @@ namespace Evbpc.Framework.Utilities.Serialization
                 using (XmlReader reader = XmlReader.Create(stringReader))
                 {
                     if (!xmlserializer.CanDeserialize(reader))
-                        throw new ArgumentException(string.Format("The provided value cannot be deserialized to the type {0}.", typeof(T)));
+                    {
+                        throw new ArgumentException($"The provided value cannot be deserialized to the type {typeof(T)}.");
+                    }
 
                     deserializedObject = (T)(xmlserializer.Deserialize(reader));
 
@@ -90,7 +98,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             catch
             {
                 if (throwExceptions)
+                {
                     throw;
+                }
 
                 return false;
             }

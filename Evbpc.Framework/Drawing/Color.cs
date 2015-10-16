@@ -251,7 +251,7 @@ namespace Evbpc.Framework.Drawing
             }
             else
             {
-                throw new ArgumentException($"Parameter \"data\" must be exactly {SizeInBytes} bytes.");
+                throw new ArgumentException($"Parameter {nameof(data)} must be exactly {SizeInBytes} bytes.");
             }
         }
 

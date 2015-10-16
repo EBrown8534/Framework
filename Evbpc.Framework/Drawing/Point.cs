@@ -106,7 +106,7 @@ namespace Evbpc.Framework.Drawing
         public void FromBytes(byte[] data)
         {
             if (data.Length != SizeInBytes)
-                throw new ArgumentException($"The parameter \"data\" must be a {SizeInBytes} index byte-array.");
+                throw new ArgumentException($"The parameter {nameof(data)} must be a {SizeInBytes} index byte-array.");
 
             this = new Point(
                 ((int)data[0] << 24 | (int)data[1] << 16 | (int)data[2] << 8 | (int)data[3] << 0),

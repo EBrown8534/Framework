@@ -26,7 +26,7 @@ namespace Evbpc.Framework.Physics
         /// Inherited from <see cref="IVector2"/>. Gets a boolean value indicating whether or not the current <see cref="Vector2F"/> is empty or not.
         /// </summary>
         [Browsable(false)]
-        public bool IsEmpty=>this == Empty; 
+        public bool IsEmpty => this == Empty;
 
         /// <summary>
         /// Gets the X component of the <see cref="Vector2F"/>.
@@ -128,7 +128,7 @@ namespace Evbpc.Framework.Physics
         /// <param name="v2">The <see cref="Vector2"/> to add.</param>
         /// <returns>A new <see cref="Vector2F"/> which is the addition of all components of the <see cref="Vector2F"/> and <see cref="Vector2"/>.</returns>
         public static Vector2F operator +(Vector2F v1, Vector2 v2) => new Vector2F(v1.X + v2.X, v1.Y + v2.Y);
-        
+
         /// <summary>
         /// Adds two <see cref="Vector2F"/> objects together and returns the result.
         /// </summary>

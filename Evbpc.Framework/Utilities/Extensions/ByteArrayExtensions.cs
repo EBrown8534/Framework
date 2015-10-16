@@ -21,10 +21,14 @@ namespace Evbpc.Framework.Utilities.Extensions
             byte[] result = new byte[source.Length + value.Length];
 
             for (int i = 0; i < source.Length; i++)
+            {
                 result[i] = source[i];
+            }
 
             for (int i = 0; i < value.Length; i++)
+            {
                 result[i + source.Length] = value[i];
+            }
 
             return result;
         }

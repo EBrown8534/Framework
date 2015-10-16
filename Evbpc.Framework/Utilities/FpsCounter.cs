@@ -50,9 +50,13 @@ namespace Evbpc.Framework.Utilities
             for (int i = 0; i < _frames.Count; i++)
             {
                 if (_frames[i] - DateTime.UtcNow > ExpirationTime)
+                {
                     _frames.RemoveAt(i);
+                }
                 else
+                {
                     break;
+                }
             }
         }
 
@@ -63,9 +67,13 @@ namespace Evbpc.Framework.Utilities
         public int Immediate()
         {
             if (_frames.Count > 2)
+            {
                 return 1000 / (int)(_frames[_frames.Count - 1] - _frames[_frames.Count - 2]).TotalMilliseconds;
+            }
             else
+            {
                 return 0;
+            }
         }
 
         /// <summary>
@@ -103,13 +111,19 @@ namespace Evbpc.Framework.Utilities
             for (int i = _frames.Count - 1; i >= 0; i--)
             {
                 if (now - _frames[i] < difference)
+                {
                     n++;
+                }
                 else
+                {
                     break;
+                }
             }
 
             if (n > 1)
+            {
                 return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
+            }
 
             return 0;
         }
@@ -128,13 +142,19 @@ namespace Evbpc.Framework.Utilities
             for (int i = _frames.Count - 1; i >= 0; i--)
             {
                 if (_frames[i] >= start && _frames[i] <= end)
+                {
                     n++;
+                }
                 else if (_frames[i] < start)
+                {
                     break;
+                }
             }
 
             if (n > 1)
+            {
                 return (int)(n / (_frames[_frames.Count - 1] - _frames[_frames.Count - n]).TotalSeconds);
+            }
 
             return 0;
         }

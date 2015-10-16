@@ -37,7 +37,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static uint ToUInt32(this byte[] data)
         {
             if (data.Length != 4)
-                throw new ArgumentException("The byte-array \"data\" must be exactly four bytes.");
+            {
+                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly four bytes.");
+            }
 
             uint result = 0;
 
@@ -73,7 +75,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static int ToInt32(this byte[] data)
         {
             if (data.Length != 4)
-                throw new ArgumentException("The byte-array \"data\" must be exactly four bytes.");
+            {
+                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly four bytes.");
+            }
 
             int result = 0;
 
@@ -113,7 +117,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static ulong ToUInt64(this byte[] data)
         {
             if (data.Length != 8)
-                throw new ArgumentException("The byte-array \"data\" must be exactly eight bytes.");
+            {
+                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly eight bytes.");
+            }
 
             ulong result = 0;
 
@@ -153,7 +159,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static long ToInt64(this byte[] data)
         {
             if (data.Length != 8)
-                throw new ArgumentException("The byte-array \"data\" must be exactly eight bytes.");
+            {
+                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly eight bytes.");
+            }
 
             long result = 0;
 

@@ -190,6 +190,11 @@ namespace Evbpc.Framework.Utilities
         /// <returns>The input Base64 string decoded into a byte-array string, following the provided options.</returns>
         public static byte[] FromBase64String(string input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
         {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentException($"The parameter {nameof(input)} cannot be null, empty, or whitespace.");
+            }
+
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
             if ((options & Base64FormattingOptions.UrlFilenameSafeAlphabet) == Base64FormattingOptions.UrlFilenameSafeAlphabet)

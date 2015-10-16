@@ -98,7 +98,7 @@ namespace Evbpc.Framework.Utilities
         {
             if (trackObject == null || trackObject == this)
             {
-                throw new ArgumentException("The trackObject must not be null or this instance.");
+                throw new ArgumentException($"The {nameof(trackObject)} must not be null or this instance.");
             }
 
             TrackObject = trackObject;
@@ -198,21 +198,31 @@ namespace Evbpc.Framework.Utilities
         public bool Contains(ITrackableObject testObject, bool entirelyContained)
         {
             if (entirelyContained)
+            {
                 return Bounds.Contains(new RectangleF(testObject.Position, testObject.Size));
+            }
             else
             {
                 // We're only checking corner cases as we are assuming that the `testObject` is not *bigger* than the `Camera`. If it is, then that's a different issue. (We'll likely fix this in the future, just not today!)
                 if (Bounds.Contains(testObject.Position))
+                {
                     return true;
+                }
 
                 if (Bounds.Contains(testObject.Position.X, testObject.Size.Height))
+                {
                     return true;
+                }
 
                 if (Bounds.Contains(testObject.Size.Width, testObject.Position.Y))
+                {
                     return true;
+                }
 
                 if (Bounds.Contains(testObject.Size.Width, testObject.Size.Height))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -221,9 +231,7 @@ namespace Evbpc.Framework.Utilities
         private void OnTrackableObjectChanged(TrackableObjectChangedEventArgs e)
         {
             var handler = TrackableObjectChanged;
-
-            if (handler != null)
-                handler(this, e);
+            handler?.Invoke(this, e);
         }
 
         /// <summary>

@@ -47,7 +47,6 @@ namespace Evbpc.Framework.Utilities
             if (ipv4Strings.Length == 4)
             {
                 string[] ipv4Bytes = StringArrayToHexArray(ip.Split('.'));
-
                 return "::" + ipv4Bytes[0] + ipv4Bytes[1] + ":" + ipv4Bytes[2] + ipv4Bytes[3];
             }
 

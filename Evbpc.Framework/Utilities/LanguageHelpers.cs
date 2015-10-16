@@ -52,9 +52,13 @@ namespace Evbpc.Framework.Utilities
                                     else
                                     {
                                         if (throwErrors)
+                                        {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by a V.");
+                                        }
                                         else
+                                        {
                                             return -1;
+                                        }
                                     }
                                     break;
                                 case 'X':
@@ -66,9 +70,13 @@ namespace Evbpc.Framework.Utilities
                                     else
                                     {
                                         if (throwErrors)
+                                        {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by an X.");
+                                        }
                                         else
+                                        {
                                             return -1;
+                                        }
                                     }
                                     break;
                                 case 'I':
@@ -79,7 +87,9 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 1;
+                        }
                         break;
                     case 'V':
                         if (roman.Length > i + 1)
@@ -95,7 +105,9 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 5;
+                        }
                         break;
                     case 'X':
                         if (roman.Length > i + 1)
@@ -111,9 +123,13 @@ namespace Evbpc.Framework.Utilities
                                     else
                                     {
                                         if (throwErrors)
+                                        {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by an L.");
+                                        }
                                         else
+                                        {
                                             return -1;
+                                        }
                                     }
                                     break;
                                 case 'C':
@@ -125,9 +141,13 @@ namespace Evbpc.Framework.Utilities
                                     else
                                     {
                                         if (throwErrors)
+                                        {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by a C.");
+                                        }
                                         else
+                                        {
                                             return -1;
+                                        }
                                     }
                                     break;
                                 case 'X':
@@ -140,7 +160,9 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 10;
+                        }
                         break;
                     case 'L':
                         if (roman.Length > i + 1)
@@ -158,7 +180,9 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 50;
+                        }
                         break;
                     case 'C':
                         if (roman.Length > i + 1)
@@ -174,9 +198,13 @@ namespace Evbpc.Framework.Utilities
                                     else
                                     {
                                         if (throwErrors)
+                                        {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by a D.");
+                                        }
                                         else
+                                        {
                                             return -1;
+                                        }
                                     }
                                     break;
                                 case 'M':
@@ -188,9 +216,13 @@ namespace Evbpc.Framework.Utilities
                                     else
                                     {
                                         if (throwErrors)
+                                        {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by an M.");
+                                        }
                                         else
+                                        {
                                             return -1;
+                                        }
                                     }
                                     break;
                                 case 'C':
@@ -205,7 +237,9 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 100;
+                        }
                         break;
                     case 'D':
                         if (roman.Length > i + 1)
@@ -225,7 +259,9 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 500;
+                        }
                         break;
                     case 'M':
                         if (roman.Length > i + 1)
@@ -246,13 +282,19 @@ namespace Evbpc.Framework.Utilities
                             }
                         }
                         else
+                        {
                             result += 1000;
+                        }
                         break;
                     default:
                         if (throwErrors)
+                        {
                             throw new ArgumentException("An invalid character was found in the input string. Valid characters are capital letters from the following list: I, V, X, L, C, D, M.");
+                        }
                         else
+                        {
                             return -1;
+                        }
                 }
             }
 

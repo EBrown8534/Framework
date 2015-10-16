@@ -61,16 +61,16 @@ namespace Evbpc.Framework.Utilities.Prompting
             {
                 string line = Console.ReadLine();
 
-                if (options == PromptOptions.Required || (options == PromptOptions.Optional && line != ""))
+                if (options == PromptOptions.Required || (options == PromptOptions.Optional && !string.IsNullOrEmpty(line)))
                 {
                     pass = Retrieve(line, out result);
 
-                    if (pass && validationMethod != null)
+                    if (pass)
                     {
-                        pass = validationMethod(result);
+                        pass = validationMethod?.Invoke(result) ?? pass;
                     }
                 }
-                else if (options == PromptOptions.Optional && line == "")
+                else if (options == PromptOptions.Optional && string.IsNullOrEmpty(line))
                 {
                     pass = true;
                     result = defaultValue;
@@ -95,7 +95,7 @@ namespace Evbpc.Framework.Utilities.Prompting
 
             if (parseResultMethod != null)
             {
-                result = parseResultMethod(result);
+                result = parseResultMethod.Invoke(result);
             }
 
             return result;

@@ -117,7 +117,7 @@ namespace Evbpc.Framework.Integrations.Google.ReCaptcha
         {
             string result = Validator._bodyDivInclude.Replace("%SITEKEY%", _reCaptchaSiteKey);
 
-            if (ExtraClasses != null && ExtraClasses.Count > 0)
+            if (ExtraClasses?.Count > 0)
             {
                 result = result.Replace("%EXTRACLASSES%", string.Join(" ", ExtraClasses));
             }

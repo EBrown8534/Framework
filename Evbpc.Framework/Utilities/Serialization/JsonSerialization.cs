@@ -29,7 +29,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             try
             {
                 if (value == null)
-                    throw new ArgumentNullException(string.Format("The value is expected to be a non-null {0}.", typeof(T)));
+                {
+                    throw new ArgumentNullException($"The value is expected to be a non-null {typeof(T)}.");
+                }
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 serializedJson = jss.Serialize(value);
@@ -38,7 +40,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             catch
             {
                 if (throwExceptions)
+                {
                     throw;
+                }
 
                 return false;
             }
@@ -62,7 +66,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             try
             {
                 if (value == null)
+                {
                     throw new ArgumentNullException("The value is expected to be a non-null string.");
+                }
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 deserializedObject = jss.Deserialize<T>(value);
@@ -71,7 +77,9 @@ namespace Evbpc.Framework.Utilities.Serialization
             catch
             {
                 if (throwExceptions)
+                {
                     throw;
+                }
 
                 return false;
             }

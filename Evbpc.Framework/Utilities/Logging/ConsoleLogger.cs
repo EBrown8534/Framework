@@ -22,9 +22,9 @@ namespace Evbpc.Framework.Utilities.Logging
         public string DateTimeFormat { get; }
 
         /// <summary>
-        /// Creates a new instance of a <see cref="ConsoleLogger"/> with the specified <see cref="LoggingType"/> and a <see cref="DateTimeFormat"/> of <code>"O"</code>.
+        /// Creates a new instance of a <see cref="ConsoleLogger"/> with the specified <see cref="Logging.LoggingType"/> and a <see cref="DateTimeFormat"/> of <code>"O"</code>.
         /// </summary>
-        /// <param name="loggingType">The <see cref="ConsoleLogger.LoggingType"/>.</param>
+        /// <param name="loggingType">The <see cref="LoggingType"/>.</param>
         public ConsoleLogger(LoggingType loggingType)
             : this(loggingType, "O")
         {
@@ -32,10 +32,10 @@ namespace Evbpc.Framework.Utilities.Logging
         }
 
         /// <summary>
-        /// Creates a new instance of a <see cref="ConsoleLogger"/> with the specified <see cref="LoggingType"/> and <see cref="DateTimeFormat"/>.
+        /// Creates a new instance of a <see cref="ConsoleLogger"/> with the specified <see cref="Logging.LoggingType"/> and <see cref="DateTimeFormat"/>.
         /// </summary>
-        /// <param name="loggingType">The <see cref="ConsoleLogger.LoggingType"/>.</param>
-        /// <param name="dateTimeFormat">The <see cref="ConsoleLogger.DateTimeFormat"/>.</param>
+        /// <param name="loggingType">The <see cref="LoggingType"/>.</param>
+        /// <param name="dateTimeFormat">The <see cref="DateTimeFormat"/>.</param>
         public ConsoleLogger(LoggingType loggingType, string dateTimeFormat)
         {
             LoggingType = loggingType;
