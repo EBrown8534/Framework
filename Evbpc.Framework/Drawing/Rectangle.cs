@@ -85,42 +85,78 @@ namespace Evbpc.Framework.Drawing
                 {
                     if (aConBTR)
                     {
-                        if (aConBBL) { return new Rectangle(b.Location, b.Size); }
-                        else { return new Rectangle(b.Location, new Size(b.Width, a.Bottom - b.Top)); }
+                        if (aConBBL)
+                        {
+                            return new Rectangle(b.Location, b.Size);
+                        }
+                        else
+                        {
+                            return new Rectangle(b.Location, new Size(b.Width, a.Bottom - b.Top));
+                        }
                     }
                     else
                     {
-                        if (aConBBL) { return new Rectangle(b.Location, new Size(a.Right - b.Left, b.Height)); }
-                        else { return new Rectangle(b.Location, new Size(a.Right - b.Left, a.Bottom - b.Top)); }
+                        if (aConBBL)
+                        {
+                            return new Rectangle(b.Location, new Size(a.Right - b.Left, b.Height));
+                        }
+                        else
+                        {
+                            return new Rectangle(b.Location, new Size(a.Right - b.Left, a.Bottom - b.Top));
+                        }
                     }
                 }
                 else
                 {
                     if (aConBTR)
                     {
-                        if (aConBBR) { return new Rectangle(b.Location, new Size(b.Right - a.Left, b.Height)); }
-                        else { return new Rectangle(b.Location, new Size(b.Right - a.Left, a.Bottom - b.Top)); }
+                        if (aConBBR)
+                        {
+                            return new Rectangle(b.Location, new Size(b.Right - a.Left, b.Height));
+                        }
+                        else
+                        {
+                            return new Rectangle(b.Location, new Size(b.Right - a.Left, a.Bottom - b.Top));
+                        }
                     }
                     else
                     {
                         if (aConBBL)
                         {
-                            if (aConBBR) { return new Rectangle(a.Location, new Size(b.Width, b.Bottom - a.Top)); }
-                            else { return new Rectangle(new Point(b.Left, a.Top), new Size(a.Right - b.Left, b.Bottom - a.Top)); }
+                            if (aConBBR)
+                            {
+                                return new Rectangle(a.Location, new Size(b.Width, b.Bottom - a.Top));
+                            }
+                            else
+                            {
+                                return new Rectangle(new Point(b.Left, a.Top), new Size(a.Right - b.Left, b.Bottom - a.Top));
+                            }
                         }
                         else
                         {
-                            if (aConBBR) { return new Rectangle(a.Location, new Size(b.Right - a.Left, b.Bottom - a.Top)); }
+                            if (aConBBR)
+                            {
+                                return new Rectangle(a.Location, new Size(b.Right - a.Left, b.Bottom - a.Top));
+                            }
                             else
                             {
-                                if (bConATL) { return new Rectangle(a.Location, a.Size); }
-                                else { return Empty; }
+                                if (bConATL)
+                                {
+                                    return new Rectangle(a.Location, a.Size);
+                                }
+                                else
+                                {
+                                    return Empty;
+                                }
                             }
                         }
                     }
                 }
             }
-            else { return Empty; }
+            else
+            {
+                return Empty;
+            }
         }
 
         public bool IntersectsWith(Rectangle rect) => Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right);
