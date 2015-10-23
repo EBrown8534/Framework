@@ -19,10 +19,11 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static uint[] ToUIntArray(this BigInteger b)
         {
             var bytes = b.ToByteArray();
+            var bytesLengthRemainder = bytes.Length % 4;
 
-            if (bytes.Length % 4 != 0)
+            if (bytesLengthRemainder != 0)
             {
-                Array.Resize(ref bytes, bytes.Length + (4 - bytes.Length % 4));
+                Array.Resize(ref bytes, bytes.Length + (4 - bytesLengthRemainder));
             }
 
             var size = (int)Math.Ceiling(bytes.Length / 4.0);
