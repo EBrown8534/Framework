@@ -19,11 +19,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         {
             var size = 4;
 
-            byte[] result = new byte[size];
+            var result = new byte[size];
 
-            uint t = value;
-
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
                 var bitOffset = (size - (i + 1)) * 8;
                 result[i] = (byte)((value & ((ulong)0xFF << bitOffset)) >> bitOffset);
@@ -46,9 +44,9 @@ namespace Evbpc.Framework.Utilities.Extensions
                 throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
             }
 
-            uint result = 0;
+            var result = 0u;
 
-            for (int i = 0; i < requiredSize; i++)
+            for (var i = 0; i < requiredSize; i++)
             {
                 result |= ((uint)data[i] << ((requiredSize - (i + 1)) * 8));
             }
@@ -63,7 +61,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>byte[]</code> representing the <code>int</code> value.</returns>
         public static byte[] ToByteArray(this int value)
         {
-            uint t = (uint)value;
+            var t = (uint)value;
 
             return t.ToByteArray();
         }
@@ -82,11 +80,7 @@ namespace Evbpc.Framework.Utilities.Extensions
                 throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
             }
 
-            int result = 0;
-
-            result = (int)data.ToUInt32();
-
-            return result;
+            return (int)data.ToUInt32();
         }
 
         /// <summary>
@@ -98,7 +92,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         {
             var size = 8;
 
-            byte[] result = new byte[size];
+            var result = new byte[size];
 
             for (int i = 0; i < size; i++)
             {
@@ -123,9 +117,9 @@ namespace Evbpc.Framework.Utilities.Extensions
                 throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
             }
 
-            ulong result = 0;
+            var result = 0ul;
 
-            for (int i = 0; i < requiredSize; i++)
+            for (var i = 0; i < requiredSize; i++)
             {
                 result |= ((ulong)data[i] << ((requiredSize - (i + 1)) * 8));
             }
@@ -140,7 +134,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>byte[]</code> representing the <code>long</code> value.</returns>
         public static byte[] ToByteArray(this long value)
         {
-            ulong t = (ulong)value;
+            var t = (ulong)value;
 
             return t.ToByteArray();
         }
@@ -159,11 +153,7 @@ namespace Evbpc.Framework.Utilities.Extensions
                 throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
             }
 
-            long result = 0;
-
-            result = (long)data.ToUInt64();
-
-            return result;
+            return (long)data.ToUInt64();
         }
     }
 }
