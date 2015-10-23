@@ -101,42 +101,78 @@ namespace Evbpc.Framework.Drawing
                 {
                     if (aConBTR)
                     {
-                        if (aConBBL) { return new RectangleF(b.Location, b.Size); }
-                        else { return new RectangleF(b.Location, new SizeF(b.Width, a.Bottom - b.Top)); }
+                        if (aConBBL)
+                        {
+                            return new RectangleF(b.Location, b.Size);
+                        }
+                        else
+                        {
+                            return new RectangleF(b.Location, new SizeF(b.Width, a.Bottom - b.Top));
+                        }
                     }
                     else
                     {
-                        if (aConBBL) { return new RectangleF(b.Location, new SizeF(a.Right - b.Left, b.Height)); }
-                        else { return new RectangleF(b.Location, new SizeF(a.Right - b.Left, a.Bottom - b.Top)); }
+                        if (aConBBL)
+                        {
+                            return new RectangleF(b.Location, new SizeF(a.Right - b.Left, b.Height));
+                        }
+                        else
+                        {
+                            return new RectangleF(b.Location, new SizeF(a.Right - b.Left, a.Bottom - b.Top));
+                        }
                     }
                 }
                 else
                 {
                     if (aConBTR)
                     {
-                        if (aConBBR) { return new RectangleF(b.Location, new SizeF(b.Right - a.Left, b.Height)); }
-                        else { return new RectangleF(b.Location, new SizeF(b.Right - a.Left, a.Bottom - b.Top)); }
+                        if (aConBBR)
+                        {
+                            return new RectangleF(b.Location, new SizeF(b.Right - a.Left, b.Height));
+                        }
+                        else
+                        {
+                            return new RectangleF(b.Location, new SizeF(b.Right - a.Left, a.Bottom - b.Top));
+                        }
                     }
                     else
                     {
                         if (aConBBL)
                         {
-                            if (aConBBR) { return new RectangleF(a.Location, new SizeF(b.Width, b.Bottom - a.Top)); }
-                            else { return new RectangleF(new PointF(b.Left, a.Top), new SizeF(a.Right - b.Left, b.Bottom - a.Top)); }
+                            if (aConBBR)
+                            {
+                                return new RectangleF(a.Location, new SizeF(b.Width, b.Bottom - a.Top));
+                            }
+                            else
+                            {
+                                return new RectangleF(new PointF(b.Left, a.Top), new SizeF(a.Right - b.Left, b.Bottom - a.Top));
+                            }
                         }
                         else
                         {
-                            if (aConBBR) { return new RectangleF(a.Location, new SizeF(b.Right - a.Left, b.Bottom - a.Top)); }
+                            if (aConBBR)
+                            {
+                                return new RectangleF(a.Location, new SizeF(b.Right - a.Left, b.Bottom - a.Top));
+                            }
                             else
                             {
-                                if (bConATL) { return new RectangleF(a.Location, a.Size); }
-                                else { return Empty; }
+                                if (bConATL)
+                                {
+                                    return new RectangleF(a.Location, a.Size);
+                                }
+                                else
+                                {
+                                    return Empty;
+                                }
                             }
                         }
                     }
                 }
             }
-            else { return Empty; }
+            else
+            {
+                return Empty;
+            }
         }
 
         public bool IntersectsWith(RectangleF rect) => Contains(rect.Top, rect.Left) || Contains(rect.Top, rect.Right) || Contains(rect.Bottom, rect.Left) || Contains(rect.Bottom, rect.Right);
