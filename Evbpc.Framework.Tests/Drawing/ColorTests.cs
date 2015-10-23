@@ -51,7 +51,7 @@ namespace Evbpc.Framework.Tests.Drawing
             Color color1 = new Color(0xFF7F00BF);
             Color color2 = new Color(0xFF7F00BF);
 
-            Assert.AreEqual(color1 == color2, true);
+            Assert.AreEqual(true, color1 == color2);
         }
 
         [TestMethod, TestCategory("Color Tests")]
@@ -60,7 +60,7 @@ namespace Evbpc.Framework.Tests.Drawing
             Color color1 = new Color(0xFF7F00BF);
             Color color2 = new Color(0xFF7FBF00);
 
-            Assert.AreEqual(color1 != color2, true);
+            Assert.AreEqual(true, color1 != color2);
         }
 
         [TestMethod, TestCategory("Color Tests")]
@@ -68,7 +68,7 @@ namespace Evbpc.Framework.Tests.Drawing
         {
             Color color = new Color(0xFF7F00BF);
 
-            CollectionAssert.AreEqual(color.GetBytes(), new byte[] { 0xFF, 0x7F, 0x00, 0xBF });
+            CollectionAssert.AreEqual(new byte[] { 0xFF, 0x7F, 0x00, 0xBF }, color.GetBytes());
         }
 
         [TestMethod, TestCategory("Color Tests")]
@@ -77,7 +77,7 @@ namespace Evbpc.Framework.Tests.Drawing
             Color color = new Color();
             color.FromBytes(new byte[] { 0xFF, 0x7F, 0x00, 0xBF });
 
-            Assert.AreEqual(color.GetPackedValue(), 0xFF7F00BFu);
+            Assert.AreEqual(0xFF7F00BFu, color.GetPackedValue());
         }
     }
 }

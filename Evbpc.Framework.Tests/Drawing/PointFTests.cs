@@ -12,8 +12,8 @@ namespace Evbpc.Framework.Tests.Drawing
         {
             PointF point = new PointF(0.0f, 0.0f);
 
-            Assert.AreEqual(point.X, 0.0f);
-            Assert.AreEqual(point.Y, 0.0f);
+            Assert.AreEqual(0.0f, point.X);
+            Assert.AreEqual(0.0f, point.Y);
         }
 
         [TestMethod, TestCategory("PointF Tests")]
@@ -21,8 +21,8 @@ namespace Evbpc.Framework.Tests.Drawing
         {
             PointF point = new PointF(0.1f, 1.56f);
 
-            Assert.AreEqual(point.X, 0.1f);
-            Assert.AreEqual(point.Y, 1.56f);
+            Assert.AreEqual(0.1f, point.X);
+            Assert.AreEqual(1.56f, point.Y);
         }
     }
 }

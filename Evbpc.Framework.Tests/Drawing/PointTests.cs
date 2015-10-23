@@ -12,8 +12,8 @@ namespace Evbpc.Framework.Tests.Drawing
         {
             Point point = new Point(0x00000000, 0x00000000);
 
-            Assert.AreEqual(point.X, 0x00000000);
-            Assert.AreEqual(point.Y, 0x00000000);
+            Assert.AreEqual(0x00000000, point.X);
+            Assert.AreEqual(0x00000000, point.Y);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -21,8 +21,8 @@ namespace Evbpc.Framework.Tests.Drawing
         {
             Point point = new Point(0x7FFF00BF, 0x00BF7FFF);
 
-            Assert.AreEqual(point.X, 0x7FFF00BF);
-            Assert.AreEqual(point.Y, 0x00BF7FFF);
+            Assert.AreEqual(0x7FFF00BF, point.X);
+            Assert.AreEqual(0x00BF7FFF, point.Y);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -30,7 +30,7 @@ namespace Evbpc.Framework.Tests.Drawing
         {
             Point point = new Point(0x7FFF00BF, 0x00BF7FFF);
 
-            CollectionAssert.AreEqual(point.GetBytes(), new byte[] { 0x7F, 0xFF, 0x00, 0xBF, 0x00, 0xBF, 0x7F, 0xFF });
+            CollectionAssert.AreEqual(new byte[] { 0x7F, 0xFF, 0x00, 0xBF, 0x00, 0xBF, 0x7F, 0xFF }, point.GetBytes());
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -39,8 +39,8 @@ namespace Evbpc.Framework.Tests.Drawing
             Point point = new Point();
             point.FromBytes(new byte[] { 0x7F, 0xFF, 0x00, 0xBF, 0x00, 0xBF, 0x7F, 0xFF });
 
-            Assert.AreEqual(point.X, 0x7FFF00BF);
-            Assert.AreEqual(point.Y, 0x00BF7FFF);
+            Assert.AreEqual(0x7FFF00BF, point.X);
+            Assert.AreEqual(0x00BF7FFF, point.Y);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -49,7 +49,7 @@ namespace Evbpc.Framework.Tests.Drawing
             Point point1 = new Point(0x7FFF00BF, 0x00BF7FFF);
             Point point2 = new Point(0x7FFF00BF, 0x00BF7FFF);
 
-            Assert.AreEqual(point1 == point2, true);
+            Assert.AreEqual(true, point1 == point2);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -58,7 +58,7 @@ namespace Evbpc.Framework.Tests.Drawing
             Point point1 = new Point(0x7FFF00BF, 0x00BF7FFF);
             Point point2 = new Point(0x7FFF00BF, 0x00BFFF7F);
 
-            Assert.AreEqual(point1 != point2, true);
+            Assert.AreEqual(true, point1 != point2);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -67,8 +67,8 @@ namespace Evbpc.Framework.Tests.Drawing
             PointF point = new PointF(0.1f, 1.56f);
             Point rounded = Point.Round(point);
 
-            Assert.AreEqual(rounded.X, 0x00);
-            Assert.AreEqual(rounded.Y, 0x02);
+            Assert.AreEqual(0x00, rounded.X);
+            Assert.AreEqual(0x02, rounded.Y);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -77,8 +77,8 @@ namespace Evbpc.Framework.Tests.Drawing
             PointF point = new PointF(0.1f, 1.56f);
             Point rounded = Point.Truncate(point);
 
-            Assert.AreEqual(rounded.X, 0x00);
-            Assert.AreEqual(rounded.Y, 0x01);
+            Assert.AreEqual(0x00, rounded.X);
+            Assert.AreEqual(0x01, rounded.Y);
         }
 
         [TestMethod, TestCategory("Point Tests")]
@@ -87,8 +87,8 @@ namespace Evbpc.Framework.Tests.Drawing
             PointF point = new PointF(0.1f, 1.56f);
             Point rounded = Point.Ceiling(point);
 
-            Assert.AreEqual(rounded.X, 0x01);
-            Assert.AreEqual(rounded.Y, 0x02);
+            Assert.AreEqual(0x01, rounded.X);
+            Assert.AreEqual(0x02, rounded.Y);
         }
     }
 }
