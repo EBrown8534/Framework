@@ -94,7 +94,7 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             var result = new byte[size];
 
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
                 var bitOffset = (size - (i + 1)) * 8;
                 result[i] = (byte)((value & ((ulong)0xFF << bitOffset)) >> bitOffset);
