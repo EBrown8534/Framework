@@ -32,7 +32,7 @@ namespace Evbpc.Framework.Utilities.Serialization
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException($"The value is expected to be a non-null {typeof(T)}.");
+                    throw new ArgumentNullException($"The {nameof(value)} is expected to be a non-null {typeof(T)}.");
                 }
 
                 XmlSerializer xmlserializer = new XmlSerializer(typeof(T));
@@ -77,7 +77,7 @@ namespace Evbpc.Framework.Utilities.Serialization
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("The value is expected to be a non-null string.");
+                    throw new ArgumentNullException($"The {nameof(value)} is expected to be a non-null string.");
                 }
 
                 XmlSerializer xmlserializer = new XmlSerializer(typeof(T));

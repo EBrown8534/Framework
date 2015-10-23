@@ -30,7 +30,7 @@ namespace Evbpc.Framework.Utilities.Serialization
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException($"The value is expected to be a non-null {typeof(T)}.");
+                    throw new ArgumentNullException($"The {nameof(value)} is expected to be a non-null {typeof(T)}.");
                 }
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
@@ -67,7 +67,7 @@ namespace Evbpc.Framework.Utilities.Serialization
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("The value is expected to be a non-null string.");
+                    throw new ArgumentNullException($"The {nameof(value)} is expected to be a non-null string.");
                 }
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();

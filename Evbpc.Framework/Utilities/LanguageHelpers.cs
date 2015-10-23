@@ -15,9 +15,9 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="roman">The roman number to convert to an integer.</param>
         /// <param name="allowShorthand">Optional: if true use shorthand/subtraction rules, certain sequences of small value characters preceeding large value characters are allowed. If false throws an exception (if specified) when a shorthand situation is encountered.</param>
-        /// <param name="throwErrors">Optional: if true throws exceptions as normal. If false does not throw exceptions and instead returns -1 immediately when an exception would be thrown. (Note: Setting false here is faster than wrapping the call in a Try-Catch block.)</param>
+        /// <param name="throwExceptions">Optional: if true throws exceptions as normal. If false does not throw exceptions and instead returns -1 immediately when an exception would be thrown. (Note: Setting false here is faster than wrapping the call in a Try-Catch block.)</param>
         /// <returns>An integer that represents the roman number. May also be -1 when an exception occurs and throwException is false.</returns>
-        public static int RomanToNumber(string roman, bool allowShorthand = true, bool throwErrors = true)
+        public static int RomanToNumber(string roman, bool allowShorthand = true, bool throwExceptions = true)
         {
             // I = 1
             // V = 5
@@ -28,7 +28,7 @@ namespace Evbpc.Framework.Utilities
             // M = 1000
 
 #if DEBUG
-#warning In DEBUG mode RomanToNumber Errors will be thrown regardless of throwErrors parameter.
+#warning In DEBUG mode RomanToNumber Exceptions will be thrown regardless of throwExceptions parameter.
             throwErrors = true;
 #endif
 
@@ -51,7 +51,7 @@ namespace Evbpc.Framework.Utilities
                                     }
                                     else
                                     {
-                                        if (throwErrors)
+                                        if (throwExceptions)
                                         {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by a V.");
                                         }
@@ -69,7 +69,7 @@ namespace Evbpc.Framework.Utilities
                                     }
                                     else
                                     {
-                                        if (throwErrors)
+                                        if (throwExceptions)
                                         {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an I was directly followed by an X.");
                                         }
@@ -122,7 +122,7 @@ namespace Evbpc.Framework.Utilities
                                     }
                                     else
                                     {
-                                        if (throwErrors)
+                                        if (throwExceptions)
                                         {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by an L.");
                                         }
@@ -140,7 +140,7 @@ namespace Evbpc.Framework.Utilities
                                     }
                                     else
                                     {
-                                        if (throwErrors)
+                                        if (throwExceptions)
                                         {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: an X was directly followed by a C.");
                                         }
@@ -197,7 +197,7 @@ namespace Evbpc.Framework.Utilities
                                     }
                                     else
                                     {
-                                        if (throwErrors)
+                                        if (throwExceptions)
                                         {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by a D.");
                                         }
@@ -215,7 +215,7 @@ namespace Evbpc.Framework.Utilities
                                     }
                                     else
                                     {
-                                        if (throwErrors)
+                                        if (throwExceptions)
                                         {
                                             throw new ArgumentException("Shorthand rules are off and a shorthand situation was encountered: a C was directly followed by an M.");
                                         }
@@ -287,7 +287,7 @@ namespace Evbpc.Framework.Utilities
                         }
                         break;
                     default:
-                        if (throwErrors)
+                        if (throwExceptions)
                         {
                             throw new ArgumentException("An invalid character was found in the input string. Valid characters are capital letters from the following list: I, V, X, L, C, D, M.");
                         }

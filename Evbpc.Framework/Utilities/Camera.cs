@@ -188,7 +188,7 @@ namespace Evbpc.Framework.Utilities
         {
             Scale += adjustment;
         }
-        
+
         /// <summary>
         /// Determines if the current <see cref="Camera"/> instances contains the <see cref="ITrackableObject"/>.
         /// </summary>
