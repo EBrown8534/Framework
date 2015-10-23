@@ -32,6 +32,9 @@ namespace Evbpc.Framework.Xna.Utilities
         /// </summary>
         public TimeSpan HoldRepeatDelay { get; set; } = new TimeSpan(0, 0, 0, 0, 35);
 
+        private static Dictionary<Keys, DateTime> _keysPressedAt = new Dictionary<Keys, DateTime>();
+        private static Dictionary<Keys, DateTime> _keyLastTickAt = new Dictionary<Keys, DateTime>();
+
         /// <summary>
         /// Updates the internal <code>KeyboardState</code> and fires relevant events.
         /// </summary>
@@ -79,7 +82,9 @@ namespace Evbpc.Framework.Xna.Utilities
                 key ^= Keys.Shift;
 
                 if ((int)key >= 0x41 && (int)key <= 0x5A)
+                {
                     return (char)key;
+                }
 
                 // We made this a massive `switch` statement for the speed it provides.
                 switch (key)
@@ -200,9 +205,6 @@ namespace Evbpc.Framework.Xna.Utilities
             }
         }
 
-        private static Dictionary<Keys, DateTime> _keysPressedAt = new Dictionary<Keys, DateTime>();
-        private static Dictionary<Keys, DateTime> _keyLastTickAt = new Dictionary<Keys, DateTime>();
-
         private List<Keys> GetPressedKeys(KeyboardState k)
         {
             var pressedKeys = new List<Keys>();
@@ -212,7 +214,9 @@ namespace Evbpc.Framework.Xna.Utilities
                 pressedKeys.Add(XnaKeyToKey(key));
 
                 if (!_keysPressedAt.ContainsKey(XnaKeyToKey(key)))
+                {
                     _keysPressedAt.Add(XnaKeyToKey(key), DateTime.UtcNow);
+                }
             }
 
             return pressedKeys;
@@ -225,7 +229,12 @@ namespace Evbpc.Framework.Xna.Utilities
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onkeydown(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnKeyDown(KeyEventArgs e) { if (KeyDown != null) { KeyDown(this, e); } }
+        protected virtual void OnKeyDown(KeyEventArgs e)
+        {
+            var handler = KeyDown;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="KeyPress"/> event.
         /// </summary>
@@ -233,7 +242,12 @@ namespace Evbpc.Framework.Xna.Utilities
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onkeypress(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnKeyPress(KeyPressEventArgs e) { if (KeyPress != null) { KeyPress(this, e); } }
+        protected virtual void OnKeyPress(KeyPressEventArgs e)
+        {
+            var handler = KeyPress;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="KeyUp"/> event.
         /// </summary>
@@ -241,7 +255,11 @@ namespace Evbpc.Framework.Xna.Utilities
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onkeyup(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnKeyUp(KeyEventArgs e) { if (KeyUp != null) { KeyUp(this, e); } }
+        protected virtual void OnKeyUp(KeyEventArgs e)
+        {
+            var handler = KeyUp;
+            handler?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Occurs when a key is pressed while the control has focus.
