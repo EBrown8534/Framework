@@ -10,74 +10,101 @@ namespace Evbpc.Framework.Tests.Drawing
         [TestMethod, TestCategory("Color Tests")]
         public void CreateColorStructure_R0x00_G0x00_B0x00_A0x00()
         {
+            var expected = 0x00000000u;
             Color color = new Color(0x00, 0x00, 0x00, 0x00);
 
-            Assert.AreEqual(0x00000000u, color.GetPackedValue());
+            var result = color.GetPackedValue();
+
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod, TestCategory("Color Tests")]
         public void CreateColorStructure_Packed0x00000000()
         {
+            var expectedA = 0x00;
+            var expectedR = 0x00;
+            var expectedB = 0x00;
+            var expectedG = 0x00;
+
             Color color = new Color(0x00000000u);
 
-            Assert.AreEqual(0x00, color.A);
-            Assert.AreEqual(0x00, color.R);
-            Assert.AreEqual(0x00, color.G);
-            Assert.AreEqual(0x00, color.B);
+            Assert.AreEqual(expectedA, color.A);
+            Assert.AreEqual(expectedR, color.R);
+            Assert.AreEqual(expectedB, color.G);
+            Assert.AreEqual(expectedG, color.B);
         }
 
         [TestMethod, TestCategory("Color Tests")]
         public void CreateColorStructure_R0x7F_G0x00_B0xBF_A0xFF()
         {
+            var expected = 0xFF7F00BF;
             Color color = new Color(0x7F, 0x00, 0xBF, 0xFF);
 
-            Assert.AreEqual(0xFF7F00BF, color.GetPackedValue());
+            var result = color.GetPackedValue();
+
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod, TestCategory("Color Tests")]
         public void CreateColorStructure_Packed0xFF7F00BF()
         {
+            var expectedA = 0xFF;
+            var expectedR = 0x7F;
+            var expectedB = 0x00;
+            var expectedG = 0xBF;
+
             Color color = new Color(0xFF7F00BF);
 
-            Assert.AreEqual(0xFF, color.A);
-            Assert.AreEqual(0x7F, color.R);
-            Assert.AreEqual(0x00, color.G);
-            Assert.AreEqual(0xBF, color.B);
+            Assert.AreEqual(expectedA, color.A);
+            Assert.AreEqual(expectedR, color.R);
+            Assert.AreEqual(expectedB, color.G);
+            Assert.AreEqual(expectedG, color.B);
         }
 
         [TestMethod, TestCategory("Color Tests")]
-        public void Equal_Packed0xFF7F00BF_Packed0xFF7F00BF()
+        public void EqualOverload_Packed0xFF7F00BF_Packed0xFF7F00BF()
         {
             Color color1 = new Color(0xFF7F00BF);
             Color color2 = new Color(0xFF7F00BF);
 
-            Assert.AreEqual(true, color1 == color2);
+            var result = color1 == color2;
+
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Color Tests")]
-        public void NotEqual_Packed0xFF7F00BF_Packed0xFF7FBF00()
+        public void NotEqualOperator_Packed0xFF7F00BF_Packed0xFF7FBF00()
         {
             Color color1 = new Color(0xFF7F00BF);
             Color color2 = new Color(0xFF7FBF00);
 
-            Assert.AreEqual(true, color1 != color2);
+            var result = color1 != color2;
+
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Color Tests")]
         public void GetBytes_0xFF7F00BF()
         {
+            var expected = new byte[] { 0xFF, 0x7F, 0x00, 0xBF };
             Color color = new Color(0xFF7F00BF);
 
-            CollectionAssert.AreEqual(new byte[] { 0xFF, 0x7F, 0x00, 0xBF }, color.GetBytes());
+            var result = color.GetBytes();
+
+            CollectionAssert.AreEqual(expected, result);
         }
 
         [TestMethod, TestCategory("Color Tests")]
         public void FromBytes_0xFF_0x7F_0x00_0xBF()
         {
+            var expected = 0xFF7F00BFu;
+
             Color color = new Color();
             color.FromBytes(new byte[] { 0xFF, 0x7F, 0x00, 0xBF });
 
-            Assert.AreEqual(0xFF7F00BFu, color.GetPackedValue());
+            var result = color.GetPackedValue();
+
+            Assert.AreEqual(expected, result);
         }
     }
 }
