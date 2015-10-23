@@ -37,11 +37,16 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>uint</code> that represents the converted <code>byte[]</code>.</returns>
         public static uint ToUInt32(this byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException($"The parameter {nameof(data)} cannot be null.");
+            }
+
             const int requiredSize = sizeof(uint);
 
             if (data.Length != requiredSize)
             {
-                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
+                throw new ArgumentException($"The byte-array {nameof(data)} must be exactly {requiredSize} bytes.");
             }
 
             var result = 0u;
@@ -73,11 +78,16 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>An <code>int</code> value representing the <code>byte[]</code>.</returns>
         public static int ToInt32(this byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException($"The parameter {nameof(data)} cannot be null.");
+            }
+
             const int requiredSize = sizeof(int);
 
             if (data.Length != requiredSize)
             {
-                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
+                throw new ArgumentException($"The byte-array {nameof(data)} must be exactly {requiredSize} bytes.");
             }
 
             return (int)data.ToUInt32();
@@ -110,11 +120,16 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>ulong</code> reprented by the <code>byte[]</code>.</returns>
         public static ulong ToUInt64(this byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException($"The parameter {nameof(data)} cannot be null.");
+            }
+
             const int requiredSize = sizeof(ulong);
 
             if (data.Length != requiredSize)
             {
-                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
+                throw new ArgumentException($"The byte-array {nameof(data)} must be exactly {requiredSize} bytes.");
             }
 
             var result = 0ul;
@@ -146,11 +161,16 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>long</code> value represented by the <code>byte[]</code>.</returns>
         public static long ToInt64(this byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException($"The parameter {nameof(data)} cannot be null.");
+            }
+
             const int requiredSize = sizeof(long);
 
             if (data.Length != requiredSize)
             {
-                throw new ArgumentException($"The byte-array \"{nameof(data)}\" must be exactly {requiredSize} bytes.");
+                throw new ArgumentException($"The byte-array {nameof(data)} must be exactly {requiredSize} bytes.");
             }
 
             return (long)data.ToUInt64();
