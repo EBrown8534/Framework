@@ -54,6 +54,7 @@
     <Compile Include="Drawing\PointTests.cs" />
     <Compile Include="Drawing\PointFTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Extensions\NumberByteArrayExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\" />
