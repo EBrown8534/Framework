@@ -17,7 +17,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>byte[]</code> representing the <code>uint</code> value.</returns>
         public static byte[] ToByteArray(this uint value)
         {
-            var size = 4;
+            const int size = sizeof(uint);
 
             var result = new byte[size];
 
@@ -37,7 +37,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>uint</code> that represents the converted <code>byte[]</code>.</returns>
         public static uint ToUInt32(this byte[] data)
         {
-            var requiredSize = 4;
+            const int requiredSize = sizeof(uint);
 
             if (data.Length != requiredSize)
             {
@@ -48,7 +48,7 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             for (var i = 0; i < requiredSize; i++)
             {
-                result |= ((uint)data[i] << ((requiredSize - (i + 1)) * 8));
+                result |= (uint)data[i] << ((requiredSize - (i + 1)) * 8);
             }
 
             return result;
@@ -61,9 +61,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>byte[]</code> representing the <code>int</code> value.</returns>
         public static byte[] ToByteArray(this int value)
         {
-            var t = (uint)value;
+            var asUInt = (uint)value;
 
-            return t.ToByteArray();
+            return asUInt.ToByteArray();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>An <code>int</code> value representing the <code>byte[]</code>.</returns>
         public static int ToInt32(this byte[] data)
         {
-            var requiredSize = 4;
+            const int requiredSize = sizeof(int);
 
             if (data.Length != requiredSize)
             {
@@ -90,7 +90,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>byte[]</code> representing the <code>ulong</code>.</returns>
         public static byte[] ToByteArray(this ulong value)
         {
-            var size = 8;
+            const int size = sizeof(ulong);
 
             var result = new byte[size];
 
@@ -110,7 +110,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>ulong</code> reprented by the <code>byte[]</code>.</returns>
         public static ulong ToUInt64(this byte[] data)
         {
-            var requiredSize = 8;
+            const int requiredSize = sizeof(ulong);
 
             if (data.Length != requiredSize)
             {
@@ -121,7 +121,7 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             for (var i = 0; i < requiredSize; i++)
             {
-                result |= ((ulong)data[i] << ((requiredSize - (i + 1)) * 8));
+                result |= (ulong)data[i] << ((requiredSize - (i + 1)) * 8);
             }
 
             return result;
@@ -134,9 +134,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>byte[]</code> representing the <code>long</code> value.</returns>
         public static byte[] ToByteArray(this long value)
         {
-            var t = (ulong)value;
+            var asULong = (ulong)value;
 
-            return t.ToByteArray();
+            return asULong.ToByteArray();
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>A <code>long</code> value represented by the <code>byte[]</code>.</returns>
         public static long ToInt64(this byte[] data)
         {
-            var requiredSize = 8;
+            const int requiredSize = sizeof(long);
 
             if (data.Length != requiredSize)
             {
