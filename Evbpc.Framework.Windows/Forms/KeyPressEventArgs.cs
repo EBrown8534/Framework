@@ -21,7 +21,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.keypresseventargs.keypresseventargs(v=vs.110).aspx
         /// </remarks>
-        public KeyPressEventArgs(char keyChar) { KeyChar = keyChar; }
+        public KeyPressEventArgs(char keyChar)
+        {
+            KeyChar = keyChar;
+        }
         #endregion
 
         #region Properties

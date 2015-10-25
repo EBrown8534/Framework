@@ -12,12 +12,11 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 {
     public class Label : Evbpc.Framework.Windows.Forms.Label, IDrawableControl
     {
-        private SpriteFont _font;
-        public SpriteFont Font => _font;
+        public SpriteFont Font { get; }
 
         public Label(SpriteFont font, string name)
         {
-            _font = font;
+            Font = font;
             Name = name;
         }
 
@@ -29,7 +28,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
         void IDrawableControl.Draw(SpriteBatch s, Evbpc.Framework.Drawing.Point initialLocation)
         {
-            s.DrawString(_font, Text, new Vector2(initialLocation.X + this.Location.X, initialLocation.Y + this.Location.Y), ForeColor.ToXnaColor());
+            s.DrawString(Font, Text, new Vector2(initialLocation.X + this.Location.X, initialLocation.Y + this.Location.Y), ForeColor.ToXnaColor());
         }
     }
 }

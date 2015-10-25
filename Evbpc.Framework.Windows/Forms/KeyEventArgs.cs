@@ -7,32 +7,29 @@ namespace Evbpc.Framework.Windows.Forms
 {
     public class KeyEventArgs : EventArgs
     {
-        private Keys _keyData;
-        private bool _shift;
-
         #region Constructors
         public KeyEventArgs(Keys keyData)
         {
-            _shift = false;
-            _keyData = keyData;
-            
-            if ((_keyData & Keys.Shift) == Keys.Shift)
+            Shift = false;
+            KeyData = keyData;
+
+            if ((KeyData & Keys.Shift) == Keys.Shift)
             {
-                _keyData = _keyData ^ Keys.Shift;
-                _shift = true;
+                KeyData = KeyData ^ Keys.Shift;
+                Shift = true;
             }
         }
         #endregion
 
         #region Properties
-        public virtual bool Alt { get { return (_keyData & Keys.Alt) == Keys.Alt; } }
-        public bool Control { get { return (_keyData & Keys.Control) == Keys.Control; } }
+        public virtual bool Alt => (KeyData & Keys.Alt) == Keys.Alt;
+        public bool Control => (KeyData & Keys.Control) == Keys.Control;
         public bool Handled { get; set; }
-        public Keys KeyCode { get { return _keyData; } }
-        public Keys KeyData { get { return _keyData; } }
-        public int KeyValue { get { return (int)_keyData; } }
-        public Keys Modifiers { get { return _keyData & Keys.Modifiers; } }
-        public virtual bool Shift { get { return _shift; } }
+        public Keys KeyCode => KeyData;
+        public Keys KeyData { get; }
+        public int KeyValue => (int)KeyData;
+        public Keys Modifiers => KeyData & Keys.Modifiers;
+        public virtual bool Shift { get; }
         public bool SuppressKeyPress { get; set; }
         #endregion
     }

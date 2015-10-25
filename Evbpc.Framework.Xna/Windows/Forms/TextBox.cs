@@ -14,12 +14,11 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 {
     public class TextBox : Framework.Windows.Forms.TextBox, IDrawableControl, IUpdateableControl
     {
-        private SpriteFont _font;
-        public SpriteFont Font => _font;
+        public SpriteFont Font { get; }
         
         public TextBox(SpriteFont font, string name)
         {
-            _font = font;
+            Font = font;
             Name = name;
             Form.KeyboardStateManager.KeyDown += KeyStateMan_KeyDown;
             Form.KeyboardStateManager.KeyPress += KeyStateMan_KeyPress;
@@ -40,7 +39,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
         void IDrawableControl.Draw(SpriteBatch s, Evbpc.Framework.Drawing.Point initialLocation)
         {
-            s.DrawString(_font, Text, new Vector2(initialLocation.X + this.Location.X, initialLocation.Y + this.Location.Y), ForeColor.ToXnaColor());
+            s.DrawString(Font, Text, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
         }
 
         void IUpdateableControl.Update(MouseState m, bool hasFocus, GameTime gt)

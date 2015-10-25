@@ -19,11 +19,12 @@ namespace Evbpc.Framework.Windows.Forms
     public class Form : ContainerControl
     {
         protected static List<Form> Forms = new List<Form>();
-        private Size _defaultSize;
-        private Form[] _ownedForms;
 
         #region Constructors
-        public Form() { _ownedForms = null; }
+        public Form()
+        {
+            OwnedForms = null;
+        }
         #endregion
 
         #region Properties
@@ -50,7 +51,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.defaultsize(v=vs.110).aspx
         /// </remarks>
-        protected override Size DefaultSize { get { return _defaultSize; } }
+        protected override Size DefaultSize { get; }
 
         /// <summary>
         /// Gets or sets the size and location of the form on the Windows desktop.
@@ -59,7 +60,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.desktopbounds(v=vs.110).aspx
         /// </remarks>
         [Browsable(false)]
-        public Rectangle DesktopBounds { get { return base.Bounds; } set { base.Bounds = value; } }
+        public Rectangle DesktopBounds { get { return Bounds; } set { Bounds = value; } }
 
         /// <summary>
         /// Gets or sets the location of the form on the Windows desktop.
@@ -68,7 +69,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.desktoplocation(v=vs.110).aspx
         /// </remarks>
         [Browsable(false)]
-        public Point DesktopLocation { get { return base.Location; } set { base.Location = value; } }
+        public Point DesktopLocation { get { return Location; } set { Location = value; } }
 
         /// <summary>
         /// Gets or sets the border style of the form.
@@ -129,7 +130,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.form.ownedforms(v=vs.110).aspx
         /// </remarks>
         [Browsable(false)]
-        public Form[] OwnedForms { get { return _ownedForms; } }
+        public Form[] OwnedForms { get; private set; }
 
         /// <summary>
         /// Gets or sets the form that owns this form.
@@ -209,22 +210,24 @@ namespace Evbpc.Framework.Windows.Forms
             ActiveForm = this;
 
             if (Forms.Contains(this))
+            {
                 Forms.Remove(this);
+            }
 
             Forms.Insert(0, this);
         }
 
         public void AddOwnedForm(Form ownedForm)
         {
-            Form[] tForms = new Form[_ownedForms.Length + 1];
-            
-            for (int i = 0; i < _ownedForms.Length; i++) 
+            Form[] tForms = new Form[OwnedForms.Length + 1];
+
+            for (int i = 0; i < OwnedForms.Length; i++)
             {
-                tForms[i] = _ownedForms[i];
+                tForms[i] = OwnedForms[i];
             }
-            
+
             tForms[tForms.Length - 1] = ownedForm;
-            _ownedForms = tForms;
+            OwnedForms = tForms;
         }
 
         public void Close()
@@ -241,9 +244,11 @@ namespace Evbpc.Framework.Windows.Forms
             foreach (Form form in Forms)
             {
                 if (form.Name == key)
+                {
                     return form;
+                }
             }
-            
+
             throw new KeyNotFoundException();
         }
 
@@ -259,34 +264,119 @@ namespace Evbpc.Framework.Windows.Forms
             throw new NotImplementedException();
         }
 
-        protected virtual void OnActivated(EventArgs e) { var evenHandler = Activated; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnClosed(EventArgs e) { var evenHandler = Closed; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnClosing(CancelEventArgs e) { var evenHandler = Closing; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnDeactivate(EventArgs e) { var evenHandler = Deactivate; if (evenHandler != null) { evenHandler(this, e); } }
-        protected override void OnEnabledChanged(EventArgs e) { base.OnEnabledChanged(e); }
-        protected override void OnEnter(EventArgs e) { base.OnEnter(e); }
-        protected virtual void OnFormClosed(FormClosedEventArgs e) { var evenHandler = FormClosed; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnFormClosing(FormClosingEventArgs e) { var evenHandler = FormClosing; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnLoad(EventArgs e) { var evenHandler = Load; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnMaximizedBoundsChanged(EventArgs e) { var evenHandler = MaximizedBoundsChanged; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnMaximumSizeChanged(EventArgs e) { var evenHandler = MaximumSizeChanged; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnMinimumSizeChanged(EventArgs e) { var evenHandler = MinimumSizeChanged; if (evenHandler != null) { evenHandler(this, e); } }
-        protected override void OnResize(EventArgs e) { base.OnResize(e); }
-        protected virtual void OnResizeBegin(EventArgs e) { var evenHandler = ResizeBegin; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnResizeEnd(EventArgs e) { var evenHandler = ResizeEnd; if (evenHandler != null) { evenHandler(this, e); } }
-        protected virtual void OnShown(EventArgs e) { var evenHandler = Shown; if (evenHandler != null) { evenHandler(this, e); } }
-        protected override void OnTextChanged(EventArgs e) { base.OnTextChanged(e); }
-        protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e); }
+        protected virtual void OnActivated(EventArgs e)
+        {
+            var evenHandler = Activated;
+            evenHandler?.Invoke(this, e);
+        }
+
+        protected virtual void OnClosed(EventArgs e)
+        {
+            var evenHandler = Closed;
+            evenHandler?.Invoke(this, e);
+        }
+
+        protected virtual void OnClosing(CancelEventArgs e)
+        {
+            var evenHandler = Closing;
+            evenHandler?.Invoke(this, e);
+        }
+
+        protected virtual void OnDeactivate(EventArgs e)
+        {
+            var evenHandler = Deactivate;
+            evenHandler?.Invoke(this, e);
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+        }
+
+        protected override void OnEnter(EventArgs e)
+        {
+            base.OnEnter(e);
+        }
+
+        protected virtual void OnFormClosed(FormClosedEventArgs e)
+        {
+            var evenHandler = FormClosed;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected virtual void OnFormClosing(FormClosingEventArgs e)
+        {
+            var evenHandler = FormClosing;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected virtual void OnLoad(EventArgs e)
+        {
+            var evenHandler = Load;
+            evenHandler?.Invoke(this, e);
+        }
+
+        protected virtual void OnMaximizedBoundsChanged(EventArgs e)
+        {
+            var evenHandler = MaximizedBoundsChanged;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected virtual void OnMaximumSizeChanged(EventArgs e)
+        {
+            var evenHandler = MaximumSizeChanged;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected virtual void OnMinimumSizeChanged(EventArgs e)
+        {
+            var evenHandler = MinimumSizeChanged;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+        }
+
+        protected virtual void OnResizeBegin(EventArgs e)
+        {
+            var evenHandler = ResizeBegin;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected virtual void OnResizeEnd(EventArgs e)
+        {
+            var evenHandler = ResizeEnd;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected virtual void OnShown(EventArgs e)
+        {
+            var evenHandler = Shown;
+            evenHandler?.Invoke(this, e); 
+        }
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+        }
+
 
         public void RemoveOwnedForm(Form ownedForm)
         {
-            Form[] tForms = new Form[_ownedForms.Length - 1];
-            
+            Form[] tForms = new Form[OwnedForms.Length - 1];
+
             int tIndex = 0;
-            
-            foreach (Form f in _ownedForms) 
+
+            foreach (Form f in OwnedForms)
             {
-                if (!f.Equals(ownedForm)) 
+                if (!f.Equals(ownedForm))
                 {
                     tForms[tIndex] = f;
                     tIndex++;
@@ -303,15 +393,15 @@ namespace Evbpc.Framework.Windows.Forms
         public void SetDesktopBounds(int x, int y, int width, int height)
         {
             OnResizeBegin(new EventArgs());
-            base.Location = new Point(x, y);
-            base.Size = new Size(width, height);
+            Location = new Point(x, y);
+            Size = new Size(width, height);
             OnResize(new EventArgs());
             OnResizeEnd(new EventArgs());
         }
 
         public void SetDesktopLocation(int x, int y)
         {
-            base.Location = new Point(x, y);
+            Location = new Point(x, y);
         }
 
         /// <summary>
@@ -323,10 +413,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// If you do not need to add controls, programmatically change anything on the form, or programmatically operate on it, then it is not necessary to hold on to the variable. You may still subscribe to events and will be informed when an event is triggered.
         /// </remarks>
         public new void Show()
-        { 
+        {
             if (Forms.Contains(this))
+            {
                 throw new InvalidOperationException("The Form.Show() method has already been called on this Form.");
-            
+            }
+
             Forms.Add(this);
             Enabled = true;
             Visible = true;

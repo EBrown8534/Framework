@@ -7,27 +7,28 @@ using System.Text;
 
 namespace Evbpc.Framework.Windows.Forms
 {
-    [ComVisibleAttribute(true)]
-    [ClassInterfaceAttribute(ClassInterfaceType.AutoDispatch)]
-    [DefaultBindingPropertyAttribute("Text")]
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDispatch)]
+    [DefaultBindingProperty("Text")]
     public class Label : Control
     {
         #region Constructors
         public Label()
         {
-            DefaultBindingPropertyAttribute defaultBindingAttribute =
-            (DefaultBindingPropertyAttribute)Attribute.GetCustomAttribute(typeof(Label), typeof(DefaultBindingPropertyAttribute));
+            DefaultBindingPropertyAttribute defaultBindingAttribute = (DefaultBindingPropertyAttribute)Attribute.GetCustomAttribute(typeof(Label), typeof(DefaultBindingPropertyAttribute));
 
             if (defaultBindingAttribute != null)
-                this.Text = defaultBindingAttribute.Name;
+            {
+                Text = defaultBindingAttribute.Name;
+            }
         }
         #endregion
 
         #region Properties
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public bool AutoEllipsis { get; set; }
 
-        [SettingsBindableAttribute(true)]
+        [SettingsBindable(true)]
         public override string Text { get; set; }
         #endregion
     }

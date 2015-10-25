@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Evbpc.Framework.Windows.Forms
 {
-    [ComVisibleAttribute(true)]
-    [ClassInterfaceAttribute(ClassInterfaceType.AutoDispatch)]
-    [DefaultBindingPropertyAttribute("Text")]
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDispatch)]
+    [DefaultBindingProperty("Text")]
     public abstract class TextBoxBase : Control
     {
 

@@ -79,11 +79,20 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             KeyboardStateManager.KeyUp += KeyStateMan_KeyUp;
         }
 
-        void KeyStateMan_KeyUp(object sender, KeyEventArgs e) { OnKeyUp(e); }
+        void KeyStateMan_KeyUp(object sender, KeyEventArgs e)
+        {
+            OnKeyUp(e);
+        }
 
-        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
+        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            OnKeyPress(e);
+        }
 
-        void KeyStateMan_KeyDown(object sender, KeyEventArgs e) { OnKeyDown(e); }
+        void KeyStateMan_KeyDown(object sender, KeyEventArgs e)
+        {
+            OnKeyDown(e);
+        }
 
         private void Draw(SpriteBatch s)
         {
@@ -104,9 +113,13 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                     if (c is IDrawableControl)
                     {
                         if (ShowTitleBar)
+                        {
                             ((IDrawableControl)c).Draw(s, new EFD.Point(Location.X, Location.Y + TitleBarHeight));
+                        }
                         else
+                        {
                             ((IDrawableControl)c).Draw(s, Location);
+                        }
                     }
                 }
             }
@@ -171,10 +184,10 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             // We should only process things that require input if the game is focused, the form is visible, and the form is enabled.
             if (Enabled && Visible && hasFocus)
             {
-                if (m.X >= this.Bounds.Left
-                    && m.X < this.Bounds.Right
-                    && m.Y >= this.Bounds.Top
-                    && m.Y < this.Bounds.Bottom)
+                if (m.X >= Bounds.Left
+                    && m.X < Bounds.Right
+                    && m.Y >= Bounds.Top
+                    && m.Y < Bounds.Bottom)
                 {
                     if (m.LeftButton == ButtonState.Pressed
                         && m.RightButton == ButtonState.Pressed)
@@ -186,7 +199,9 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                         && _mouseStatePrevious.LeftButton == ButtonState.Pressed)
                     {
                         if (DateTime.UtcNow - _clickStart <= _clickTrigger)
+                        {
                             OnClick(new EventArgs());
+                        }
 
                         _inDrag = false;
 
@@ -199,13 +214,13 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
                         if (ShowTitleBar)
                         {
-                            if (m.X >= this.Bounds.Left
-                                && m.X < this.Bounds.Right
-                                && m.Y >= this.Location.Y
-                                && m.Y < this.Location.Y + this.TitleBarHeight)
+                            if (m.X >= Bounds.Left
+                                && m.X < Bounds.Right
+                                && m.Y >= Location.Y
+                                && m.Y < Location.Y + TitleBarHeight)
                             {
                                 _dragMouseStart = new EFD.Point(m.X, m.Y);
-                                _dragPosStart = this.Location;
+                                _dragPosStart = Location;
                                 _inDrag = true;
                             }
                         }
@@ -218,14 +233,16 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                 {
                     if (AllowDrag && _inDrag && ShowTitleBar)
                     {
-                        this.Location = _dragPosStart + new Evbpc.Framework.Drawing.Size(m.X - _dragMouseStart.X, m.Y - _dragMouseStart.Y);
+                        Location = _dragPosStart + new Evbpc.Framework.Drawing.Size(m.X - _dragMouseStart.X, m.Y - _dragMouseStart.Y);
                     }
                 }
 
                 for (int i = 0; i < Controls.Count; i++)
                 {
                     if (Controls[i] is IUpdateableControl)
+                    {
                         ((IUpdateableControl)Controls[i]).Update(m, Controls[i] == ActiveControl, gt);
+                    }
                 }
             }
             else if (Enabled && Visible)

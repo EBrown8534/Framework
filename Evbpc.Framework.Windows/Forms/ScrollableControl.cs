@@ -16,12 +16,12 @@ namespace Evbpc.Framework.Windows.Forms
         #region Properties
         public override Rectangle DisplayRectangle { get { throw new NotImplementedException(); } }
 
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public HScrollProperties HorizontalScroll { get { throw new NotImplementedException(); } }
 
         protected bool HScroll { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
 
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public VScrollProperties VerticalScroll { get { throw new NotImplementedException(); } }
 
         protected bool VScroll { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
@@ -30,7 +30,13 @@ namespace Evbpc.Framework.Windows.Forms
         #region Methods
         protected virtual void AdjustFormScrollbars(bool displayScrollbars) { throw new NotImplementedException(); }
         protected override void OnMouseWheel(MouseEventArgs e) { throw new NotImplementedException(); }
-        protected virtual void OnScroll(ScrollEventArgs se) { throw new NotImplementedException(); }
+
+        protected virtual void OnScroll(ScrollEventArgs e)
+        {
+            var handler = Scroll;
+            handler?.Invoke(this, e);
+        }
+
         protected override void OnVisibleChanged(EventArgs e) { throw new NotImplementedException(); }
         protected void SetDisplayRectLocation(int x, int y) { throw new NotImplementedException(); }
         #endregion

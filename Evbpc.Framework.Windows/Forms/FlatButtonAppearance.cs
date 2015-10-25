@@ -18,7 +18,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.flatbuttonappearance.bordercolor(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public Color BorderColor { get; set; }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.flatbuttonappearance.bordersize(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public int BorderSize { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.flatbuttonappearance.checkedbackcolor(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public Color CheckedBackColor { get; set; }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.flatbuttonappearance.mousedownbackcolor(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public Color MouseDownBackColor { get; set; }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.flatbuttonappearance.mouseoverbackcolor(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public Color MouseOverBackColor { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Evbpc.Framework.Windows.Forms
     /// 
     /// Also, do note: I wrote a little program that generated this file for me. I cannot guarantee it's accuracy.
     /// </remarks>
-    [FlagsAttribute]
+    [Flags]
     public enum Keys
     {
         /// <summary>

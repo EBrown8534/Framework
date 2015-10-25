@@ -8,10 +8,11 @@ namespace Evbpc.Framework.Windows.Forms
 {
     public abstract class ScrollProperties
     {
-        private ScrollableControl _parentControl;
-
         #region Constructors
-        protected ScrollProperties(ScrollableControl container) { _parentControl = container; }
+        protected ScrollProperties(ScrollableControl container)
+        {
+            ParentControl = container;
+        }
         #endregion
 
         #region Properties
@@ -19,10 +20,10 @@ namespace Evbpc.Framework.Windows.Forms
         public int LargeChange { get; set; }
         public int Maximum { get; set; }
         public int Minimum { get; set; }
-        protected ScrollableControl ParentControl { get { return _parentControl; } }
+        protected ScrollableControl ParentControl { get; }
         public int SmallChange { get; set; }
 
-        [BindableAttribute(true)]
+        [Bindable(true)]
         public int Value { get; set; }
 
         public bool Visible { get; set; }

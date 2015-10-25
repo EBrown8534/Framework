@@ -34,8 +34,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.containercontrol.activecontrol(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public Control ActiveControl { get { return _activeControl; } set { if (this.Controls.Contains(value)) { _activeControl = value; } } }
+        [Browsable(false)]
+        public Control ActiveControl
+        {
+            get
+            {
+                return _activeControl;
+            }
+            set
+            {
+                if (Controls.Contains(value))
+                {
+                    _activeControl = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the form that the container control is assigned to.
@@ -43,8 +56,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.containercontrol.parentform(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public Form ParentForm { get { return FindForm(); } }
+        [Browsable(false)]
+        public Form ParentForm => FindForm();
         #endregion
 
         #region Methods
@@ -58,10 +71,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// </remarks>
         public bool ActivateControl(Control active)
         {
-            if (this.Controls.Contains(active))
+            if (Controls.Contains(active))
             {
                 active.Select();
-                this._activeControl = active;
+                ActiveControl = active;
                 return true;
             }
             
@@ -76,12 +89,14 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.containercontrol.processtabkey(v=vs.110).aspx
         /// </remarks>
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
+        [UIPermission(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool ProcessTabKey(bool forward)
         {
-            if (_activeControl != null)
+            if (ActiveControl != null)
             {
                 int tIndex = _activeControl.TabIndex;
+
+                // TODO: finish implementation
             }
 
             return false;
@@ -96,7 +111,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/z62bk4s9(v=vs.110).aspx
         /// </remarks>
-        protected override void Select(bool directed, bool forward) { throw new NotImplementedException(); }
+        protected override void Select(bool directed, bool forward)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

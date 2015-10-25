@@ -8,22 +8,23 @@ namespace Evbpc.Framework.Windows.Forms
 {
     public class MouseEventArgs : EventArgs
     {
-        private MouseButtons _button;
-        private int _clicks;
-        private Point _location;
-        private int _delta;
-
         #region Constructors
-        public MouseEventArgs(MouseButtons button, int clicks, int x, int y, int delta) { _button = button; _clicks = clicks; _location = new Point(x, y); _delta = delta; }
+        public MouseEventArgs(MouseButtons button, int clicks, int x, int y, int delta)
+        {
+            Button = button;
+            Clicks = clicks;
+            Location = new Point(x, y);
+            Delta = delta;
+        }
         #endregion
 
         #region Properties
-        public MouseButtons Button { get { return _button; } }
-        public int Clicks { get { return _clicks; } }
-        public int Delta { get { return _delta; } }
-        public Point Location { get { return _location; } }
-        public int X { get { return _location.X; } }
-        public int Y { get { return _location.Y; } }
+        public MouseButtons Button { get; }
+        public int Clicks { get; }
+        public int Delta { get; }
+        public Point Location { get; }
+        public int X => Location.X;
+        public int Y => Location.Y;
         #endregion
     }
 }

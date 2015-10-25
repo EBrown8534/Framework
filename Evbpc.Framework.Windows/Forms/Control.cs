@@ -17,8 +17,6 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public abstract class Control : Component, IComponent, IDisposable
     {
-        private ControlCollection _controls;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the Control class with default settings.
@@ -33,7 +31,7 @@ namespace Evbpc.Framework.Windows.Forms
             ForeColor = DefaultForeColor;
             Anchor = AnchorStyles.None;
             Capture = true;
-            _controls = new ControlCollection(this);
+            Controls = new ControlCollection(this);
             Enabled = true;
             Location = new Point();
             MaximumSize = DefaultMaximumSize;
@@ -132,8 +130,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.bottom(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public int Bottom { get { return Location.Y + Size.Height; } }
+        [Browsable(false)]
+        public int Bottom => Location.Y + Size.Height;
 
         /// <summary>
         /// Gets or sets the size and location of the control including its nonclient elements, in pixels, relative to the parent control.
@@ -141,7 +139,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.bounds(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Rectangle Bounds { get { return new Rectangle(Location, Size); } set { Location = value.Location; Size = value.Size; } }
 
         /// <summary>
@@ -150,8 +148,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.canfocus(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public bool CanFocus { get { return ((Parent != null && Parent.CanFocus) || (Parent == null && this is Form)) && Enabled && Visible; } }
+        [Browsable(false)]
+        public bool CanFocus => ((Parent != null && Parent.CanFocus) || (Parent == null && this is Form)) && Enabled && Visible;
 
         /// <summary>
         /// Gets a value indicating whether the control can be selected.
@@ -159,8 +157,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.canselect(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public bool CanSelect { get { return Parent != null && Parent.CanFocus && Visible && Enabled; } }
+        [Browsable(false)]
+        public bool CanSelect => Parent != null && Parent.CanFocus && Visible && Enabled;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has captured the mouse.
@@ -168,7 +166,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.capture(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public bool Capture { get; set; }
 
         /// <summary>
@@ -177,8 +175,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.clientrectangle(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public Rectangle ClientRectangle { get { return Bounds; } }
+        [Browsable(false)]
+        public Rectangle ClientRectangle => Bounds;
 
         /// <summary>
         /// Gets or sets the height and width of the client area of the control.
@@ -186,7 +184,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.clientsize(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Size ClientSize { get { return Size; } set { Size = value; } }
 
         /// <summary>
@@ -195,8 +193,30 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.containsfocus(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public bool ContainsFocus { get { if ((Parent != null)) { foreach (Control c in _controls) { if (c.ContainsFocus) { return true; } } if (FindForm().ActiveControl == this) { return true; } } return false; } }
+        [Browsable(false)]
+        public bool ContainsFocus
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    foreach (Control c in Controls)
+                    {
+                        if (c.ContainsFocus)
+                        {
+                            return true;
+                        }
+                    }
+
+                    if (FindForm().ActiveControl == this)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets the collection of controls contained within the control.
@@ -204,8 +224,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controls(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public Control.ControlCollection Controls { get { return _controls; } }
+        [Browsable(false)]
+        public ControlCollection Controls { get; }
 
         /// <summary>
         /// Gets the default background color of the control.
@@ -213,35 +233,39 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.defaultbackcolor(v=vs.110).aspx
         /// </remarks>
-        public static Color DefaultBackColor { get { return new Color(255, 255, 255); } }
+        public static Color DefaultBackColor => new Color(255, 255, 255);
+
         /// <summary>
         /// Gets the default foreground color of the control.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.defaultforecolor(v=vs.110).aspx
         /// </remarks>
-        public static Color DefaultForeColor { get { return new Color(0, 0, 0); } }
+        public static Color DefaultForeColor => new Color(0, 0, 0);
+
         /// <summary>
         /// Gets the length and height, in pixels, that is specified as the default maximum size of a control.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.defaultmaximumsize(v=vs.110).aspx
         /// </remarks>
-        protected virtual Size DefaultMaximumSize { get { return new Size(int.MaxValue, int.MaxValue); } }
+        protected virtual Size DefaultMaximumSize => new Size(int.MaxValue, int.MaxValue);
+
         /// <summary>
         /// Gets the length and height, in pixels, that is specified as the default minimum size of a control.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.defaultminimumsize(v=vs.110).aspx
         /// </remarks>
-        protected virtual Size DefaultMinimumSize { get { return new Size(0, 0); } }
+        protected virtual Size DefaultMinimumSize => new Size(0, 0);
+
         /// <summary>
         /// Gets the default size of the control.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.defaultsize(v=vs.110).aspx
         /// </remarks>
-        protected virtual Size DefaultSize { get { return new Size(640, 480); } }
+        protected virtual Size DefaultSize => new Size(640, 480);
 
         /// <summary>
         /// Gets the rectangle that represents the display area of the control.
@@ -249,8 +273,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.displayrectangle(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public virtual Rectangle DisplayRectangle { get { return Bounds; } }
+        [Browsable(false)]
+        public virtual Rectangle DisplayRectangle => Bounds;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control can respond to user interaction.
@@ -266,8 +290,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.focused(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public virtual bool Focused { get { return (Parent != null) && ContainsFocus; } }
+        [Browsable(false)]
+        public virtual bool Focused => Parent != null && ContainsFocus;
 
         /// <summary>
         /// Gets or sets the foreground color of the control.
@@ -283,8 +307,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.haschildren(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public bool HasChildren { get { return _controls.Count > 0; } }
+        [Browsable(false)]
+        public bool HasChildren => Controls.Count > 0;
 
         /// <summary>
         /// Gets or sets the height of the control.
@@ -292,7 +316,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.height(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public int Height { get { return Size.Height; } set { Size = new Size(Size.Width, value); } }
 
         /// <summary>
@@ -301,7 +325,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.left(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public int Left { get { return Location.X; } set { Location = new Point(value, Location.Y); } }
 
         /// <summary>
@@ -332,7 +356,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.name(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public string Name { get; set; }
 
         /// <summary>
@@ -341,7 +365,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.parent(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public Control Parent { get; set; }
 
         /// <summary>
@@ -350,8 +374,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.preferredsize(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public Size PreferredSize { get { return Size; } }
+        [Browsable(false)]
+        public Size PreferredSize => Size;
 
         /// <summary>
         /// Gets the distance, in pixels, between the right edge of the control and the left edge of its container's client area.
@@ -359,8 +383,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.right(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public int Right { get { return Location.X + Size.Width; } }
+        [Browsable(false)]
+        public int Right => Location.X + Size.Width;
 
         /// <summary>
         /// Gets or sets the height and width of the control.
@@ -399,7 +423,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.top(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public int Top { get { return Location.X; } set { Location = new Point(Location.X, value); } }
 
         /// <summary>
@@ -408,8 +432,26 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.toplevelcontrol(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
-        public Control TopLevelControl { get { if (Parent == null) { if (this is Form) { return this; } } else { return Parent.TopLevelControl; } return null; } }
+        [Browsable(false)]
+        public Control TopLevelControl
+        {
+            get
+            {
+                if (Parent == null)
+                {
+                    if (this is Form)
+                    {
+                        return this;
+                    }
+                }
+                else
+                {
+                    return Parent.TopLevelControl;
+                }
+
+                return null;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
@@ -425,7 +467,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.width(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public int Width { get { return Size.Width; } set { Size = new Size(value, Size.Height); } }
         #endregion
 
@@ -445,8 +487,18 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.findform(v=vs.110).aspx
         /// </remarks>
-        [UIPermissionAttribute(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
-        public Form FindForm() { if (this is Form) { return (Form)this; } else { if (Parent != null) { return Parent.FindForm(); } } return null; }
+        [UIPermission(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
+        public Form FindForm()
+        {
+            if (this is Form)
+            {
+                return (Form)this;
+            }
+            else
+            {
+                return Parent?.FindForm();
+            }
+        }
 
         /// <summary>
         /// Sets input focus to the control.
@@ -455,7 +507,19 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.focus(v=vs.110).aspx
         /// </remarks>
-        public bool Focus() { if (Parent != null) { if (CanFocus) { FindForm().ActiveControl = this; } } return ContainsFocus; }
+        public bool Focus()
+        {
+            if (Parent != null)
+            {
+                if (CanFocus)
+                {
+                    FindForm().ActiveControl = this;
+                }
+            }
+
+            return ContainsFocus;
+        }
+
         /// <summary>
         /// Retrieves the next control forward or back in the tab order of child controls.
         /// </summary>
@@ -466,6 +530,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.getnextcontrol(v=vs.110).aspx
         /// </remarks>
         public Control GetNextControl(Control ctl, bool forward) { throw new NotImplementedException(); }
+
         /// <summary>
         /// Retrieves the size of a rectangular area into which a control can be fitted.
         /// </summary>
@@ -474,7 +539,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.getpreferredsize(v=vs.110).aspx
         /// </remarks>
-        public virtual Size GetPreferredSize(Size proposedSize) { return new Size(Math.Min(Size.Width, proposedSize.Width), Math.Min(Size.Height, proposedSize.Height)); }
+        public virtual Size GetPreferredSize(Size proposedSize) => new Size(Math.Min(Size.Width, proposedSize.Width), Math.Min(Size.Height, proposedSize.Height));
+
         /// <summary>
         /// Determines if the control is a top-level control.
         /// </summary>
@@ -482,7 +548,11 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.gettoplevel(v=vs.110).aspx
         /// </remarks>
-        protected bool GetTopLevel() { throw new NotImplementedException(); }
+        protected bool GetTopLevel()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Raises the <see cref="BackColorChanged"/> event.
         /// </summary>
@@ -490,7 +560,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onbackcolorchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnBackColorChanged(EventArgs e) { if (BackColorChanged != null) { BackColorChanged(this, e); } }
+        protected virtual void OnBackColorChanged(EventArgs e)
+        {
+            var handler = BackColorChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="Click"/> event.
         /// </summary>
@@ -498,7 +573,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onclick(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnClick(EventArgs e) { if (Click != null) { Click(this, e); } }
+        protected virtual void OnClick(EventArgs e)
+        {
+            var handler = Click;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="ClientSizeChanged"/> event.
         /// </summary>
@@ -506,7 +586,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onclientsizechanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnClientSizeChanged(EventArgs e) { if (ClientSizeChanged != null) { ClientSizeChanged(this, e); } }
+        protected virtual void OnClientSizeChanged(EventArgs e)
+        {
+            var handler = ClientSizeChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="ControlAdded"/> event.
         /// </summary>
@@ -514,7 +599,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.oncontroladded(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnControlAdded(ControlEventArgs e) { if (ControlAdded != null) { ControlAdded(this, e); } }
+        protected virtual void OnControlAdded(ControlEventArgs e)
+        {
+            var handler = ControlAdded;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="ControlRemoved"/> event.
         /// </summary>
@@ -522,7 +612,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.oncontrolremoved(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnControlRemoved(ControlEventArgs e) { if (ControlRemoved != null) { ControlRemoved(this, e); } }
+        protected virtual void OnControlRemoved(ControlEventArgs e)
+        {
+            var handler = ControlRemoved;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="DoubleClick"/> event.
         /// </summary>
@@ -530,7 +625,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.ondoubleclick(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnDoubleClick(EventArgs e) { if (DoubleClick != null) { DoubleClick(this, e); } }
+        protected virtual void OnDoubleClick(EventArgs e)
+        {
+            var handler = DoubleClick;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="EnabledChanged"/> event.
         /// </summary>
@@ -538,7 +638,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onenabledchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnEnabledChanged(EventArgs e) { if (EnabledChanged != null) { EnabledChanged(this, e); } }
+        protected virtual void OnEnabledChanged(EventArgs e)
+        {
+            var handler = EnabledChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="Enter"/> event.
         /// </summary>
@@ -546,7 +651,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onenter(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnEnter(EventArgs e) { if (Enter != null) { Enter(this, e); } }
+        protected virtual void OnEnter(EventArgs e)
+        {
+            var handler = Enter;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="ForeColorChanged"/> event.
         /// </summary>
@@ -554,7 +664,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onforecolorchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnForeColorChanged(EventArgs e) { if (ForeColorChanged != null) { ForeColorChanged(this, e); } }
+        protected virtual void OnForeColorChanged(EventArgs e)
+        {
+            var handler = ForeColorChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="GotFocus"/> event.
         /// </summary>
@@ -562,7 +677,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.ongotfocus(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnGotFocus(EventArgs e) { if (GotFocus != null) { GotFocus(this, e); } }
+        protected virtual void OnGotFocus(EventArgs e)
+        {
+            var handler = GotFocus;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="KeyDown"/> event.
         /// </summary>
@@ -570,7 +690,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onkeydown(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnKeyDown(KeyEventArgs e) { if (KeyDown != null) { KeyDown(this, e); } }
+        protected virtual void OnKeyDown(KeyEventArgs e)
+        {
+            var handler = KeyDown;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="KeyPress"/> event.
         /// </summary>
@@ -578,7 +703,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onkeypress(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnKeyPress(KeyPressEventArgs e) { if (KeyPress != null) { KeyPress(this, e); } }
+        protected virtual void OnKeyPress(KeyPressEventArgs e)
+        {
+            var handler = KeyPress;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="KeyUp"/> event.
         /// </summary>
@@ -586,7 +716,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onkeyup(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnKeyUp(KeyEventArgs e) { if (KeyUp != null) { KeyUp(this, e); } }
+        protected virtual void OnKeyUp(KeyEventArgs e)
+        {
+            var handler = KeyUp;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="Leave"/> event.
         /// </summary>
@@ -594,7 +729,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onleave(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnLeave(EventArgs e) { if (Leave != null) { Leave(this, e); } }
+        protected virtual void OnLeave(EventArgs e)
+        {
+            var handler = Leave;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
@@ -602,7 +742,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onlocationchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnLocationChanged(EventArgs e) { if (LocationChanged != null) { LocationChanged(this, e); } }
+        protected virtual void OnLocationChanged(EventArgs e)
+        {
+            var handler = LocationChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="LostFocus"/> event.
         /// </summary>
@@ -610,7 +755,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onlostfocus(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnLostFocus(EventArgs e) { if (LostFocus != null) { LostFocus(this, e); } }
+        protected virtual void OnLostFocus(EventArgs e)
+        {
+            var handler = LostFocus;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseClick"/> event.
         /// </summary>
@@ -618,7 +768,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmouseclick(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseClick(MouseEventArgs e) { if (MouseClick != null) { MouseClick(this, e); } }
+        protected virtual void OnMouseClick(MouseEventArgs e)
+        {
+            var handler = MouseClick;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseDoubleClick"/> event.
         /// </summary>
@@ -626,7 +781,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmousedoubleclick(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseDoubleClick(MouseEventArgs e) { if (MouseDoubleClick != null) { MouseDoubleClick(this, e); } }
+        protected virtual void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            var handler = MouseDoubleClick;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseDown"/> event.
         /// </summary>
@@ -634,7 +794,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmousedown(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseDown(MouseEventArgs e) { if (MouseDown != null) { MouseDown(this, e); } }
+        protected virtual void OnMouseDown(MouseEventArgs e)
+        {
+            var handler = MouseDown;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseEnter"/> event.
         /// </summary>
@@ -642,7 +807,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmouseenter(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseEnter(EventArgs e) { if (MouseEnter != null) { MouseEnter(this, e); } }
+        protected virtual void OnMouseEnter(EventArgs e)
+        {
+            var handler = MouseEnter;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseHover"/> event.
         /// </summary>
@@ -650,7 +820,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmousehover(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseHover(EventArgs e) { if (MouseHover != null) { MouseHover(this, e); } }
+        protected virtual void OnMouseHover(EventArgs e)
+        {
+            var handler = MouseHover;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseLeave"/> event.
         /// </summary>
@@ -658,7 +833,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmouseleave(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseLeave(EventArgs e) { if (MouseLeave != null) { MouseLeave(this, e); } }
+        protected virtual void OnMouseLeave(EventArgs e)
+        {
+            var handler = MouseLeave;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseMove"/> event.
         /// </summary>
@@ -666,7 +846,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmousemove(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseMove(MouseEventArgs e) { if (MouseMove != null) { MouseMove(this, e); } }
+        protected virtual void OnMouseMove(MouseEventArgs e)
+        {
+            var handler = MouseMove;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseUp"/> event.
         /// </summary>
@@ -674,7 +859,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmouseup(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseUp(MouseEventArgs e) { if (MouseUp != null) { MouseUp(this, e); } }
+        protected virtual void OnMouseUp(MouseEventArgs e)
+        {
+            var handler = MouseUp;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="MouseWheel"/> event.
         /// </summary>
@@ -682,7 +872,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmousewheel(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMouseWheel(MouseEventArgs e) { if (MouseWheel != null) { MouseWheel(this, e); } }
+        protected virtual void OnMouseWheel(MouseEventArgs e)
+        {
+            var handler = MouseWheel;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="Move"/> event.
         /// </summary>
@@ -690,7 +885,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onmove(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnMove(EventArgs e) { if (Move != null) { Move(this, e); } }
+        protected virtual void OnMove(EventArgs e)
+        {
+            var handler = Move;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="Resize"/> event.
         /// </summary>
@@ -698,7 +898,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onresize(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnResize(EventArgs e) { if (Resize != null) { Resize(this, e); } }
+        protected virtual void OnResize(EventArgs e)
+        {
+            var handler = Resize;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="SizeChanged"/> event.
         /// </summary>
@@ -706,7 +911,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onsizechanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnSizeChanged(EventArgs e) { if (SizeChanged != null) { SizeChanged(this, e); } }
+        protected virtual void OnSizeChanged(EventArgs e)
+        {
+            var handler = SizeChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="TabIndexChanged"/> event.
         /// </summary>
@@ -714,7 +924,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.ontabindexchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnTabIndexChanged(EventArgs e) { if (TabIndexChanged != null) { TabIndexChanged(this, e); } }
+        protected virtual void OnTabIndexChanged(EventArgs e)
+        {
+            var handler = TabIndexChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="TabStopChanged"/> event.
         /// </summary>
@@ -722,7 +937,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.ontabstopchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnTabStopChanged(EventArgs e) { if (TabStopChanged != null) { TabStopChanged(this, e); } }
+        protected virtual void OnTabStopChanged(EventArgs e)
+        {
+            var handler = TabStopChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="TextChanged"/> event.
         /// </summary>
@@ -730,7 +950,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.ontextchanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnTextChanged(EventArgs e) { if (TextChanged != null) { TextChanged(this, e); } }
+        protected virtual void OnTextChanged(EventArgs e)
+        {
+            var handler = TextChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Raises the <see cref="VisibleChanged"/> event.
         /// </summary>
@@ -738,35 +963,56 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onvisiblechanged(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnVisibleChanged(EventArgs e) { if (VisibleChanged != null) { VisibleChanged(this, e); } }
+        protected virtual void OnVisibleChanged(EventArgs e)
+        {
+            var handler = VisibleChanged;
+            handler?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Resets the <see cref="BackColor"/> property to its default value.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.resetbackcolor(v=vs.110).aspx
         /// </remarks>
-        public virtual void ResetBackColor() { BackColor = DefaultBackColor; }
+        public virtual void ResetBackColor()
+        {
+            BackColor = DefaultBackColor;
+        }
+
         /// <summary>
         /// Resets the <see cref="ForeColor"/> property to its default value.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.resetforecolor(v=vs.110).aspx
         /// </remarks>
-        public virtual void ResetForeColor() { ForeColor = DefaultForeColor; }
+        public virtual void ResetForeColor()
+        {
+            ForeColor = DefaultForeColor;
+        }
+
         /// <summary>
         /// Resets the <see cref="Text"/> property to its default value.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.resettext(v=vs.110).aspx
         /// </remarks>
-        public virtual void ResetText() { Text = ""; }
+        public virtual void ResetText()
+        {
+            Text = "";
+        }
+
         /// <summary>
         /// Activates the control.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/7wt11hea(v=vs.110).aspx
         /// </remarks>
-        public void Select() { Focus(); }
+        public void Select()
+        {
+            Focus();
+        }
+
         /// <summary>
         /// Activates a child control. Optionally specifies the direction in the tab order to select the control from.
         /// </summary>
@@ -775,7 +1021,11 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/hb97bya5(v=vs.110).aspx
         /// </remarks>
-        protected virtual void Select(bool directed, bool forward) { throw new NotImplementedException(); }
+        protected virtual void Select(bool directed, bool forward)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Activates the next control.
         /// </summary>
@@ -788,14 +1038,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.selectnextcontrol(v=vs.110).aspx
         /// </remarks>
-        public bool SelectNextControl(Control ctl, bool forward, bool tabStopOnly, bool nested, bool wrap) { throw new NotImplementedException(); }
+        public bool SelectNextControl(Control ctl, bool forward, bool tabStopOnly, bool nested, bool wrap)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Sends the control to the back of the z-order.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.sendtoback(v=vs.110).aspx
         /// </remarks>
-        public void SendToBack() { throw new NotImplementedException(); }
+        public void SendToBack()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Sets the bounds of the control to the specified location and size.
         /// </summary>
@@ -806,7 +1064,12 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/z0tayb1b(v=vs.110).aspx
         /// </remarks>
-        public void SetBounds(int x, int y, int width, int height) { Location = new Point(x, y); Size = new Size(width, height); }
+        public void SetBounds(int x, int y, int width, int height)
+{
+            Location = new Point(x, y);
+            Size = new Size(width, height);
+        }
+
         /// <summary>
         /// Sets the control as the top-level control.
         /// </summary>
@@ -814,14 +1077,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.settoplevel(v=vs.110).aspx
         /// </remarks>
-        protected void SetTopLevel(bool value) { /*throw new NotImplementedException();*/ }
+        protected void SetTopLevel(bool value)
+        {
+            /*throw new NotImplementedException();*/
+        }
+
         /// <summary>
         /// Displays the control to the user.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.show(v=vs.110).aspx
         /// </remarks>
-        public void Show() { Visible = true; Select(); }
+        public void Show()
+        {
+            Visible = true;
+            Select();
+        }
         #endregion
 
         #region Events
@@ -853,7 +1124,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controladded(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public event ControlEventHandler ControlAdded;
 
         /// <summary>
@@ -862,7 +1133,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlremoved(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public event ControlEventHandler ControlRemoved;
 
         /// <summary>
@@ -900,7 +1171,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.gotfocus(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public event EventHandler GotFocus;
 
         /// <summary>
@@ -945,7 +1216,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.lostfocus(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public event EventHandler LostFocus;
 
         /// <summary>
@@ -1011,7 +1282,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mousewheel(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(false)]
+        [Browsable(false)]
         public event MouseEventHandler MouseWheel;
 
         /// <summary>
@@ -1072,18 +1343,22 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection(v=vs.110).aspx
         /// </remarks>
-        [ListBindableAttribute(false)]
+        [ListBindable(false)]
         public class ControlCollection : IEnumerable
         {
-            private List<Control> _Controls;
-            private Control _Owner;
+            private List<Control> _controls;
+            private Control _owner;
 
             #region Constructors
             /// <summary>
             /// Initializes a new instance of the <see cref="Control.ControlCollection"/> class.
             /// </summary>
             /// <param name="owner">A <see cref="Control"/> representing the control that owns the control collection.</param>
-            public ControlCollection(Control owner) { _Owner = owner; _Controls = new List<Control>(); }
+            public ControlCollection(Control owner)
+            {
+                _owner = owner;
+                _controls = new List<Control>();
+            }
             #endregion
 
             #region Properties
@@ -1093,14 +1368,16 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.layout.arrangedelementcollection.count(v=vs.110).aspx
             /// </remarks>
-            public virtual int Count { get { return _Controls.Count; } }
+            public virtual int Count => _controls.Count;
+
             /// <summary>
             /// Gets a value indicating whether the collection is read-only.
             /// </summary>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.layout.arrangedelementcollection.isreadonly(v=vs.110).aspx
             /// </remarks>
-            public virtual bool IsReadOnly { get { return false; } }
+            public virtual bool IsReadOnly => false; 
+
             /// <summary>
             /// Indicates the <see cref="Control"/> at the specified indexed location in the collection.
             /// </summary>
@@ -1109,7 +1386,8 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/333f9hk4(v=vs.110).aspx
             /// </remarks>
-            public virtual Control this[int index] { get { return _Controls[index]; } }
+            public virtual Control this[int index] => _controls[index]; 
+
             /// <summary>
             /// Indicates a <see cref="Control"/> with the specified key in the collection.
             /// </summary>
@@ -1118,14 +1396,29 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/s1865435(v=vs.110).aspx
             /// </remarks>
-            public virtual Control this[string key] { get { foreach (Control c in _Controls) { if (c.Name == key) { return c; } } throw new KeyNotFoundException(); } }
+            public virtual Control this[string key]
+            {
+                get
+                {
+                    foreach (Control c in _controls)
+                    {
+                        if (c.Name == key)
+                        {
+                            return c;
+                        }
+                    }
+
+                    throw new KeyNotFoundException();
+                }
+            }
+
             /// <summary>
-            /// Gets the control that owns this <see cref="Control.ControlCollection"/>.
+            /// Gets the control that owns this <see cref="ControlCollection"/>.
             /// </summary>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.owner(v=vs.110).aspx
             /// </remarks>
-            public Control Owner { get { return _Owner; } }
+            public Control Owner => _owner;
             #endregion
 
             #region Methods
@@ -1136,7 +1429,18 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.add(v=vs.110).aspx
             /// </remarks>
-            public virtual void Add(Control value) { if (_Owner == value) { throw new Exception(); } value.TabIndex = _Controls.Count; _Controls.Add(value); value.Parent = _Owner; }
+            public virtual void Add(Control value)
+            {
+                if (_owner == value)
+                {
+                    throw new ArgumentException($"The control {nameof(value)} cannot be the same as the {nameof(Owner)}.");
+                }
+
+                value.TabIndex = _controls.Count;
+                _controls.Add(value);
+                value.Parent = _owner;
+            }
+
             /// <summary>
             /// Adds an array of control objects to the collection.
             /// </summary>
@@ -1144,20 +1448,32 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.addrange(v=vs.110).aspx
             /// </remarks>
-            public virtual void AddRange(Control[] controls) { foreach (Control control in controls) { this.Add(control); } }
+            public virtual void AddRange(Control[] controls)
+            {
+                foreach (Control control in controls)
+                {
+                    Add(control);
+                }
+            }
+
             /// <summary>
             /// Removes all controls from the collection.
             /// </summary>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.clear(v=vs.110).aspx
             /// </remarks>
-            public virtual void Clear() { _Controls.Clear(); }
+            public virtual void Clear()
+            {
+                _controls.Clear();
+            }
+
             /// <summary>
             /// Determines whether the specified control is a member of the collection.
             /// </summary>
             /// <param name="control">The <see cref="Control"/> to locate in the collection.</param>
             /// <returns>true if the <see cref="Control"/> is a member of the collection; otherwise, false.</returns>
-            public bool Contains(Control control) { return _Controls.Contains(control); }
+            public bool Contains(Control control) => _controls.Contains(control);
+
             /// <summary>
             /// Determines whether the <see cref="Control.ControlCollection"/> contains an item with the specified key.
             /// </summary>
@@ -1166,7 +1482,19 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.containskey(v=vs.110).aspx
             /// </remarks>
-            public virtual bool ContainsKey(string key) { foreach (Control c in _Controls) { if (c.Name == key) { return true; } } return false; }
+            public virtual bool ContainsKey(string key)
+            {
+                foreach (Control c in _controls)
+                {
+                    if (c.Name == key)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
             /// <summary>
             /// Copies the entire contents of this collection to a compatible one-dimensional <see cref="Array"/>, starting at the specified index of the target array.
             /// </summary>
@@ -1175,7 +1503,11 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.layout.arrangedelementcollection.copyto(v=vs.110).aspx
             /// </remarks>
-            public void CopyTo(Array array, int index) { throw new NotImplementedException(); }
+            public void CopyTo(Array array, int index)
+            {
+                throw new NotImplementedException();
+            }
+
             /// <summary>
             /// Searches for controls by their <see cref="Name"/> property and builds an array of all the controls that match.
             /// </summary>
@@ -1185,7 +1517,11 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.find(v=vs.110).aspx
             /// </remarks>
-            public Control[] Find(string key, bool searchAllChildren) { throw new NotImplementedException(); }
+            public Control[] Find(string key, bool searchAllChildren)
+            {
+                throw new NotImplementedException();
+            }
+
             /// <summary>
             /// Retrieves the index of the specified child control within the control collection.
             /// </summary>
@@ -1194,7 +1530,16 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/1fz293fh(v=vs.110).aspx
             /// </remarks>
-            public int GetChildIndex(Control child) { if (_Controls.Contains(child)) { return _Controls.IndexOf(child); } throw new KeyNotFoundException(); }
+            public int GetChildIndex(Control child)
+            {
+                if (_controls.Contains(child))
+                {
+                    return _controls.IndexOf(child);
+                }
+
+                throw new KeyNotFoundException();
+            }
+
             /// <summary>
             /// Retrieves the index of the specified child control within the control collection, and optionally raises an exception if the specified control is not within the control collection.
             /// </summary>
@@ -1204,7 +1549,21 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/ta8fcz9s(v=vs.110).aspx
             /// </remarks>
-            public virtual int GetChildIndex(Control child, bool throwException) { if (_Controls.Contains(child)) { return _Controls.IndexOf(child); } if (throwException) { throw new ArgumentException(); } return -1; }
+            public virtual int GetChildIndex(Control child, bool throwException)
+            {
+                if (_controls.Contains(child))
+                {
+                    return _controls.IndexOf(child);
+                }
+
+                if (throwException)
+                {
+                    throw new ArgumentException();
+                }
+
+                return -1;
+            }
+
             /// <summary>
             /// Retrieves a reference to an enumerator object that is used to iterate over a <see cref="Control.ControlCollection"/>.
             /// </summary>
@@ -1212,7 +1571,8 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/ms158431(v=vs.110).aspx
             /// </remarks>
-            public virtual IEnumerator GetEnumerator() { return _Controls.GetEnumerator(); }
+            public virtual IEnumerator GetEnumerator() => _controls.GetEnumerator();
+
             /// <summary>
             /// Retrieves the index of the specified control in the control collection.
             /// </summary>
@@ -1221,7 +1581,8 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.indexof(v=vs.110).aspx
             /// </remarks>
-            public int IndexOf(Control control) { return _Controls.IndexOf(control); }
+            public int IndexOf(Control control) => _controls.IndexOf(control);
+
             /// <summary>
             /// Retrieves the index of the specified control in the control collection.
             /// </summary>
@@ -1230,7 +1591,11 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.indexof(v=vs.110).aspx
             /// </remarks>
-            public virtual int IndexOfKey(string key) { throw new NotImplementedException(); }
+            public virtual int IndexOfKey(string key)
+            {
+                throw new NotImplementedException();
+            }
+
             /// <summary>
             /// Removes the specified control from the control collection.
             /// </summary>
@@ -1238,7 +1603,11 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.remove(v=vs.110).aspx
             /// </remarks>
-            public virtual void Remove(Control value) { _Controls.Remove(value); }
+            public virtual void Remove(Control value)
+            {
+                _controls.Remove(value);
+            }
+
             /// <summary>
             /// Removes a control from the control collection at the specified indexed location.
             /// </summary>
@@ -1246,7 +1615,11 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.removeat(v=vs.110).aspx
             /// </remarks>
-            public void RemoveAt(int index) { _Controls.RemoveAt(index); }
+            public void RemoveAt(int index)
+            {
+                _controls.RemoveAt(index);
+            }
+
             /// <summary>
             /// Removes the child control with the specified key.
             /// </summary>
@@ -1254,7 +1627,11 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.removebykey(v=vs.110).aspx
             /// </remarks>
-            public virtual void RemoveByKey(string key) { throw new NotImplementedException(); }
+            public virtual void RemoveByKey(string key)
+            {
+                throw new NotImplementedException();
+            }
+
             /// <summary>
             /// Sets the index of the specified child control in the collection to the specified index value.
             /// </summary>
@@ -1263,7 +1640,26 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.setchildindex(v=vs.110).aspx
             /// </remarks>
-            public virtual void SetChildIndex(Control child, int newIndex) { if (_Controls.Contains(child)) { if (newIndex >= Count) { _Controls.Remove(child); _Controls.Add(child); } else { _Controls.Remove(child); _Controls.Insert(newIndex, child); } } else { throw new ArgumentException(); } }
+            public virtual void SetChildIndex(Control child, int newIndex)
+            {
+                if (_controls.Contains(child))
+                {
+                    if (newIndex >= Count)
+                    {
+                        _controls.Remove(child);
+                        _controls.Add(child);
+                    }
+                    else
+                    {
+                        _controls.Remove(child);
+                        _controls.Insert(newIndex, child);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
             #endregion
 
             #region Explicit Interface Implementations

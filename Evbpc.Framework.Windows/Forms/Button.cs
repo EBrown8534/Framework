@@ -46,7 +46,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/6y878dt5(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseEnter(EventArgs eventargs) { base.OnMouseEnter(eventargs); }
+        protected override void OnMouseEnter(EventArgs eventargs)
+        {
+            base.OnMouseEnter(eventargs);
+        }
 
         /// <summary>
         /// This member overrides <see cref="ButtonBase.OnMouseLeave(EventArgs)"/>, and more complete documentation might be available in that topic.
@@ -56,7 +59,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/e6ty6yb0(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseLeave(EventArgs eventargs) { base.OnMouseLeave(eventargs); }
+        protected override void OnMouseLeave(EventArgs eventargs)
+        {
+            base.OnMouseLeave(eventargs);
+        }
 
         /// <summary>
         /// Raises the <see cref="OnMouseUp"/> event.
@@ -65,7 +71,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/1hc3z2ya(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseUp(MouseEventArgs mevent) { base.OnMouseUp(mevent); }
+        protected override void OnMouseUp(MouseEventArgs mevent)
+        {
+            base.OnMouseUp(mevent);
+        }
 
         /// <summary>
         /// Raises the <see cref="TextChanged"/> event.
@@ -74,7 +83,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/0k7keftx(v=vs.110).aspx
         /// </remarks>
-        protected override void OnTextChanged(EventArgs e) { base.OnTextChanged(e); }
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+        }
 
         /// <summary>
         /// Generates a <see cref="Click"/> event for a button.

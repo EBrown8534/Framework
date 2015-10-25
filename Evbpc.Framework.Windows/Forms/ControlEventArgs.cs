@@ -13,8 +13,6 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class ControlEventArgs : EventArgs
     {
-        private Control _control;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlEventArgs"/> class for the specified control.
@@ -23,7 +21,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.controleventargs.controleventargs(v=vs.110).aspx
         /// </remarks>
-        public ControlEventArgs(Control control) { _control = control; }
+        public ControlEventArgs(Control control)
+        {
+            Control = control;
+        }
         #endregion
 
         #region Properties
@@ -33,7 +34,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.controleventargs.control(v=vs.110).aspx
         /// </remarks>
-        public Control Control { get { return _control; } }
+        public Control Control { get; }
         #endregion
     }
 }

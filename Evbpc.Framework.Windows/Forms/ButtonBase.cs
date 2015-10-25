@@ -15,8 +15,6 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public abstract class ButtonBase : Control
     {
-        private FlatButtonAppearance _flatAppearance;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the ButtonBase class.
@@ -34,7 +32,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.autoellipsis(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
+        [Browsable(true)]
         public bool AutoEllipsis { get; set; }
 
         /// <summary>
@@ -49,7 +47,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// This member overrides <see cref="Control.DefaultSize"/>, and more complete documentation might be available in that topic.
         /// Gets the default size of the control.
         /// </summary>
-        protected override Size DefaultSize { get { return new Size(0, 0); } }
+        protected override Size DefaultSize => new Size(0, 0); 
 
         /// <summary>
         /// Gets the appearance of the border and the colors used to indicate check state and mouse state.
@@ -57,8 +55,8 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.flatappearance(v=vs.110).aspx
         /// </remarks>
-        [BrowsableAttribute(true)]
-        public FlatButtonAppearance FlatAppearance { get { return _flatAppearance; } }
+        [Browsable(true)]
+        public FlatButtonAppearance FlatAppearance { get; set; }
 
         /// <summary>
         /// Gets or sets the flat style appearance of the button control.
@@ -83,7 +81,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/ms158234(v=vs.110).aspx
         /// </remarks>
-        [SettingsBindableAttribute(true)]
+        [SettingsBindable(true)]
         public override string Text { get; set; }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.getpreferredsize(v=vs.110).aspx
         /// </remarks>
-        public override Size GetPreferredSize(Size proposedSize) { return new Size(Math.Min(Size.Width, proposedSize.Width), Math.Min(Size.Height, proposedSize.Height)); }
+        public override Size GetPreferredSize(Size proposedSize) => new Size(Math.Min(Size.Width, proposedSize.Width), Math.Min(Size.Height, proposedSize.Height));
 
         /// <summary>
         /// This member overrides <see cref="Control.OnEnabledChanged(EventArgs)"/>, and more complete documentation might be available in that topic.
@@ -114,7 +112,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/ksa2868w(v=vs.110).aspx
         /// </remarks>
-        protected override void OnEnabledChanged(EventArgs e) { base.OnEnabledChanged(e); }
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+        }
 
         /// <summary>
         /// Raises the <see cref="GotFocus"/> event.
@@ -123,7 +124,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/xk0bsxz2(v=vs.110).aspx
         /// </remarks>
-        protected override void OnGotFocus(EventArgs e) { base.OnGotFocus(e); }
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -133,7 +137,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/f6df3w7z(v=vs.110).aspx
         /// </remarks>
-        protected override void OnKeyDown(KeyEventArgs kevent) { base.OnKeyDown(kevent); }
+        protected override void OnKeyDown(KeyEventArgs kevent)
+        {
+            base.OnKeyDown(kevent);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -143,7 +150,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/f6df3w7z(v=vs.110).aspx
         /// </remarks>
-        protected override void OnKeyUp(KeyEventArgs kevent) { base.OnKeyUp(kevent); }
+        protected override void OnKeyUp(KeyEventArgs kevent)
+        {
+            base.OnKeyUp(kevent);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -153,7 +163,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/x5dk67cz(v=vs.110).aspx
         /// </remarks>
-        protected override void OnLostFocus(EventArgs e) { base.OnLostFocus(e); }
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -163,7 +176,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/h2ksdf2z(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseDown(MouseEventArgs mevent) { base.OnMouseDown(mevent); }
+        protected override void OnMouseDown(MouseEventArgs mevent)
+        {
+            base.OnMouseDown(mevent);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -173,7 +189,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.onmouseenter(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseEnter(EventArgs eventargs) { base.OnMouseEnter(eventargs); }
+        protected override void OnMouseEnter(EventArgs eventargs)
+        {
+            base.OnMouseEnter(eventargs);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -183,7 +202,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.onmouseleave(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseLeave(EventArgs eventargs) { base.OnMouseLeave(eventargs); }
+        protected override void OnMouseLeave(EventArgs eventargs)
+        {
+            base.OnMouseLeave(eventargs);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -193,7 +215,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/3h17s498(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseMove(MouseEventArgs mevent) { base.OnMouseMove(mevent); }
+        protected override void OnMouseMove(MouseEventArgs mevent)
+        {
+            base.OnMouseMove(mevent);
+        }
 
         /// <summary>
         /// This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.
@@ -203,7 +228,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/ea65040s(v=vs.110).aspx
         /// </remarks>
-        protected override void OnMouseUp(MouseEventArgs mevent) { base.OnMouseUp(mevent); }
+        protected override void OnMouseUp(MouseEventArgs mevent)
+        {
+            base.OnMouseUp(mevent);
+        }
 
         /// <summary>
         /// This member overrides <see cref="Control.OnTextChanged(EventArgs)"/>, and more complete documentation might be available in that topic.
@@ -213,7 +241,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/cxxt96xw(v=vs.110).aspx
         /// </remarks>
-        protected override void OnTextChanged(EventArgs e) { base.OnTextChanged(e); }
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+        }
 
         /// <summary>
         /// This member overrides <see cref="Control.OnVisibleChanged(EventArgs)"/>, and more complete documentation might be available in that topic.
@@ -223,7 +254,10 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.buttonbase.onvisiblechanged(v=vs.110).aspx
         /// </remarks>
-        protected override void OnVisibleChanged(EventArgs e) { base.OnVisibleChanged(e); }
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+        }
         #endregion
     }
 }
