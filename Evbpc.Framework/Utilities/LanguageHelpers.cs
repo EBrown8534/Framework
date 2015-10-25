@@ -29,7 +29,7 @@ namespace Evbpc.Framework.Utilities
 
 #if DEBUG
 #warning In DEBUG mode RomanToNumber Exceptions will be thrown regardless of throwExceptions parameter.
-            throwErrors = true;
+            throwExceptions = true;
 #endif
 
             int result = 0;
