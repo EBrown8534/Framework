@@ -12,7 +12,7 @@ namespace Evbpc.Framework.Windows.Forms
     {
         /// <summary>
         /// Represents a collection of <see cref="Control"/> objects.
-        /// Is not actually inherited from ArrangedElementCollection. ArrangedElementCollection was removed from this implementation. (Cuz was Dolan.)
+        /// Is not actually inherited from ArrangedElementCollection. ArrangedElementCollection was removed from this implementation.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection(v=vs.110).aspx
@@ -28,7 +28,7 @@ namespace Evbpc.Framework.Windows.Forms
 
             #region Constructors
             /// <summary>
-            /// Initializes a new instance of the <see cref="Control.ControlCollection"/> class.
+            /// Initializes a new instance of the <see cref="ControlCollection"/> class.
             /// </summary>
             /// <param name="owner">A <see cref="Control"/> representing the control that owns the control collection.</param>
             public ControlCollection(Control owner)
@@ -93,7 +93,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// Indicates a <see cref="Control"/> with the specified key in the collection.
             /// </summary>
             /// <param name="key">The name of the control to retrieve from the control collection.</param>
-            /// <returns>The <see cref="Control"/> with the specified key within the <see cref="Control.ControlCollection"/>.</returns>
+            /// <returns>The <see cref="Control"/> with the specified key within the <see cref="ControlCollection"/>.</returns>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/s1865435(v=vs.110).aspx
             /// </remarks>
@@ -196,10 +196,10 @@ namespace Evbpc.Framework.Windows.Forms
             }
 
             /// <summary>
-            /// Determines whether the <see cref="Control.ControlCollection"/> contains an item with the specified key.
+            /// Determines whether the <see cref="ControlCollection"/> contains an item with the specified key.
             /// </summary>
             /// <param name="key">The key to locate in the <see cref="Control.ControlCollection"/>.</param>
-            /// <returns>true if the <see cref="Control.ControlCollection"/> contains an item with the specified key; otherwise, false.</returns>
+            /// <returns>true if the <see cref="ControlCollection"/> contains an item with the specified key; otherwise, false.</returns>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.containskey(v=vs.110).aspx
             /// </remarks>
@@ -235,7 +235,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// <summary>
             /// Searches for controls by their <see cref="Name"/> property and builds an array of all the controls that match.
             /// </summary>
-            /// <param name="key">The key to locate in the <see cref="Control.ControlCollection"/>.</param>
+            /// <param name="key">The key to locate in the <see cref="ControlCollection"/>.</param>
             /// <param name="searchAllChildren">true to search all child controls; otherwise, false.</param>
             /// <returns>An array of type <see cref="Control"/> containing the matching controls.</returns>
             /// <remarks>
@@ -271,7 +271,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// Retrieves the index of the specified child control within the control collection, and optionally raises an exception if the specified control is not within the control collection.
             /// </summary>
             /// <param name="child">The <see cref="Control"/> to search for in the control collection.</param>
-            /// <param name="throwException">true to throw an exception if the <see cref="Control"/> specified in the child parameter is not a control in the <see cref="Control.ControlCollection"/>; otherwise, false.</param>
+            /// <param name="throwException">true to throw an exception if the <see cref="Control"/> specified in the child parameter is not a control in the <see cref="ControlCollection"/>; otherwise, false.</param>
             /// <returns></returns>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/ta8fcz9s(v=vs.110).aspx
@@ -295,7 +295,7 @@ namespace Evbpc.Framework.Windows.Forms
             }
 
             /// <summary>
-            /// Retrieves a reference to an enumerator object that is used to iterate over a <see cref="Control.ControlCollection"/>.
+            /// Retrieves a reference to an enumerator object that is used to iterate over a <see cref="ControlCollection"/>.
             /// </summary>
             /// <returns>An <see cref="IEnumerator"/>.</returns>
             /// <remarks>
@@ -307,7 +307,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// Retrieves the index of the specified control in the control collection.
             /// </summary>
             /// <param name="control">The <see cref="Control"/> to locate in the collection.</param>
-            /// <returns>A zero-based index value that represents the position of the specified <see cref="Control"/> in the <see cref="Control.ControlCollection"/>.</returns>
+            /// <returns>A zero-based index value that represents the position of the specified <see cref="Control"/> in the <see cref="ControlCollection"/>.</returns>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.indexof(v=vs.110).aspx
             /// </remarks>
@@ -323,7 +323,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// Retrieves the index of the specified control in the control collection.
             /// </summary>
             /// <param name="key">The <see cref="Control"/> to locate in the collection.</param>
-            /// <returns>A zero-based index value that represents the position of the specified <see cref="Control"/> in the <see cref="Control.ControlCollection"/>.</returns>
+            /// <returns>A zero-based index value that represents the position of the specified <see cref="Control"/> in the <see cref="ControlCollection"/>.</returns>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.indexof(v=vs.110).aspx
             /// </remarks>
@@ -335,7 +335,7 @@ namespace Evbpc.Framework.Windows.Forms
             /// <summary>
             /// Removes the specified control from the control collection.
             /// </summary>
-            /// <param name="value">The <see cref="Control"/> to remove from the <see cref="Control.ControlCollection"/>.</param>
+            /// <param name="value">The <see cref="Control"/> to remove from the <see cref="ControlCollection"/>.</param>
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.remove(v=vs.110).aspx
             /// </remarks>
