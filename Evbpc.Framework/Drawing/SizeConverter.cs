@@ -115,4 +115,4 @@ namespace Evbpc.Framework.Drawing
         public override bool GetPropertiesSupported(ITypeDescriptorContext context) => false;
     }
 }
-}
+
