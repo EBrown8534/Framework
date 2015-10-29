@@ -7,7 +7,7 @@ using System.Text;
 namespace Evbpc.Framework.Drawing
 {
     /// <summary>
-    /// Represents a <see cref="Point"/> and <see cref="Size"/> in 2D space.
+    /// Represents a <see cref="Point"/> and <see cref="Drawing.Size"/> in 2D space.
     /// </summary>
     [Serializable]
     [TypeConverter(typeof(RectangleConverter))]
@@ -142,7 +142,7 @@ namespace Evbpc.Framework.Drawing
         /// <param name="top">The <see cref="Top"/> location of the <see cref="Rectangle"/>.</param>
         /// <param name="right">The <see cref="Right"/> location of the <see cref="Rectangle"/>.</param>
         /// <param name="bottom">The <see cref="Bottom"/> location of the <see cref="Rectangle"/>.</param>
-        /// <returns></returns>
+        /// <returns>A new <see cref="Rectangle"/> from the specified values.</returns>
         public static Rectangle FromLTRB(int left, int top, int right, int bottom) => new Rectangle(new Point(top, left), new Size(bottom - top, right - left));
 
         /// <summary>
