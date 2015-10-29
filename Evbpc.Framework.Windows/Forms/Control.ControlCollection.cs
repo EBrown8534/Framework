@@ -20,6 +20,9 @@ namespace Evbpc.Framework.Windows.Forms
         [ListBindable(false)]
         public class ControlCollection : IEnumerable, ICloneable, IList, ICollection
         {
+            private object _syncRoot = new object();
+            private object _internalSyncRoot = new object();
+
             private List<Control> _controls;
             private Control _owner;
 
@@ -105,6 +108,14 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual void Add(Control value)
             {
+                lock (_internalSyncRoot)
+                {
+                    InternalAdd(value);
+                }
+            }
+
+            private void InternalAdd(Control value)
+            {
                 if (_owner == value)
                 {
                     throw new ArgumentException($"The control {nameof(value)} cannot be the same as the {nameof(Owner)}.");
@@ -138,7 +149,10 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual void Clear()
             {
-                _controls.Clear();
+                lock (_internalSyncRoot)
+                {
+                    _controls.Clear();
+                }
             }
 
             /// <summary>
@@ -146,7 +160,13 @@ namespace Evbpc.Framework.Windows.Forms
             /// </summary>
             /// <param name="control">The <see cref="Control"/> to locate in the collection.</param>
             /// <returns>true if the <see cref="Control"/> is a member of the collection; otherwise, false.</returns>
-            public bool Contains(Control control) => _controls.Contains(control);
+            public bool Contains(Control control)
+            {
+                lock (_internalSyncRoot)
+                {
+                    return _controls.Contains(control);
+                }
+            }
 
             /// <summary>
             /// Determines whether the <see cref="Control.ControlCollection"/> contains an item with the specified key.
@@ -158,15 +178,18 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual bool ContainsKey(string key)
             {
-                foreach (Control c in _controls)
+                lock (_internalSyncRoot)
                 {
-                    if (c.Name == key)
+                    foreach (Control c in _controls)
                     {
-                        return true;
+                        if (c.Name == key)
+                        {
+                            return true;
+                        }
                     }
-                }
 
-                return false;
+                    return false;
+                }
             }
 
             /// <summary>
@@ -206,12 +229,15 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public int GetChildIndex(Control child)
             {
-                if (_controls.Contains(child))
+                lock (_internalSyncRoot)
                 {
-                    return _controls.IndexOf(child);
-                }
+                    if (_controls.Contains(child))
+                    {
+                        return _controls.IndexOf(child);
+                    }
 
-                throw new KeyNotFoundException();
+                    throw new KeyNotFoundException();
+                }
             }
 
             /// <summary>
@@ -225,17 +251,20 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual int GetChildIndex(Control child, bool throwException)
             {
-                if (_controls.Contains(child))
+                lock (_internalSyncRoot)
                 {
-                    return _controls.IndexOf(child);
-                }
+                    if (_controls.Contains(child))
+                    {
+                        return _controls.IndexOf(child);
+                    }
 
-                if (throwException)
-                {
-                    throw new ArgumentException();
-                }
+                    if (throwException)
+                    {
+                        throw new ArgumentException();
+                    }
 
-                return -1;
+                    return -1;
+                }
             }
 
             /// <summary>
@@ -255,7 +284,13 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlcollection.indexof(v=vs.110).aspx
             /// </remarks>
-            public int IndexOf(Control control) => _controls.IndexOf(control);
+            public int IndexOf(Control control)
+            {
+                lock (_internalSyncRoot)
+                {
+                    return _controls.IndexOf(control);
+                }
+            }
 
             /// <summary>
             /// Retrieves the index of the specified control in the control collection.
@@ -279,7 +314,10 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual void Remove(Control value)
             {
-                _controls.Remove(value);
+                lock (_internalSyncRoot)
+                {
+                    _controls.Remove(value);
+                }
             }
 
             /// <summary>
@@ -291,7 +329,10 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public void RemoveAt(int index)
             {
-                _controls.RemoveAt(index);
+                lock (_internalSyncRoot)
+                {
+                    _controls.RemoveAt(index);
+                }
             }
 
             /// <summary>
@@ -316,22 +357,25 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual void SetChildIndex(Control child, int newIndex)
             {
-                if (_controls.Contains(child))
+                lock (_internalSyncRoot)
                 {
-                    if (newIndex >= Count)
+                    if (_controls.Contains(child))
                     {
-                        _controls.Remove(child);
-                        _controls.Add(child);
+                        if (newIndex >= Count)
+                        {
+                            _controls.Remove(child);
+                            _controls.Add(child);
+                        }
+                        else
+                        {
+                            _controls.Remove(child);
+                            _controls.Insert(newIndex, child);
+                        }
                     }
                     else
                     {
-                        _controls.Remove(child);
-                        _controls.Insert(newIndex, child);
+                        throw new ArgumentException();
                     }
-                }
-                else
-                {
-                    throw new ArgumentException();
                 }
             }
             #endregion
@@ -339,13 +383,16 @@ namespace Evbpc.Framework.Windows.Forms
             #region Explicit Interface Implementations
             Object ICloneable.Clone()
             {
-                ControlCollection clone = new ControlCollection(_owner);
-                clone._controls = _controls;
-                return clone;
+                lock (_internalSyncRoot)
+                {
+                    ControlCollection clone = new ControlCollection(_owner);
+                    clone._controls = _controls;
+                    return clone;
+                }
             }
 
             bool ICollection.IsSynchronized { get { return true; } }
-            Object ICollection.SyncRoot { get { return new object(); } }
+            Object ICollection.SyncRoot { get { return _syncRoot; } }
 
             int IList.Add(Object control)
             {
@@ -353,8 +400,12 @@ namespace Evbpc.Framework.Windows.Forms
 
                 if (controlControl != null)
                 {
-                    Add(controlControl);
-                    return _controls.Count;
+                    lock (_internalSyncRoot)
+                    {
+                        InternalAdd(controlControl);
+
+                        return _controls.Count;
+                    }
                 }
 
                 return -1;
@@ -395,7 +446,10 @@ namespace Evbpc.Framework.Windows.Forms
 
                 if (valueControl != null)
                 {
-                    _controls.Insert(index, valueControl);
+                    lock (_internalSyncRoot)
+                    {
+                        _controls.Insert(index, valueControl);
+                    }
                 }
             }
 
@@ -413,7 +467,10 @@ namespace Evbpc.Framework.Windows.Forms
 
                     if (valueControl != null)
                     {
-                        _controls[index] = valueControl;
+                        lock (_internalSyncRoot)
+                        {
+                            _controls[index] = valueControl;
+                        }
                     }
                 }
             }
