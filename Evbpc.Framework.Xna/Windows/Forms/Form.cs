@@ -172,11 +172,6 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             {
                 form.Draw(s);
             }
-
-            //for (int i = _Forms.Count - 1; i >= 0; i--)
-            //{
-            //    ((Form)_Forms[i]).Draw(s);
-            //}
         }
 
         internal void Update(MouseState m, bool hasFocus, GameTime gt)

@@ -31,11 +31,20 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             Text = text;
         }
 
-        void KeyStateMan_KeyUp(object sender, KeyEventArgs e) { OnKeyUp(e); }
+        void KeyStateMan_KeyUp(object sender, KeyEventArgs e)
+        {
+            OnKeyUp(e);
+        }
 
-        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
+        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            OnKeyPress(e);
+        }
 
-        void KeyStateMan_KeyDown(object sender, KeyEventArgs e) { OnKeyDown(e); }
+        void KeyStateMan_KeyDown(object sender, KeyEventArgs e)
+        {
+            OnKeyDown(e);
+        }
 
         void IDrawableControl.Draw(SpriteBatch s, Evbpc.Framework.Drawing.Point initialLocation)
         {

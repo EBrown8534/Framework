@@ -382,6 +382,8 @@ namespace Evbpc.Framework.Windows.Forms
                     tIndex++;
                 }
             }
+
+            OwnedForms = tForms;
         }
 
         protected override void Select(bool directed, bool forward)
