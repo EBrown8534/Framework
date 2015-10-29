@@ -42,7 +42,7 @@ namespace Evbpc.Framework.Windows.Forms
         #endregion
 
         #region Events
-        public event ScrollEventHandler Scroll;
+        public event EventHandler<ScrollEventArgs> Scroll;
         #endregion
 
         // These are not the fields you're looking for.

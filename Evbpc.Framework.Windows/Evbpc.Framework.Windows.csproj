@@ -77,7 +77,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\ControlEventArgs.cs" />
-    <Compile Include="Forms\EventHandlerDelegates.cs" />
     <Compile Include="Forms\FlatButtonAppearance.cs" />
     <Compile Include="Forms\FlatStyle.cs" />
     <Compile Include="Forms\Form.cs">

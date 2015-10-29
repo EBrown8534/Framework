@@ -33,46 +33,108 @@ namespace Evbpc.Framework.Utilities.Logging
             return string.Format(message, args);
         }
         
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="args"></param>
         public void LogError(string message, params object[] args)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void LogError(string message, Color.Preset foreColor = Color.Preset.DarkRed, Color.Preset backColor = Color.Preset.DarkRed)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="args"></param>
         public void LogImportant(string message, params object[] args)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void LogImportant(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.Black)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="args"></param>
         public void LogInformation(string message, params object[] args)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void LogInformation(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="type"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="args"></param>
         public void LogVerbose(string message, params object[] args)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void LogVerbose(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="args"></param>
         public void LogWarning(string message, params object[] args)
         {
         }
 
+        /// <summary>
+        /// No-op implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void LogWarning(string message, Color.Preset foreColor = Color.Preset.DarkYellow, Color.Preset backColor = Color.Preset.Black)
         {
         }

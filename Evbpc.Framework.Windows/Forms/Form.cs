@@ -18,9 +18,15 @@ namespace Evbpc.Framework.Windows.Forms
     /// </remarks>
     public class Form : ContainerControl
     {
+        /// <summary>
+        /// A list of <see cref="Form"/> objects this <see cref="Form"/> owns.
+        /// </summary>
         protected static List<Form> Forms = new List<Form>();
 
         #region Constructors
+        /// <summary>
+        /// Constructs a new instance of <see cref="Form"/> with default values.
+        /// </summary>
         public Form()
         {
             OwnedForms = null;
@@ -438,8 +444,8 @@ namespace Evbpc.Framework.Windows.Forms
         public event CancelEventHandler Closing;
 
         public event EventHandler Deactivate;
-        public event FormClosedEventHandler FormClosed;
-        public event FormClosingEventHandler FormClosing;
+        public event EventHandler<FormClosedEventArgs> FormClosed;
+        public event EventHandler<FormClosingEventArgs> FormClosing;
         public event EventHandler Load;
         public event EventHandler MaximizedBoundsChanged;
         public event EventHandler MaximumSizeChanged;
