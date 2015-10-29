@@ -45,7 +45,16 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/system.windows.forms.layout.arrangedelementcollection.count(v=vs.110).aspx
             /// </remarks>
-            public virtual int Count => _controls.Count;
+            public virtual int Count
+            {
+                get
+                {
+                    lock (_internalSyncRoot)
+                    {
+                        return _controls.Count;
+                    }
+                }
+            }
 
             /// <summary>
             /// Gets a value indicating whether the collection is read-only.
@@ -63,7 +72,16 @@ namespace Evbpc.Framework.Windows.Forms
             /// <remarks>
             /// http://msdn.microsoft.com/en-us/library/333f9hk4(v=vs.110).aspx
             /// </remarks>
-            public virtual Control this[int index] => _controls[index];
+            public virtual Control this[int index]
+            {
+                get
+                {
+                    lock (_internalSyncRoot)
+                    {
+                        return _controls[index];
+                    }
+                }
+            }
 
             /// <summary>
             /// Indicates a <see cref="Control"/> with the specified key in the collection.
@@ -77,15 +95,18 @@ namespace Evbpc.Framework.Windows.Forms
             {
                 get
                 {
-                    foreach (Control c in _controls)
+                    lock (_internalSyncRoot)
                     {
-                        if (c.Name == key)
+                        foreach (Control c in _controls)
                         {
-                            return c;
+                            if (c.Name == key)
+                            {
+                                return c;
+                            }
                         }
-                    }
 
-                    throw new KeyNotFoundException();
+                        throw new KeyNotFoundException();
+                    }
                 }
             }
 
