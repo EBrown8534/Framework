@@ -20,11 +20,11 @@ namespace Evbpc.Framework.Windows.Forms
         [ListBindable(false)]
         public class ControlCollection : IEnumerable, ICloneable, IList, ICollection
         {
-            private object _syncRoot = new object();
-            private object _internalSyncRoot = new object();
+            private readonly object _syncRoot = new object();
+            private readonly object _internalSyncRoot = new object();
 
-            private List<Control> _controls;
-            private Control _owner;
+            private readonly List<Control> _controls;
+            private readonly Control _owner;
 
             #region Constructors
             /// <summary>
@@ -35,6 +35,12 @@ namespace Evbpc.Framework.Windows.Forms
             {
                 _owner = owner;
                 _controls = new List<Control>();
+            }
+
+            private ControlCollection(Control owner, List<Control> controls)
+                : this(owner)
+            {
+                _controls = controls;
             }
             #endregion
 
@@ -402,20 +408,19 @@ namespace Evbpc.Framework.Windows.Forms
             #endregion
 
             #region Explicit Interface Implementations
-            Object ICloneable.Clone()
+            object ICloneable.Clone()
             {
                 lock (_internalSyncRoot)
                 {
-                    ControlCollection clone = new ControlCollection(_owner);
-                    clone._controls = _controls;
+                    ControlCollection clone = new ControlCollection(_owner, _controls);
                     return clone;
                 }
             }
 
             bool ICollection.IsSynchronized { get { return true; } }
-            Object ICollection.SyncRoot { get { return _syncRoot; } }
+            object ICollection.SyncRoot { get { return _syncRoot; } }
 
-            int IList.Add(Object control)
+            int IList.Add(object control)
             {
                 var controlControl = control as Control;
 
@@ -437,7 +442,7 @@ namespace Evbpc.Framework.Windows.Forms
                 Clear();
             }
 
-            bool IList.Contains(Object value)
+            bool IList.Contains(object value)
             {
                 var valueControl = value as Control;
 
@@ -449,7 +454,7 @@ namespace Evbpc.Framework.Windows.Forms
                 return false;
             }
 
-            int IList.IndexOf(Object value)
+            int IList.IndexOf(object value)
             {
                 var valueControl = value as Control;
 
@@ -461,7 +466,7 @@ namespace Evbpc.Framework.Windows.Forms
                 return -1;
             }
 
-            void IList.Insert(int index, Object value)
+            void IList.Insert(int index, object value)
             {
                 var valueControl = value as Control;
 
@@ -476,7 +481,7 @@ namespace Evbpc.Framework.Windows.Forms
 
             bool IList.IsFixedSize => false;
 
-            Object IList.this[int index]
+            object IList.this[int index]
             {
                 get
                 {
@@ -496,7 +501,7 @@ namespace Evbpc.Framework.Windows.Forms
                 }
             }
 
-            void IList.Remove(Object control)
+            void IList.Remove(object control)
             {
                 var controlControl = control as Control;
 
