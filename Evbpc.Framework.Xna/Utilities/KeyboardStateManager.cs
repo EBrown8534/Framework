@@ -267,21 +267,21 @@ namespace Evbpc.Framework.Xna.Utilities
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown(v=vs.110).aspx
         /// </remarks>
-        public event KeyEventHandler KeyDown;
+        public event EventHandler<KeyEventArgs> KeyDown;
         /// <summary>
         /// Occurs when a character. space or backspace key is pressed while the control has focus.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keypress(v=vs.110).aspx
         /// </remarks>
-        public event KeyPressEventHandler KeyPress;
+        public event EventHandler<KeyPressEventArgs> KeyPress;
         /// <summary>
         /// Occurs when a key is released while the control has focus.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keyup(v=vs.110).aspx
         /// </remarks>
-        public event KeyEventHandler KeyUp;
+        public event EventHandler<KeyEventArgs> KeyUp;
 
         private List<Keys> GetPressedKeys()
         {

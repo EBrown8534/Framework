@@ -1125,7 +1125,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controladded(v=vs.110).aspx
         /// </remarks>
         [Browsable(true)]
-        public event ControlEventHandler ControlAdded;
+        public event EventHandler<ControlEventArgs> ControlAdded;
 
         /// <summary>
         /// Occurs when a control is removed from the <see cref="Control.ControlRemoved"/>.
@@ -1134,7 +1134,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.controlremoved(v=vs.110).aspx
         /// </remarks>
         [Browsable(true)]
-        public event ControlEventHandler ControlRemoved;
+        public event EventHandler<ControlEventArgs> ControlRemoved;
 
         /// <summary>
         /// Occurs when the control is double-clicked.
@@ -1180,21 +1180,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keydown(v=vs.110).aspx
         /// </remarks>
-        public event KeyEventHandler KeyDown;
+        public event EventHandler<KeyEventArgs> KeyDown;
         /// <summary>
         /// Occurs when a character. space or backspace key is pressed while the control has focus.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keypress(v=vs.110).aspx
         /// </remarks>
-        public event KeyPressEventHandler KeyPress;
+        public event EventHandler<KeyPressEventArgs> KeyPress;
         /// <summary>
         /// Occurs when a key is released while the control has focus.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.keyup(v=vs.110).aspx
         /// </remarks>
-        public event KeyEventHandler KeyUp;
+        public event EventHandler<KeyEventArgs> KeyUp;
         /// <summary>
         /// Occurs when the input focus leaves the control.
         /// </summary>
@@ -1225,21 +1225,21 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mouseclick(v=vs.110).aspx
         /// </remarks>
-        public event MouseEventHandler MouseClick;
+        public event EventHandler<MouseEventArgs> MouseClick;
         /// <summary>
         /// Occurs when the control is double clicked by the mouse.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mousedoubleclick(v=vs.110).aspx
         /// </remarks>
-        public event MouseEventHandler MouseDoubleClick;
+        public event EventHandler<MouseEventArgs> MouseDoubleClick;
         /// <summary>
         /// Occurs when the mouse pointer is over the control and a mouse button is pressed.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mousedown(v=vs.110).aspx
         /// </remarks>
-        public event MouseEventHandler MouseDown;
+        public event EventHandler<MouseEventArgs> MouseDown;
         /// <summary>
         /// Occurs when the mouse pointer enters the control.
         /// </summary>
@@ -1267,14 +1267,14 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mousemove(v=vs.110).aspx
         /// </remarks>
-        public event MouseEventHandler MouseMove;
+        public event EventHandler<MouseEventArgs> MouseMove;
         /// <summary>
         /// Occurs when the mouse pointer is over the control and a mouse button is released.
         /// </summary>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mouseup(v=vs.110).aspx
         /// </remarks>
-        public event MouseEventHandler MouseUp;
+        public event EventHandler<MouseEventArgs> MouseUp;
 
         /// <summary>
         /// Occurs when the mouse wheel moves while the control has focus.
@@ -1283,7 +1283,7 @@ namespace Evbpc.Framework.Windows.Forms
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.mousewheel(v=vs.110).aspx
         /// </remarks>
         [Browsable(false)]
-        public event MouseEventHandler MouseWheel;
+        public event EventHandler<MouseEventArgs> MouseWheel;
 
         /// <summary>
         /// Occurs when the control is moved.

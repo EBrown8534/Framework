@@ -162,9 +162,12 @@ namespace Evbpc.Framework.Windows.Forms
             /// </remarks>
             public virtual void AddRange(Control[] controls)
             {
-                foreach (Control control in controls)
+                lock (_internalSyncRoot)
                 {
-                    Add(control);
+                    foreach (Control control in controls)
+                    {
+                        InternalAdd(control);
+                    }
                 }
             }
 
