@@ -140,7 +140,7 @@ namespace Evbpc.Framework.Drawing
         public static Point Subtract(Point pt, Size sz) => pt - sz;
 
         /// <summary>
-        /// Gets a string representation of a <see cref="Point"/>.
+        /// Gets a string representation of the current <see cref="Point"/>.
         /// </summary>
         /// <returns>A string that represents the <see cref="X"/> and <see cref="Y"/> coordinates of the <see cref="Point"/>.</returns>
         public override string ToString() => $"({_x},{_y})";
@@ -161,11 +161,11 @@ namespace Evbpc.Framework.Drawing
         public static Point operator +(Point pt, Size sz) => new Point(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
-        /// Determines if two <see cref="Point"/> objects are equal.
+        /// Determines if two <see cref="Point"/> structures are equal.
         /// </summary>
         /// <param name="left">The <see cref="Point"/> to check.</param>
         /// <param name="right">The <see cref="Point"/> to compare to.</param>
-        /// <returns>True if the <see cref="Point"/> objects have the same value, false otherwise.</returns>
+        /// <returns>True if the <see cref="Point"/> structures have the same value, false otherwise.</returns>
         public static bool operator ==(Point left, Point right) => left.X == right.X && left.Y == right.Y;
 
         /// <summary>
@@ -181,11 +181,11 @@ namespace Evbpc.Framework.Drawing
         public static implicit operator PointF(Point p) => new PointF(p.X, p.Y);
 
         /// <summary>
-        /// Determines if two <see cref="Point"/> objects are not equal.
+        /// Determines if two <see cref="Point"/> structures are not equal.
         /// </summary>
         /// <param name="left">The <see cref="Point"/> to check.</param>
         /// <param name="right">The <see cref="Point"/> to compare to.</param>
-        /// <returns>True if the <see cref="Point"/> objects do not have the same value, false otherwise.</returns>
+        /// <returns>True if the <see cref="Point"/> structures do not have the same value, false otherwise.</returns>
         public static bool operator !=(Point left, Point right) => left.X != right.X || left.Y != right.Y;
 
         /// <summary>

@@ -8,7 +8,7 @@ using System.Text;
 namespace Evbpc.Framework.Drawing
 {
     /// <summary>
-    /// Represents a size value consisting of two short values.
+    /// Represents a size value consisting of two <code>short</code> values.
     /// </summary>
     [Serializable]
     public struct SizeShort : ISerializableByteArray
@@ -65,7 +65,7 @@ namespace Evbpc.Framework.Drawing
         /// </summary>
         /// <param name="sz1">The first <see cref="SizeShort"/> to add.</param>
         /// <param name="sz2">The second <see cref="SizeShort"/> to add.</param>
-        /// <returns>The sum of the two <see cref="SizeShort"/> objects.</returns>
+        /// <returns>The sum of the two <see cref="SizeShort"/> structures.</returns>
         public static SizeShort Add(SizeShort sz1, SizeShort sz2) => sz1 + sz2;
 
         /// <summary>
@@ -80,13 +80,13 @@ namespace Evbpc.Framework.Drawing
         /// </summary>
         /// <param name="obj">The object to compare the <see cref="SizeShort"/> to.</param>
         /// <returns>True if the object is equal to the current <see cref="SizeShort"/>.</returns>
-        public override bool Equals(Object obj) => obj is SizeShort && (SizeShort)obj == this;
+        public override bool Equals(object obj) => obj is SizeShort && (SizeShort)obj == this;
 
         /// <summary>
         /// Computes the hash code of the current <see cref="SizeShort"/>.
         /// </summary>
         /// <returns>The hash code of the current <see cref="SizeShort"/>.</returns>
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode() => Width << 16 | (int)Height;
 
         /// <summary>
         /// Rounds a <see cref="SizeF"/> value to the nearest <see cref="SizeShort"/> value.
@@ -100,7 +100,7 @@ namespace Evbpc.Framework.Drawing
         /// </summary>
         /// <param name="sz1">The intial <see cref="SizeShort"/>.</param>
         /// <param name="sz2">The <see cref="SizeShort"/> to subtract.</param>
-        /// <returns>The difference between the two <see cref="SizeShort"/> objects.</returns>
+        /// <returns>The difference between the two <see cref="SizeShort"/> structures.</returns>
         public static SizeShort Subtract(SizeShort sz1, SizeShort sz2) => sz1 - sz2;
 
         /// <summary>
@@ -117,19 +117,19 @@ namespace Evbpc.Framework.Drawing
         public static SizeShort Truncate(SizeF value) => new SizeShort((short)(value.Width), (short)(value.Height));
 
         /// <summary>
-        /// Adds two <see cref="SizeShort"/> objects together.
+        /// Adds two <see cref="SizeShort"/> structures together.
         /// </summary>
         /// <param name="sz1">The first <see cref="SizeShort"/> to add.</param>
         /// <param name="sz2">The second <see cref="SizeShort"/> to add.</param>
-        /// <returns>The sum of the two <see cref="SizeShort"/> objects.</returns>
+        /// <returns>The sum of the two <see cref="SizeShort"/> structures.</returns>
         public static SizeShort operator +(SizeShort sz1, SizeShort sz2) => new SizeShort((short)(sz1.Width + sz2.Width), (short)(sz1.Height + sz2.Height));
-        
+
         /// <summary>
-        /// Determines if two <see cref="SizeShort"/> objects are equal.
+        /// Determines if two <see cref="SizeShort"/> structures are equal.
         /// </summary>
         /// <param name="sz1">The first <see cref="SizeShort"/> to check.</param>
         /// <param name="sz2">The second <see cref="SizeShort"/> to check.</param>
-        /// <returns>True if the <see cref="SizeShort"/> objects are equal.</returns>
+        /// <returns>True if the <see cref="SizeShort"/> structures are equal.</returns>
         public static bool operator ==(SizeShort sz1, SizeShort sz2) => sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
@@ -157,11 +157,11 @@ namespace Evbpc.Framework.Drawing
         public static implicit operator Size(SizeShort p) => new Size(p.Width, p.Height);
 
         /// <summary>
-        /// Determines if two <see cref="SizeShort"/> objects are not equal.
+        /// Determines if two <see cref="SizeShort"/> structures are not equal.
         /// </summary>
         /// <param name="sz1">The first <see cref="SizeShort"/> to check.</param>
         /// <param name="sz2">The second <see cref="SizeShort"/> to check.</param>
-        /// <returns>True if the <see cref="SizeShort"/> objects are not equal.</returns>
+        /// <returns>True if the <see cref="SizeShort"/> structures are not equal.</returns>
         public static bool operator !=(SizeShort sz1, SizeShort sz2) => sz1.Width != sz2.Width || sz1.Height != sz2.Height;
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Evbpc.Framework.Drawing
         /// </summary>
         /// <param name="sz1">The intial <see cref="SizeShort"/>.</param>
         /// <param name="sz2">The <see cref="SizeShort"/> to subtract.</param>
-        /// <returns>The difference between the two <see cref="SizeShort"/> objects.</returns>
+        /// <returns>The difference between the two <see cref="SizeShort"/> structures.</returns>
         public static SizeShort operator -(SizeShort sz1, SizeShort sz2) => new SizeShort((short)(sz1.Width - sz2.Width), (short)(sz1.Height - sz2.Height));
 
         /// <summary>
@@ -199,16 +199,13 @@ namespace Evbpc.Framework.Drawing
         /// </summary>
         public void FromBytes(byte[] data)
         {
-            if (data.Length == this.SizeInBytes)
-            {
-                this = new SizeShort(
-                    (short)(((uint)data[0]) << 8 | ((uint)data[1])),
-                    (short)(((uint)data[2]) << 8 | ((uint)data[3])));
-            }
-            else
+            if (data.Length != SizeInBytes)
             {
                 throw new ArgumentException($"Parameter {nameof(data)} must be exactly {SizeInBytes} bytes.");
             }
+
+            this = new SizeShort((short)(((uint)data[0]) << 8 | ((uint)data[1])),
+                                 (short)(((uint)data[2]) << 8 | ((uint)data[3])));
         }
 
         /// <summary>
