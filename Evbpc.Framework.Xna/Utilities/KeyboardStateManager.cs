@@ -145,11 +145,12 @@ namespace Evbpc.Framework.Xna.Utilities
             }
             else
             {
-                if ((int)key >= 0x41 && (int)key <= 0x5A)
+                if ((int)key >= 'A' && (int)key <= 'Z')
                 {
                     return (char)((int)key + 32);
                 }
-                if ((int)key >= 0x30 && (int)key <= 0x39)
+
+                if ((int)key >= '0' && (int)key <= '9')
                 {
                     return (char)key;
                 }
@@ -355,9 +356,9 @@ namespace Evbpc.Framework.Xna.Utilities
 
         private static bool IsPressedState(List<Keys> pressedKeys, Keys key, bool state)
         {
-            for (int i = 0; i < pressedKeys.Count; i++)
+            foreach (Keys pressedKey in pressedKeys)
             {
-                if (pressedKeys[i] == key)
+                if (pressedKey == key)
                 {
                     return state;
                 }
