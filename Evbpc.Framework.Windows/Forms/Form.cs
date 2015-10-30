@@ -211,6 +211,12 @@ namespace Evbpc.Framework.Windows.Forms
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Activates the form and gives it focus.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.activate(v=vs.110).aspx
+        /// </remarks>
         public void Activate()
         {
             ActiveForm = this;
@@ -223,6 +229,13 @@ namespace Evbpc.Framework.Windows.Forms
             Forms.Insert(0, this);
         }
 
+        /// <summary>
+        /// Adds an owned form to this form.
+        /// </summary>
+        /// <param name="ownedForm">The <see cref="Form"/> that this form will own.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.addownedform(v=vs.110).aspx
+        /// </remarks>
         public void AddOwnedForm(Form ownedForm)
         {
             Form[] tForms = new Form[OwnedForms.Length + 1];
@@ -236,6 +249,12 @@ namespace Evbpc.Framework.Windows.Forms
             OwnedForms = tForms;
         }
 
+        /// <summary>
+        /// Closes the form.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.close(v=vs.110).aspx
+        /// </remarks>
         public void Close()
         {
             OnClosing(new CancelEventArgs());
@@ -245,6 +264,14 @@ namespace Evbpc.Framework.Windows.Forms
             OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing));
         }
 
+        /// <summary>
+        /// Retrieves the <see cref="Form"/> with the specified <see cref="Control.Name"/>.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>The <see cref="Form"/> that has the specified <see cref="Control.Name"/>.</returns>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.control.findform(v=vs.110).aspx
+        /// </remarks>
         public static Form FindForm(string key)
         {
             foreach (Form form in Forms)
@@ -258,122 +285,270 @@ namespace Evbpc.Framework.Windows.Forms
             throw new KeyNotFoundException();
         }
 
+        /// <summary>
+        /// Determines if a character is an input character that the control recognizes.
+        /// </summary>
+        /// <param name="charCode">The character to test.</param>
+        /// <returns>True if the character should be sent directly to the control and not preprocessed; otherwise, false.</returns>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.control.isinputchar(v=vs.110).aspx
+        /// </remarks>
         [UIPermission(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool IsInputChar(char charCode)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Determines whether the specified key is a regular input key or a special key that requires preprocessing.
+        /// </summary>
+        /// <param name="keyData">One of the <see cref="Keys"/> values.</param>
+        /// <returns>True if the specified key is a regular input key; otherwise, false.</returns>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.control.isinputkey(v=vs.110).aspx
+        /// </remarks>
         [UIPermission(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
         protected virtual bool IsInputKey(Keys keyData)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Raises the <see cref="Activated"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onactivated(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnActivated(EventArgs e)
         {
             var evenHandler = Activated;
             evenHandler?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Closed"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onclosed(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnClosed(EventArgs e)
         {
             var evenHandler = Closed;
             evenHandler?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Closing"/> event.
+        /// </summary>
+        /// <param name="e">A <code>CancelEventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onclosing(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnClosing(CancelEventArgs e)
         {
             var evenHandler = Closing;
             evenHandler?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Deactivate"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.ondeactivate(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnDeactivate(EventArgs e)
         {
             var evenHandler = Deactivate;
             evenHandler?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.EnabledChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/46w4szff(v=vs.110).aspx
+        /// </remarks>
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.Enter"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/46w4szff(v=vs.110).aspx
+        /// </remarks>
         protected override void OnEnter(EventArgs e)
         {
             base.OnEnter(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="FormClosed"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="FormClosedEventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onformclosed(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnFormClosed(FormClosedEventArgs e)
         {
             var evenHandler = FormClosed;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="FormClosing"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="FormClosingEventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onformclosing(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnFormClosing(FormClosingEventArgs e)
         {
             var evenHandler = FormClosing;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="Load"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onload(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnLoad(EventArgs e)
         {
             var evenHandler = Load;
             evenHandler?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MaximizedBoundsChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onmaximizedboundschanged(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnMaximizedBoundsChanged(EventArgs e)
         {
             var evenHandler = MaximizedBoundsChanged;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="MaximumSizeChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onmaximumsizechanged(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnMaximumSizeChanged(EventArgs e)
         {
             var evenHandler = MaximumSizeChanged;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="MinimumSizeChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onminimumsizechanged(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnMinimumSizeChanged(EventArgs e)
         {
             var evenHandler = MinimumSizeChanged;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.Resize"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/akxb9sb3(v=vs.110).aspx
+        /// </remarks>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="ResizeBegin"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onresizebegin(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnResizeBegin(EventArgs e)
         {
             var evenHandler = ResizeBegin;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="ResizeEnd"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onresizeend(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnResizeEnd(EventArgs e)
         {
             var evenHandler = ResizeEnd;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="Shown"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onshown(v=vs.110).aspx
+        /// </remarks>
         protected virtual void OnShown(EventArgs e)
         {
             var evenHandler = Shown;
             evenHandler?.Invoke(this, e); 
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.TextChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/ck6f88bf(v=vs.110).aspx
+        /// </remarks>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.VisibleChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <code>EventArgs</code> that contains the event data.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.onvisiblechanged(v=vs.110).aspx
+        /// </remarks>
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
         }
 
-
+        /// <summary>
+        /// Removes an owned form from this form.
+        /// </summary>
+        /// <param name="ownedForm">A <see cref="Form"/> representing the form to remove from the list of owned forms for this form.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.removeownedform(v=vs.110).aspx
+        /// </remarks>
         public void RemoveOwnedForm(Form ownedForm)
         {
             Form[] tForms = new Form[OwnedForms.Length - 1];
@@ -392,12 +567,30 @@ namespace Evbpc.Framework.Windows.Forms
             OwnedForms = tForms;
         }
 
+        /// <summary>
+        /// Selects this form, and optionally selects the next or previous control.
+        /// </summary>
+        /// <param name="directed">If set to true that the active control is changed</param>
+        /// <param name="forward">If directed is true, then this controls the direction in which focus is moved. If this is true, then the next control is selected; otherwise, the previous control is selected.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/sh071987(v=vs.110).aspx
+        /// </remarks>
         protected override void Select(bool directed, bool forward)
         {
             Activate();
             SetTopLevel(true);
         }
 
+        /// <summary>
+        /// Sets the bounds of the form in desktop coordinates.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the form's <see cref="Control.Location"/>.</param>
+        /// <param name="y">The y-coordinate of the form's <see cref="Control.Location"/>.</param>
+        /// <param name="width">The width of the form.</param>
+        /// <param name="height">The height of the form.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.setdesktopbounds(v=vs.110).aspx
+        /// </remarks>
         public void SetDesktopBounds(int x, int y, int width, int height)
         {
             OnResizeBegin(new EventArgs());
@@ -407,6 +600,14 @@ namespace Evbpc.Framework.Windows.Forms
             OnResizeEnd(new EventArgs());
         }
 
+        /// <summary>
+        /// Sets the location of the form in desktop coordinates.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the form's <see cref="Control.Location"/>.</param>
+        /// <param name="y">The y-coordinate of the form's <see cref="Control.Location"/>.</param>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.setdesktoplocation(v=vs.110).aspx
+        /// </remarks>
         public void SetDesktopLocation(int x, int y)
         {
             Location = new Point(x, y);
@@ -435,23 +636,110 @@ namespace Evbpc.Framework.Windows.Forms
         #endregion
 
         #region Events
+        /// <summary>
+        /// Occurs when the form is activated in code or by the user.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.activated(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler Activated;
 
+        /// <summary>
+        /// Occurs when the form is closed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.closed(v=vs.110).aspx
+        /// </remarks>
         [Browsable(false)]
         public event EventHandler Closed;
 
+        /// <summary>
+        /// Occurs when the form is closing.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.closing(v=vs.110).aspx
+        /// </remarks>
         [Browsable(false)]
         public event CancelEventHandler Closing;
 
+        /// <summary>
+        /// Occurs when the form loses focus and is no longer the active form.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.deactivate(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler Deactivate;
+
+        /// <summary>
+        /// Occurs after the form is closed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.formclosed(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler<FormClosedEventArgs> FormClosed;
+
+        /// <summary>
+        /// Occurs before the form is closed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.formclosing(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler<FormClosingEventArgs> FormClosing;
+
+        /// <summary>
+        /// Occurs before a form is displayed for the first time.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.load(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler Load;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="MaximizedBounds"/> property has changed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.maximizedboundschanged(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler MaximizedBoundsChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="MaximumSize"/> property has changed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.maximumsizechanged(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler MaximumSizeChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="MinimumSize"/> property has changed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.minimumsizechanged(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler MinimumSizeChanged;
+
+        /// <summary>
+        /// Occurs when a form enters resizing mode.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.resizebegin(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler ResizeBegin;
+
+        /// <summary>
+        /// Occurs when a form exits resizing mode.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.resizeend(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler ResizeEnd;
+
+        /// <summary>
+        /// Occurs whenever the form is first displayed.
+        /// </summary>
+        /// <remarks>
+        /// https://msdn.microsoft.com/en-us/library/system.windows.forms.form.shown(v=vs.110).aspx
+        /// </remarks>
         public event EventHandler Shown;
         #endregion
     }

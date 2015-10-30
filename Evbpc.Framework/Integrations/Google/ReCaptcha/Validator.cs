@@ -27,7 +27,7 @@ namespace Evbpc.Framework.Integrations.Google.ReCaptcha
         /// <summary>
         /// Returns the script to be included in the <code>&lt;head&gt;</code> of the page.
         /// </summary>
-        public string HeadScriptInclude => Validator._headScriptInclude;
+        public string HeadScriptInclude => _headScriptInclude;
 
         /// <summary>
         /// Use this to get or set any extra classes that should be added to the <code>&lt;div&gt;</code> that is created by the <see cref="BodyDivInclude"/>.
@@ -58,17 +58,17 @@ namespace Evbpc.Framework.Integrations.Google.ReCaptcha
         /// </summary>
         /// <param name="form">The <code>Request.Form</code> to validate.</param>
         /// <param name="remoteIp">An optional <code>IPAddress</code></param>
-        /// <returns>A <see cref="ReCaptchaResponse"/> value indicating the response of the verification.</returns>
+        /// <returns>A <see cref="Response"/> value indicating the response of the verification.</returns>
         /// <remarks>
-        /// If the returned <see cref="ReCaptchaResponse"/> is null, then a severe error occurred during the exchange.
+        /// If the returned <see cref="Response"/> is null, then a severe error occurred during the exchange.
         /// </remarks>
         public Response Validate(NameValueCollection form, string remoteIp = null)
         {
-            string reCaptchaFormResponse = form[Validator._reCaptchaFormCode];
+            string reCaptchaFormResponse = form[_reCaptchaFormCode];
 
             NameValueCollection postParameters = GetPostParameters(reCaptchaFormResponse, remoteIp);
             Response result;
-            Response.TryParseJson(Validator.UploadRecaptchaResponse(postParameters), out result);
+            Response.TryParseJson(UploadRecaptchaResponse(postParameters), out result);
             return result;
         }
 
@@ -81,7 +81,7 @@ namespace Evbpc.Framework.Integrations.Google.ReCaptcha
         {
             using (WebClient client = new WebClient())
             {
-                byte[] response = client.UploadValues(Validator._googleApiEndpoint, postParameters);
+                byte[] response = client.UploadValues(_googleApiEndpoint, postParameters);
                 string reCaptchaResult = System.Text.Encoding.UTF8.GetString(response);
                 return reCaptchaResult;
             }
@@ -108,14 +108,13 @@ namespace Evbpc.Framework.Integrations.Google.ReCaptcha
         /// <summary>
         /// Returns the <code>&lt;div&gt;</code> that should be inserted in the HTML where the reCAPTCHA should be rendered.
         /// </summary>
-        /// <param name="extraClasses">Any extra classes that should be appended to the <code>&lt;div&gt;</code>.</param>
         /// <returns>The HTML that should be inserted into the document to render the reCAPTCHA.</returns>
         /// <remarks>
         /// This method allows you to pass an arbitrary list of extra classes, regardless of what the current instance may contain.
         /// </remarks>
         public string GetBodyDivContent()
         {
-            string result = Validator._bodyDivInclude.Replace("%SITEKEY%", _reCaptchaSiteKey);
+            string result = _bodyDivInclude.Replace("%SITEKEY%", _reCaptchaSiteKey);
 
             if (ExtraClasses?.Count > 0)
             {

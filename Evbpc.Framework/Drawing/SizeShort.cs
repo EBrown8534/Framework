@@ -148,13 +148,13 @@ namespace Evbpc.Framework.Drawing
         /// Converts a <see cref="SizeShort"/> value to a <see cref="SizeF"/> value.
         /// </summary>
         /// <param name="size">The <see cref="SizeShort"/> to convert.</param>
-        public static implicit operator SizeF(SizeShort p) => new SizeF(p.Width, p.Height);
+        public static implicit operator SizeF(SizeShort size) => new SizeF(size.Width, size.Height);
 
         /// <summary>
         /// Converts a <see cref="SizeShort"/> value to a <see cref="Size"/> value.
         /// </summary>
         /// <param name="size">The <see cref="SizeShort"/> to convert.</param>
-        public static implicit operator Size(SizeShort p) => new Size(p.Width, p.Height);
+        public static implicit operator Size(SizeShort size) => new Size(size.Width, size.Height);
 
         /// <summary>
         /// Determines if two <see cref="SizeShort"/> structures are not equal.

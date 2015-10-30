@@ -10,9 +10,6 @@ namespace Evbpc.Framework.Integrations.GitHub.Models
     [DataContract]
     public class StatusCommit : Commit
     {
-        [DataMember(Name = "sha")]
-        public string Sha { get; set; }
-
         [DataMember(Name = "commit")]
         public MiniCommit Commit { get; set; }
 
