@@ -86,7 +86,7 @@ namespace Evbpc.Framework.Drawing
         /// Computes the hash code of the current <see cref="SizeShort"/>.
         /// </summary>
         /// <returns>The hash code of the current <see cref="SizeShort"/>.</returns>
-        public override int GetHashCode() => Width << 16 | (int)Height;
+        public override int GetHashCode() => Width << 16 | (ushort)Height;
 
         /// <summary>
         /// Rounds a <see cref="SizeF"/> value to the nearest <see cref="SizeShort"/> value.
