@@ -46,7 +46,7 @@ namespace Evbpc.Framework.Utilities
 
             if (ipv4Strings.Length == 4)
             {
-                string[] ipv4Bytes = StringArrayToHexArray(ip.Split('.'));
+                string[] ipv4Bytes = StringArrayToHexArray(ipv4Strings);
                 return "::" + ipv4Bytes[0] + ipv4Bytes[1] + ":" + ipv4Bytes[2] + ipv4Bytes[3];
             }
 
@@ -58,7 +58,7 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         /// <param name="input">The array to convert.</param>
         /// <returns>The hexadecimal equivalent.</returns>
-        public static string[] StringArrayToHexArray(string[] input) => input.ToList().Select(x => Convert.ToByte(x, 0x10).ToString("x")).ToArray();
+        public static string[] StringArrayToHexArray(string[] input) => input.ToList().Select(x => Convert.ToByte(x, 10).ToString("x")).ToArray();
 
         /// <summary>
         /// Convets an IPv6 address to a hexadecimal string.
@@ -141,7 +141,7 @@ namespace Evbpc.Framework.Utilities
                 hex = hex.Substring(2);
             }
 
-            byte[] result = new byte[hex.Length / 2 - 1];
+            byte[] result = new byte[hex.Length / 2];
 
             for (int i = 0; i < result.Length; i++)
             {

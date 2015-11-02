@@ -63,7 +63,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -73,6 +75,7 @@
     <Compile Include="Drawing\PointFTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Extensions\NumberByteArrayExtensionsTests.cs" />
+    <Compile Include="Utilities\IpHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\" />
