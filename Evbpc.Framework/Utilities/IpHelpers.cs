@@ -15,16 +15,17 @@ namespace Evbpc.Framework.Utilities
         /// Converts an IP string to the hexadecimal equivalent.
         /// </summary>
         /// <param name="ip">The IP to convert.</param>
+        /// <param name="padIp">Determines if IP addresses should be padded to the full width of an IPv6 address. If false leading zero bytes will be removed.</param>
         /// <returns>The hexadecimal representation of the IP address.</returns>
-        public static string IpToHex(string ip)
+        public static string IpToHex(string ip, bool padIp)
         {
             if (ip.Contains('.'))
             {
-                return Ip4ToHex(ip);
+                return Ip4ToHex(ip, padIp);
             }
             else
             {
-                return Ip6ToHex(ip);
+                return Ip6ToHex(ip, padIp);
             }
         }
 
@@ -32,8 +33,9 @@ namespace Evbpc.Framework.Utilities
         /// Converts an IPv4 string to the hexadecimal equivalent.
         /// </summary>
         /// <param name="ip">The IP to convert.</param>
+        /// <param name="padIp">Determines if IP addresses should be padded to the full width of an IPv6 address. If false leading zero bytes will be removed.</param>
         /// <returns>The hexadecimal representation of the IP address.</returns>
-        public static string Ip4ToHex(string ip) => Ip6ToHex(Ip4ToIp6(ip));
+        public static string Ip4ToHex(string ip, bool padIp) => Ip6ToHex(Ip4ToIp6(ip), padIp);
 
         /// <summary>
         /// Converts an IPv4 address to the IPv6 equivalent.
@@ -64,8 +66,9 @@ namespace Evbpc.Framework.Utilities
         /// Convets an IPv6 address to a hexadecimal string.
         /// </summary>
         /// <param name="ip">The IP address to convert.</param>
+        /// <param name="padIp">Determines if IP addresses should be padded to the full width of an IPv6 address. If false leading zero bytes will be removed.</param>
         /// <returns>The hexadecimal string representing the IPv6 address.</returns>
-        public static string Ip6ToHex(string ip)
+        public static string Ip6ToHex(string ip, bool padIp)
         {
             string result = "0x";
 
@@ -76,6 +79,11 @@ namespace Evbpc.Framework.Utilities
             for (int i = 0; i < ipv6Words.Length; i++)
             {
                 result += ipv6Words[i].PadLeft(4, '0');
+            }
+
+            if (!padIp)
+            {
+                result = StripLeadingZeroes(result);
             }
 
             return result;
@@ -124,6 +132,34 @@ namespace Evbpc.Framework.Utilities
             if (ipv6Sections[1] != "")
             {
                 result += ':' + ipv6Sections[1];
+            }
+
+            return result;
+        }
+
+        public static string StripLeadingZeroes(string input)
+        {
+            string result = "0x";
+
+            if (input.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+            {
+                input = input.Substring(2);
+            }
+
+            bool inIp = false;
+
+            for (int i = 0; i < input.Length; i+=2)
+            {
+                if (input[i] != '0' || input[i+1] != '0')
+                {
+                    inIp = true;
+                }
+
+                if (inIp)
+                {
+                    result += input[i];
+                    result += input[i + 1];
+                }
             }
 
             return result;
