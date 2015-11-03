@@ -7,10 +7,10 @@ namespace Evbpc.Framework.Tests.Utilities
     public class IpHelpersTests
     {
         [TestMethod]
-        public void IPv4ToHex_68_37_140_114()
+        public void IPv4ToHex_192_168_0_1()
         {
-            var expected = "0x00000000000000000000000044258c72";
-            var input = "68.37.140.114";
+            var expected = "0x000000000000000000000000c0a80001";
+            var input = "192.168.0.1";
 
             var actual = Framework.Utilities.IpHelpers.IpToHex(input, true);
 
@@ -18,10 +18,10 @@ namespace Evbpc.Framework.Tests.Utilities
         }
 
         [TestMethod]
-        public void HexToByteArray_0x00000000000000000000000044258c72()
+        public void HexToByteArray_0x000000000000000000000000c0a80001()
         {
-            var expected = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x44, 0x25, 0x8c, 0x72 };
-            var input = "0x00000000000000000000000044258c72";
+            var expected = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0xA8, 0x00, 0x01 };
+            var input = "0x000000000000000000000000c0a80001";
 
             var actual = Framework.Utilities.IpHelpers.HexToByteArray(input);
 
@@ -62,10 +62,10 @@ namespace Evbpc.Framework.Tests.Utilities
         }
 
         [TestMethod]
-        public void StripLeadingZeroes_0x00000000000000000000000044258c72()
+        public void StripLeadingZeroes_0x000000000000000000000000c0a80001()
         {
-            var expected = "0x44258c72";
-            var input = "0x00000000000000000000000044258c72";
+            var expected = "0xc0a80001";
+            var input = "0x000000000000000000000000c0a80001";
 
             var actual = Framework.Utilities.IpHelpers.StripLeadingZeroes(input);
 

@@ -137,6 +137,11 @@ namespace Evbpc.Framework.Utilities
             return result;
         }
 
+        /// <summary>
+        /// Strips leading zero bytes from a hex string.
+        /// </summary>
+        /// <param name="input">The hex string to strip.</param>
+        /// <returns>A new hex string with leading zero bytes stripped.</returns>
         public static string StripLeadingZeroes(string input)
         {
             string result = "0x";
