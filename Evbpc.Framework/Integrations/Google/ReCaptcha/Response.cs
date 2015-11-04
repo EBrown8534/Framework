@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using static Evbpc.Framework.Utilities.StringHelpers;
+using static Evbpc.Framework.Utilities.Extensions.StringExtensions;
 
 namespace Evbpc.Framework.Integrations.Google.ReCaptcha
 {
