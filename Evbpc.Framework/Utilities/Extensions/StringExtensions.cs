@@ -246,11 +246,9 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>The resulting PascalCase string.</returns>
         public static string ToPascalCase(this string s)
         {
-            // Our `ReCaptchaErrors` enum contains the exact same strings as the returned `error` text would be, with the following transformations:
-            // 1. The words are transformed to PascalCase;
-            // 2. The dashes are stripped;
             string[] errorWords = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
             string errorEnumName = string.Empty;
+
             foreach (string errorWord in errorWords)
             {
                 errorEnumName += errorWord[0].ToString().ToUpper() + errorWord.Substring(1);
