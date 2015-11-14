@@ -284,5 +284,12 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="input">The array to convert.</param>
         /// <returns>The hexadecimal equivalent.</returns>
         public static string[] StringArrayToHexArray(string[] input) => input.ToList().Select(x => Convert.ToByte(x, 10).ToString("x")).ToArray();
+
+        /// <summary>
+        /// Converts a byte array to a hexadecimal string.
+        /// </summary>
+        /// <param name="input">The byte array to convert.</param>
+        /// <returns>A hexadecimal string representing the byte array.</returns>
+        public static string ToHexString(this byte[] input) => "0x" + BitConverter.ToString(input).Replace("-", string.Empty);
     }
 }
