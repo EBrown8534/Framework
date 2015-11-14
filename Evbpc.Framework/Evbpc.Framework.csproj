@@ -180,7 +180,7 @@
     <Compile Include="Utilities\Prompting\IPrompt.cs" />
     <Compile Include="Utilities\Prompting\PromptOptions.cs" />
     <Compile Include="Utilities\Extensions\StringExtensions.cs" />
-    <Compile Include="Utilities\Cryptography.cs" />
+    <Compile Include="Utilities\Cryptography\AesCrypto.cs" />
     <Compile Include="Utilities\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Utilities\Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Utilities\FpsCounter.cs" />
