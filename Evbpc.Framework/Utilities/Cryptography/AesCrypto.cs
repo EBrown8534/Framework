@@ -13,15 +13,8 @@ namespace Evbpc.Framework.Utilities.Cryptography
     /// </summary>
     public class AesCrypto : IDisposable
     {
-        /// <summary>
-        /// Gets or sets the salt to use with AES encryption.
-        /// </summary>
-        public byte[] Salt { get; set; }
-
-        /// <summary>
-        /// Gets or sets the passphrase for use with AES encryption.
-        /// </summary>
-        public string Passphrase { get; set; }
+        private string _passphrase;
+        private byte[] _salt;
 
         private Rijndael _encryptor;
         private Rfc2898DeriveBytes _pdb;
@@ -29,32 +22,75 @@ namespace Evbpc.Framework.Utilities.Cryptography
         private ICryptoTransform _decryptorTransform;
 
         /// <summary>
+        /// Gets or sets the passphrase for use with AES encryption.
+        /// </summary>
+        public string Passphrase
+        {
+            get
+            {
+                return _passphrase;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"The parameter {nameof(Passphrase)} is required.");
+                }
+
+                _passphrase = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the salt to use with AES encryption. This should be different for each message.
+        /// </summary>
+        public byte[] Salt
+        {
+            get
+            {
+                return _salt;
+            }
+            set
+            {
+                if (value == null || value.Length < 8)
+                {
+                    throw new ArgumentException($"The parameter {nameof(Salt)} is required, and must be at least 8 bytes.");
+                }
+
+                _salt = value;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AesCrypto"/> from the specified <see cref="Passphrase"/> with a random <see cref="Salt"/>.
+        /// </summary>
+        /// <param name="passphrase">The <see cref="Passphrase"/> to use when encrypting or decrypting data.</param>
+        private AesCrypto(string passphrase)
+        {
+            Passphrase = passphrase;
+
+            var rand = new Random();
+            Salt = new byte[8];
+            rand.NextBytes(Salt);
+
+            _encryptor = Rijndael.Create();
+            _pdb = new Rfc2898DeriveBytes(Passphrase, Salt);
+            _encryptor.Key = _pdb.GetBytes(_encryptor.KeySize / 8);
+            _encryptor.IV = _pdb.GetBytes(_encryptor.BlockSize / 8);
+
+            _encryptorTransform = _encryptor.CreateEncryptor();
+            _decryptorTransform = _encryptor.CreateDecryptor();
+        }
+
+        /// <summary>
         /// Constructs a new instance of <see cref="AesCrypto"/> from the specified values.
         /// </summary>
         /// <param name="salt">The <see cref="Salt"/> used in encryption.</param>
         /// <param name="passphrase">The <see cref="Passphrase"/> used in encryption.</param>
-        public AesCrypto(byte[] salt, string passphrase)
+        public AesCrypto(string passphrase, byte[] salt)
+            : this(passphrase)
         {
-            if (string.IsNullOrWhiteSpace(passphrase))
-            {
-                throw new ArgumentException($"The parameter {nameof(passphrase)} is required.");
-            }
-
-            if (salt == null || salt.Length < 8)
-            {
-                throw new ArgumentException($"The parameter {nameof(salt)} is required, and must be at least 8 bytes.");
-            }
-
             Salt = salt;
-            Passphrase = passphrase;
-
-            _encryptor = Rijndael.Create();
-            _pdb = new Rfc2898DeriveBytes(Passphrase, Salt);
-            _encryptor.Key = _pdb.GetBytes(32);
-            _encryptor.IV = _pdb.GetBytes(16);
-
-            _encryptorTransform = _encryptor.CreateEncryptor();
-            _decryptorTransform = _encryptor.CreateDecryptor();
         }
 
         /// <summary>
