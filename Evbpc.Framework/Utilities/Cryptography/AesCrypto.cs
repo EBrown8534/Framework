@@ -30,12 +30,12 @@ namespace Evbpc.Framework.Utilities.Cryptography
         /// <param name="passphrase">The <see cref="Passphrase"/> used in encryption.</param>
         public AesCrypto(byte[] salt, string passphrase)
         {
-            if (Passphrase.Length == 0)
+            if (passphrase.Length == 0)
             {
                 throw new ArgumentException($"The parameter {nameof(passphrase)} is required.");
             }
 
-            if (Salt.Length == 0)
+            if (salt.Length == 0)
             {
                 throw new ArgumentException($"The parameter {nameof(salt)} is required.");
             }
