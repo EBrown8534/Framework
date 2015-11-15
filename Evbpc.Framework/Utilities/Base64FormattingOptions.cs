@@ -18,31 +18,31 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// Include the padding character at the end of the string, if neccessary.
         /// </summary>
-        RequirePaddingCharacter = 0 << 1,
+        RequirePaddingCharacter = 1 << 1,
         /// <summary>
         /// Insert line breaks after every 64 characters in the string representation. Superceeds 76-character breaks.
         /// </summary>
-        BreakLinesAt64Characters = 0 << 2,
+        BreakLinesAt64Characters = 1 << 2,
         /// <summary>
         /// Insert line breaks after every 76 characters in the string representation.
         /// </summary>
-        BreakLinesAt76Characters = 0 << 3,
+        BreakLinesAt76Characters = 1 << 3,
         /// <summary>
         /// Utilize an alphabet with safe characters allowed in filenames and URLs. Superceeds all other alphabets.
         /// </summary>
-        UrlFilenameSafeAlphabet = 0 << 4,
+        UrlFilenameSafeAlphabet = 1 << 4,
         /// <summary>
         /// Utilizes an alphabet compatible with Unix Crypt PASSWD stores.
         /// </summary>
-        UnixCryptAlphabet = 0 << 5,
+        UnixCryptAlphabet = 1 << 5,
         /// <summary>
         /// Will add a \r to each newline.
         /// </summary>
-        UseCarraigeReturnNewline = 0 << 6,
+        UseCarraigeReturnNewline = 1 << 6,
         /// <summary>
         /// Will add a \n to each newline.
         /// </summary>
-        UseLineBreakNewLine = 0 << 7,
+        UseLineBreakNewLine = 1 << 7,
 
         // Composite options
         /// <summary>

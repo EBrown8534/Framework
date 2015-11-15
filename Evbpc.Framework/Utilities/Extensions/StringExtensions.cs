@@ -33,35 +33,61 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             StringBuilder workingResult = new StringBuilder();
 
-            int originalLength = input.Length;
-            int newLength = originalLength;
+            //int originalLength = input.Length;
+            //int newLength = originalLength;
 
-            if (input.Length % 3 != 0)
+            //if (input.Length % 3 != 0)
+            //{
+            //    newLength += 3 - (originalLength % 3);
+            //}
+
+            //byte[] workingSet = new byte[originalLength];
+
+            //for (int i = 0; i < input.Length; i++)
+            //{
+            //    workingSet[i] = input[i];
+            //}
+
+            for (int i = 0; i < input.Length; i += 3)
             {
-                newLength += 3 - (originalLength % 3);
-            }
+                int temp = (input[i] & 0xFC) >> 2;
 
-            byte[] workingSet = new byte[newLength];
+                workingResult.Append(alphabet[temp]);
 
-            for (int i = 0; i < originalLength; i++)
-            {
-                workingSet[i] = input[i];
-            }
+                temp = (input[i] & 0x03) << 4;
 
-            for (int g = 0; g < newLength / 3; g++)
-            {
-                int indexOffset = g * 3;
-                workingResult.Append(alphabet[((workingSet[indexOffset] & 0xFC) >> 2)]);
-                workingResult.Append(alphabet[((workingSet[indexOffset] & 0x03) << 4) | ((workingSet[indexOffset + 1] & 0xF0) >> 4)]);
-                workingResult.Append(alphabet[((workingSet[indexOffset + 1] & 0x0F) << 2) | ((workingSet[indexOffset + 2] & 0xC0) >> 6)]);
-                workingResult.Append(alphabet[((workingSet[indexOffset + 2] & 0x3F))]);
-            }
-
-            if (((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter) && originalLength != newLength)
-            {
-                for (int padCount = 0; padCount < newLength - originalLength; padCount++)
+                if (i + 1 < input.Length)
                 {
-                    workingResult.Append(alphabet[64]);
+                    temp |= (input[i + 1] & 0xF0) >> 4;
+                    workingResult.Append(alphabet[temp]);
+
+                    temp = (input[i + 1] & 0x0F) << 2;
+
+                    if (i + 2 < input.Length)
+                    {
+                        temp |= (input[i + 2] & 0xC0) >> 6;
+                        workingResult.Append(alphabet[temp]);
+                        workingResult.Append(alphabet[((input[i + 2] & 0x3F))]);
+                    }
+                    else
+                    {
+                        workingResult.Append(alphabet[temp]);
+
+                        if ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter)
+                        {
+                            workingResult.Append(alphabet[64]);
+                        }
+                    }
+                }
+                else
+                {
+                    workingResult.Append(alphabet[temp]);
+
+                    if ((options & Base64FormattingOptions.RequirePaddingCharacter) == Base64FormattingOptions.RequirePaddingCharacter)
+                    {
+                        workingResult.Append(alphabet[64]);
+                        workingResult.Append(alphabet[64]);
+                    }
                 }
             }
 
@@ -207,6 +233,7 @@ namespace Evbpc.Framework.Utilities.Extensions
             }
 
             string workingSet = input.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+            //string workingSet = input;
 
             int originalLength = input.Length;
             int newLength = originalLength;
@@ -216,22 +243,36 @@ namespace Evbpc.Framework.Utilities.Extensions
                 throw new ArgumentException("The input string did not contain a required padding character.", nameof(input));
             }
 
-            newLength = newLength / 4 * 3;
+            //newLength = newLength * 3 / 4;
 
-            while (input[originalLength - 1] == alphabet[64])
+            //while (input[originalLength - 1] == alphabet[64])
+            //{
+            //    newLength -= 1;
+            //}
+
+            //byte[] workingResult = new byte[newLength];
+            byte[] workingResult = new byte[((workingSet.Length * 3) / 4) - (workingSet.IndexOf(alphabet[64]) > 0 ? (workingSet.Length - workingSet.IndexOf(alphabet[64])) : 0)];
+
+            int j = 0;
+            int[] temp = new int[4];
+            for (int i = 0; i < originalLength; i += 4)
             {
-                newLength -= 1;
-            }
+                temp[0] = alphabet.IndexOf(workingSet[i]);
+                temp[1] = alphabet.IndexOf(workingSet[i + 1]);
+                temp[2] = alphabet.IndexOf(workingSet[i + 2]);
+                temp[3] = alphabet.IndexOf(workingSet[i + 3]);
 
-            byte[] workingResult = new byte[newLength];
+                workingResult[j++] = (byte)((temp[0] << 2) | (temp[1] >> 4));
 
-            for (int g = 0; g < newLength / 3; g++)
-            {
-                int workingResultIndexOffset = g * 3;
-                int workingSetIndexOffset = g * 4;
-                workingResult[workingResultIndexOffset] = (byte)(((alphabet.IndexOf(workingSet[workingSetIndexOffset])) << 2) | ((alphabet.IndexOf(workingSet[workingSetIndexOffset + 1])) >> 4));
-                workingResult[workingResultIndexOffset + 1] = (byte)(((alphabet.IndexOf(workingSet[workingSetIndexOffset + 1])) << 4) | ((alphabet.IndexOf(workingSet[workingSetIndexOffset + 2])) >> 2));
-                workingResult[workingResultIndexOffset + 2] = (byte)(((alphabet.IndexOf(workingSet[workingSetIndexOffset + 2])) << 6) | ((alphabet.IndexOf(workingSet[workingSetIndexOffset + 3]))));
+                if (temp[2] < 64)
+                {
+                    workingResult[j++] = (byte)((temp[1] << 4) | (temp[2] >> 2));
+
+                    if (temp[3] < 64)
+                    {
+                        workingResult[j++] = (byte)((temp[2] << 6) | temp[3]);
+                    }
+                }
             }
 
             byte[] result = workingResult;

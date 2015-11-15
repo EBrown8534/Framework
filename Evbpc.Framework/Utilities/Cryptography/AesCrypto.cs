@@ -62,18 +62,17 @@ namespace Evbpc.Framework.Utilities.Cryptography
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="AesCrypto"/> from the specified <see cref="Passphrase"/> with a random <see cref="Salt"/>.
+        /// Constructs a new instance of <see cref="AesCrypto"/> from the specified values.
         /// </summary>
-        /// <param name="passphrase">The <see cref="Passphrase"/> to use when encrypting or decrypting data.</param>
-        private AesCrypto(string passphrase)
+        /// <param name="salt">The <see cref="Salt"/> used in encryption.</param>
+        /// <param name="passphrase">The <see cref="Passphrase"/> used in encryption.</param>
+        public AesCrypto(string passphrase, byte[] salt)
         {
             Passphrase = passphrase;
-
-            var rand = new Random();
-            Salt = new byte[8];
-            rand.NextBytes(Salt);
+            Salt = salt;
 
             _encryptor = Rijndael.Create();
+            _encryptor.Padding = PaddingMode.PKCS7;
             _pdb = new Rfc2898DeriveBytes(Passphrase, Salt);
             _encryptor.Key = _pdb.GetBytes(_encryptor.KeySize / 8);
             _encryptor.IV = _pdb.GetBytes(_encryptor.BlockSize / 8);
@@ -83,33 +82,23 @@ namespace Evbpc.Framework.Utilities.Cryptography
         }
 
         /// <summary>
-        /// Constructs a new instance of <see cref="AesCrypto"/> from the specified values.
-        /// </summary>
-        /// <param name="salt">The <see cref="Salt"/> used in encryption.</param>
-        /// <param name="passphrase">The <see cref="Passphrase"/> used in encryption.</param>
-        public AesCrypto(string passphrase, byte[] salt)
-            : this(passphrase)
-        {
-            Salt = salt;
-        }
-
-        /// <summary>
         /// Uses AES encryption to encrypt a string of data.
         /// </summary>
         /// <param name="clearText">The data to encrypt. Data is expected to be Unicode.</param>
         /// <returns>An encrypted Base64 string.</returns>
         public string AesEncrypt(string clearText)
         {
-            var clearBytes = Encoding.Unicode.GetBytes(clearText);
+            var clearBytes = Encoding.UTF8.GetBytes(clearText);
 
             using (var ms = new MemoryStream())
             {
                 using (var cs = new CryptoStream(ms, _encryptorTransform, CryptoStreamMode.Write))
                 {
                     cs.Write(clearBytes, 0, clearBytes.Length);
+                    cs.FlushFinalBlock();
                 }
 
-                return StringExtensions.ToBase64String(ms.GetBuffer());
+                return StringExtensions.ToBase64String(ms.ToArray());
             }
         }
 
@@ -132,7 +121,7 @@ namespace Evbpc.Framework.Utilities.Cryptography
                         cs.Write(cipherBytes, 0, cipherBytes.Length);
                     }
 
-                    return Encoding.Unicode.GetString(ms.GetBuffer());
+                    return Encoding.UTF8.GetString(ms.ToArray());
                 }
             }
             catch when (!throwExceptions)
