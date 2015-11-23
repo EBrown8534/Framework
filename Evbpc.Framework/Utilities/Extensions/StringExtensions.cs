@@ -33,21 +33,6 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             StringBuilder workingResult = new StringBuilder();
 
-            //int originalLength = input.Length;
-            //int newLength = originalLength;
-
-            //if (input.Length % 3 != 0)
-            //{
-            //    newLength += 3 - (originalLength % 3);
-            //}
-
-            //byte[] workingSet = new byte[originalLength];
-
-            //for (int i = 0; i < input.Length; i++)
-            //{
-            //    workingSet[i] = input[i];
-            //}
-
             for (int i = 0; i < input.Length; i += 3)
             {
                 int temp = (input[i] & 0xFC) >> 2;
@@ -233,7 +218,6 @@ namespace Evbpc.Framework.Utilities.Extensions
             }
 
             string workingSet = input.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
-            //string workingSet = input;
 
             int originalLength = input.Length;
             int newLength = originalLength;
@@ -243,14 +227,6 @@ namespace Evbpc.Framework.Utilities.Extensions
                 throw new ArgumentException("The input string did not contain a required padding character.", nameof(input));
             }
 
-            //newLength = newLength * 3 / 4;
-
-            //while (input[originalLength - 1] == alphabet[64])
-            //{
-            //    newLength -= 1;
-            //}
-
-            //byte[] workingResult = new byte[newLength];
             byte[] workingResult = new byte[((workingSet.Length * 3) / 4) - (workingSet.IndexOf(alphabet[64]) > 0 ? (workingSet.Length - workingSet.IndexOf(alphabet[64])) : 0)];
 
             int j = 0;
@@ -259,8 +235,25 @@ namespace Evbpc.Framework.Utilities.Extensions
             {
                 temp[0] = alphabet.IndexOf(workingSet[i]);
                 temp[1] = alphabet.IndexOf(workingSet[i + 1]);
-                temp[2] = alphabet.IndexOf(workingSet[i + 2]);
-                temp[3] = alphabet.IndexOf(workingSet[i + 3]);
+
+                if (workingSet.Length - i > 2)
+                {
+                    temp[2] = alphabet.IndexOf(workingSet[i + 2]);
+
+                    if (workingSet.Length - i > 3)
+                    {
+                        temp[3] = alphabet.IndexOf(workingSet[i + 3]);
+                    }
+                    else
+                    {
+                        temp[3] = 64;
+                    }
+                }
+                else
+                {
+                    temp[2] = 64;
+                    temp[3] = 64;
+                }
 
                 workingResult[j++] = (byte)((temp[0] << 2) | (temp[1] >> 4));
 
