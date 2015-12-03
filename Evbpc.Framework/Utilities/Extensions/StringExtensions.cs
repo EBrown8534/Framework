@@ -364,14 +364,14 @@ namespace Evbpc.Framework.Utilities.Extensions
         public static string ToPascalCase(this string s)
         {
             var words = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
-
+            
             var sb = new StringBuilder(words.Sum(x => x.Length));
 
             foreach (string word in words)
             {
                 var stringInfo = new StringInfo(word);
                 sb.Append(stringInfo.SubstringByTextElements(0, 1).ToUpper());
-                sb.Append(stringInfo.SubstringByTextElements(1));
+                sb.Append(stringInfo.SubstringByTextElements(1).ToLower());
             }
 
             return sb.ToString();
