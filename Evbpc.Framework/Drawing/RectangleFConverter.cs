@@ -35,10 +35,7 @@ namespace Evbpc.Framework.Drawing
         /// <param name="context">An <code>ITypeDescriptorContext</code> that provides a format context.</param>
         /// <param name="destinationType">A <code>Type</code> that represents the type you want to convert to.</param>
         /// <returns>True if this converter can perform the conversion; otherwise, false.</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            return base.CanConvertTo(context, destinationType);
-        }
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) => base.CanConvertTo(context, destinationType);
 
         /// <summary>
         /// Converts the given object to the type of this converter, using the specified context and culture information.
