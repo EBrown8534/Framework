@@ -9,7 +9,7 @@ namespace Evbpc.Framework.Physics
     /// <summary>
     /// Represents a value with an X and Y coordinate, that represents a direction and magnitude of a system.
     /// </summary>
-    public struct Vector2 : IVector2
+    public struct Vector2 : IVector2, IEquatable<Vector2>
     {
         /// <summary>
         /// Creates a new instance of <see cref="Vector2"/> with the specified <see cref="X"/> and <see cref="Y"/> values.
@@ -119,6 +119,13 @@ namespace Evbpc.Framework.Physics
         /// <param name="theta">The <see cref="Theta"/> of the <see cref="Vector2"/>.</param>
         /// <returns>A new instance of <see cref="Vector2"/> from the specified <see cref="R"/> and <see cref="Theta"/>.</returns>
         public static Vector2 FromRTheta(double r, double theta) => new Vector2((int)(r * Math.Cos(theta)), (int)(r * Math.Sin(theta)));
+
+        /// <summary>
+        /// Determines if the specified <see cref="Vector2"/> object is equal to the current <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="Vector2"/> to compare to.</param>
+        /// <returns>True if the specified <see cref="Vector2"/> is equivalent to the current <see cref="Vector2"/>.</returns>
+        public bool Equals(Vector2 other) => this == other;
 
         /// <summary>
         /// Adds two <see cref="Vector2"/> objects together and returns the result.
