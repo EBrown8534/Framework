@@ -76,5 +76,16 @@ namespace Evbpc.Framework.Tests.Utilities.Extensions
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void Some_String_ToPascalCase()
+        {
+            var expected = "SomeString";
+            var input = "some-string";
+
+            var actual = input.ToPascalCase();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
