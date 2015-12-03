@@ -30,6 +30,6 @@ namespace Evbpc.Framework.Xna.Drawing.Extensions
         /// </summary>
         /// <param name="p">The <see cref="Framework.Drawing.PointShort"/> to convert.</param>
         /// <returns>The <code>Microsoft.Xna.Framwork.Point</code> representing the specified <see cref="Framework.Drawing.PointShort"/>.</returns>
-        public static Microsoft.Xna.Framework.Point ToXnaPoint(this Framework.Drawing.PointShort p) => new Microsoft.Xna.Framework.Point((int)p.X, (int)p.Y);
+        public static Microsoft.Xna.Framework.Point ToXnaPoint(this Framework.Drawing.PointShort p) => new Microsoft.Xna.Framework.Point(p.X, p.Y);
     }
 }
