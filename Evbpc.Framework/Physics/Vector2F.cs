@@ -9,7 +9,7 @@ namespace Evbpc.Framework.Physics
     /// <summary>
     /// Represents a value with an X and Y coordinate, that represents a direction and magnitude of a system.
     /// </summary>
-    public struct Vector2F : IVector2
+    public struct Vector2F : IVector2, IEquatable<Vector2F>, IEquatable<Vector2>
     {
         /// <summary>
         /// Creates a new instance of <see cref="Vector2F"/> with the specified <see cref="X"/> and <see cref="Y"/> values.
@@ -120,6 +120,20 @@ namespace Evbpc.Framework.Physics
         /// </summary>
         /// <returns>A new <see cref="Vector2F"/>.</returns>
         public Vector2F Invert() => new Vector2F(0 - X, 0 - Y);
+
+        /// <summary>
+        /// Determines if the specified <see cref="Vector2F"/> object is equal to the current <see cref="Vector2F"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="Vector2F"/> to compare to.</param>
+        /// <returns>True if the specified <see cref="Vector2F"/> is equivalent to the current <see cref="Vector2F"/>.</returns>
+        public bool Equals(Vector2F other) => this == other;
+
+        /// <summary>
+        /// Determines if the specified <see cref="Vector2"/> object is equal to the current <see cref="Vector2F"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="Vector2"/> to compare to.</param>
+        /// <returns>True if the specified <see cref="Vector2"/> is equivalent to the current <see cref="Vector2F"/>.</returns>
+        public bool Equals(Vector2 other) => this == other;
 
         /// <summary>
         /// Adds a <see cref="Vector2F"/> and <see cref="Vector2"/> together and returns the result.
