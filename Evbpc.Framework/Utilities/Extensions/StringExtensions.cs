@@ -364,7 +364,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         {
             string[] words = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(words.Sum(x => x.Length));
 
             foreach (string word in words)
             {
