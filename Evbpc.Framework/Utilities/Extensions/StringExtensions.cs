@@ -18,8 +18,8 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="options">Any of <see cref="Base64FormattingOptions"/> enumeration values.</param>
         /// <param name="charactersPerLine">If this is a non-zero uinteger, than the number of characters per line will be equivalent to this value.</param>
         /// <returns>The input byte-array encoded into a Base64 string, following the provided options.</returns>
-        public static string ToBase64String(byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter, uint charactersPerLine = 0)
-        {
+        public static string ToBase64String(this byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter, uint charactersPerLine = 0)
+        {   
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
             if ((options & Base64FormattingOptions.UrlFilenameSafeAlphabet) == Base64FormattingOptions.UrlFilenameSafeAlphabet)
@@ -281,7 +281,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="input">The input string.</param>
         /// <param name="options">Any of <see cref="Base64FormattingOptions"/> enumeration values.</param>
         /// <returns>The input Base64 string decoded into a byte-array string, following the provided options.</returns>
-        public static byte[] FromBase64String(string input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
+        public static byte[] FromBase64String(this string input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -399,7 +399,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// </summary>
         /// <param name="input">The array to convert.</param>
         /// <returns>The hexadecimal equivalent.</returns>
-        public static string[] StringArrayToHexArray(string[] input) => input.ToList().Select(x => Convert.ToByte(x, 10).ToString("x")).ToArray();
+        public static string[] StringArrayToHexArray(this string[] input) => input.ToList().Select(x => Convert.ToByte(x, 10).ToString("x")).ToArray();
 
         /// <summary>
         /// Converts a byte array to a hexadecimal string.
