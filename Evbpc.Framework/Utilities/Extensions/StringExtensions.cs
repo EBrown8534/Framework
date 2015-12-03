@@ -363,7 +363,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>The resulting PascalCase string.</returns>
         public static string ToPascalCase(this string s)
         {
-            var words = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = s.Split(new char[3] { '-', '_', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             
             var sb = new StringBuilder(words.Sum(x => x.Length));
 
