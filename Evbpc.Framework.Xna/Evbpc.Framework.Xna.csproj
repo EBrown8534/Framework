@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\Extensions\ColorExtensions.cs" />
+    <Compile Include="Drawing\Extensions\PointExtensions.cs" />
     <Compile Include="Utilities\KeyboardStateManager.cs" />
     <Compile Include="Windows\Forms\IDrawableControl.cs" />
     <Compile Include="Windows\Forms\Form.cs">
