@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="charactersPerLine">If this is a non-zero uinteger, than the number of characters per line will be equivalent to this value.</param>
         /// <returns>The input byte-array encoded into a Base64 string, following the provided options.</returns>
         public static string ToBase64String(this byte[] input, Base64FormattingOptions options = Base64FormattingOptions.RequirePaddingCharacter, uint charactersPerLine = 0)
-        {   
+        {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
             if ((options & Base64FormattingOptions.UrlFilenameSafeAlphabet) == Base64FormattingOptions.UrlFilenameSafeAlphabet)
@@ -177,7 +178,7 @@ namespace Evbpc.Framework.Utilities.Extensions
                 workingResult.Append(alphabet[temp]);
 
                 temp = (workingSet[indexOffset] & 0x03) << 2;
-                
+
                 if (indexOffset + 1 < input.Length)
                 {
                     temp |= (workingSet[indexOffset + 1] & 0xC0) >> 6;
@@ -362,13 +363,15 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>The resulting PascalCase string.</returns>
         public static string ToPascalCase(this string s)
         {
-            string[] words = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
 
-            StringBuilder sb = new StringBuilder(words.Sum(x => x.Length));
+            var sb = new StringBuilder(words.Sum(x => x.Length));
 
             foreach (string word in words)
             {
-                sb.Append(word[0].ToString().ToUpper() + word.Substring(1));
+                var stringInfo = new StringInfo(word);
+                sb.Append(stringInfo.SubstringByTextElements(0, 1).ToUpper());
+                sb.Append(stringInfo.SubstringByTextElements(1));
             }
 
             return sb.ToString();
