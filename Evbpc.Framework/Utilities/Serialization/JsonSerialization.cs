@@ -9,7 +9,7 @@ namespace Evbpc.Framework.Utilities.Serialization
     /// <summary>
     /// Provides methods for Serialization and Deserialization of JSON/JavaScript Object Notation documents.
     /// </summary>
-    public class JsonSerialization
+    public static class JsonSerialization
     {
         /// <summary>
         /// Serializes an object to a JSON/JavaScript Object Notation string.

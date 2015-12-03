@@ -11,7 +11,7 @@ namespace Evbpc.Framework.Utilities.Serialization
     /// <summary>
     /// Provides methods for Serialization and Deserialization of XML/Extensible Markup Language documents.
     /// </summary>
-    public class XmlSerialization
+    public static class XmlSerialization
     {
         /// <summary>
         /// Serializes an object to an XML/Extensible Markup Language string.
