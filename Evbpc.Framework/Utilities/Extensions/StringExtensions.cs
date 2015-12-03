@@ -362,14 +362,16 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <returns>The resulting PascalCase string.</returns>
         public static string ToPascalCase(this string s)
         {
-            string[] errorWords = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
-            string errorEnumName = string.Empty;
+            string[] words = s.Split(new char[2] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (string errorWord in errorWords)
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string word in words)
             {
-                errorEnumName += errorWord[0].ToString().ToUpper() + errorWord.Substring(1);
+                sb.Append(word[0].ToString().ToUpper() + word.Substring(1));
             }
-            return errorEnumName;
+
+            return sb.ToString();
         }
 
         /// <summary>
