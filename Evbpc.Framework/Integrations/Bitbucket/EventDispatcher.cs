@@ -1,4 +1,5 @@
 ﻿using Evbpc.Framework.Integrations.Bitbucket.Events;
+using Evbpc.Framework.Utilities.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.Bitbucket
 {
+    /// <summary>
+    /// Dispatches events received from the Bitbucket API.
+    /// </summary>
     public class EventDispatcher : IEventDispatcher
     {
         /// <summary>
@@ -21,33 +25,17 @@ namespace Evbpc.Framework.Integrations.Bitbucket
             switch (eventKey)
             {
                 case PushEvent.WebhookEventName:
-                    OnPushReceived(new EventArgs<PushEvent>(Deserialze<PushEvent>(json)));
+                    OnPushReceived(new EventArgs<PushEvent>(DataContractJsonSerialization.Deserialze<PushEvent>(json)));
                     break;
                 case IssueCommentCreatedEvent.WebhookEventName:
-                    OnIssueCommentCreatedReceived(new EventArgs<IssueCommentCreatedEvent>(Deserialze<IssueCommentCreatedEvent>(json)));
+                    OnIssueCommentCreatedReceived(new EventArgs<IssueCommentCreatedEvent>(DataContractJsonSerialization.Deserialze<IssueCommentCreatedEvent>(json)));
                     break;
                 case IssueCreatedEvent.WebhookEventName:
-                    OnIssueCreatedEventReceived(new EventArgs<IssueCreatedEvent>(Deserialze<IssueCreatedEvent>(json)));
+                    OnIssueCreatedEventReceived(new EventArgs<IssueCreatedEvent>(DataContractJsonSerialization.Deserialze<IssueCreatedEvent>(json)));
                     break;
                 case IssueUpdatedEvent.WebhookEventName:
-                    OnIssueUpdatedEventReceived(new EventArgs<IssueUpdatedEvent>(Deserialze<IssueUpdatedEvent>(json)));
+                    OnIssueUpdatedEventReceived(new EventArgs<IssueUpdatedEvent>(DataContractJsonSerialization.Deserialze<IssueUpdatedEvent>(json)));
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Deserializes a JSON string using a <code>DataContractSerializer</code>.
-        /// </summary>
-        /// <typeparam name="T">The type to deserialize to.</typeparam>
-        /// <param name="json">The JSON to deserialize.</param>
-        /// <returns>The deserialized JSON to the specified type.</returns>
-        public T Deserialze<T>(string json)
-        {
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
-            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
-            {
-                ms.Position = 0;
-                return (T)serializer.ReadObject(ms);
             }
         }
 
