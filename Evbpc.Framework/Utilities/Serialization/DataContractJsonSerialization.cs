@@ -28,5 +28,23 @@ namespace Evbpc.Framework.Utilities.Serialization
                 return (T)serializer.ReadObject(ms);
             }
         }
+
+        /// <summary>
+        /// Serializes an object to a string using a <code>DataContractJsonSerializer</code>.
+        /// </summary>
+        /// <typeparam name="T">The type being serialized.</typeparam>
+        /// <param name="serializeObject">The object to serialize.</param>
+        /// <returns>The serialized object.</returns>
+        public static string Serialize<T>(T serializeObject)
+        {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                serializer.WriteObject(ms, serializeObject);
+                ms.Position = 0;
+                StreamReader sr = new StreamReader(ms);
+                return sr.ReadToEnd();
+            }
+        }
     }
 }
