@@ -26,10 +26,7 @@ namespace Evbpc.Framework.Utilities.Cryptography
         /// </summary>
         public string Passphrase
         {
-            get
-            {
-                return _passphrase;
-            }
+            get { return _passphrase; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -46,10 +43,7 @@ namespace Evbpc.Framework.Utilities.Cryptography
         /// </summary>
         public byte[] Salt
         {
-            get
-            {
-                return _salt;
-            }
+            get { return _salt; }
             set
             {
                 if (value == null || value.Length < 8)

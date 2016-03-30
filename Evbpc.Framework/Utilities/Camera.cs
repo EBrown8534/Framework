@@ -26,10 +26,7 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         public PointF Position
         {
-            get
-            {
-                return _position;
-            }
+            get { return _position; }
             private set
             {
                 if (_position != value)
@@ -46,10 +43,7 @@ namespace Evbpc.Framework.Utilities
         /// </summary>
         public SizeF Size
         {
-            get
-            {
-                return _size;
-            }
+            get { return _size; }
             private set
             {
                 if (_size != value)

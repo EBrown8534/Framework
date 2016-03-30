@@ -81,7 +81,15 @@ namespace Evbpc.Framework.Utilities.Prompting
         /// <param name="parseResultMethod">An optional delegate to a method which will parse the final result (assuming validity checks all pass).</param>
         /// <param name="maxTries">An optional integer specifying the maximum number of attempts to make. If <code>0</code> or smaller then the number of attempts will not be limited.</param>
         /// <returns>A boolean value indicating success. If <code>true</code> then result is filled with the user specified input, or the default value. If <code>false</code> then result will be <code>default(T)</code>.</returns>
-        public bool Prompt<T>(out T result, string message, PromptOptions options, T defaultValue = default(T), string failureMessage = null, Func<T, bool> validationMethod = null, Func<T, T> parseResultMethod = null, int maxTries = 0) where T : IConvertible
+        public bool Prompt<T>(out T result,
+                              string message, 
+                              PromptOptions options, 
+                              T defaultValue = default(T), 
+                              string failureMessage = null, 
+                              Func<T, bool> validationMethod = null, 
+                              Func<T, T> parseResultMethod = null, 
+                              int maxTries = 0) 
+            where T : IConvertible
         {
             Console.Write(message);
 

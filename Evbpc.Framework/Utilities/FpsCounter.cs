@@ -20,7 +20,7 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// Returns the list of Frames that are stored within the <see cref="FpsCounter"/>.
         /// </summary>
-        public IEnumerable<DateTime> Frames => _frames.ToArray(); /* prevent the internal `List<DateTime>` from being modified by the outside */
+        public IEnumerable<DateTime> Frames => _frames.ToArray(); /* Prevent the internal `List<DateTime>` from being modified by the outside. */
 
         /// <summary>
         /// Creates a new instance of the <see cref="FpsCounter"/>.

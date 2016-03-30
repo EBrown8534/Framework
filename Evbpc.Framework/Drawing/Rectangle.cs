@@ -288,7 +288,7 @@ namespace Evbpc.Framework.Drawing
         /// </summary>
         /// <param name="pos">The <see cref="Point"/> containing the values to move by.</param>
         /// <returns>A new <see cref="Rectangle"/> moved by the <see cref="Point"/> values.</returns>
-        public Rectangle Offset(Point pos)=>new Rectangle(new Point(Location.X + pos.X, Location.Y + pos.Y), Size);
+        public Rectangle Offset(Point pos) => new Rectangle(new Point(Location.X + pos.X, Location.Y + pos.Y), Size);
 
         /// <summary>
         /// Moves this <see cref="Rectangle"/> by the specified values.
@@ -296,7 +296,7 @@ namespace Evbpc.Framework.Drawing
         /// <param name="x">The <see cref="Point.X"/> to increase or decrease this <see cref="X"/> by.</param>
         /// <param name="y">The <see cref="Point.Y"/> to increase or decrease this <see cref="Y"/> by.</param>
         /// <returns>A new <see cref="Rectangle"/> moved by the values.</returns>
-        public Rectangle Offset(int x, int y)=>new Rectangle(new Point(Location.X + x, Location.Y + y), Size);
+        public Rectangle Offset(int x, int y) => new Rectangle(new Point(Location.X + x, Location.Y + y), Size);
 
         /// <summary>
         /// Constructs a new <see cref="Rectangle"/> from the specified <see cref="RectangleF"/> by rounding all float values to the nearest whole number.
