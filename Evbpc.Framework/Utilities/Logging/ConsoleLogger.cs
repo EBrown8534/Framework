@@ -87,7 +87,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The <code>string</code> to write to the <see cref="ConsoleLogger"/>.</param>
         /// <param name="foreColor">The colour that the foreground of the message should be.</param>
         /// <param name="backColor">The colour that the background of the message should be.</param>
-        public void LogError(string message, Color.Preset foreColor = Color.Preset.DarkRed, Color.Preset backColor = Color.Preset.DarkRed)
+        public void LogError(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.DarkRed)
         {
             LogMessage(message, LoggingType.Error, foreColor, backColor);
         }

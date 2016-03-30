@@ -75,7 +75,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
-        void LogError(string message, Color.Preset foreColor = Color.Preset.DarkRed, Color.Preset backColor = Color.Preset.DarkRed);
+        void LogError(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.DarkRed);
 
         /// <summary>
         /// Logs a <see cref="LoggingType.Verbose"/> message to the <see cref="ILogger"/>, formatted with the specified args.
