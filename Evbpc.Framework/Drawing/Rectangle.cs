@@ -190,90 +190,80 @@ namespace Evbpc.Framework.Drawing
         /// <returns>A new <see cref="Rectangle"/> representing the overlap covered by the two <see cref="Rectangle"/> objects.</returns>
         public static Rectangle Intersect(Rectangle a, Rectangle b)
         {
-            if (a.IntersectsWith(b))
+            if (!a.IntersectsWith(b))
             {
-                bool aConBTL = a.Contains(b.Top, b.Left);
-                bool aConBTR = a.Contains(b.Top, b.Right);
-                bool aConBBL = a.Contains(b.Bottom, b.Left);
-                bool aConBBR = a.Contains(b.Bottom, b.Right);
-                bool bConATL = b.Contains(a.Top, a.Left);
+                return Empty;
+            }
 
-                if (aConBTL)
+            bool aConBTL = a.Contains(b.Top, b.Left);
+            bool aConBTR = a.Contains(b.Top, b.Right);
+            bool aConBBL = a.Contains(b.Bottom, b.Left);
+            bool aConBBR = a.Contains(b.Bottom, b.Right);
+            bool bConATL = b.Contains(a.Top, a.Left);
+
+            if (aConBTL)
+            {
+                if (aConBTR)
                 {
-                    if (aConBTR)
+                    if (aConBBL)
                     {
-                        if (aConBBL)
-                        {
-                            return new Rectangle(b.Location, b.Size);
-                        }
-                        else
-                        {
-                            return new Rectangle(b.Location, new Size(b.Width, a.Bottom - b.Top));
-                        }
+                        return new Rectangle(b.Location, b.Size);
                     }
                     else
                     {
-                        if (aConBBL)
-                        {
-                            return new Rectangle(b.Location, new Size(a.Right - b.Left, b.Height));
-                        }
-                        else
-                        {
-                            return new Rectangle(b.Location, new Size(a.Right - b.Left, a.Bottom - b.Top));
-                        }
+                        return new Rectangle(b.Location, new Size(b.Width, a.Bottom - b.Top));
                     }
                 }
                 else
                 {
-                    if (aConBTR)
+                    if (aConBBL)
                     {
-                        if (aConBBR)
-                        {
-                            return new Rectangle(b.Location, new Size(b.Right - a.Left, b.Height));
-                        }
-                        else
-                        {
-                            return new Rectangle(b.Location, new Size(b.Right - a.Left, a.Bottom - b.Top));
-                        }
+                        return new Rectangle(b.Location, new Size(a.Right - b.Left, b.Height));
                     }
                     else
                     {
-                        if (aConBBL)
-                        {
-                            if (aConBBR)
-                            {
-                                return new Rectangle(a.Location, new Size(b.Width, b.Bottom - a.Top));
-                            }
-                            else
-                            {
-                                return new Rectangle(new Point(b.Left, a.Top), new Size(a.Right - b.Left, b.Bottom - a.Top));
-                            }
-                        }
-                        else
-                        {
-                            if (aConBBR)
-                            {
-                                return new Rectangle(a.Location, new Size(b.Right - a.Left, b.Bottom - a.Top));
-                            }
-                            else
-                            {
-                                if (bConATL)
-                                {
-                                    return new Rectangle(a.Location, a.Size);
-                                }
-                                else
-                                {
-                                    return Empty;
-                                }
-                            }
-                        }
+                        return new Rectangle(b.Location, new Size(a.Right - b.Left, a.Bottom - b.Top));
                     }
                 }
             }
+
+            if (aConBTR)
+            {
+                if (aConBBR)
+                {
+                    return new Rectangle(b.Location, new Size(b.Right - a.Left, b.Height));
+                }
+                else
+                {
+                    return new Rectangle(b.Location, new Size(b.Right - a.Left, a.Bottom - b.Top));
+                }
+            }
+
+            if (aConBBL)
+            {
+                if (aConBBR)
+                {
+                    return new Rectangle(a.Location, new Size(b.Width, b.Bottom - a.Top));
+                }
+                else
+                {
+                    return new Rectangle(new Point(b.Left, a.Top), new Size(a.Right - b.Left, b.Bottom - a.Top));
+                }
+            }
+
+            if (aConBBR)
+            {
+                return new Rectangle(a.Location, new Size(b.Right - a.Left, b.Bottom - a.Top));
+            }
             else
             {
-                return Empty;
+                if (bConATL)
+                {
+                    return new Rectangle(a.Location, a.Size);
+                }
             }
+
+            return Empty;
         }
 
         /// <summary>
