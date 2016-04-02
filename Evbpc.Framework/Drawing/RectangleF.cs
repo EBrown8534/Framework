@@ -185,90 +185,80 @@ namespace Evbpc.Framework.Drawing
         /// <returns>A new <see cref="RectangleF"/> representing the overlap covered by the two <see cref="RectangleF"/> objects.</returns>
         public static RectangleF Intersect(RectangleF a, RectangleF b)
         {
-            if (a.IntersectsWith(b))
+            if (!a.IntersectsWith(b))
             {
+                return Empty;
+            }
+
                 bool aConBTL = a.Contains(b.Top, b.Left);
                 bool aConBTR = a.Contains(b.Top, b.Right);
                 bool aConBBL = a.Contains(b.Bottom, b.Left);
                 bool aConBBR = a.Contains(b.Bottom, b.Right);
                 bool bConATL = b.Contains(a.Top, a.Left);
 
-                if (aConBTL)
+            if (aConBTL)
+            {
+                if (aConBTR)
                 {
-                    if (aConBTR)
+                    if (aConBBL)
                     {
-                        if (aConBBL)
-                        {
-                            return new RectangleF(b.Location, b.Size);
-                        }
-                        else
-                        {
-                            return new RectangleF(b.Location, new SizeF(b.Width, a.Bottom - b.Top));
-                        }
+                        return new RectangleF(b.Location, b.Size);
                     }
                     else
                     {
-                        if (aConBBL)
-                        {
-                            return new RectangleF(b.Location, new SizeF(a.Right - b.Left, b.Height));
-                        }
-                        else
-                        {
-                            return new RectangleF(b.Location, new SizeF(a.Right - b.Left, a.Bottom - b.Top));
-                        }
+                        return new RectangleF(b.Location, new SizeF(b.Width, a.Bottom - b.Top));
                     }
                 }
                 else
                 {
-                    if (aConBTR)
+                    if (aConBBL)
                     {
-                        if (aConBBR)
-                        {
-                            return new RectangleF(b.Location, new SizeF(b.Right - a.Left, b.Height));
-                        }
-                        else
-                        {
-                            return new RectangleF(b.Location, new SizeF(b.Right - a.Left, a.Bottom - b.Top));
-                        }
+                        return new RectangleF(b.Location, new SizeF(a.Right - b.Left, b.Height));
                     }
                     else
                     {
-                        if (aConBBL)
-                        {
-                            if (aConBBR)
-                            {
-                                return new RectangleF(a.Location, new SizeF(b.Width, b.Bottom - a.Top));
-                            }
-                            else
-                            {
-                                return new RectangleF(new PointF(b.Left, a.Top), new SizeF(a.Right - b.Left, b.Bottom - a.Top));
-                            }
-                        }
-                        else
-                        {
-                            if (aConBBR)
-                            {
-                                return new RectangleF(a.Location, new SizeF(b.Right - a.Left, b.Bottom - a.Top));
-                            }
-                            else
-                            {
-                                if (bConATL)
-                                {
-                                    return new RectangleF(a.Location, a.Size);
-                                }
-                                else
-                                {
-                                    return Empty;
-                                }
-                            }
-                        }
+                        return new RectangleF(b.Location, new SizeF(a.Right - b.Left, a.Bottom - b.Top));
                     }
                 }
             }
+
+            if (aConBTR)
+            {
+                if (aConBBR)
+                {
+                    return new RectangleF(b.Location, new SizeF(b.Right - a.Left, b.Height));
+                }
+                else
+                {
+                    return new RectangleF(b.Location, new SizeF(b.Right - a.Left, a.Bottom - b.Top));
+                }
+            }
+
+            if (aConBBL)
+            {
+                if (aConBBR)
+                {
+                    return new RectangleF(a.Location, new SizeF(b.Width, b.Bottom - a.Top));
+                }
+                else
+                {
+                    return new RectangleF(new PointF(b.Left, a.Top), new SizeF(a.Right - b.Left, b.Bottom - a.Top));
+                }
+            }
+
+            if (aConBBR)
+            {
+                return new RectangleF(a.Location, new SizeF(b.Right - a.Left, b.Bottom - a.Top));
+            }
             else
             {
-                return Empty;
+                if (bConATL)
+                {
+                    return new RectangleF(a.Location, a.Size);
+                }
             }
+
+            return Empty;
         }
 
         /// <summary>
