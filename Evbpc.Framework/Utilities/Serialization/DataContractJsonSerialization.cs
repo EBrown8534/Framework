@@ -19,7 +19,7 @@ namespace Evbpc.Framework.Utilities.Serialization
         /// <typeparam name="T">The type to deserialize to.</typeparam>
         /// <param name="json">The JSON to deserialize.</param>
         /// <returns>The deserialized JSON to the specified type.</returns>
-        public static T Deserialze<T>(string json)
+        public static T Deserialize<T>(string json)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
             using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
