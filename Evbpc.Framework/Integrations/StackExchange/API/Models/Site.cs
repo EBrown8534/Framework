@@ -114,7 +114,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// See <code>site_state</code>
         /// </summary>
         [DataMember(Name = "site_state")]
-        public string SiteDate { get; set; }
+        public string SiteState { get; set; }
 
         /// <summary>
         /// See <code>site_type</code>
