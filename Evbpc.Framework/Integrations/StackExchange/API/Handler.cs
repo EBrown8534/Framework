@@ -20,9 +20,14 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
             Configuration = configuration;
         }
 
-        public Wrapper<T> SubmitRequest<T>(IRequest request)
+        public Wrapper<T> SubmitRequest<T>(IRequest request, bool throwVerificationExceptions = true)
             where T : IBaseModel
         {
+            if (!request.VerifyRequiredParameters())
+            {
+                throw new ArgumentException($"At least one of the required parameters for {nameof(request)} was invalid.");
+            }
+
             var response = "";
 
             var url = Configuration.GetFormattedUrl(request);
