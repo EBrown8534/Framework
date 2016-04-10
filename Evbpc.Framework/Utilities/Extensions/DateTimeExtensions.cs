@@ -34,7 +34,21 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// </summary>
         /// <param name="dateTime">A DateTime to convert to epoch time.</param>
         /// <returns>The long number of seconds since the unix epoch.</returns>
-        public static long ToEpoch(DateTime dateTime) => (long)(dateTime - EpochBase).TotalSeconds;
+        public static long ToEpoch(DateTime dateTime)
+        {
+            if (dateTime.Kind != DateTimeKind.Utc)
+            {
+                throw new ArgumentException($"The value for {nameof(dateTime)} must be a UTC DateTime object.");
+            }
+
+            // Round the milliseconds down.
+            if (dateTime.Millisecond > 0)
+            {
+                dateTime = dateTime.AddMilliseconds(0 - dateTime.Millisecond);
+            }
+
+            return (long)(dateTime - EpochBase).TotalSeconds;
+        }
 
         /// <summary>
         /// Converts a long representation of time since the unix epoch to a DateTime.

@@ -210,6 +210,70 @@ namespace Evbpc.Framework.Tests.Utilities.Extensions
         }
 
         [TestMethod, TestCategory("Date Time Extensions Tests")]
+        public void EpochToDateTime_n1()
+        {
+            var expected = new DateTime(1969, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc);
+            var input = -1;
+
+            var result = DateTimeExtensions.FromEpoch(input);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod, TestCategory("Date Time Extensions Tests")]
+        public void DateTimeToEpoch_1969_12_31_23_59_59_0()
+        {
+            var expected = -1;
+            var input = new DateTime(1969, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc);
+
+            var result = DateTimeExtensions.ToEpoch(input);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod, TestCategory("Date Time Extensions Tests")]
+        public void DateTimeToEpoch_1969_12_31_23_59_59_1()
+        {
+            var expected = -1;
+            var input = new DateTime(1969, 12, 31, 23, 59, 59, 1, DateTimeKind.Utc);
+
+            var result = DateTimeExtensions.ToEpoch(input);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod, TestCategory("Date Time Extensions Tests")]
+        public void DateTimeToEpoch_1970_1_1_0_0_0_1()
+        {
+            var expected = 0;
+            var input = new DateTime(1970, 1, 1, 0, 0, 0, 1, DateTimeKind.Utc);
+
+            var result = DateTimeExtensions.ToEpoch(input);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod, TestCategory("Date Time Extensions Tests"), ExpectedException(typeof(ArgumentException))]
+        public void DateTimeToEpoch_ThrowExceptionOnLocal()
+        {
+            var input = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);
+
+            var result = DateTimeExtensions.ToEpoch(input);
+
+            Assert.Fail("Exception did not throw.");
+        }
+
+        [TestMethod, TestCategory("Date Time Extensions Tests"), ExpectedException(typeof(ArgumentException))]
+        public void DateTimeToEpoch_ThrowExceptionOnUnspecified()
+        {
+            var input = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified);
+
+            var result = DateTimeExtensions.ToEpoch(input);
+
+            Assert.Fail("Exception did not throw.");
+        }
+
+        [TestMethod, TestCategory("Date Time Extensions Tests")]
         public void EpochToDateTime_Null()
         {
             var expected = (DateTime?)null;
