@@ -75,6 +75,7 @@
     <Compile Include="Drawing\PointFTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Cryptography\AesCryptoTests.cs" />
+    <Compile Include="Utilities\Extensions\DateTimeExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\NumberByteArrayExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\StringExtensionsTests.cs" />
   </ItemGroup>
