@@ -13,7 +13,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
     /// <remarks>
     /// Endpoint URL is <see cref="EndpointUrl"/>.
     /// </remarks>
-    public class SitesRequester : IRequester
+    public class SitesRequest : IRequest
     {
         private const string _endpointUrl = "sites?pagesize={PageSize}";
 
@@ -31,7 +31,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         public int PageSize { get; set; } = 1000;
 
         /// <summary>
-        /// Returns the fully formatted endpoint for this <see cref="SitesRequester"/> instance.
+        /// Returns the fully formatted endpoint for this <see cref="SitesRequest"/> instance.
         /// </summary>
         public string FormattedEndpoint => EndpointUrl.Replace("{PageSize}", PageSize.ToString());
 

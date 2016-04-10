@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 {
-    public interface IRequester
+    public interface IRequest
     {
         string EndpointUrl { get; }
 
         /// <summary>
-        /// Gets the formatted endpoint for the <see cref="IRequester"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
+        /// Gets the formatted endpoint for the <see cref="IRequest"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
         /// </summary>
         string FormattedEndpoint { get; }
 

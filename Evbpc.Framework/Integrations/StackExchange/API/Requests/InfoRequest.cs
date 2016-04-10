@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 {
-    public class InfoRequester : IRequester
+    public class InfoRequest : IRequest
     {
         private const string _endpointUrl = "info?site={Site}";
 

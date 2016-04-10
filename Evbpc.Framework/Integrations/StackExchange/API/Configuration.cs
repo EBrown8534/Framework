@@ -47,8 +47,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         /// <summary>
         /// Returns the fully formatted URL for Stack Exchange API requests.
         /// </summary>
-        /// <param name="requester">The fully filled <see cref="IRequester"/> making the request.</param>
+        /// <param name="requester">The fully filled <see cref="IRequest"/> making the request.</param>
         /// <returns>The formatted url.</returns>
-        public string GetFormattedUrl(IRequester requester) => AppendKey(FormattedUrl + requester.FormattedEndpoint);
+        public string GetFormattedUrl(IRequest requester) => AppendKey(FormattedUrl + requester.FormattedEndpoint);
     }
 }

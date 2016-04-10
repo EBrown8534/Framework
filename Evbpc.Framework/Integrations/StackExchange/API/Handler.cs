@@ -20,7 +20,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
             Configuration = configuration;
         }
 
-        public Wrapper<T> SubmitRequest<T>(IRequester request)
+        public Wrapper<T> SubmitRequest<T>(IRequest request)
             where T : IBaseModel
         {
             var response = "";
