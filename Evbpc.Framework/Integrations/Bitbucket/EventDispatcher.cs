@@ -25,16 +25,16 @@ namespace Evbpc.Framework.Integrations.Bitbucket
             switch (eventKey)
             {
                 case PushEvent.WebhookEventName:
-                    OnPushReceived(new EventArgs<PushEvent>(DataContractJsonSerialization.Deserialze<PushEvent>(json)));
+                    OnPushReceived(new EventArgs<PushEvent>(DataContractJsonSerialization.Deserialize<PushEvent>(json)));
                     break;
                 case IssueCommentCreatedEvent.WebhookEventName:
-                    OnIssueCommentCreatedReceived(new EventArgs<IssueCommentCreatedEvent>(DataContractJsonSerialization.Deserialze<IssueCommentCreatedEvent>(json)));
+                    OnIssueCommentCreatedReceived(new EventArgs<IssueCommentCreatedEvent>(DataContractJsonSerialization.Deserialize<IssueCommentCreatedEvent>(json)));
                     break;
                 case IssueCreatedEvent.WebhookEventName:
-                    OnIssueCreatedEventReceived(new EventArgs<IssueCreatedEvent>(DataContractJsonSerialization.Deserialze<IssueCreatedEvent>(json)));
+                    OnIssueCreatedEventReceived(new EventArgs<IssueCreatedEvent>(DataContractJsonSerialization.Deserialize<IssueCreatedEvent>(json)));
                     break;
                 case IssueUpdatedEvent.WebhookEventName:
-                    OnIssueUpdatedEventReceived(new EventArgs<IssueUpdatedEvent>(DataContractJsonSerialization.Deserialze<IssueUpdatedEvent>(json)));
+                    OnIssueUpdatedEventReceived(new EventArgs<IssueUpdatedEvent>(DataContractJsonSerialization.Deserialize<IssueUpdatedEvent>(json)));
                     break;
             }
         }
