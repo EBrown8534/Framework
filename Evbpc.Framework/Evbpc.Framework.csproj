@@ -109,8 +109,9 @@
     <Compile Include="Integrations\StackExchange\API\Models\Site.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Styling.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Wrapper.cs" />
+    <Compile Include="Integrations\StackExchange\API\Requests\InfoRequester.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\IRequester.cs" />
-    <Compile Include="Integrations\StackExchange\API\Requests\Sites.cs" />
+    <Compile Include="Integrations\StackExchange\API\Requests\SitesRequester.cs" />
     <Compile Include="Utilities\Cryptography\Hashing.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
     <Compile Include="Integrations\IEventDispatcher.cs" />

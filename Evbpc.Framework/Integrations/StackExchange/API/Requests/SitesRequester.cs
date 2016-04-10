@@ -34,5 +34,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         /// Returns the fully formatted endpoint for this <see cref="Sites"/> instance.
         /// </summary>
         public string FormattedEndpoint => EndpointUrl.Replace("{PageSize}", PageSize.ToString());
+
+        public bool VerifyRequiredParameters() => PageSize > 0;
     }
 }

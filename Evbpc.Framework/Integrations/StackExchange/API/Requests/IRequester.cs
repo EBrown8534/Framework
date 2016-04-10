@@ -15,5 +15,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         /// Gets the formatted endpoint for the <see cref="IRequester"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
         /// </summary>
         string FormattedEndpoint { get; }
+
+        bool VerifyRequiredParameters();
     }
 }
