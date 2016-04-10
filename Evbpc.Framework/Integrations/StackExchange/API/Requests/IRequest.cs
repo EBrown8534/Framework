@@ -17,5 +17,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         string FormattedEndpoint { get; }
 
         bool VerifyRequiredParameters();
+
+        string VerificationError { get; }
     }
 }

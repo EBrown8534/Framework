@@ -36,5 +36,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         public string FormattedEndpoint => EndpointUrl.Replace("{PageSize}", PageSize.ToString());
 
         public bool VerifyRequiredParameters() => PageSize > 0;
+
+        public string VerificationError => $"The value for {nameof(PageSize)} must be an integer greater than 0.";
     }
 }

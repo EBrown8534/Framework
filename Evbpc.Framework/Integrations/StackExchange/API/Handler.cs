@@ -25,7 +25,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         {
             if (!request.VerifyRequiredParameters())
             {
-                throw new ArgumentException($"At least one of the required parameters for {nameof(request)} was invalid.");
+                throw new ArgumentException($"At least one of the required parameters for {nameof(request)} was invalid.", new ArgumentException(request.VerificationError));
             }
 
             var response = "";

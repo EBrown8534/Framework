@@ -20,5 +20,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         public string FormattedEndpoint => EndpointUrl.Replace("{Site}", Site);
 
         public bool VerifyRequiredParameters() => !string.IsNullOrWhiteSpace(Site);
+
+        public string VerificationError => $"The value for {nameof(Site)} must be a valid, non-null, and non-whitespace string.";
     }
 }
