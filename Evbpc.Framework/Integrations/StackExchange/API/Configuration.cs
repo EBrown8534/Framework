@@ -18,6 +18,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         public const string ApiUrlBase = "{Protocol}://api.stackexchange.com/{Version}/";
 
         /// <summary>
+        /// This is the upper bound of the Page Size for <b>most</b> requests. Currently 100.
+        /// </summary>
+        public const int MaxPageSize = 100;
+
+        /// <summary>
         /// The application API key. Can be <code>null</code> for anonymous requests.
         /// </summary>
         public string Key { get; set; }

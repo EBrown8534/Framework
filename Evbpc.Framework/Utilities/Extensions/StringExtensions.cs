@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -412,5 +413,22 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="input">The byte array to convert.</param>
         /// <returns>A hexadecimal string representing the byte array.</returns>
         public static string ToHexString(this byte[] input) => "0x" + BitConverter.ToString(input).Replace("-", string.Empty);
+
+        public static string BuildQueryString(Dictionary<string, string> values)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var kvp in values)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append("&");
+                }
+
+                sb.Append(kvp.Key).Append("=").Append(kvp.Value);
+            }
+
+            return sb.ToString();
+        }
     }
 }

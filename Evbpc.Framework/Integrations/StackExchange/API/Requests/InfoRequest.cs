@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Evbpc.Framework.Utilities.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 {
     public class InfoRequest : IRequest
     {
-        private const string _endpointUrl = "info?site={Site}";
+        private const string _endpointUrl = "info?";
 
         /// <summary>
         /// The destination endpoint for the API request.
@@ -17,7 +18,19 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public string Site { get; set; }
 
-        public string FormattedEndpoint => EndpointUrl.Replace("{Site}", Site);
+        public string FormattedEndpoint
+        {
+            get
+            {
+                var values = new Dictionary<string, string>();
+
+                values.Add(nameof(Site).ToLower(), Site);
+
+                var qs = StringExtensions.BuildQueryString(values);
+
+                return EndpointUrl + qs;
+            }
+        }
 
         public bool VerifyRequiredParameters() => !string.IsNullOrWhiteSpace(Site);
 

@@ -1,4 +1,5 @@
 ﻿using Evbpc.Framework.Integrations.StackExchange.API.Models;
+using Evbpc.Framework.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
     /// </remarks>
     public class SitesRequest : IRequest
     {
-        private const string _endpointUrl = "sites?pagesize={PageSize}";
+        private const string _endpointUrl = "sites?";
 
         /// <summary>
         /// The destination endpoint for the API request.
@@ -30,10 +31,26 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         /// </remarks>
         public int PageSize { get; set; } = 1000;
 
+        public int Page { get; set; } = 1;
+
         /// <summary>
         /// Returns the fully formatted endpoint for this <see cref="SitesRequest"/> instance.
         /// </summary>
-        public string FormattedEndpoint => EndpointUrl.Replace("{PageSize}", PageSize.ToString());
+
+        public string FormattedEndpoint
+        {
+            get
+            {
+                var values = new Dictionary<string, string>();
+
+                values.Add(nameof(PageSize).ToLower(), PageSize.ToString());
+                values.Add(nameof(Page).ToLower(), Page.ToString());
+
+                var qs = StringExtensions.BuildQueryString(values);
+
+                return EndpointUrl + qs;
+            }
+        }
 
         public bool VerifyRequiredParameters() => PageSize > 0;
 
