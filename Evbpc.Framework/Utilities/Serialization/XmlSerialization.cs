@@ -23,11 +23,6 @@ namespace Evbpc.Framework.Utilities.Serialization
         /// <returns>A boolean value indicating success.</returns>
         public static bool Serialize<T>(T value, ref string serializedXml, bool throwExceptions = false)
         {
-#if DEBUG
-#warning When in DEBUG Mode XML Serialization Exceptions will be thrown regardless of throwExceptions paramter.
-            throwExceptions = true;
-#endif
-
             try
             {
                 if (value == null)
@@ -68,11 +63,6 @@ namespace Evbpc.Framework.Utilities.Serialization
         /// <returns>A boolean value indicating success.</returns>
         public static bool Deserialize<T>(string value, ref T deserializedObject, bool throwExceptions = false)
         {
-#if DEBUG
-#warning When in DEBUG Mode XML Deserialization Exceptions will be thrown regardless of throwExceptions paramter.
-            throwExceptions = true;
-#endif
-
             try
             {
                 if (value == null)

@@ -27,11 +27,6 @@ namespace Evbpc.Framework.Utilities
             // D = 500
             // M = 1000
 
-#if DEBUG
-#warning In DEBUG mode RomanToNumber Exceptions will be thrown regardless of throwExceptions parameter.
-            throwExceptions = true;
-#endif
-
             int result = 0;
 
             for (int i = 0; i < roman.Length; i++)
