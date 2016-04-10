@@ -247,7 +247,7 @@ namespace Evbpc.Framework.Drawing
         {
             if (data.Length == SizeInBytes)
             {
-                this = new Color(data[0], data[1], data[2], data[3]);
+                this = new Color(data[1], data[2], data[3], data[0]);
             }
             else
             {
