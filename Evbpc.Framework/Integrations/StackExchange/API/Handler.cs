@@ -24,12 +24,16 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         {
             var response = "";
 
-            var httpWebRequest = WebRequest.Create(Configuration.GetFormattedUrl(request));
-            var httpWebResponse = httpWebRequest.GetResponse();
+            var url = Configuration.GetFormattedUrl(request);
 
-            using (var reader = new StreamReader(httpWebResponse.GetResponseStream()))
+            var webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
+            webRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            var webResponse = webRequest.GetResponse();
+
+            using (var sr = new StreamReader(webResponse.GetResponseStream()))
             {
-                response = reader.ReadToEnd();
+                response = sr.ReadToEnd();
             }
 
             return DataContractJsonSerialization.Deserialize<Wrapper<T>>(response);
