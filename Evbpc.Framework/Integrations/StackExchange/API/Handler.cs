@@ -20,7 +20,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
             Configuration = configuration;
         }
 
-        public Wrapper<T> SubmitRequest<T>(IRequest request, bool throwVerificationExceptions = true)
+        public Wrapper<T> SubmitRequest<T>(IRequest<T> request, bool throwVerificationExceptions = true)
             where T : IBaseModel
         {
             if (!request.VerifyRequiredParameters())

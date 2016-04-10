@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 {
-    public interface IRequest
+    /// <summary>
+    /// This representes a generic request against the Stack Exchange API. Though this does not make use of the type parameter intrinsically, it's necessary for generic inference and type constraints.
+    /// </summary>
+    /// <typeparam name="T">A <see cref="IBaseModel"/> representing the returned model from the request. When used with <see cref="Handler.SubmitRequest{T}(IRequest{T}, bool)"/> this will return a type of <see cref="Wrapper{TObject}"/> where <code>TObject</code> is this type.</typeparam>
+    public interface IRequest<T>
+        where T : IBaseModel
     {
+        /// <summary>
+        /// The basic endpoint for the <see cref="IRequest{T}"/>.
+        /// </summary>
         string EndpointUrl { get; }
 
         /// <summary>
-        /// Gets the formatted endpoint for the <see cref="IRequest"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
+        /// Gets the formatted endpoint for the <see cref="IRequest{T}"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
         /// </summary>
         string FormattedEndpoint { get; }
 

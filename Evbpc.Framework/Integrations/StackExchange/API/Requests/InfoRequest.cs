@@ -1,4 +1,5 @@
-﻿using Evbpc.Framework.Utilities.Extensions;
+﻿using Evbpc.Framework.Integrations.StackExchange.API.Models;
+using Evbpc.Framework.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 {
-    public class InfoRequest : IRequest
+    public class InfoRequest : IRequest<Info>
     {
         private const string _endpointUrl = "info?";
 

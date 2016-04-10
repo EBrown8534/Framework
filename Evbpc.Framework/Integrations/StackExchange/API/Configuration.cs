@@ -1,4 +1,5 @@
-﻿using Evbpc.Framework.Integrations.StackExchange.API.Requests;
+﻿using Evbpc.Framework.Integrations.StackExchange.API.Models;
+using Evbpc.Framework.Integrations.StackExchange.API.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,6 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         /// </summary>
         /// <param name="requester">The fully filled <see cref="IRequest"/> making the request.</param>
         /// <returns>The formatted url.</returns>
-        public string GetFormattedUrl(IRequest requester) => AppendKey(FormattedUrl + requester.FormattedEndpoint);
+        public string GetFormattedUrl<T>(IRequest<T> requester) where T : IBaseModel => AppendKey(FormattedUrl + requester.FormattedEndpoint);
     }
 }
