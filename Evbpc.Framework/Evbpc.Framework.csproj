@@ -102,6 +102,11 @@
     <Compile Include="Integrations\Bitbucket\Models\Comment.cs" />
     <Compile Include="Integrations\Bitbucket\Models\StringChange.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Version.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\Info.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\RelatedSite.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\Site.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\Styling.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\Wrapper.cs" />
     <Compile Include="Utilities\Cryptography\Hashing.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
     <Compile Include="Integrations\IEventDispatcher.cs" />
