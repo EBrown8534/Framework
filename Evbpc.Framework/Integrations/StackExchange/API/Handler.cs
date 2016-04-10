@@ -59,8 +59,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
             var webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
             webRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            var webResponse = webRequest.GetResponse();
 
+            using (var webResponse = webRequest.GetResponse())
             using (var sr = new StreamReader(webResponse.GetResponseStream()))
             {
                 response = sr.ReadToEnd();
