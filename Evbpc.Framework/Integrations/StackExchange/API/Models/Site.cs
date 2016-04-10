@@ -15,7 +15,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
     /// http://api.stackexchange.com/docs/types/site
     /// </remarks>
     [DataContract]
-    public class Site
+    public class Site : IBaseModel
     {
         /// <summary>
         /// See <code>aliases</code>

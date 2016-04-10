@@ -14,7 +14,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
     /// http://api.stackexchange.com/docs/types/styling
     /// </remarks>
     [DataContract]
-    public class Styling
+    public class Styling : IBaseModel
     {
         /// <summary>
         /// See <code>link_color</code>

@@ -14,7 +14,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
     /// http://api.stackexchange.com/docs/types/related-site
     /// </remarks>
     [DataContract]
-    public class RelatedSite
+    public class RelatedSite : IBaseModel
     {
         /// <summary>
         /// See <code>api_site_parameter</code>

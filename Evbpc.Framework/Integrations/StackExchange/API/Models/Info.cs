@@ -14,7 +14,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
     /// http://api.stackexchange.com/docs/types/info
     /// </remarks>
     [DataContract]
-    public class Info
+    public class Info : IBaseModel
     {
         /// <summary>
         /// See <code>answers_per_minute</code>

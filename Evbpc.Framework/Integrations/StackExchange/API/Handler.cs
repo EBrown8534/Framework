@@ -21,6 +21,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         }
 
         public Wrapper<T> SubmitRequest<T>(IRequester request)
+            where T : IBaseModel
         {
             var response = "";
 

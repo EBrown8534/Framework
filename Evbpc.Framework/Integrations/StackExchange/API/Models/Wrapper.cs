@@ -12,7 +12,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
     /// </summary>
     /// <typeparam name="TObject">The type of the object list/array returned by the API request.</typeparam>
     [DataContract]
-    public class Wrapper<TObject>
+    public class Wrapper<TObject> : IBaseModel
+        where TObject : IBaseModel
     {
         /// <summary>
         /// A list of the objects returned by the API request.
