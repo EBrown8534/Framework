@@ -10,16 +10,16 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
     /// <summary>
     /// This is a general wrapper for Stack Exchange API request models. All API requests should contain these basic fields.
     /// </summary>
-    /// <typeparam name="TObject">The type of the object list/array returned by the API request.</typeparam>
+    /// <typeparam name="T">The type of the object list/array returned by the API request.</typeparam>
     [DataContract]
-    public class Wrapper<TObject> : IBaseModel
-        where TObject : IBaseModel
+    public class Wrapper<T> : IBaseModel
+        where T : IBaseModel
     {
         /// <summary>
         /// A list of the objects returned by the API request.
         /// </summary>
         [DataMember(Name = "items")]
-        public List<TObject> Items { get; set; }
+        public List<T> Items { get; set; }
 
         /// <summary>
         /// Whether or not <see cref="Items"/> returned by this request are the end of the pagination or not.

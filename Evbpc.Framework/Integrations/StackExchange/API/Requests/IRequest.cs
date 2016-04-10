@@ -24,8 +24,15 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         /// </summary>
         string FormattedEndpoint { get; }
 
+        /// <summary>
+        /// This should verify that all the provided parameters required for the <see cref="IRequest{T}"/> are present.
+        /// </summary>
+        /// <returns>True if the required parameters pass verification, false otherwise.</returns>
         bool VerifyRequiredParameters();
 
+        /// <summary>
+        /// This should return a message to be used to indicate to the user what the verification should be, ir order to pass <see cref="VerifyRequiredParameters()"/>.
+        /// </summary>
         string VerificationError { get; }
     }
 }
