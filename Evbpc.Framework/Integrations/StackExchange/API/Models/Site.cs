@@ -67,13 +67,16 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// <summary>
         /// See <code>launch_date</code>
         /// </summary>
+        /// <remarks>
+        /// This isn't noted in the SE API docs, but this value can be null. (If a site is closed or open beta, this value is null.)
+        /// </remarks>
         [DataMember(Name = "launch_date")]
-        public long LaunchDate { get; set; }
+        public long? LaunchDate { get; set; }
 
         /// <summary>
         /// A .NET DateTime representing the <see cref="LaunchDate"/>.
         /// </summary>
-        public DateTime LaunchDateTime { get { return DateTimeExtensions.FromEpoch(LaunchDate); } set { LaunchDate = DateTimeExtensions.ToEpoch(value); } }
+        public DateTime? LaunchDateTime { get { return DateTimeExtensions.FromEpoch(LaunchDate); } set { LaunchDate = DateTimeExtensions.ToEpoch(value); } }
 
         /// <summary>
         /// See <code>logo_url</code>
