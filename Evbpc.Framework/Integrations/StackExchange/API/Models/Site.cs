@@ -44,7 +44,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// <summary>
         /// A .NET DateTime? representing the <see cref="ClosedBetaDate"/>.
         /// </summary>
-        public DateTime? ClosedBetaDateTime { get { return DateTimeExtensions.FromEpoch(ClosedBetaDate); } set { ClosedBetaDate = DateTimeExtensions.ToEpoch(value); } }
+        public DateTime? ClosedBetaDateTime
+        {
+            get { return DateTimeExtensions.FromEpoch(ClosedBetaDate); }
+            set { ClosedBetaDate = DateTimeExtensions.ToEpoch(value); }
+        }
 
         /// <summary>
         /// See <code>favicon_url</code>
@@ -76,7 +80,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// <summary>
         /// A .NET DateTime representing the <see cref="LaunchDate"/>.
         /// </summary>
-        public DateTime? LaunchDateTime { get { return DateTimeExtensions.FromEpoch(LaunchDate); } set { LaunchDate = DateTimeExtensions.ToEpoch(value); } }
+        public DateTime? LaunchDateTime
+        {
+            get { return DateTimeExtensions.FromEpoch(LaunchDate); }
+            set { LaunchDate = DateTimeExtensions.ToEpoch(value); }
+        }
 
         /// <summary>
         /// See <code>logo_url</code>
@@ -105,7 +113,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// <summary>
         /// A .NET DateTime? representing the <see cref="OpenBetaDate"/>.
         /// </summary>
-        public DateTime? OpenBetaDateTime { get { return DateTimeExtensions.FromEpoch(OpenBetaDate); } set { OpenBetaDate = DateTimeExtensions.ToEpoch(value); } }
+        public DateTime? OpenBetaDateTime
+        {
+            get { return DateTimeExtensions.FromEpoch(OpenBetaDate); }
+            set { OpenBetaDate = DateTimeExtensions.ToEpoch(value); }
+        }
 
         /// <summary>
         /// See <code>related_sites</code>
