@@ -119,6 +119,7 @@
     <Compile Include="Integrations\StackExchange\API\Requests\IRequest.cs" />
     <Compile Include="Integrations\StackExchange\API\OrderType.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\SitesRequest.cs" />
+    <Compile Include="Utilities\BenchmarkResult.cs" />
     <Compile Include="Utilities\Cryptography\Hashing.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
     <Compile Include="Integrations\IEventDispatcher.cs" />
