@@ -37,6 +37,14 @@ namespace Evbpc.Framework.Utilities
         /// The number of rounds that passed testing. (Always equivalent to <see cref="RoundsRun"/> for <see cref="Benchmark(ulong, Action)"/>.)
         /// </summary>
         public ulong RoundsPassed { get; set; }
+
+        /// <summary>
+        /// The total amount of time taken for all the benchmarks. (Does not include statistic calculation time, or result verification time.)
+        /// </summary>
+        /// <remarks>
+        /// Depending on the number of rounds and time taken for each, this value may not be entirely representful of the actual result, and may have rounded over. It should be used with caution on long-running methods that are run for long amounts of time, though that likely won't be a problem as that would result in the programmer having to wait for it to run.
+        /// </remarks>
+        public TimeSpan TotalTime { get; set; }
         
         /// <summary>
         /// Runs a benchmark of a method.
@@ -53,6 +61,7 @@ namespace Evbpc.Framework.Utilities
             double totalValues = 0;
             long maxTicks = 0;
             long minTicks = 0;
+            long totalTime = 0;
 
             for (ulong i = 0; i < rounds; i++)
             {
@@ -76,6 +85,8 @@ namespace Evbpc.Framework.Utilities
                 averageTicks = averageTicks + delta / totalValues;
                 m2 += delta * (sw.ElapsedTicks - averageTicks);
 
+                totalTime += sw.ElapsedTicks;
+
                 sw.Reset();
             }
 
@@ -88,6 +99,7 @@ namespace Evbpc.Framework.Utilities
                 MinTime = new TimeSpan(minTicks),
                 RoundsPassed = rounds,
                 RoundsRun = rounds,
+                TotalTime = new TimeSpan(totalTime),
                 Variance = new TimeSpan(Convert.ToInt64(variance))
             };
         }
@@ -109,6 +121,7 @@ namespace Evbpc.Framework.Utilities
             double totalValues = 0;
             long maxTicks = 0;
             long minTicks = 0;
+            long totalTime = 0;
             ulong roundsPassed = 0;
 
             for (ulong i = 0; i < rounds; i++)
@@ -138,6 +151,8 @@ namespace Evbpc.Framework.Utilities
                 averageTicks = averageTicks + delta / totalValues;
                 m2 += delta * (sw.ElapsedTicks - averageTicks);
 
+                totalTime += sw.ElapsedTicks;
+
                 sw.Reset();
             }
 
@@ -150,6 +165,7 @@ namespace Evbpc.Framework.Utilities
                 MinTime = new TimeSpan(minTicks),
                 RoundsPassed = roundsPassed,
                 RoundsRun = rounds,
+                TotalTime = new TimeSpan(totalTime),
                 Variance = new TimeSpan(Convert.ToInt64(variance))
             };
         }
