@@ -36,8 +36,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         /// <typeparam name="T">The type of the object to be returned. This should be inferred from the <see cref="IRequest{T}"/>.</typeparam>
         /// <param name="request">The <see cref="IRequest{T}"/> being performed.</param>
         /// <param name="throwVerificationExceptions">If true, verification errors will result in exceptions. If false, a <code>null</code> object will simply be returned.</param>
-        /// <returns>A <see cref="Wrapper{TObject}"/> for the API request.</returns>
-        public Wrapper<T> SubmitRequest<T>(IRequest<T> request, bool throwVerificationExceptions = true)
+        /// <returns>The JSON result for the API request.</returns>
+        public string SubmitRequest<T>(IRequest<T> request, bool throwVerificationExceptions = true)
             where T : IBaseModel
         {
             if (!request.VerifyRequiredParameters())
@@ -66,6 +66,18 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
                 response = sr.ReadToEnd();
             }
 
+            return response;
+        }
+
+        /// <summary>
+        /// Processes a request from the SE API.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be returned. This should be inferred from the <see cref="IRequest{T}"/>.</typeparam>
+        /// <param name="response">The JSON response from the API.</param>
+        /// <returns>A <see cref="Wrapper{T}"/> representing the JSON data.</returns>
+        public Wrapper<T> ProcessResponse<T>(string response)
+            where T : IBaseModel
+        {
             return DataContractJsonSerialization.Deserialize<Wrapper<T>>(response);
         }
     }
