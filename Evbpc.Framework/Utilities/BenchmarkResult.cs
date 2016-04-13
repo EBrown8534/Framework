@@ -42,7 +42,7 @@ namespace Evbpc.Framework.Utilities
         /// The total amount of time taken for all the benchmarks. (Does not include statistic calculation time, or result verification time.)
         /// </summary>
         /// <remarks>
-        /// Depending on the number of rounds and time taken for each, this value may not be entirely representful of the actual result, and may have rounded over. It should be used with caution on long-running methods that are run for long amounts of time, though that likely won't be a problem as that would result in the programmer having to wait for it to run.
+        /// Depending on the number of rounds and time taken for each, this value may not be entirely representful of the actual result, and may have rounded over. It should be used with caution on long-running methods that are run for long amounts of time, though that likely won't be a problem as that would result in the programmer having to wait for it to run. (It would take around 29,247 years for it to wrap around.)
         /// </remarks>
         public TimeSpan TotalTime { get; set; }
         
