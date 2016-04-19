@@ -209,6 +209,7 @@
     <Compile Include="Utilities\Logging\LoggingType.cs" />
     <Compile Include="Utilities\Extensions\NumericExtensions.cs" />
     <Compile Include="Utilities\Serialization\DataContractJsonSerialization.cs" />
+    <Compile Include="Utilities\ExtendedStringBuilder.cs" />
     <Compile Include="Utilities\TrackableObjectChangedEventArgs.cs" />
     <Compile Include="Utilities\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Utilities\Serialization\ISerializableByteArray.cs" />
