@@ -11,11 +11,13 @@ namespace Evbpc.Framework.Utilities
     /// </summary>
     public class ExtendedStringBuilder
     {
-        private StringBuilder _stringBuilder;
+        private readonly StringBuilder _stringBuilder;
 
-        public string CurrentString => _stringBuilder.ToString();
-
-        public int Length => _stringBuilder.Length;
+        public int Length
+        {
+            get { return _stringBuilder.Length; }
+            set { _stringBuilder.Length = value; }
+        }
 
         public ExtendedStringBuilder()
         {
@@ -54,9 +56,9 @@ namespace Evbpc.Framework.Utilities
 
         public static ExtendedStringBuilder operator +(ExtendedStringBuilder sb, object o) => sb.Append(o);
 
-        public static implicit operator string(ExtendedStringBuilder sb) => sb.CurrentString;
+        public static implicit operator string(ExtendedStringBuilder sb) => sb.ToString();
 
-        public override string ToString() => CurrentString;
+        public override string ToString() => _stringBuilder.ToString();
 
         public string ToString(int startIndex, int length) => _stringBuilder.ToString(startIndex, length);
     }
