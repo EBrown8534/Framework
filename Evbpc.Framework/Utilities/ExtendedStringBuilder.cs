@@ -57,5 +57,7 @@ namespace Evbpc.Framework.Utilities
         public static implicit operator string(ExtendedStringBuilder sb) => sb.CurrentString;
 
         public override string ToString() => CurrentString;
+
+        public string ToString(int startIndex, int length) => _stringBuilder.ToString(startIndex, length);
     }
 }
