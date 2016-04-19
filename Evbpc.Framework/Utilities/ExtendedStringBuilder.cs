@@ -29,6 +29,19 @@ namespace Evbpc.Framework.Utilities
             _stringBuilder = new StringBuilder(capacity);
         }
 
+        public ExtendedStringBuilder(StringBuilder baseBuilder)
+            : this(baseBuilder.Length)
+        {
+            // We do this trick to make sure that the internal StringBuilder doesn't become a reference to an external one.
+            Append(baseBuilder.ToString());
+        }
+
+        public ExtendedStringBuilder(string baseString)
+            : this(baseString.Length)
+        {
+            Append(baseString);
+        }
+
         public ExtendedStringBuilder Append(string s)
         {
             _stringBuilder.Append(s);
