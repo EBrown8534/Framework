@@ -11,7 +11,7 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// The total number of rounds ran.
         /// </summary>
-        public ulong RoundsRun { get; set; }
+        public long RoundsRun { get; set; }
 
         /// <summary>
         /// The average time for all the rounds.
@@ -36,7 +36,7 @@ namespace Evbpc.Framework.Utilities
         /// <summary>
         /// The number of rounds that passed testing. (Always equivalent to <see cref="RoundsRun"/> for <see cref="Benchmark(ulong, Action)"/>.)
         /// </summary>
-        public ulong RoundsPassed { get; set; }
+        public long RoundsPassed { get; set; }
 
         /// <summary>
         /// The total amount of time taken for all the benchmarks. (Does not include statistic calculation time, or result verification time.)
@@ -52,7 +52,7 @@ namespace Evbpc.Framework.Utilities
         /// <param name="rounds">The number of rounds to run.</param>
         /// <param name="method">The code to run.</param>
         /// <returns>A <see cref="BenchmarkResult"/> representing the result of the session.</returns>
-        public static BenchmarkResult Benchmark(ulong rounds, Action method)
+        public static BenchmarkResult Benchmark(long rounds, Action method)
         {
             var sw = new Stopwatch();
 
@@ -63,7 +63,7 @@ namespace Evbpc.Framework.Utilities
             long minTicks = 0;
             long totalTime = 0;
 
-            for (ulong i = 0; i < rounds; i++)
+            for (long i = 0; i < rounds; i++)
             {
                 sw.Start();
                 method.Invoke();
@@ -112,7 +112,7 @@ namespace Evbpc.Framework.Utilities
         /// <param name="method">The code to run.</param>
         /// <param name="expectedResult">The expected result of the function. This will be compared to the actual result and used for <see cref="BenchmarkResult.RoundsPassed"/>. This uses the default <code>object.Equals(object)</code> method.</param>
         /// <returns>A <see cref="BenchmarkResult"/> representing the result of the session.</returns>
-        public static BenchmarkResult Benchmark<T>(ulong rounds, Func<T> method, T expectedResult)
+        public static BenchmarkResult Benchmark<T>(long rounds, Func<T> method, T expectedResult)
         {
             var sw = new Stopwatch();
 
@@ -122,9 +122,9 @@ namespace Evbpc.Framework.Utilities
             long maxTicks = 0;
             long minTicks = 0;
             long totalTime = 0;
-            ulong roundsPassed = 0;
+            long roundsPassed = 0;
 
-            for (ulong i = 0; i < rounds; i++)
+            for (long i = 0; i < rounds; i++)
             {
                 sw.Start();
                 var result = method.Invoke();
