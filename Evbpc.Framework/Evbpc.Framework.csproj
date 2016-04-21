@@ -106,7 +106,9 @@
     <Compile Include="Integrations\Bitbucket\Models\Version.cs" />
     <Compile Include="Integrations\StackExchange\API\Configuration.cs" />
     <Compile Include="Integrations\StackExchange\API\Handler.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\Answer.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Badge.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\Comment.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\IBaseModel.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Info.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\RelatedSite.cs" />
