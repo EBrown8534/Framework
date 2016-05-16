@@ -63,11 +63,20 @@ namespace Evbpc.Framework.Utilities
             return this;
         }
 
+        public ExtendedStringBuilder Append(ExtendedStringBuilder e)
+        {
+            _stringBuilder.Append(e);
+
+            return this;
+        }
+
         public static ExtendedStringBuilder operator +(ExtendedStringBuilder sb, string s) => sb.Append(s);
 
         public static ExtendedStringBuilder operator +(ExtendedStringBuilder sb, char c) => sb.Append(c);
 
         public static ExtendedStringBuilder operator +(ExtendedStringBuilder sb, object o) => sb.Append(o);
+
+        public static ExtendedStringBuilder operator +(ExtendedStringBuilder sb, ExtendedStringBuilder e) => sb.Append(e);
 
         public static implicit operator string(ExtendedStringBuilder sb) => sb.ToString();
 
