@@ -64,7 +64,21 @@ namespace Evbpc.Framework.Utilities
             {
                 var cts = new CancellationTokenSource();
                 var ct = cts.Token;
-                var t = Task.Run(() => { for (int i = 0; i < 1; i += 0) { if (ct.IsCancellationRequested) { break; } sw.Start(); method.Invoke(); sw.Stop(); sw.Reset(); } }, ct);
+                var t = Task.Run(() =>
+                {
+                    for (int i = 0; i < 1; i += 0)
+                    {
+                        if (ct.IsCancellationRequested)
+                        {
+                            break;
+                        }
+
+                        sw.Start();
+                        method.Invoke();
+                        sw.Stop();
+                        sw.Reset();
+                    }
+                }, ct);
 
                 cts.CancelAfter((int)(warmupSeconds * 1000));
 
@@ -143,7 +157,21 @@ namespace Evbpc.Framework.Utilities
             {
                 var cts = new CancellationTokenSource();
                 var ct = cts.Token;
-                var t = Task.Run(() => { for (int i = 0; i < 1; i += 0) { if (ct.IsCancellationRequested) { break; } sw.Start(); method.Invoke(); sw.Stop(); sw.Reset(); } }, ct);
+                var t = Task.Run(() =>
+                {
+                    for (int i = 0; i < 1; i += 0)
+                    {
+                        if (ct.IsCancellationRequested)
+                        {
+                            break;
+                        }
+
+                        sw.Start();
+                        method.Invoke();
+                        sw.Stop();
+                        sw.Reset();
+                    }
+                }, ct);
 
                 cts.CancelAfter((int)(warmupSeconds * 1000));
 
