@@ -78,6 +78,7 @@
     <Compile Include="Utilities\Extensions\DateTimeExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\NumberByteArrayExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\StringExtensionsTests.cs" />
+    <Compile Include="Utilities\Serialization\DelimitedSerialization\CsvSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\" />
