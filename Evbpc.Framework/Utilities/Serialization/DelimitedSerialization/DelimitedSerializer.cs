@@ -45,7 +45,8 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                 .Where(x => Attribute.IsDefined(x, typeof(DelimitedColumnAttribute)))
                 .OrderBy(x => ((DelimitedColumnAttribute)x.GetCustomAttributes(typeof(DelimitedColumnAttribute), true)[0]).Order)
                 .ThenBy(x => ((DelimitedColumnAttribute)x.GetCustomAttributes(typeof(DelimitedColumnAttribute), true)[0]).Name)
-                .ThenBy(x => x.Name);
+                .ThenBy(x => x.Name)
+                .ToList();
             
             foreach (var property in properties)
             {
