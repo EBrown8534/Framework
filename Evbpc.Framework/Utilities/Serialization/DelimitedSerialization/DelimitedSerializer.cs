@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,34 +43,34 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             var result = new ExtendedStringBuilder();
 
             var properties = typeof(T).GetProperties()
-                .Where(x => Attribute.IsDefined(x, typeof(DelimitedColumnAttribute)))
-                .OrderBy(x => ((DelimitedColumnAttribute)x.GetCustomAttributes(typeof(DelimitedColumnAttribute), true)[0]).Order)
-                .ThenBy(x => ((DelimitedColumnAttribute)x.GetCustomAttributes(typeof(DelimitedColumnAttribute), true)[0]).Name)
-                .ThenBy(x => x.Name)
+                .Select((PropertyInfo p) => new
+                {
+                    Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>(),
+                    Info = p
+                })
+                .Where(x => x.Attribute != null)
+                .OrderBy(x => x.Attribute.Order)
+                .ThenBy(x => x.Attribute.Name)
+                .ThenBy(x => x.Info.Name)
                 .ToList();
-            
-            foreach (var property in properties)
+
+            Action<string, string, string> validateCharacters = (string name, string checkFor, string humanLocation) =>
             {
-                var attribute = (DelimitedColumnAttribute)property.GetCustomAttributes(typeof(DelimitedColumnAttribute), true)[0];
-
-                var name = attribute.Name ?? property.Name;
-
-                if (name.Contains(ColumnDelimiter))
+                if (name.Contains(checkFor))
                 {
-                    throw new ArgumentException($"The column name string '{name}' contains an invalid character: '{ColumnDelimiter}'.");
+                    throw new ArgumentException($"The {humanLocation} string '{name}' contains an invalid character: '{checkFor}'.");
                 }
-                if (name.Contains(RowDelimiter))
-                {
-                    throw new ArgumentException($"The column name string '{name}' contains an invalid character: '{RowDelimiter}'.");
-                }
+            };
 
-                if (result.Length > 0)
-                {
-                    result += ColumnDelimiter;
-                }
+            result += string.Join(ColumnDelimiter, properties
+               .Select(x =>
+               {
+                   var name = x.Attribute?.Name ?? x.Info.Name;
+                   validateCharacters(name, ColumnDelimiter, "column name");
+                   validateCharacters(name, RowDelimiter, "column name");
 
-                result += name;
-            }
+                   return name;
+               }));
 
             foreach (var item in items)
             {
@@ -77,18 +78,12 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
 
                 foreach (var property in properties)
                 {
-                    var value = property.GetValue(item).ToString();
+                    var value = property.Info.GetValue(item)?.ToString();
 
-                    if (value.Contains(ColumnDelimiter))
-                    {
-                        throw new ArgumentException($"The property value string '{value}' contains an invalid character: '{ColumnDelimiter}'.");
-                    }
-                    if (value.Contains(RowDelimiter))
-                    {
-                        throw new ArgumentException($"The property value string '{value}' contains an invalid character: '{RowDelimiter}'.");
-                    }
+                    validateCharacters(value, ColumnDelimiter, "property value");
+                    validateCharacters(value, RowDelimiter, "property value");
 
-                    if (row.Length > 0)
+                    if (row.HasBeenAppended)
                     {
                         row += ColumnDelimiter;
                     }
@@ -106,16 +101,16 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
         /// <summary>
         /// Returns an instance of the <see cref="DelimitedSerializer"/> setup for Tab-Separated Value files.
         /// </summary>
-        public static readonly DelimitedSerializer TsvSerializer = new DelimitedSerializer { ColumnDelimiter = "\t", RowDelimiter = Environment.NewLine };
+        public static DelimitedSerializer TsvSerializer => new DelimitedSerializer { ColumnDelimiter = "\t", RowDelimiter = Environment.NewLine };
 
         /// <summary>
         /// Returns an instance of the <see cref="DelimitedSerializer"/> setup for Comma-Separated Value files.
         /// </summary>
-        public static readonly DelimitedSerializer CsvSerializer = new DelimitedSerializer { ColumnDelimiter = ",", RowDelimiter = Environment.NewLine };
-        
+        public static DelimitedSerializer CsvSerializer => new DelimitedSerializer { ColumnDelimiter = ",", RowDelimiter = Environment.NewLine };
+
         /// <summary>
         /// Returns an instance of the <see cref="DelimitedSerializer"/> setup for Pipe-Separated Value files.
         /// </summary>
-        public static readonly DelimitedSerializer PsvSerializer = new DelimitedSerializer { ColumnDelimiter = "|", RowDelimiter = Environment.NewLine };
+        public static DelimitedSerializer PsvSerializer => new DelimitedSerializer { ColumnDelimiter = "|", RowDelimiter = Environment.NewLine };
     }
 }
