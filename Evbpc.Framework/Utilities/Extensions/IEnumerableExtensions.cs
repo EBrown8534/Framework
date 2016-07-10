@@ -31,24 +31,20 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// </remarks>
         public static IEnumerable<T> ExceptExact<T>(this IEnumerable<T> source, IEnumerable<T> exceptions)
         {
-            var tExceptions = new List<T>();
-            tExceptions.AddRange(exceptions);
-
-            var result = new List<T>();
+            var tExceptions = exceptions.ToList();
 
             foreach (var el in source)
             {
+                var index = tExceptions.IndexOf(el);
+
                 if (tExceptions.Contains(el))
                 {
                     tExceptions.RemoveAt(tExceptions.IndexOf(el));
+                    continue;
                 }
-                else
-                {
-                    result.Add(el);
-                }
-            }
 
-            return result;
+                yield return el;
+            }
         }
     }
 }
