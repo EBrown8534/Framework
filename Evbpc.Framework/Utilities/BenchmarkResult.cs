@@ -36,7 +36,7 @@ namespace Evbpc.Framework.Utilities
         public TimeSpan Variance { get; set; }
 
         /// <summary>
-        /// The number of rounds that passed testing. (Always equivalent to <see cref="RoundsRun"/> for <see cref="Benchmark(ulong, Action)"/>.)
+        /// The number of rounds that passed testing. (Always equivalent to <see cref="RoundsRun"/> for <see cref="Benchmark(long, Action, double, bool)"/>.)
         /// </summary>
         public long RoundsPassed { get; set; }
 
@@ -145,7 +145,7 @@ namespace Evbpc.Framework.Utilities
         /// <typeparam name="T">The type of the output of the function.</typeparam>
         /// <param name="rounds">The number of rounds to run.</param>
         /// <param name="method">The code to run.</param>
-        /// <param name="expectedResult">The expected result of the function. This will be compared to the actual result and used for <see cref="BenchmarkResult.RoundsPassed"/>. This uses the default <code>object.Equals(object)</code> method.</param>
+        /// <param name="expectedResult">The expected result of the function. This will be compared to the actual result and used for <see cref="RoundsPassed"/>. This uses the default <code>object.Equals(object)</code> method.</param>
         /// <param name="warmupSeconds">The number of seconds to run the method for to warm up.</param>
         /// <param name="forceGcBetweenRuns">If true, forces the garbage collector to run between each round. This can significantly increase the amount of time it takes for the benchmark to complete.</param>
         /// <returns>A <see cref="BenchmarkResult"/> representing the result of the session.</returns>
