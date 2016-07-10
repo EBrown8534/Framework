@@ -17,7 +17,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <typeparam name="T">The type of the source and exception parameters.</typeparam>
         /// <param name="source">The <code>IEnumerable{T}</code> containing the elements to be excepted.</param>
         /// <param name="exceptions">The <code>IEnumerable</code> containing the elements to except out.</param>
-        /// <returns>A <code>List{T}</code> that is the source <code>IEnumerable{T}</code> remove the exceptions <code>IEnumerable{T}</code>.</returns>
+        /// <returns>An <code>IEnumerable{T}</code> that is the source <code>IEnumerable{T}</code> remove the exceptions <code>IEnumerable{T}</code>.</returns>
         /// <remarks>
         /// If an element appears multiple times in the exceptions <code>IEnumerable{T}</code>, that many copies of it will be removed from the source <code>IEnumerable{T}</code>.
         /// 
