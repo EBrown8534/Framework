@@ -27,7 +27,7 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// Exceptions: { 2, 2, 3, 4, 5 }
         /// Result: { 2, 6 }
         /// 
-        /// Neither of the <code>IEnumerable{T}</code>s need be ordered in any particular manner.
+        /// Neither of the <code>IEnumerable{T}</code>s need be ordered in any particular manner. The order of the resultant <code>IEnumerable{T}</code> will be identical to the order of the <code>source</code> parameter, excepting exactly the <code>exceptions</code> parameter.
         /// </remarks>
         public static IEnumerable<T> ExceptExact<T>(this IEnumerable<T> source, IEnumerable<T> exceptions)
         {
