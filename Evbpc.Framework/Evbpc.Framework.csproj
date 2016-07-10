@@ -196,6 +196,7 @@
     <Compile Include="Utilities\Base64FormattingOptions.cs" />
     <Compile Include="Utilities\Extensions\BigIntegerExtensions.cs" />
     <Compile Include="Utilities\Camera.cs" />
+    <Compile Include="Utilities\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Utilities\Logging\EmptyLogger.cs" />
     <Compile Include="Utilities\Prompting\ConsolePrompt.cs" />
     <Compile Include="Utilities\Prompting\IPrompt.cs" />
