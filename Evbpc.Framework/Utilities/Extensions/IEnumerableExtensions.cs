@@ -37,9 +37,9 @@ namespace Evbpc.Framework.Utilities.Extensions
             {
                 var index = tExceptions.IndexOf(el);
 
-                if (tExceptions.Contains(el))
+                if (index >= 0)
                 {
-                    tExceptions.RemoveAt(tExceptions.IndexOf(el));
+                    tExceptions.RemoveAt(index);
                     continue;
                 }
 
