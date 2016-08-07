@@ -10,7 +10,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 {
     public class BadgeRequest : IRequest<Badge>
     {
-        private const string _endpointUrl = "badges?";
+        private const string _endpointUrl = "badges{Type}?";
 
         public string EndpointUrl => _endpointUrl;
 
@@ -32,10 +32,27 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public DateTime? ToDate { get; set; }
 
+        public BadgeRequestType Type { get; set; } = BadgeRequestType.NotSpecified;
+
         public string FormattedEndpoint
         {
             get
             {
+                var endpointUrl = EndpointUrl;
+                var stringType = "";
+                
+                switch (Type)
+                {
+                    case BadgeRequestType.Named:
+                        stringType = @"/name";
+                        break;
+                    case BadgeRequestType.Tag:
+                        stringType = @"/tags";
+                        break;
+                }
+
+                endpointUrl = endpointUrl.Replace("{Type}", stringType);
+
                 var values = new Dictionary<string, string>();
                 
                 values.Add(nameof(Order).ToLower(), Order == OrderType.Ascending ? "asc" : "desc");
@@ -66,7 +83,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
                 var qs = StringExtensions.BuildQueryString(values);
 
-                return EndpointUrl + qs;
+                return endpointUrl + qs;
             }
         }
 
@@ -79,6 +96,13 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
             Rank,
             Name,
             Type,
+        }
+
+        public enum BadgeRequestType
+        {
+            NotSpecified,
+            Tag,
+            Named,
         }
     }
 }
