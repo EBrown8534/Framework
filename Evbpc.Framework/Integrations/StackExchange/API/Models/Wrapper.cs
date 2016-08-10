@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Evbpc.Framework.Integrations.StackExchange.API.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -25,22 +26,22 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// Whether or not <see cref="Items"/> returned by this request are the end of the pagination or not.
         /// </summary>
         [DataMember(Name = "has_more")]
-        public bool HasMore { get; set; }
+        public bool? HasMore { get; set; }
 
         /// <summary>
         /// The maximum number of API requests that can be performed in a 24 hour period.
         /// </summary>
         [DataMember(Name = "quota_max")]
-        public int QuotaMax { get; set; }
+        public int? QuotaMax { get; set; }
 
         /// <summary>
         /// The remaining number of API requests that can be performed in the current 24 hour period.
         /// </summary>
         /// <remarks>
-        /// As far as I know, this resets to <see cref="QuotaMax"/> at 00:00:00 UTC+0000.
+        /// As far as I know, this resets to <see cref="QuotaMax"/> at around 00:00:00 UTC+0000.
         /// </remarks>
         [DataMember(Name = "quota_remaining")]
-        public int QuotaRemaining { get; set; }
+        public int? QuotaRemaining { get; set; }
 
         /// <summary>
         /// The optional number of seconds that the programme making the API requests should stop submitting requests for.
@@ -50,5 +51,25 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// </remarks>
         [DataMember(Name = "backoff")]
         public int? Backoff { get; set; }
+
+        /// <summary>
+        /// Gets the total objects that meet the <see cref="IRequest{T}.Filter"/> criteria.
+        /// </summary>
+        public int? Total { get; set; }
+
+        /// <summary>
+        /// Gets the current page from the <see cref="IRequest{T}"/>.
+        /// </summary>
+        public int? Page { get; set; }
+
+        /// <summary>
+        /// Gets the size of each page from the <see cref="IRequest{T}"/>.
+        /// </summary>
+        public int? PageSize { get; set; }
+
+        /// <summary>
+        /// Gets the type of object returned by the <see cref="IRequest{T}"/>.
+        /// </summary>
+        public string Type { get; set; }
     }
 }
