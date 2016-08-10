@@ -108,6 +108,7 @@
     <Compile Include="Integrations\StackExchange\API\Handler.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Answer.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Badge.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\BadgeCount.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Comment.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\IBaseModel.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Info.cs" />
@@ -115,12 +116,14 @@
     <Compile Include="Integrations\StackExchange\API\Models\ShallowUser.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Site.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Styling.cs" />
+    <Compile Include="Integrations\StackExchange\API\Models\User.cs" />
     <Compile Include="Integrations\StackExchange\API\Models\Wrapper.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\BadgeRequest.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\InfoRequest.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\IRequest.cs" />
     <Compile Include="Integrations\StackExchange\API\OrderType.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\SitesRequest.cs" />
+    <Compile Include="Integrations\StackExchange\API\Requests\UserRequest.cs" />
     <Compile Include="Utilities\BenchmarkResult.cs" />
     <Compile Include="Utilities\Cryptography\Hashing.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
