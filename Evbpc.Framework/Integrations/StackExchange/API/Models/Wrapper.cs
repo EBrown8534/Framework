@@ -55,21 +55,25 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Models
         /// <summary>
         /// Gets the total objects that meet the <see cref="IRequest{T}.Filter"/> criteria.
         /// </summary>
+        [DataMember(Name = "total")]
         public int? Total { get; set; }
 
         /// <summary>
         /// Gets the current page from the <see cref="IRequest{T}"/>.
         /// </summary>
+        [DataMember(Name = "page")]
         public int? Page { get; set; }
 
         /// <summary>
         /// Gets the size of each page from the <see cref="IRequest{T}"/>.
         /// </summary>
+        [DataMember(Name = "page_size")]
         public int? PageSize { get; set; }
 
         /// <summary>
         /// Gets the type of object returned by the <see cref="IRequest{T}"/>.
         /// </summary>
+        [DataMember(Name = "type")]
         public string Type { get; set; }
     }
 }
