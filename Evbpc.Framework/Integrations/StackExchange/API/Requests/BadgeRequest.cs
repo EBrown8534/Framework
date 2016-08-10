@@ -66,7 +66,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
                     values.Add(nameof(Min).ToLower(), Min.ToString());
                 }
 
-                if (Min != null)
+                if (Max != null)
                 {
                     values.Add(nameof(Max).ToLower(), Max.ToString());
                 }
@@ -87,7 +87,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
             }
         }
 
-        public string VerificationError => $"The value for {nameof(Site)} must be a valid, non-null, and non-whitespace string; the value for {nameof(PageSize)} must be greater than 0 and less than or equal to {Configuration.MaxPageSize}.";
+        public string VerificationError => $"The value for {nameof(Site)} must be a valid, non-null, and non-whitespace string; the value for {nameof(PageSize)} must be greater than 0 and less than or equal to {Configuration.MaxPageSize}."; 
 
         public bool VerifyRequiredParameters() => !string.IsNullOrWhiteSpace(Site) && PageSize > 0 && PageSize <= Configuration.MaxPageSize;
 
