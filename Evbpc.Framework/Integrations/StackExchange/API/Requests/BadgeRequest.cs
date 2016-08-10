@@ -34,6 +34,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public BadgeRequestType Type { get; set; } = BadgeRequestType.NotSpecified;
 
+        public string Filter { get; set; }
+
         public string FormattedEndpoint
         {
             get
@@ -81,14 +83,19 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
                     values.Add(nameof(FromDate).ToLower(), DateTimeExtensions.ToEpoch(FromDate.Value).ToString());
                 }
 
+                if (Filter != null)
+                {
+                    values.Add(nameof(Filter).ToLower(), Filter);
+                }
+
                 var qs = StringExtensions.BuildQueryString(values);
 
                 return endpointUrl + qs;
             }
         }
 
-        public string VerificationError => $"The value for {nameof(Site)} must be a valid, non-null, and non-whitespace string; the value for {nameof(PageSize)} must be greater than 0 and less than or equal to {Configuration.MaxPageSize}."; 
-
+        public string VerificationError => $"The value for {nameof(Site)} must be a valid, non-null, and non-whitespace string; the value for {nameof(PageSize)} must be greater than 0 and less than or equal to {Configuration.MaxPageSize}.";
+        
         public bool VerifyRequiredParameters() => !string.IsNullOrWhiteSpace(Site) && PageSize > 0 && PageSize <= Configuration.MaxPageSize;
 
         public enum SortType

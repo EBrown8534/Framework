@@ -25,6 +25,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         /// </summary>
         public string Site { get; set; }
 
+        public string Filter { get; set; }
+
         /// <summary>
         /// The final endpoint URL that should be appended to the Stack Exchange API base url.
         /// </summary>
@@ -35,6 +37,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
                 var values = new Dictionary<string, string>();
 
                 values.Add(nameof(Site).ToLower(), Site);
+
+                if (Filter != null)
+                {
+                    values.Add(nameof(Filter).ToLower(), Filter);
+                }
 
                 var qs = StringExtensions.BuildQueryString(values);
 

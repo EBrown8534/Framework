@@ -20,6 +20,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         string EndpointUrl { get; }
 
         /// <summary>
+        /// An optional filter to use for the <see cref="IRequest{T}"/>.
+        /// </summary>
+        string Filter { get; }
+
+        /// <summary>
         /// Gets the formatted endpoint for the <see cref="IRequest{T}"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
         /// </summary>
         string FormattedEndpoint { get; }

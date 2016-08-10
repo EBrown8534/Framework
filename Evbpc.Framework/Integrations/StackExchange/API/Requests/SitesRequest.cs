@@ -33,6 +33,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public int Page { get; set; } = 1;
 
+        public string Filter { get; set; }
+
         /// <summary>
         /// Returns the fully formatted endpoint for this <see cref="SitesRequest"/> instance.
         /// </summary>
@@ -45,6 +47,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
                 values.Add(nameof(PageSize).ToLower(), PageSize.ToString());
                 values.Add(nameof(Page).ToLower(), Page.ToString());
+
+                if (Filter != null)
+                {
+                    values.Add(nameof(Filter).ToLower(), Filter);
+                }
 
                 var qs = StringExtensions.BuildQueryString(values);
 

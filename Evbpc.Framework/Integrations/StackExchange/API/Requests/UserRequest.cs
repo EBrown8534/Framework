@@ -40,6 +40,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public string InName { get; set; }
 
+        public string Filter { get; set; }
+
         public string FormattedEndpoint
         {
             get
@@ -76,6 +78,11 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
                 if (InName != null)
                 {
                     values.Add(nameof(InName).ToLower(), InName);
+                }
+
+                if (Filter != null)
+                {
+                    values.Add(nameof(Filter).ToLower(), Filter);
                 }
 
                 var qs = StringExtensions.BuildQueryString(values);
