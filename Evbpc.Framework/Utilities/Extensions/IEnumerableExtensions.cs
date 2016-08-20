@@ -46,5 +46,15 @@ namespace Evbpc.Framework.Utilities.Extensions
                 yield return el;
             }
         }
+
+        /// <summary>
+        /// Returns the key that first matches a predicate in the <code>IEnumerable{KeyValuePair{TKey, Predicate{TValue}}}</code>.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the input.</typeparam>
+        /// <typeparam name="TKey">The type of the result.</typeparam>
+        /// <param name="source">The <code>IEnumerable{KeyValuePair{TKey, Predicate{TValue}}}</code> to search.</param>
+        /// <param name="input">The value to be passed to each <code>Predicate{TValue}</code>.</param>
+        /// <returns>The first Key from the <code>source</code> with a Value that returns true for the <code>input</code>.</returns>
+        public static TKey FindKey<TValue, TKey>(IEnumerable<KeyValuePair<TKey, Predicate<TValue>>> source, TValue input) => source.FirstOrDefault(item => item.Value(input)).Key;
     }
 }
