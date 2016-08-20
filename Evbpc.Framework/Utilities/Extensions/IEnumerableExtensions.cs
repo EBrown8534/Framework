@@ -55,6 +55,6 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="source">The <code>IEnumerable{KeyValuePair{TKey, Predicate{TValue}}}</code> to search.</param>
         /// <param name="input">The value to be passed to each <code>Predicate{TValue}</code>.</param>
         /// <returns>The first Key from the <code>source</code> with a Value that returns true for the <code>input</code>.</returns>
-        public static TKey FindKey<TValue, TKey>(IEnumerable<KeyValuePair<TKey, Predicate<TValue>>> source, TValue input) => source.FirstOrDefault(item => item.Value(input)).Key;
+        public static TKey FindKey<TValue, TKey>(this IEnumerable<KeyValuePair<TKey, Predicate<TValue>>> source, TValue input) => source.FirstOrDefault(item => item.Value(input)).Key;
     }
 }
