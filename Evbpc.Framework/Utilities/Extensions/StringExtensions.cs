@@ -430,5 +430,52 @@ namespace Evbpc.Framework.Utilities.Extensions
 
             return sb;
         }
+
+        public static string InsertOnCharacter(this string source, CharacterType type, string insert)
+        {
+            var esb = new ExtendedStringBuilder(source.Length);
+
+            foreach (var c in source)
+            {
+                var cType = c.GetCharacterType();
+
+                if (cType == type)
+                {
+                    esb += insert;
+                }
+
+                esb += c;
+            }
+
+            return esb;
+        }
+
+        public static CharacterType GetCharacterType(this char c)
+        {
+            if (c >= 'a' && c <= 'z')
+            {
+                return CharacterType.LowerLetter;
+            }
+
+            if (c >= 'A' && c <= 'Z')
+            {
+                return CharacterType.UpperLetter;
+            }
+
+            if (c >= '0' && c <= '9')
+            {
+                return CharacterType.Number;
+            }
+
+            return CharacterType.Symbol;
+        }
+
+        public enum CharacterType
+        {
+            UpperLetter,
+            LowerLetter,
+            Number,
+            Symbol,
+        }
     }
 }
