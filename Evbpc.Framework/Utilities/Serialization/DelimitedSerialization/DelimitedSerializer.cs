@@ -43,7 +43,7 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             var result = new ExtendedStringBuilder();
 
             var properties = typeof(T).GetProperties()
-                .Select((PropertyInfo p) => new
+                .Select(p => new
                 {
                     Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>(),
                     Info = p
