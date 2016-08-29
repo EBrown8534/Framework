@@ -217,6 +217,7 @@
     <Compile Include="Utilities\Serialization\DataContractJsonSerialization.cs" />
     <Compile Include="Utilities\ExtendedStringBuilder.cs" />
     <Compile Include="Utilities\Serialization\DelimitedSerialization\DelimitedColumnAttribute.cs" />
+    <Compile Include="Utilities\Serialization\DelimitedSerialization\DelimitedIgnoreAttribute.cs" />
     <Compile Include="Utilities\Serialization\DelimitedSerialization\DelimitedSerializer.cs" />
     <Compile Include="Utilities\TrackableObjectChangedEventArgs.cs" />
     <Compile Include="Utilities\Extensions\ByteArrayExtensions.cs" />
