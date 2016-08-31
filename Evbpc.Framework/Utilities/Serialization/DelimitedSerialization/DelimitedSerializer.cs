@@ -12,15 +12,48 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
     /// </summary>
     public class DelimitedSerializer
     {
+        private string _columnDelimiter;
+        private string _rowDelimiter;
+
         /// <summary>
         /// The string to be used to separate columns.
         /// </summary>
-        public string ColumnDelimiter { get; set; }
+        public string ColumnDelimiter
+        {
+            get
+            {
+                return _columnDelimiter;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException($"The value for {nameof(ColumnDelimiter)} cannot be null or an empty string.");
+                }
+
+                _columnDelimiter = value;
+            }
+        }
 
         /// <summary>
         /// The string to be used to separate rows.
         /// </summary>
-        public string RowDelimiter { get; set; }
+        public string RowDelimiter
+        {
+            get
+            {
+                return _rowDelimiter;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException($"The value for {nameof(RowDelimiter)} cannot be null or an empty string.");
+                }
+
+                _rowDelimiter = value;
+            }
+        }
 
         /// <summary>
         /// If not null, then sequences in values and names which are identical to the <see cref="ColumnDelimiter"/> will be replaced with this value.
@@ -58,27 +91,36 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
         public bool IncludeHeader { get; set; }
 
         /// <summary>
-        /// Serializes an object to a delimited file. Throws an exception if any of the property names, column names, or values contain either the <see cref="ColumnDelimiter"/> or the <see cref="RowDelimiter"/>.
+        /// Used for readonly default instances.
         /// </summary>
-        /// <typeparam name="T">The type of the object to serialize.</typeparam>
-        /// <param name="items">A list of the items to serialize.</param>
-        /// <returns>The serialized string.</returns>
-        public string Serialize<T>(List<T> items)
+        private DelimitedSerializer()
         {
-            if (string.IsNullOrEmpty(ColumnDelimiter))
-            {
-                throw new ArgumentException($"The property '{nameof(ColumnDelimiter)}' cannot be null or an empty string.");
-            }
 
-            if (string.IsNullOrEmpty(RowDelimiter))
-            {
-                throw new ArgumentException($"The property '{nameof(RowDelimiter)}' cannot be null or an empty string.");
-            }
+        }
 
-            var result = new ExtendedStringBuilder();
+        /// <summary>
+        /// Constructs a new instance of the <see cref="DelimitedSerializer"/> from the specified values.
+        /// </summary>
+        /// <param name="columnDelimiter">The <see cref="ColumnDelimiter"/>.</param>
+        /// <param name="rowDelimiter">The <see cref="RowDelimiter"/>.</param>
+        public DelimitedSerializer(string columnDelimiter, string rowDelimiter)
+        {
+            ColumnDelimiter = columnDelimiter;
+            RowDelimiter = rowDelimiter;
+        }
 
+        private class Property
+        {
+            public DelimitedColumnAttribute Attribute { get; set; }
+            public PropertyInfo Info { get; set; }
+
+            public bool CanSerialize => !Info.PropertyType.IsArray && (Info.PropertyType == typeof(string) || Info.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) == null);
+        }
+
+        private IEnumerable<Property> _getProperties<T>(IEnumerable<T> items)
+        {
             var properties = typeof(T).GetProperties()
-                .Select(p => new
+                .Select(p => new Property
                 {
                     Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>(),
                     Info = p
@@ -93,31 +135,33 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             {
                 properties = typeof(T).GetProperties()
                     .Where(x => x.GetCustomAttribute<DelimitedIgnoreAttribute>() == null)
-                    .Select(p => new
+                    .Select(p => new Property
                     {
                         Attribute = new DelimitedColumnAttribute { Name = p.Name },
                         Info = p
                     })
-                    .Where(x => x.Attribute != null)
-                    .OrderBy(x => x.Attribute.Order)
-                    .ThenBy(x => x.Attribute.Name)
-                    .ThenBy(x => x.Info.Name)
+                    .OrderBy(x => x.Attribute.Name)
                     .ToList();
             }
 
-            Action<string, string, string> validateCharacters = (string name, string checkFor, string humanLocation) =>
-            {
-                if (name.Contains(checkFor))
-                {
-                    throw new ArgumentException($"The {humanLocation} string '{name}' contains an invalid character: '{checkFor}'.");
-                }
-            };
+            return properties;
+        }
 
+        private void _validateCharacters(string name, string checkFor, string humanLocation)
+        {
+            if (name.Contains(checkFor))
+            {
+                throw new ArgumentException($"The {humanLocation} string '{name}' contains an invalid character: '{checkFor}'.");
+            }
+        }
+
+        private ExtendedStringBuilder _buildHeader<T>(IEnumerable<Property> properties)
+        {
             var columnLine = new ExtendedStringBuilder();
 
             foreach (var property in properties)
             {
-                if (property.Info.PropertyType.IsArray || (property.Info.PropertyType != typeof(string) && property.Info.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) != null))
+                if (!property.CanSerialize)
                 {
                     continue;
                 }
@@ -137,8 +181,8 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                     name = name.Replace("\"", DoubleQuoteEscape);
                 }
 
-                validateCharacters(name, ColumnDelimiter, "column name");
-                validateCharacters(name, RowDelimiter, "column name");
+                _validateCharacters(name, ColumnDelimiter, "column name");
+                _validateCharacters(name, RowDelimiter, "column name");
 
                 if (columnLine.HasBeenAppended)
                 {
@@ -161,75 +205,100 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                 columnLine += ColumnDelimiter;
             }
 
-            if (IncludeHeader)
-            {
-                result += columnLine;
-            }
+            return columnLine;
+        }
 
-            foreach (var item in items)
-            {
-                var row = new ExtendedStringBuilder();
+        private ExtendedStringBuilder _buildRow<T>(T item, IEnumerable<Property> properties)
+        {
+            var row = new ExtendedStringBuilder();
 
-                foreach (var property in properties)
+            foreach (var property in properties)
+            {
+                if (!property.CanSerialize)
                 {
-                    if (property.Info.PropertyType.IsArray || (property.Info.PropertyType != typeof(string) && property.Info.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) != null))
-                    {
-                        continue;
-                    }
-
-                    var value = property.Info.GetValue(item)?.ToString();
-
-                    if (property.Info.PropertyType == typeof(DateTime) || property.Info.PropertyType == typeof(DateTime?))
-                    {
-                        value = ((DateTime?)property.Info.GetValue(item))?.ToString("u");
-                    }
-
-                    if (value != null)
-                    {
-                        if (InvalidColumnReplace != null)
-                        {
-                            value = value.Replace(ColumnDelimiter, InvalidColumnReplace);
-                        }
-                        if (InvalidRowReplace != null)
-                        {
-                            value = value.Replace(RowDelimiter, InvalidRowReplace);
-                        }
-                        if (DoubleQuoteEscape != null)
-                        {
-                            value = value.Replace("\"", DoubleQuoteEscape);
-                        }
-
-                        validateCharacters(value, ColumnDelimiter, "property value");
-                        validateCharacters(value, RowDelimiter, "property value");
-                    }
-
-                    if (row.HasBeenAppended)
-                    {
-                        row += ColumnDelimiter;
-                    }
-
-                    if (QuoteValues)
-                    {
-                        row += "\"";
-                    }
-                    row += value;
-                    if (QuoteValues)
-                    {
-                        row += "\"";
-                    }
+                    continue;
                 }
 
-                if (IncludeTrailingDelimiter)
+                var value = property.Info.GetValue(item)?.ToString();
+
+                if (property.Info.PropertyType == typeof(DateTime) || property.Info.PropertyType == typeof(DateTime?))
+                {
+                    value = ((DateTime?)property.Info.GetValue(item))?.ToString("u");
+                }
+
+                if (value != null)
+                {
+                    if (InvalidColumnReplace != null)
+                    {
+                        value = value.Replace(ColumnDelimiter, InvalidColumnReplace);
+                    }
+                    if (InvalidRowReplace != null)
+                    {
+                        value = value.Replace(RowDelimiter, InvalidRowReplace);
+                    }
+                    if (DoubleQuoteEscape != null)
+                    {
+                        value = value.Replace("\"", DoubleQuoteEscape);
+                    }
+
+                    _validateCharacters(value, ColumnDelimiter, "property value");
+                    _validateCharacters(value, RowDelimiter, "property value");
+                }
+
+                if (row.HasBeenAppended)
                 {
                     row += ColumnDelimiter;
                 }
 
+                if (QuoteValues)
+                {
+                    row += "\"";
+                }
+                row += value;
+                if (QuoteValues)
+                {
+                    row += "\"";
+                }
+            }
+
+            if (IncludeTrailingDelimiter)
+            {
+                row += ColumnDelimiter;
+            }
+
+            return row;
+        }
+
+        /// <summary>
+        /// Serializes an object to a delimited file. Throws an exception if any of the property names, column names, or values contain either the <see cref="ColumnDelimiter"/> or the <see cref="RowDelimiter"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to serialize.</typeparam>
+        /// <param name="items">A list of the items to serialize.</param>
+        /// <returns>The serialized string.</returns>
+        public string Serialize<T>(IEnumerable<T> items)
+        {
+            var result = new ExtendedStringBuilder();
+            var properties = _getProperties(items);
+
+            if (IncludeHeader)
+            {
+                result += _buildHeader<T>(properties);
+            }
+
+            foreach (var item in items)
+            {
                 if (result.HasBeenAppended)
                 {
                     result += RowDelimiter;
                 }
 
-                result += row;
+                result += _buildRow(item, properties);
+            }
+
+            if (IncludeEmptyRow)
+            {
+                result += RowDelimiter;
+                result += "";
             }
 
             return result;
@@ -277,7 +346,10 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             RowDelimiter = "\r\n",
             IncludeHeader = true,
             IncludeTrailingDelimiter = true,
+            IncludeEmptyRow = false,
             QuoteValues = true,
+            InvalidColumnReplace = null,
+            InvalidRowReplace = null,
             DoubleQuoteEscape = "\"\""
         };
     }
