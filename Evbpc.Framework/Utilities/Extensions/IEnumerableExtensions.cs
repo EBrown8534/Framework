@@ -56,5 +56,34 @@ namespace Evbpc.Framework.Utilities.Extensions
         /// <param name="input">The value to be passed to each <code>Predicate{TValue}</code>.</param>
         /// <returns>The first Key from the <code>source</code> with a Value that returns true for the <code>input</code>.</returns>
         public static TKey FindKey<TValue, TKey>(this IEnumerable<KeyValuePair<TKey, Predicate<TValue>>> source, TValue input) => source.FirstOrDefault(item => item.Value(input)).Key;
+
+        /// <summary>
+        /// Returns an `IEnumerable<int>` which consists of all the numbers missing from the input. Complexity is O(n) where n is the difference between the last element value and the first.
+        /// </summary>
+        /// <param name="input">Must be an ordered `IEnumerable<int>` with no duplicates.</param>
+        /// <returns>A lazy `IEnumerable<int>` consisting of all numbers missing from the input. This method uses `yield return`, which means it can be used lazily to see if any numbers are missing from the input without necessarily calculating all missing numbers.</returns>
+        public static IEnumerable<int> GetMissingNumbers(this IEnumerable<int> input)
+        {
+            const uint minValuePos = (uint)int.MaxValue + 1;
+            int lastNumber = input.First();
+            bool firstLoop = true;
+
+            foreach (var number in input)
+            {
+                if (!firstLoop && number <= lastNumber)
+                {
+                    throw new ArgumentException($"The {nameof(input)} contained an invalid set of elements. Elements must be ordered with no duplicate values.");
+                }
+
+                while ((number + minValuePos) - (lastNumber + minValuePos) > 1)
+                {
+                    lastNumber++;
+                    yield return lastNumber;
+                }
+
+                lastNumber = number;
+                firstLoop = false;
+            }
+        }
     }
 }
