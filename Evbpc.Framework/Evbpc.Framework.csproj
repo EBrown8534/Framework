@@ -126,6 +126,7 @@
     <Compile Include="Integrations\StackExchange\API\Requests\UserRequest.cs" />
     <Compile Include="Utilities\BenchmarkResult.cs" />
     <Compile Include="Utilities\Cryptography\Hashing.cs" />
+    <Compile Include="Utilities\DataSize.cs" />
     <Compile Include="Utilities\EventArgs.cs" />
     <Compile Include="Integrations\IEventDispatcher.cs" />
     <Compile Include="Integrations\Bitbucket\Models\Parent.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Utilities\Serialization\DelimitedSerialization\DelimitedColumnAttribute.cs" />
     <Compile Include="Utilities\Serialization\DelimitedSerialization\DelimitedIgnoreAttribute.cs" />
     <Compile Include="Utilities\Serialization\DelimitedSerialization\DelimitedSerializer.cs" />
+    <Compile Include="Utilities\SizeScale.cs" />
     <Compile Include="Utilities\TrackableObjectChangedEventArgs.cs" />
     <Compile Include="Utilities\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Utilities\Serialization\ISerializableByteArray.cs" />

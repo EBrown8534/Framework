@@ -75,11 +75,13 @@
     <Compile Include="Drawing\PointFTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Cryptography\AesCryptoTests.cs" />
+    <Compile Include="Utilities\DataSizeTests.cs" />
     <Compile Include="Utilities\Extensions\DateTimeExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\IEnumerableExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\NumberByteArrayExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\StringExtensionsTests.cs" />
     <Compile Include="Utilities\Serialization\DelimitedSerialization\CsvSerializerTests.cs" />
+    <Compile Include="Utilities\SizeScaleTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\" />
