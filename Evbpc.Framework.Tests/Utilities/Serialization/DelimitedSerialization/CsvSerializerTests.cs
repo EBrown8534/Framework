@@ -178,10 +178,9 @@ namespace Evbpc.Framework.Tests.Utilities.Serialization.DelimitedSerialization
         }
 
         [TestMethod, TestCategory("Csv Serializer Tests")]
-        [ExpectedException(typeof(ArgumentException))]
         public void SerializeWithInvalidValue()
         {
-            string expected = null;
+            string expected = "Name";
             var input = new List<TestObject1>();
             var config = new Config();
 
@@ -190,10 +189,12 @@ namespace Evbpc.Framework.Tests.Utilities.Serialization.DelimitedSerialization
                 if (i == 0)
                 {
                     input.Add(new TestObject1 { Name = config.InvalidName });
+                    expected += Environment.NewLine + config.InvalidName.Replace(",", "\\u002C");
                 }
                 else
                 {
                     input.Add(new TestObject1 { Name = config.Names[i] });
+                    expected += Environment.NewLine + config.Names[i];
                 }
             }
 
