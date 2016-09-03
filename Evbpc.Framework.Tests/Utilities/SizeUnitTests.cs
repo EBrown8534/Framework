@@ -9,122 +9,112 @@ using System.Threading.Tasks;
 namespace Evbpc.Framework.Tests.Utilities
 {
     [TestClass]
-    public class SizeScaleTests
+    public class SizeUnitTests
     {
-        [TestMethod, TestCategory("Size Scale Tests")]
-        public void Abbreviation_None()
-        {
-            var input = SizeScale.None;
-
-            var actual = input.Abbreviation();
-
-            Assert.IsNull(actual);
-        }
-
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Bytes()
         {
             var expected = "B";
-            var input = SizeScale.Bytes;
+            var input = SizeUnit.Bytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Bits()
         {
             var expected = "b";
-            var input = SizeScale.Bits;
+            var input = SizeUnit.Bits;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Kilobytes()
         {
             var expected = "KB";
-            var input = SizeScale.Kilobytes;
+            var input = SizeUnit.Kilobytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Kibibytes()
         {
             var expected = "KiB";
-            var input = SizeScale.Kibibytes;
+            var input = SizeUnit.Kibibytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Megabytes()
         {
             var expected = "MB";
-            var input = SizeScale.Megabytes;
+            var input = SizeUnit.Megabytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Mebibytes()
         {
             var expected = "MiB";
-            var input = SizeScale.Mebibytes;
+            var input = SizeUnit.Mebibytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Gigabytes()
         {
             var expected = "GB";
-            var input = SizeScale.Gigabytes;
+            var input = SizeUnit.Gigabytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Gibibytes()
         {
             var expected = "GiB";
-            var input = SizeScale.Gibibytes;
+            var input = SizeUnit.Gibibytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Terabytes()
         {
             var expected = "TB";
-            var input = SizeScale.Terabytes;
+            var input = SizeUnit.Terabytes;
 
             var actual = input.Abbreviation();
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod, TestCategory("Size Scale Tests")]
+        [TestMethod, TestCategory("Size Unit Tests")]
         public void Abbreviation_Tibibytes()
         {
             var expected = "TiB";
-            var input = SizeScale.Tibibytes;
+            var input = SizeUnit.Tibibytes;
 
             var actual = input.Abbreviation();
 

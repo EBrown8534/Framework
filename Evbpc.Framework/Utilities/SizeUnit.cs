@@ -8,26 +8,21 @@ namespace Evbpc.Framework.Utilities
 {
     public static class SizeScaleExtensions
     {
-        public static string Abbreviation(this SizeScale scale)
+        public static string Abbreviation(this SizeUnit unit)
         {
-            if (scale == SizeScale.None)
-            {
-                return null;
-            }
-
-            if (scale == SizeScale.Bytes)
+            if (unit == SizeUnit.Bytes)
             {
                 return "B";
             }
 
-            if (scale == SizeScale.Bits)
+            if (unit == SizeUnit.Bits)
             {
                 return "b";
             }
 
-            var firstLetter = scale.ToString()[0] + "";
+            var firstLetter = unit.ToString()[0] + "";
 
-            if (((int)scale & 0x00FF) == (int)SizeScale.Bits)
+            if (((int)unit & 0x00FF) == (int)SizeUnit.Bits)
             {
                 return firstLetter + "iB";
             }
@@ -36,9 +31,8 @@ namespace Evbpc.Framework.Utilities
         }
     }
 
-    public enum SizeScale : int
+    public enum SizeUnit : int
     {
-        None = 0x0000,
         Bytes = 0x0001,
         Bits = 0x0002,
         Kilobytes = 0x0101,

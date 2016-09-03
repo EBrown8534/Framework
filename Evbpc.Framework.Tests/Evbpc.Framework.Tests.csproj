@@ -81,7 +81,7 @@
     <Compile Include="Utilities\Extensions\NumberByteArrayExtensionsTests.cs" />
     <Compile Include="Utilities\Extensions\StringExtensionsTests.cs" />
     <Compile Include="Utilities\Serialization\DelimitedSerialization\CsvSerializerTests.cs" />
-    <Compile Include="Utilities\SizeScaleTests.cs" />
+    <Compile Include="Utilities\SizeUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\" />
