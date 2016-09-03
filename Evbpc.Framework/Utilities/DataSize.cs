@@ -24,7 +24,7 @@ namespace Evbpc.Framework.Utilities
             SizeInBytes = sizeInBytes;
         }
 
-        public DataSize(double size, SizeScale scale)
+        private DataSize(double size, SizeScale scale)
         {
             Scale = scale;
 
@@ -153,5 +153,7 @@ namespace Evbpc.Framework.Utilities
         public static DataSize operator *(DataSize left, double right) => new DataSize((ulong)(left.SizeInBytes * right), left.Scale);
 
         public static DataSize operator /(DataSize left, double right) => new DataSize((ulong)(left.SizeInBytes / right), left.Scale);
+
+        public static DataSize From(double size, SizeScale scale) => new DataSize(size, scale);
     }
 }
