@@ -259,8 +259,6 @@ namespace Evbpc.Framework.Tests.Utilities.Extensions
             var input = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);
 
             var result = DateTimeExtensions.ToEpoch(input);
-
-            Assert.Fail("Exception did not throw.");
         }
 
         [TestMethod, TestCategory("Date Time Extensions Tests"), ExpectedException(typeof(ArgumentException))]
@@ -269,8 +267,6 @@ namespace Evbpc.Framework.Tests.Utilities.Extensions
             var input = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified);
 
             var result = DateTimeExtensions.ToEpoch(input);
-
-            Assert.Fail("Exception did not throw.");
         }
 
         [TestMethod, TestCategory("Date Time Extensions Tests")]
