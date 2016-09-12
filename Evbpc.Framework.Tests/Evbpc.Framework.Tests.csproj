@@ -73,6 +73,7 @@
     <Compile Include="Drawing\ColorTests.cs" />
     <Compile Include="Drawing\PointTests.cs" />
     <Compile Include="Drawing\PointFTests.cs" />
+    <Compile Include="Physics\LineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Cryptography\AesCryptoTests.cs" />
     <Compile Include="Utilities\DataSizeTests.cs" />
@@ -83,9 +84,7 @@
     <Compile Include="Utilities\Serialization\DelimitedSerialization\CsvSerializerTests.cs" />
     <Compile Include="Utilities\SizeUnitTests.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Physics\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Evbpc.Framework.Windows\Evbpc.Framework.Windows.csproj">
       <Project>{c4e27e9e-b586-4f9f-8cdb-dd8128adda33}</Project>
