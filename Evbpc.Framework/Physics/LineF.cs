@@ -39,7 +39,7 @@ namespace Evbpc.Framework.Physics
             }
 
             // So we know the intersection point were the lines extended forever, we just need to see if the point fits on our source lines.
-            if (l1.RectContainsPoint(intPoint.Value) && l2.RectContainsPoint(intPoint.Value))
+            if (l1.WithinX(intPoint.Value) && l2.WithinX(intPoint.Value))
             {
                 return intPoint;
             }
@@ -55,10 +55,10 @@ namespace Evbpc.Framework.Physics
         /// <remarks>
         /// If it is already know that the <see cref="PointF"/> fits on the <see cref="LineF"/> at <b>some</b> location, then this is an inexpensive operation to see if the <see cref="PointF"/> is within the current <see cref="LineF"/> segment.
         /// </remarks>
-        public bool RectContainsPoint(PointF pt) => (pt.X >= Start.X && pt.X <= End.X && pt.Y >= Start.Y && pt.Y <= End.Y)
-                                                    || (pt.X >= Start.X && pt.X <= End.X && pt.Y <= Start.Y && pt.Y >= End.Y)
-                                                    || (pt.X <= Start.X && pt.X >= End.X && pt.Y >= Start.Y && pt.Y <= End.Y)
-                                                    || (pt.X <= Start.X && pt.X >= End.X && pt.Y <= Start.Y && pt.Y >= End.Y);
+        public bool RectContainsPoint(PointF pt) => WithinX(pt) && WithinY(pt);
+
+        public bool WithinX(PointF pt) => (pt.X >= Start.X && pt.X <= End.X) || (pt.X <= Start.X && pt.X >= End.X);
+        public bool WithinY(PointF pt) => (pt.Y >= Start.Y && pt.Y <= End.Y) || (pt.Y <= Start.Y && pt.Y >= End.Y);
 
         /// <summary>
         /// Returns a <see cref="PointF"/> which represents the intersection of this line and the specified line if they were extended in each direction forever.
