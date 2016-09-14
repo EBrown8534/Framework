@@ -11,25 +11,18 @@ namespace Evbpc.Framework.Physics
     {
         public const float EqualThreshold = float.Epsilon * 2;
 
-        public Point Start { get; }
-        public Point End { get; }
+        public PointF Start { get; }
+        public PointF End { get; }
         public Vector2F Vector { get; }
 
-        public Rectangle Bounds => new Rectangle(Start.X, Start.Y, End.X - Start.X, End.Y - Start.X);
+        public RectangleF Bounds => new RectangleF(Start.X, Start.Y, End.X - Start.X, End.Y - Start.X);
 
-        public Line(Point start, Point end)
+        public Line(PointF start, PointF end)
         {
             Start = start;
             End = end;
             Vector = new Vector2F(End.X - Start.X, End.Y - Start.Y);
         }
-
-        /// <summary>
-        /// Gets the <see cref="PointF"/> at which the current <see cref="Line"/> intersects the target <see cref="Line"/>.
-        /// </summary>
-        /// <param name="l">The target <see cref="Line"/> to test.</param>
-        /// <returns>The <see cref="PointF"/> intersection point. Returns <code>null</code> if the lines are parallel, or do not intersect with each line's segment.</returns>
-        public PointF? Intersect(Line l) => Intersect(this, l);
 
         public static PointF? Intersect(Line l1, Line l2)
         {
@@ -61,14 +54,7 @@ namespace Evbpc.Framework.Physics
 
         public bool WithinX(PointF pt) => (pt.X >= Start.X && pt.X <= End.X) || (pt.X <= Start.X && pt.X >= End.X);
         public bool WithinY(PointF pt) => (pt.Y >= Start.Y && pt.Y <= End.Y) || (pt.Y <= Start.Y && pt.Y >= End.Y);
-
-        /// <summary>
-        /// Returns a <see cref="PointF"/> which represents the intersection of this line and the specified line if they were extended in each direction forever.
-        /// </summary>
-        /// <param name="l">The line to intersect with.</param>
-        /// <returns>The intersection <see cref="PointF"/> of the two lines. If the lines are parallel then returns <code>null</code>. If the lines coincide, this also returns <code>null</code>.</returns>
-        public PointF? IntersectForever(Line l) => IntersectForever(this, l);
-
+        
         public static PointF? IntersectForever(Line l1, Line l2)
         {
             if (l1.End.X == l1.Start.X)
@@ -81,7 +67,7 @@ namespace Evbpc.Framework.Physics
                 }
 
                 // Intersection point is a lot easier, just plug the `Start.X` into the second line's formula.
-                var m = (float)(l2.End.Y - l2.Start.Y) / (l2.End.X - l2.Start.X);
+                var m = (l2.End.Y - l2.Start.Y) / (l2.End.X - l2.Start.X);
                 var b = -(m * l2.Start.X) + l2.Start.Y;
 
                 return new PointF(l1.Start.X, m * l1.Start.X + b);
@@ -91,15 +77,15 @@ namespace Evbpc.Framework.Physics
             {
                 // Second line is a vertical line
                 // Intersection point is a lot easier, just plug the `line.Start.X` into the first line's formula.
-                var m = (float)(l1.End.Y - l1.Start.Y) / (l1.End.X - l1.Start.X);
+                var m = (l1.End.Y - l1.Start.Y) / (l1.End.X - l1.Start.X);
                 var b = -(m * l1.Start.X) + l1.Start.Y;
 
                 return new PointF(l2.Start.X, m * l2.Start.X + b);
             }
 
             // We'll need the slopes of both lines
-            var m1 = (float)(l1.End.Y - l1.Start.Y) / (l1.End.X - l1.Start.X);
-            var m2 = (float)(l2.End.Y - l2.Start.Y) / (l2.End.X - l2.Start.X);
+            var m1 = (l1.End.Y - l1.Start.Y) / (l1.End.X - l1.Start.X);
+            var m2 = (l2.End.Y - l2.Start.Y) / (l2.End.X - l2.Start.X);
 
             // (Mostly) equal slopes indicate the lines are parallel and will never intersect.
             if (Math.Abs(m1 - m2) <= EqualThreshold)

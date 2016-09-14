@@ -125,7 +125,6 @@
     <Compile Include="Integrations\StackExchange\API\Requests\SitesRequest.cs" />
     <Compile Include="Integrations\StackExchange\API\Requests\UserRequest.cs" />
     <Compile Include="Physics\Line.cs" />
-    <Compile Include="Physics\LineF.cs" />
     <Compile Include="Utilities\BenchmarkResult.cs" />
     <Compile Include="Utilities\Cryptography\Hashing.cs" />
     <Compile Include="Utilities\DataSize.cs" />
