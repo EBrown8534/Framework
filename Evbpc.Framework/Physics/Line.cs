@@ -34,7 +34,7 @@ namespace Evbpc.Framework.Physics
             }
 
             // So we know the intersection point were the lines extended forever, we just need to see if the point fits on our source lines.
-            if (l1.WithinX(intPoint.Value) && l2.WithinX(intPoint.Value))
+            if (l1.RectContainsPoint(intPoint.Value) && l2.RectContainsPoint(intPoint.Value))
             {
                 return intPoint;
             }

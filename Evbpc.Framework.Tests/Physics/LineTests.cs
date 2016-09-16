@@ -153,5 +153,22 @@ namespace Evbpc.Framework.Tests.Physics
 
             Assert.IsNull(result);
         }
+
+        [TestMethod]
+        public void Intersect_OneVertical_OnePositive_Line_0_0_2_2_Line_1_3_1_4()
+        {
+            //   |
+            //   |
+            //    /
+            //   /
+            //  /
+            // /
+            var l1 = new Line(new Point(0, 0), new Point(2, 2));
+            var l2 = new Line(new Point(1, 3), new Point(1, 4));
+
+            var result = Line.Intersect(l1, l2);
+
+            Assert.IsNull(result);
+        }
     }
 }
