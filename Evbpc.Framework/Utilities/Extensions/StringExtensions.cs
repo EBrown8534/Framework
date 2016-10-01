@@ -431,20 +431,33 @@ namespace Evbpc.Framework.Utilities.Extensions
             return sb;
         }
 
+        /// <summary>
+        /// Inserts a <code>string</code> into another <code>string</code> before each occurrence of the specified <see cref="CharacterType"/>.
+        /// </summary>
+        /// <param name="source">The <code>string</code> to insert into.</param>
+        /// <param name="type">The <see cref="CharacterType"/> to insert before.</param>
+        /// <param name="insert">The <code>string</code> to insert.</param>
+        /// <returns>The resultant <code>string</code>.</returns>
+        /// <remarks>
+        /// In the case of the first character of <code>source</code> matching the specified <see cref="CharacterType"/>, the <code>insert</code> will not be inserted.
+        /// </remarks>
         public static string InsertOnCharacter(this string source, CharacterType type, string insert)
         {
             var esb = new ExtendedStringBuilder(source.Length);
 
+            var firstRun = false;
             foreach (var c in source)
             {
                 var cType = c.GetCharacterType();
 
-                if (cType == type)
+                if (firstRun && cType == type)
                 {
                     esb += insert;
                 }
 
                 esb += c;
+
+                firstRun = true;
             }
 
             return esb;
