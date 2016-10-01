@@ -21,5 +21,9 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
         /// The order the column should appear in.
         /// </summary>
         public int Order { get; set; }
+
+        public string Format { get; set; }
+
+        public bool Traverse { get; set; }
     }
 }

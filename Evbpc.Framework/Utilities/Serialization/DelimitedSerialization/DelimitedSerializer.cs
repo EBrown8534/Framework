@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Evbpc.Framework.Utilities.Extensions.StringExtensions;
 
 namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
 {
@@ -117,35 +118,16 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             public bool CanSerialize => !Info.PropertyType.IsArray && (Info.PropertyType == typeof(string) || Info.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) == null);
         }
 
-        private IEnumerable<Property> _getProperties<T>(IEnumerable<T> items)
-        {
-            var properties = typeof(T).GetProperties()
+        private IEnumerable<Property> _getProperties(object item) =>
+            item.GetType().GetProperties()
+                .Where(p => p.GetCustomAttribute<DelimitedIgnoreAttribute>() == null)
                 .Select(p => new Property
                 {
-                    Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>(),
+                    Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>() ?? new DelimitedColumnAttribute { Name = p.Name.InsertOnCharacter(CharacterType.UpperLetter, " ") },
                     Info = p
                 })
-                .Where(x => x.Attribute != null)
-                .OrderBy(x => x.Attribute.Order)
-                .ThenBy(x => x.Attribute.Name)
-                .ThenBy(x => x.Info.Name)
+                .OrderBy(p => p.Attribute.Name)
                 .ToList();
-
-            if (properties.Count == 0)
-            {
-                properties = typeof(T).GetProperties()
-                    .Where(x => x.GetCustomAttribute<DelimitedIgnoreAttribute>() == null)
-                    .Select(p => new Property
-                    {
-                        Attribute = new DelimitedColumnAttribute { Name = p.Name },
-                        Info = p
-                    })
-                    .OrderBy(x => x.Attribute.Name)
-                    .ToList();
-            }
-
-            return properties;
-        }
 
         private void _validateCharacters(string name, string checkFor, string humanLocation)
         {
@@ -155,7 +137,7 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             }
         }
 
-        private ExtendedStringBuilder _buildHeader<T>(IEnumerable<Property> properties)
+        private ExtendedStringBuilder _buildHeader(object item, IEnumerable<Property> properties, bool root = true)
         {
             var columnLine = new ExtendedStringBuilder();
 
@@ -166,41 +148,47 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                     continue;
                 }
 
-                var name = property.Attribute?.Name ?? property.Info.Name;
+                var name = string.Empty;
 
-                if (InvalidColumnReplace != null)
+                if (property.Attribute.Traverse)
                 {
-                    name = name.Replace(ColumnDelimiter, InvalidColumnReplace);
+                    var itemValue = property.Info.GetValue(item);
+                    name = _buildHeader(itemValue, _getProperties(itemValue), false);
                 }
-                if (InvalidRowReplace != null)
+                else
                 {
-                    name = name.Replace(RowDelimiter, InvalidRowReplace);
-                }
-                if (DoubleQuoteEscape != null)
-                {
-                    name = name.Replace("\"", DoubleQuoteEscape);
-                }
+                    name = property.Attribute?.Name ?? property.Info.Name;
+                    if (InvalidColumnReplace != null)
+                    {
+                        name = name.Replace(ColumnDelimiter, InvalidColumnReplace);
+                    }
+                    if (InvalidRowReplace != null)
+                    {
+                        name = name.Replace(RowDelimiter, InvalidRowReplace);
+                    }
+                    if (DoubleQuoteEscape != null)
+                    {
+                        name = name.Replace("\"", DoubleQuoteEscape);
+                    }
 
-                _validateCharacters(name, ColumnDelimiter, "column name");
-                _validateCharacters(name, RowDelimiter, "column name");
+                    _validateCharacters(name, ColumnDelimiter, "column name");
+                    _validateCharacters(name, RowDelimiter, "column name");
+
+                    if (QuoteValues)
+                    {
+                        name = "\"" + name + "\"";
+                    }
+                }
 
                 if (columnLine.HasBeenAppended)
                 {
                     columnLine += ColumnDelimiter;
                 }
 
-                if (QuoteValues)
-                {
-                    columnLine += "\"";
-                }
                 columnLine += name;
-                if (QuoteValues)
-                {
-                    columnLine += "\"";
-                }
             }
 
-            if (IncludeTrailingDelimiter)
+            if (root && IncludeTrailingDelimiter)
             {
                 columnLine += ColumnDelimiter;
             }
@@ -208,7 +196,7 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             return columnLine;
         }
 
-        private ExtendedStringBuilder _buildRow<T>(T item, IEnumerable<Property> properties)
+        private ExtendedStringBuilder _buildRow(object item, IEnumerable<Property> properties, bool root = true)
         {
             var row = new ExtendedStringBuilder();
 
@@ -219,30 +207,40 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                     continue;
                 }
 
-                var value = property.Info.GetValue(item)?.ToString();
+                var value = string.Empty;
 
-                if (property.Info.PropertyType == typeof(DateTime) || property.Info.PropertyType == typeof(DateTime?))
+                if (property.Attribute.Traverse)
                 {
-                    value = ((DateTime?)property.Info.GetValue(item))?.ToString("u");
+                    var itemValue = property.Info.GetValue(item);
+                    value = _buildRow(itemValue, _getProperties(itemValue), false);
                 }
-
-                if (value != null)
+                else
                 {
-                    if (InvalidColumnReplace != null)
+                    value = string.Format($"{{0:{property.Attribute.Format}}}", property.Info.GetValue(item));
+
+                    if (value != null)
                     {
-                        value = value.Replace(ColumnDelimiter, InvalidColumnReplace);
-                    }
-                    if (InvalidRowReplace != null)
-                    {
-                        value = value.Replace(RowDelimiter, InvalidRowReplace);
-                    }
-                    if (DoubleQuoteEscape != null)
-                    {
-                        value = value.Replace("\"", DoubleQuoteEscape);
+                        if (InvalidColumnReplace != null)
+                        {
+                            value = value.Replace(ColumnDelimiter, InvalidColumnReplace);
+                        }
+                        if (InvalidRowReplace != null)
+                        {
+                            value = value.Replace(RowDelimiter, InvalidRowReplace);
+                        }
+                        if (DoubleQuoteEscape != null)
+                        {
+                            value = value.Replace("\"", DoubleQuoteEscape);
+                        }
+
+                        _validateCharacters(value, ColumnDelimiter, "property value");
+                        _validateCharacters(value, RowDelimiter, "property value");
                     }
 
-                    _validateCharacters(value, ColumnDelimiter, "property value");
-                    _validateCharacters(value, RowDelimiter, "property value");
+                    if (QuoteValues)
+                    {
+                        value = "\"" + value + "\"";
+                    }
                 }
 
                 if (row.HasBeenAppended)
@@ -250,18 +248,10 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                     row += ColumnDelimiter;
                 }
 
-                if (QuoteValues)
-                {
-                    row += "\"";
-                }
                 row += value;
-                if (QuoteValues)
-                {
-                    row += "\"";
-                }
             }
 
-            if (IncludeTrailingDelimiter)
+            if (root && IncludeTrailingDelimiter)
             {
                 row += ColumnDelimiter;
             }
@@ -278,11 +268,11 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
         public string Serialize<T>(IEnumerable<T> items)
         {
             var result = new ExtendedStringBuilder();
-            var properties = _getProperties(items);
+            var properties = _getProperties(items.First());
 
             if (IncludeHeader)
             {
-                result += _buildHeader<T>(properties);
+                result += _buildHeader(items.First(), properties);
             }
 
             foreach (var item in items)
