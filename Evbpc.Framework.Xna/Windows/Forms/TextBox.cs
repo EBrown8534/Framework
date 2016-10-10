@@ -68,7 +68,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             s.DrawString(Font, Text, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
         }
 
-        void IUpdateableControl.Update(MouseState m, bool hasFocus, GameTime gt)
+        void IUpdateableControl.Update(bool hasFocus, GameTime gt)
         {
 
         }

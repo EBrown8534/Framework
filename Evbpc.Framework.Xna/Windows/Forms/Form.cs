@@ -21,7 +21,6 @@ namespace Evbpc.Framework.Xna.Windows.Forms
     /// </summary>
     public class Form : Framework.Windows.Forms.Form
     {
-        private static MouseState _mouseStatePrevious;
         private TimeSpan _clickTrigger = new TimeSpan(0, 0, 0, 0, 500);
         private DateTime _clickStart;
         private EFD.Point _dragMouseStart;
@@ -33,6 +32,11 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// Gets or sets the <see cref="Utilities.KeyboardStateManager"/> used by all instances of the <see cref="Form"/> class.
         /// </summary>
         public static KeyboardStateManager KeyboardStateManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Utilities.MouseStateManager"/> used by all instances of the <see cref="Form"/> class.
+        /// </summary>
+        public static MouseStateManager MouseStateManager { get; set; }
 
         /// <summary>
         /// The Texture2D to use as the background of the form. If the <see cref="Control.Size"/> does not match the Texture2D size, clipping or resizing may occur.
@@ -131,13 +135,13 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <param name="m">The current MouseState object.</param>
         /// <param name="gt">A value representing the elapsed <code>GameTime</code> since the last update.</param>
         /// <param name="hasFocus">A value indicating whether or not the application has focus.</param>
-        public static void UpdateAll(MouseState m, GameTime gt, bool hasFocus)
+        public static void UpdateAll(GameTime gt, bool hasFocus)
         {
-            if ((m.LeftButton == ButtonState.Pressed && _mouseStatePrevious.LeftButton == ButtonState.Released)
-                || (m.RightButton == ButtonState.Pressed && _mouseStatePrevious.RightButton == ButtonState.Released)
-                || (m.MiddleButton == ButtonState.Pressed && _mouseStatePrevious.MiddleButton == ButtonState.Released))
+            if (MouseStateManager.WentUp(MouseButtons.Left)
+                || MouseStateManager.WentUp(MouseButtons.Middle)
+                || MouseStateManager.WentUp(MouseButtons.Right))
             {
-                int f = GetActiveForm(new Point(m.X, m.Y));
+                int f = GetActiveForm(new Point(MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y));
 
                 if (f > 0 || (f > -1 && ActiveForm == null))
                 {
@@ -151,15 +155,13 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
             if (ActiveForm != null)
             {
-                ((Form)ActiveForm).Update(m, hasFocus, gt);
+                ((Form)ActiveForm).Update(hasFocus, gt);
             }
 
             for (int i = 0; i < Forms.Count; i++)
             {
-                ((Form)Forms[i]).Update(m, false, gt);
+                ((Form)Forms[i]).Update(false, gt);
             }
-
-            _mouseStatePrevious = m;
         }
 
         /// <summary>
@@ -174,24 +176,23 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             }
         }
 
-        internal void Update(MouseState m, bool hasFocus, GameTime gt)
+        internal void Update(bool hasFocus, GameTime gt)
         {
             // We should only process things that require input if the game is focused, the form is visible, and the form is enabled.
             if (Enabled && Visible && hasFocus)
             {
-                if (m.X >= Bounds.Left
-                    && m.X < Bounds.Right
-                    && m.Y >= Bounds.Top
-                    && m.Y < Bounds.Bottom)
+                if (MouseStateManager.MouseStateNow.X >= Bounds.Left
+                    && MouseStateManager.MouseStateNow.X < Bounds.Right
+                    && MouseStateManager.MouseStateNow.Y >= Bounds.Top
+                    && MouseStateManager.MouseStateNow.Y < Bounds.Bottom)
                 {
-                    if (m.LeftButton == ButtonState.Pressed
-                        && m.RightButton == ButtonState.Pressed)
+                    if (MouseStateManager.MouseStateNow.LeftButton == ButtonState.Pressed
+                        && MouseStateManager.MouseStateNow.RightButton == ButtonState.Pressed)
                     {
                         Select();
                     }
 
-                    if (m.LeftButton == ButtonState.Released
-                        && _mouseStatePrevious.LeftButton == ButtonState.Pressed)
+                    if (MouseStateManager.WentUp(MouseButtons.Left))
                     {
                         if (DateTime.UtcNow - _clickStart <= _clickTrigger)
                         {
@@ -200,35 +201,34 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 
                         _inDrag = false;
 
-                        OnMouseUp(new MouseEventArgs(MouseButtons.Left, 0, m.X, m.Y, m.ScrollWheelValue - _mouseStatePrevious.ScrollWheelValue));
+                        OnMouseUp(new MouseEventArgs(MouseButtons.Left, 0, MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y, MouseStateManager.MouseStateNow.ScrollWheelValue - MouseStateManager.MouseStatePrevious.ScrollWheelValue));
                     }
-                    else if (m.LeftButton == ButtonState.Pressed
-                        && _mouseStatePrevious.LeftButton == ButtonState.Released)
+                    else if (MouseStateManager.WentDown(MouseButtons.Left))
                     {
                         _clickStart = DateTime.UtcNow;
 
                         if (ShowTitleBar)
                         {
-                            if (m.X >= Bounds.Left
-                                && m.X < Bounds.Right
-                                && m.Y >= Location.Y
-                                && m.Y < Location.Y + TitleBarHeight)
+                            if (MouseStateManager.MouseStateNow.X >= Bounds.Left
+                                && MouseStateManager.MouseStateNow.X < Bounds.Right
+                                && MouseStateManager.MouseStateNow.Y >= Location.Y
+                                && MouseStateManager.MouseStateNow.Y < Location.Y + TitleBarHeight)
                             {
-                                _dragMouseStart = new EFD.Point(m.X, m.Y);
+                                _dragMouseStart = new EFD.Point(MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y);
                                 _dragPosStart = Location;
                                 _inDrag = true;
                             }
                         }
 
-                        OnMouseDown(new MouseEventArgs(MouseButtons.Left, 0, m.X, m.Y, m.ScrollWheelValue - _mouseStatePrevious.ScrollWheelValue));
+                        OnMouseDown(new MouseEventArgs(MouseButtons.Left, 0, MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y, MouseStateManager.MouseStateNow.ScrollWheelValue - MouseStateManager.MouseStatePrevious.ScrollWheelValue));
                     }
                 }
 
-                if (m.LeftButton == ButtonState.Pressed)
+                if (MouseStateManager.MouseStateNow.LeftButton == ButtonState.Pressed)
                 {
                     if (AllowDrag && _inDrag && ShowTitleBar)
                     {
-                        Location = _dragPosStart + new Evbpc.Framework.Drawing.Size(m.X - _dragMouseStart.X, m.Y - _dragMouseStart.Y);
+                        Location = _dragPosStart + new Evbpc.Framework.Drawing.Size(MouseStateManager.MouseStateNow.X - _dragMouseStart.X, MouseStateManager.MouseStateNow.Y - _dragMouseStart.Y);
                     }
                 }
 
@@ -236,7 +236,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                 {
                     if (Controls[i] is IUpdateableControl)
                     {
-                        ((IUpdateableControl)Controls[i]).Update(m, Controls[i] == ActiveControl, gt);
+                        ((IUpdateableControl)Controls[i]).Update(Controls[i] == ActiveControl, gt);
                     }
                 }
             }

@@ -15,6 +15,9 @@ namespace Evbpc.Framework.Xna.Utilities
 
         public void Update(MouseState state)
         {
+            MouseStatePrevious = MouseStateNow;
+            MouseStateNow = state;
+
             if (WentDown(MouseButtons.Left)
                 || WentDown(MouseButtons.Middle)
                 || WentDown(MouseButtons.Right)
@@ -87,8 +90,6 @@ namespace Evbpc.Framework.Xna.Utilities
                 OnMouseUp(new MouseEventArgs(buttons, 0, MouseStateNow.X, MouseStateNow.Y, 0));
                 OnMouseClick(new MouseEventArgs(buttons, 1, MouseStateNow.X, MouseStateNow.Y, 0));
             }
-
-            MouseStatePrevious = MouseStateNow;
         }
 
         public MouseButtons ButtonsUp()

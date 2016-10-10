@@ -11,6 +11,6 @@ namespace Evbpc.Framework.Xna.Windows.Forms
 {
     internal interface IUpdateableControl
     {
-        void Update(MouseState m, bool hasFocus, GameTime gt);
+        void Update(bool hasFocus, GameTime gt);
     }
 }
