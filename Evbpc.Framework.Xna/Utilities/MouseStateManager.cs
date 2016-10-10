@@ -12,84 +12,115 @@ namespace Evbpc.Framework.Xna.Utilities
     {
         public MouseState MouseStateNow { get; private set; }
         public MouseState MouseStatePrevious { get; private set; }
+        public int DoubleClickThresholdMs { get; set; }
+
+        private DateTime _lastClickAt;
+        private MouseButtons _lastClickBy;
 
         public void Update(MouseState state)
         {
             MouseStatePrevious = MouseStateNow;
             MouseStateNow = state;
 
-            if (WentDown(MouseButtons.Left)
-                || WentDown(MouseButtons.Middle)
-                || WentDown(MouseButtons.Right)
-                || WentDown(MouseButtons.XButton1)
-                || WentDown(MouseButtons.XButton2))
+            var buttonsWentDown = ButtonsWentDown();
+
+            if (buttonsWentDown != MouseButtons.None)
             {
-                var buttons = MouseButtons.None;
-
-                if (WentDown(MouseButtons.Left))
-                {
-                    buttons |= MouseButtons.Left;
-                }
-
-                if (WentDown(MouseButtons.Middle))
-                {
-                    buttons |= MouseButtons.Middle;
-                }
-
-                if (WentDown(MouseButtons.Right))
-                {
-                    buttons |= MouseButtons.Right;
-                }
-
-                if (WentDown(MouseButtons.XButton1))
-                {
-                    buttons |= MouseButtons.XButton1;
-                }
-
-                if (WentDown(MouseButtons.XButton2))
-                {
-                    buttons |= MouseButtons.XButton2;
-                }
-
-                OnMouseDown(new MouseEventArgs(buttons, 0, MouseStateNow.X, MouseStateNow.Y, 0));
+                OnMouseDown(new MouseEventArgs(buttonsWentDown, 0, MouseStateNow.X, MouseStateNow.Y, 0));
             }
 
-            if (WentUp(MouseButtons.Left)
-                || WentUp(MouseButtons.Middle)
-                || WentUp(MouseButtons.Right)
-                || WentUp(MouseButtons.XButton1)
-                || WentUp(MouseButtons.XButton2))
+            var buttonsWentUp = ButtonsWentUp();
+
+            if (buttonsWentUp != MouseButtons.None)
             {
-                var buttons = MouseButtons.None;
+                OnMouseUp(new MouseEventArgs(buttonsWentUp, 0, MouseStateNow.X, MouseStateNow.Y, 0));
+                OnMouseClick(new MouseEventArgs(buttonsWentUp, 1, MouseStateNow.X, MouseStateNow.Y, 0));
 
-                if (WentUp(MouseButtons.Left))
+                if (buttonsWentUp == _lastClickBy
+                    && (DateTime.Now - _lastClickAt).TotalMilliseconds <= DoubleClickThresholdMs)
                 {
-                    buttons |= MouseButtons.Left;
+                    OnMouseDoubleClick(new MouseEventArgs(buttonsWentUp, 2, MouseStateNow.X, MouseStateNow.Y, 0));
                 }
-
-                if (WentUp(MouseButtons.Middle))
-                {
-                    buttons |= MouseButtons.Middle;
-                }
-
-                if (WentUp(MouseButtons.Right))
-                {
-                    buttons |= MouseButtons.Right;
-                }
-
-                if (WentUp(MouseButtons.XButton1))
-                {
-                    buttons |= MouseButtons.XButton1;
-                }
-
-                if (WentUp(MouseButtons.XButton2))
-                {
-                    buttons |= MouseButtons.XButton2;
-                }
-
-                OnMouseUp(new MouseEventArgs(buttons, 0, MouseStateNow.X, MouseStateNow.Y, 0));
-                OnMouseClick(new MouseEventArgs(buttons, 1, MouseStateNow.X, MouseStateNow.Y, 0));
             }
+
+            var scrollDelta = MouseStateNow.ScrollWheelValue - MouseStatePrevious.ScrollWheelValue;
+
+            if (scrollDelta > 0 || scrollDelta < 0)
+            {
+                OnMouseWheel(new MouseEventArgs(MouseButtons.None, 0, MouseStateNow.X, MouseStateNow.Y, scrollDelta));
+            }
+
+            var xDelta = MouseStateNow.X - MouseStatePrevious.X;
+            var yDelta = MouseStateNow.Y - MouseStatePrevious.Y;
+
+            if (xDelta > 0 || xDelta < 0 || yDelta > 0 || yDelta < 0)
+            {
+                OnMouseMove(new MouseEventArgs(MouseButtons.None, 0, MouseStateNow.X, MouseStateNow.Y, 0));
+            }
+        }
+
+        private MouseButtons ButtonsWentUp()
+        {
+            var buttons = MouseButtons.None;
+
+            if (WentUp(MouseButtons.Left))
+            {
+                buttons |= MouseButtons.Left;
+            }
+
+            if (WentUp(MouseButtons.Middle))
+            {
+                buttons |= MouseButtons.Middle;
+            }
+
+            if (WentUp(MouseButtons.Right))
+            {
+                buttons |= MouseButtons.Right;
+            }
+
+            if (WentUp(MouseButtons.XButton1))
+            {
+                buttons |= MouseButtons.XButton1;
+            }
+
+            if (WentUp(MouseButtons.XButton2))
+            {
+                buttons |= MouseButtons.XButton2;
+            }
+
+            return buttons;
+        }
+
+        private MouseButtons ButtonsWentDown()
+        {
+            var buttons = MouseButtons.None;
+
+            if (WentDown(MouseButtons.Left))
+            {
+                buttons |= MouseButtons.Left;
+            }
+
+            if (WentDown(MouseButtons.Middle))
+            {
+                buttons |= MouseButtons.Middle;
+            }
+
+            if (WentDown(MouseButtons.Right))
+            {
+                buttons |= MouseButtons.Right;
+            }
+
+            if (WentDown(MouseButtons.XButton1))
+            {
+                buttons |= MouseButtons.XButton1;
+            }
+
+            if (WentDown(MouseButtons.XButton2))
+            {
+                buttons |= MouseButtons.XButton2;
+            }
+
+            return buttons;
         }
 
         public MouseButtons ButtonsUp()
@@ -175,7 +206,7 @@ namespace Evbpc.Framework.Xna.Utilities
             return false;
         }
 
-        public bool IsDown(MouseButtons button)
+        public bool BeenDown(MouseButtons button)
         {
             switch (button)
             {
@@ -231,6 +262,12 @@ namespace Evbpc.Framework.Xna.Utilities
             handler?.Invoke(this, e);
         }
 
+        protected virtual void OnMouseMove(MouseEventArgs e)
+        {
+            var handler = MouseMove;
+            handler?.Invoke(this, e);
+        }
+
         protected virtual void OnMouseUp(MouseEventArgs e)
         {
             var handler = MouseUp;
@@ -246,6 +283,7 @@ namespace Evbpc.Framework.Xna.Utilities
         public event EventHandler<MouseEventArgs> MouseClick;
         public event EventHandler<MouseEventArgs> MouseDoubleClick;
         public event EventHandler<MouseEventArgs> MouseDown;
+        public event EventHandler<MouseEventArgs> MouseMove;
         public event EventHandler<MouseEventArgs> MouseUp;
         public event EventHandler<MouseEventArgs> MouseWheel;
     }
