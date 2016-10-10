@@ -187,7 +187,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                     && MouseStateManager.MouseStateNow.Y < Bounds.Bottom)
                 {
                     if (MouseStateManager.MouseStateNow.LeftButton == ButtonState.Pressed
-                        && MouseStateManager.MouseStateNow.RightButton == ButtonState.Pressed)
+                        || MouseStateManager.MouseStateNow.RightButton == ButtonState.Pressed)
                     {
                         Select();
                     }
