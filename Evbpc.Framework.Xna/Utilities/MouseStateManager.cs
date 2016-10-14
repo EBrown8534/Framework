@@ -12,7 +12,7 @@ namespace Evbpc.Framework.Xna.Utilities
     {
         public MouseState MouseStateNow { get; private set; }
         public MouseState MouseStatePrevious { get; private set; }
-        public int DoubleClickThresholdMs { get; set; }
+        public int DoubleClickThresholdMs { get; set; } = 300;
 
         private DateTime _lastClickAt;
         private MouseButtons _lastClickBy;
@@ -41,6 +41,9 @@ namespace Evbpc.Framework.Xna.Utilities
                 {
                     OnMouseDoubleClick(new MouseEventArgs(buttonsWentUp, 2, MouseStateNow.X, MouseStateNow.Y, 0));
                 }
+
+                _lastClickBy = buttonsWentUp;
+                _lastClickAt = DateTime.Now;
             }
 
             var scrollDelta = MouseStateNow.ScrollWheelValue - MouseStatePrevious.ScrollWheelValue;
