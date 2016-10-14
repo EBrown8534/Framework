@@ -104,26 +104,24 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             {
                 if (ShowTitleBar)
                 {
-                    s.Draw(TitleTexture, new XnaF.Rectangle(Location.X, Location.Y, Size.Width, TitleBarHeight), TitleBarColor.ToXnaColor());
-                    s.Draw(BackgroundTexture, new XnaF.Rectangle(Location.X, Location.Y + TitleBarHeight, Size.Width, Size.Height - TitleBarHeight), BackColor.ToXnaColor());
+                    s.Draw(TitleTexture, new Rectangle(Location.X, Location.Y, Size.Width, TitleBarHeight), TitleBarColor.ToXnaColor());
+                    s.Draw(BackgroundTexture, new Rectangle(Location.X, Location.Y + TitleBarHeight, Size.Width, Size.Height - TitleBarHeight), BackColor.ToXnaColor());
                 }
                 else
                 {
-                    s.Draw(BackgroundTexture, new XnaF.Rectangle(Location.X, Location.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
+                    s.Draw(BackgroundTexture, new Rectangle(Location.X, Location.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
                 }
 
-                foreach (Control c in Controls)
+                foreach (var c in Controls)
                 {
-                    if (c is IDrawableControl)
+                    var drawableControl = c as IDrawableControl;
+                    if (ShowTitleBar)
                     {
-                        if (ShowTitleBar)
-                        {
-                            ((IDrawableControl)c).Draw(s, new EFD.Point(Location.X, Location.Y + TitleBarHeight));
-                        }
-                        else
-                        {
-                            ((IDrawableControl)c).Draw(s, Location);
-                        }
+                        drawableControl?.Draw(s, new EFD.Point(Location.X, Location.Y + TitleBarHeight));
+                    }
+                    else
+                    {
+                        drawableControl?.Draw(s, Location);
                     }
                 }
             }
@@ -137,11 +135,11 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <param name="hasFocus">A value indicating whether or not the application has focus.</param>
         public static void UpdateAll(GameTime gt, bool hasFocus)
         {
-            if (MouseStateManager.WentUp(MouseButtons.Left)
-                || MouseStateManager.WentUp(MouseButtons.Middle)
-                || MouseStateManager.WentUp(MouseButtons.Right))
+            if (MouseStateManager.WentDown(MouseButtons.Left)
+                || MouseStateManager.WentDown(MouseButtons.Middle)
+                || MouseStateManager.WentDown(MouseButtons.Right))
             {
-                int f = GetActiveForm(new Point(MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y));
+                int f = GetActiveForm(new EFD.Point(MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y));
 
                 if (f > 0 || (f > -1 && ActiveForm == null))
                 {
@@ -153,14 +151,11 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                 }
             }
 
-            if (ActiveForm != null)
-            {
-                ((Form)ActiveForm).Update(hasFocus, gt);
-            }
+            (ActiveForm as Form)?.Update(hasFocus, gt);
 
             for (int i = 0; i < Forms.Count; i++)
             {
-                ((Form)Forms[i]).Update(false, gt);
+                (Forms[i] as Form)?.Update(false, gt);
             }
         }
 
@@ -228,16 +223,14 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                 {
                     if (AllowDrag && _inDrag && ShowTitleBar)
                     {
-                        Location = _dragPosStart + new Evbpc.Framework.Drawing.Size(MouseStateManager.MouseStateNow.X - _dragMouseStart.X, MouseStateManager.MouseStateNow.Y - _dragMouseStart.Y);
+                        Location = _dragPosStart + new EFD.Size(MouseStateManager.MouseStateNow.X - _dragMouseStart.X, MouseStateManager.MouseStateNow.Y - _dragMouseStart.Y);
                     }
                 }
 
-                for (int i = 0; i < Controls.Count; i++)
+                foreach (var c in Controls)
                 {
-                    if (Controls[i] is IUpdateableControl)
-                    {
-                        ((IUpdateableControl)Controls[i]).Update(Controls[i] == ActiveControl, gt);
-                    }
+                    var updateableControl = c as IUpdateableControl;
+                    updateableControl?.Update(c == ActiveControl, gt);
                 }
             }
             else if (Enabled && Visible)
@@ -246,7 +239,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             }
         }
 
-        private static int GetActiveForm(Point p)
+        private static int GetActiveForm(EFD.Point p)
         {
             for (int i = 0; i < Forms.Count; i++)
             {
