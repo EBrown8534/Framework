@@ -171,7 +171,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             }
         }
 
-        internal void Update(bool hasFocus, GameTime gt)
+        private void Update(bool hasFocus, GameTime gt)
         {
             // We should only process things that require input if the game is focused, the form is visible, and the form is enabled.
             if (Enabled && Visible && hasFocus)
