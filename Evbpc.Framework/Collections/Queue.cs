@@ -76,6 +76,8 @@ namespace Evbpc.Framework.Collections
 
         public int Count => _nextAssignment - _nextRead;
 
+        public int BufferSize => _items.Length;
+
         public object SyncRoot { get; }
 
         public bool IsSynchronized { get; } = false;

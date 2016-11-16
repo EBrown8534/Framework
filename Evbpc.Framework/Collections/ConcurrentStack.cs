@@ -114,6 +114,8 @@ namespace Evbpc.Framework.Collections
 
         public int Count => _currentIndex;
 
+        public int BufferSize => _items.Length;
+
         public bool IsEmpty => _currentIndex == 0;
 
         public object SyncRoot { get { throw new NotSupportedException(); } }
