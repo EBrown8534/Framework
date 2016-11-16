@@ -112,7 +112,7 @@ namespace Evbpc.Framework.Collections
             sourceArray.CopyTo(array, index);
         }
 
-        public int Count => _items.Length;
+        public int Count => _currentIndex;
 
         public bool IsEmpty => _currentIndex == 0;
 

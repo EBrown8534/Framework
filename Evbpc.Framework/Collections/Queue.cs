@@ -74,7 +74,7 @@ namespace Evbpc.Framework.Collections
             sourceArray.CopyTo(array, index);
         }
 
-        public int Count => _items.Length;
+        public int Count => _nextAssignment - _nextRead;
 
         public object SyncRoot { get; }
 
