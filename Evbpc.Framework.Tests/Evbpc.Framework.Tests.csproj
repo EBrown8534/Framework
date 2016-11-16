@@ -70,6 +70,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Collections\ConcurrentStackTests.cs" />
+    <Compile Include="Collections\QueueTests.cs" />
     <Compile Include="Drawing\ColorTests.cs" />
     <Compile Include="Drawing\PointTests.cs" />
     <Compile Include="Drawing\PointFTests.cs" />

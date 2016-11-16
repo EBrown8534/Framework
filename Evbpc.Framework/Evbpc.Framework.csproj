@@ -77,6 +77,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ConcurrentStack.cs" />
+    <Compile Include="Collections\Queue.cs" />
+    <Compile Include="Collections\QueueEnumerator.cs" />
+    <Compile Include="Collections\StackEnumerator.cs" />
     <Compile Include="Drawing\Color.cs" />
     <Compile Include="Drawing\PointShort.cs" />
     <Compile Include="Drawing\SizeByte.cs" />
