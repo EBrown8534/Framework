@@ -126,7 +126,8 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                     Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>() ?? new DelimitedColumnAttribute { Name = p.Name.InsertOnCharacter(CharacterType.UpperLetter, " ") },
                     Info = p
                 })
-                .OrderBy(p => p.Attribute.Name)
+                .OrderBy(p => p.Attribute.Order)
+                .ThenBy(p => p.Attribute.Name)
                 .ToList();
 
         private void _validateCharacters(string name, string checkFor, string humanLocation)
