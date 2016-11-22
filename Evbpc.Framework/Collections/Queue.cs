@@ -18,6 +18,12 @@ namespace Evbpc.Framework.Collections
             SyncRoot = this;
         }
 
+        public Queue(int capacity)
+            : base()
+        {
+            _items = new T[capacity];
+        }
+
         public void Push(T item)
         {
             var itemCount = _items.Length;
