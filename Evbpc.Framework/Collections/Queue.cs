@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Evbpc.Framework.Collections
 {
-    public class Queue<T> : IEnumerable<T>, IEnumerable, ICollection, IReadOnlyCollection<T>
+    public class Queue<T> : IEnumerable<T>, IEnumerable, ICollection, IReadOnlyCollection<T>, ICollection<T>
     {
         private T[] _items = new T[1];
         private int _nextAssignment = 0;
@@ -61,7 +61,7 @@ namespace Evbpc.Framework.Collections
             _items[_nextRead++] = default(T);
             return item;
         }
-
+        
         public T Peek() => _items[_nextRead];
 
         public IEnumerator<T> GetEnumerator() => new QueueEnumerator<T>(_items, _nextRead, _nextAssignment);
@@ -80,6 +80,34 @@ namespace Evbpc.Framework.Collections
             sourceArray.CopyTo(array, index);
         }
 
+        public void Add(T item) => Push(item);
+
+        public void Clear()
+        {
+            for (int i = _nextRead; i < _nextAssignment; i++)
+            {
+                _items[i] = default(T);
+            }
+
+            _nextRead = 0;
+            _nextAssignment = 0;
+        }
+
+        public bool Contains(T item) => _items.Contains(item);
+
+        public void CopyTo(T[] array, int arrayIndex) => CopyTo((Array)array, arrayIndex);
+
+        public bool Remove(T item)
+        {
+            if (item.Equals(_items[_nextRead]))
+            {
+                Pop();
+                return true;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(item), $"The value provided for the argument '{nameof(item)}' must be the first item in the {nameof(Queue<T>)}.");
+        }
+        
         public int Count => _nextAssignment - _nextRead;
 
         public int BufferSize => _items.Length;
@@ -87,5 +115,7 @@ namespace Evbpc.Framework.Collections
         public object SyncRoot { get; }
 
         public bool IsSynchronized { get; } = false;
+
+        public bool IsReadOnly { get; } = false;
     }
 }
