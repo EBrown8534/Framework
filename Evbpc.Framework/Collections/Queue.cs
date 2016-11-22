@@ -22,7 +22,7 @@ namespace Evbpc.Framework.Collections
         {
             var itemCount = _items.Length;
 
-            if (itemCount == _nextAssignment && _nextRead > 1)
+            if (itemCount == _nextAssignment && _nextRead > 8)
             {
                 _nextAssignment -= _nextRead;
                 for (int i = 0; i < _nextAssignment; i++)
