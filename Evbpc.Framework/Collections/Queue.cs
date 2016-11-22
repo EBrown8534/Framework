@@ -13,6 +13,8 @@ namespace Evbpc.Framework.Collections
         private int _nextAssignment = 0;
         private int _nextRead = 0;
 
+        private const int _resizeThreshold = 8;
+
         public Queue()
         {
             SyncRoot = this;
@@ -28,7 +30,7 @@ namespace Evbpc.Framework.Collections
         {
             var itemCount = _items.Length;
 
-            if (itemCount == _nextAssignment && _nextRead > 8)
+            if (itemCount == _nextAssignment && _nextRead > _resizeThreshold)
             {
                 _nextAssignment -= _nextRead;
                 for (int i = 0; i < _nextAssignment; i++)
