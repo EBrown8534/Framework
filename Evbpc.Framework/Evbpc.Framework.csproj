@@ -77,6 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Circular2DArray.cs" />
+    <Compile Include="Collections\CircularArray.cs" />
     <Compile Include="Collections\ConcurrentStack.cs" />
     <Compile Include="Collections\Queue.cs" />
     <Compile Include="Collections\QueueEnumerator.cs" />
