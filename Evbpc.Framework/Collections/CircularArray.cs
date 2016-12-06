@@ -20,16 +20,16 @@ namespace Evbpc.Framework.Collections
             _size = size;
             _array = new T[_size];
         }
-         
+
         public T this[int index]
         {
             get
             {
-                return _array[index % _size];
+                return _array[(index < 0 ? _size : 0) + index % _size];
             }
             set
             {
-                _array[index % _size] = value;
+                _array[(index < 0 ? _size : 0) + index % _size] = value;
             }
         }
 

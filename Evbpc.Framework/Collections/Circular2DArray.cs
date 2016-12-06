@@ -27,11 +27,11 @@ namespace Evbpc.Framework.Collections
         {
             get
             {
-                return _array[indexLeft % _sizeLeft, indexRight % _sizeRight];
+                return _array[(indexLeft < 0 ? _sizeLeft : 0) + indexLeft % _sizeLeft, (indexRight < 0 ? _sizeRight : 0) + indexRight % _sizeRight];
             }
             set
             {
-                _array[indexLeft % _sizeLeft, indexRight % _sizeRight] = value;
+                _array[(indexLeft < 0 ? _sizeLeft : 0) + indexLeft % _sizeLeft, (indexRight < 0 ? _sizeRight : 0) + indexRight % _sizeRight] = value;
             }
         }
 
