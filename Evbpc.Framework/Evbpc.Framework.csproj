@@ -216,6 +216,8 @@
     <Compile Include="Utilities\Camera.cs" />
     <Compile Include="Utilities\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Utilities\Logging\EmptyLogger.cs" />
+    <Compile Include="Utilities\Logging\FileLogger.cs" />
+    <Compile Include="Utilities\Logging\MultiLogger.cs" />
     <Compile Include="Utilities\Prompting\ConsolePrompt.cs" />
     <Compile Include="Utilities\Prompting\IPrompt.cs" />
     <Compile Include="Utilities\Prompting\PromptOptions.cs" />
