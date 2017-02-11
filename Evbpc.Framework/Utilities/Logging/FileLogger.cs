@@ -14,21 +14,32 @@ namespace Evbpc.Framework.Utilities.Logging
 
         public Severity Severity { get; }
 
-        public string File { get; }
+        public string File { get; private set; }
+
+        public string BaseFile { get; }
+
+        private const string _fileNameDateFormat = "yyyy.MM.dd.HH.mm.ss.fffffff";
+
+        /// <summary>
+        /// The maximum size of the file in bytes. This is checked pre-write so a file may grow *slightly* beyond this size depending on the next message being written.
+        /// </summary>
+        public int MaxFileSize { get; } = -1;
 
         public Func<Input, string> CustomFormatter { get; }
 
-        public FileLogger(string file, Severity loggingType, Func<Input, string> customFormatter = null)
-            : this(file, loggingType, "O", customFormatter)
+        public FileLogger(string file, Severity loggingType, int maxFileSize = -1, Func<Input, string> customFormatter = null)
+            : this(file, loggingType, "O", maxFileSize, customFormatter)
         {
 
         }
 
-        public FileLogger(string file, Severity loggingType, string dateTimeFormat, Func<Input, string> customFormatter)
+        public FileLogger(string file, Severity loggingType, string dateTimeFormat, int maxFileSize, Func<Input, string> customFormatter)
         {
             Severity = loggingType;
-            File = file;
+            BaseFile = file;
+            File = BaseFile + "." + DateTime.UtcNow.ToString(_fileNameDateFormat);
             DateTimeFormat = dateTimeFormat;
+            MaxFileSize = maxFileSize;
             CustomFormatter = customFormatter;
         }
 
@@ -72,7 +83,30 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             if (severity <= Severity)
             {
-                using (var sw = new StreamWriter(File, true))
+                var file = File + ".txt";
+
+                if (System.IO.File.Exists(file))
+                {
+                    var fileSize = new FileInfo(file).Length;
+
+                    while (fileSize > MaxFileSize)
+                    {
+                        File = BaseFile + "." + DateTime.UtcNow.ToString(_fileNameDateFormat);
+                        file = File + ".txt";
+                        if (System.IO.File.Exists(file))
+                        {
+                            fileSize = new FileInfo(file).Length;
+                        }
+                        else
+                        {
+                            fileSize = 0;
+                        }
+                    }
+                }
+
+                file = File + ".txt";
+
+                using (var sw = new StreamWriter(file, true))
                 {
                     sw.WriteLine(Format(new Input { DateTime = DateTime.UtcNow, Message = message, Severity = severity, DateTimeFormat = DateTimeFormat }));
                 }
