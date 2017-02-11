@@ -217,6 +217,7 @@
     <Compile Include="Utilities\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Utilities\Logging\EmptyLogger.cs" />
     <Compile Include="Utilities\Logging\FileLogger.cs" />
+    <Compile Include="Utilities\Logging\Input.cs" />
     <Compile Include="Utilities\Logging\MultiLogger.cs" />
     <Compile Include="Utilities\Prompting\ConsolePrompt.cs" />
     <Compile Include="Utilities\Prompting\IPrompt.cs" />
@@ -229,7 +230,7 @@
     <Compile Include="Utilities\ITrackableObject.cs" />
     <Compile Include="Utilities\Logging\ConsoleLogger.cs" />
     <Compile Include="Utilities\Logging\ILogger.cs" />
-    <Compile Include="Utilities\Logging\LoggingType.cs" />
+    <Compile Include="Utilities\Logging\Severity.cs" />
     <Compile Include="Utilities\Extensions\NumericExtensions.cs" />
     <Compile Include="Utilities\Serialization\DataContractJsonSerialization.cs" />
     <Compile Include="Utilities\ExtendedStringBuilder.cs" />

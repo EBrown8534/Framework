@@ -12,68 +12,74 @@ namespace Evbpc.Framework.Utilities.Logging
     {
         public string DateTimeFormat { get; }
 
-        public LoggingType LoggingType { get; }
+        public Severity Severity { get; }
 
         public string File { get; }
 
-        public FileLogger(string file, LoggingType loggingType)
-            : this(file, loggingType, "O")
+        public Func<Input, string> CustomFormatter { get; }
+
+        public FileLogger(string file, Severity loggingType, Func<Input, string> customFormatter = null)
+            : this(file, loggingType, "O", customFormatter)
         {
 
         }
 
-        public FileLogger(string file, LoggingType loggingType, string dateTimeFormat)
+        public FileLogger(string file, Severity loggingType, string dateTimeFormat, Func<Input, string> customFormatter)
         {
-            LoggingType = loggingType;
+            Severity = loggingType;
             File = file;
             DateTimeFormat = dateTimeFormat;
+            CustomFormatter = customFormatter;
         }
 
         public string FormatMessage(string message, params object[] args) =>
             string.Format(message, args);
 
         public void LogError(string message, params object[] args) =>
-            LogMessage(FormatMessage(message, args), LoggingType.Error);
+            LogMessage(FormatMessage(message, args), Severity.Error);
 
         public void LogError(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.DarkRed) =>
-            LogMessage(message, LoggingType.Error);
+            LogMessage(message, Severity.Error);
 
         public void LogImportant(string message, params object[] args) =>
-            LogMessage(FormatMessage(message, args), LoggingType.Important);
+            LogMessage(FormatMessage(message, args), Severity.Important);
 
         public void LogImportant(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.Black) =>
-            LogMessage(message, LoggingType.Important);
+            LogMessage(message, Severity.Important);
 
         public void LogInformation(string message, params object[] args) =>
-            LogMessage(FormatMessage(message, args), LoggingType.Information);
+            LogMessage(FormatMessage(message, args), Severity.Information);
 
         public void LogInformation(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black) =>
-            LogMessage(message, LoggingType.Information);
+            LogMessage(message, Severity.Information);
 
-        public void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black) =>
+        public void LogMessage(string message, Severity type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black) =>
             Log(type, message, foreColor, backColor);
 
         public void LogVerbose(string message, params object[] args) =>
-            LogMessage(FormatMessage(message, args), LoggingType.Verbose);
+            LogMessage(FormatMessage(message, args), Severity.Verbose);
 
         public void LogVerbose(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black) =>
-            LogMessage(message, LoggingType.Verbose);
+            LogMessage(message, Severity.Verbose);
 
         public void LogWarning(string message, params object[] args) =>
-            LogMessage(FormatMessage(message, args), LoggingType.Warning);
+            LogMessage(FormatMessage(message, args), Severity.Warning);
 
         public void LogWarning(string message, Color.Preset foreColor = Color.Preset.DarkYellow, Color.Preset backColor = Color.Preset.Black) =>
-            LogMessage(message, LoggingType.Warning);
+            LogMessage(message, Severity.Warning);
 
-        public void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        public void Log(Severity severity, string message, Color.Preset? foreColor = null, Color.Preset? backColor = null)
         {
-            if (type <= LoggingType)
+            if (severity <= Severity)
             {
                 using (var sw = new StreamWriter(File, true))
                 {
-                    sw.WriteLine(FormatMessage("{0}: {1}: {2}", DateTime.UtcNow.ToString(DateTimeFormat), type.ToString(), message));
+                    sw.WriteLine(Format(new Input { DateTime = DateTime.UtcNow, Message = message, Severity = severity, DateTimeFormat = DateTimeFormat }));
                 }
             }
         }
+
+        public string Format(Input input) =>
+            CustomFormatter?.Invoke(input) ?? $"{input.DateTime.ToString(DateTimeFormat)}: {input.Severity.ToString()}: {input.Message}";
     }
 }

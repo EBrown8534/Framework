@@ -12,6 +12,8 @@ namespace Evbpc.Framework.Utilities.Logging
     /// </summary>
     public class EmptyLogger : ILogger
     {
+        public Func<Input, string> CustomFormatter { get; }
+
         /// <summary>
         /// This property is not used in this <see cref="ILogger"/> implementation.
         /// </summary>
@@ -20,7 +22,9 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <summary>
         /// This property is not used in this <see cref="ILogger"/> implementation.
         /// </summary>
-        public LoggingType LoggingType { get; }
+        public Severity Severity { get; }
+
+        public string Format(Input input) => null;
 
         /// <summary>
         /// Formats a message.
@@ -28,12 +32,9 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message (with formatting keys) to format.</param>
         /// <param name="args">The arguments to format into the message.</param>
         /// <returns>The formatted message.</returns>
-        public string FormatMessage(string message, params object[] args)
-        {
-            return string.Format(message, args);
-        }
+        public string FormatMessage(string message, params object[] args) => null;
 
-        public void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        public void Log(Severity type, string message, Color.Preset? foreColor = null, Color.Preset? backColor = null)
         {
         }
 
@@ -101,7 +102,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="type"></param>
         /// <param name="foreColor"></param>
         /// <param name="backColor"></param>
-        public void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        public void LogMessage(string message, Severity type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
         {
         }
 
