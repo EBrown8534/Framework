@@ -51,12 +51,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="backColor">The colour that the background of the message should be.</param>
         public void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
         {
-            if (type <= LoggingType)
-            {
-                Console.ForegroundColor = (ConsoleColor)foreColor;
-                Console.BackgroundColor = (ConsoleColor)backColor;
-                Console.WriteLine("{0}: {1}: {2}", DateTime.UtcNow.ToString(DateTimeFormat), type.ToString(), message);
-            }
+            Log(type, message, foreColor, backColor);
         }
 
         /// <summary>
@@ -170,6 +165,16 @@ namespace Evbpc.Framework.Utilities.Logging
         public void LogImportant(string message, params object[] args)
         {
             LogImportant(FormatMessage(message, args));
+        }
+
+        public void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        {
+            if (type <= LoggingType)
+            {
+                Console.ForegroundColor = (ConsoleColor)foreColor;
+                Console.BackgroundColor = (ConsoleColor)backColor;
+                Console.WriteLine("{0}: {1}: {2}", DateTime.UtcNow.ToString(DateTimeFormat), type.ToString(), message);
+            }
         }
     }
 }

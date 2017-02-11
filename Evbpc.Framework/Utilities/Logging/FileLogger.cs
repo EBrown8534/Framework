@@ -50,16 +50,8 @@ namespace Evbpc.Framework.Utilities.Logging
         public void LogInformation(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black) =>
             LogMessage(message, LoggingType.Information);
 
-        public void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
-        {
-            if (type <= LoggingType)
-            {
-                using (var sw = new StreamWriter(File, true))
-                {
-                    sw.WriteLine(FormatMessage("{0}: {1}: {2}", DateTime.UtcNow.ToString(DateTimeFormat), type.ToString(), message));
-                }
-            }
-        }
+        public void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black) =>
+            Log(type, message, foreColor, backColor);
 
         public void LogVerbose(string message, params object[] args) =>
             LogMessage(FormatMessage(message, args), LoggingType.Verbose);
@@ -72,5 +64,16 @@ namespace Evbpc.Framework.Utilities.Logging
 
         public void LogWarning(string message, Color.Preset foreColor = Color.Preset.DarkYellow, Color.Preset backColor = Color.Preset.Black) =>
             LogMessage(message, LoggingType.Warning);
+
+        public void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        {
+            if (type <= LoggingType)
+            {
+                using (var sw = new StreamWriter(File, true))
+                {
+                    sw.WriteLine(FormatMessage("{0}: {1}: {2}", DateTime.UtcNow.ToString(DateTimeFormat), type.ToString(), message));
+                }
+            }
+        }
     }
 }

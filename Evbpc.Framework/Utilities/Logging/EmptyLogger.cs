@@ -32,7 +32,11 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             return string.Format(message, args);
         }
-        
+
+        public void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        {
+        }
+
         /// <summary>
         /// No-op implementation.
         /// </summary>

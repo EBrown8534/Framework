@@ -32,7 +32,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogError(message, args);
+                logger.Log(LoggingType.Error, FormatMessage(message, args));
             }
         }
 
@@ -40,7 +40,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogError(message, foreColor, backColor);
+                logger.Log(LoggingType.Error, message, foreColor, backColor);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogImportant(message, args);
+                logger.Log(LoggingType.Important, FormatMessage(message, args));
             }
         }
 
@@ -56,7 +56,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogImportant(message, foreColor, backColor);
+                logger.Log(LoggingType.Important, message, foreColor, backColor);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogInformation(message, args);
+                logger.Log(LoggingType.Information, FormatMessage(message, args));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogInformation(message, foreColor, backColor);
+                logger.Log(LoggingType.Information, message, foreColor, backColor);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogMessage(message, type, foreColor, backColor);
+                logger.Log(type, message, foreColor, backColor);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogVerbose(message, args);
+                logger.Log(LoggingType.Verbose, FormatMessage(message, args));
             }
         }
 
@@ -96,7 +96,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogVerbose(message, foreColor, backColor);
+                logger.Log(LoggingType.Verbose, message, foreColor, backColor);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogWarning(message, args);
+                logger.Log(LoggingType.Warning, FormatMessage(message, args));
             }
         }
 
@@ -112,7 +112,15 @@ namespace Evbpc.Framework.Utilities.Logging
         {
             foreach (var logger in Loggers)
             {
-                logger.LogWarning(message, foreColor, backColor);
+                logger.Log(LoggingType.Warning, message, foreColor, backColor);
+            }
+        }
+
+        public void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black)
+        {
+            foreach (var logger in Loggers)
+            {
+                Log(type, message, foreColor, backColor);
             }
         }
     }

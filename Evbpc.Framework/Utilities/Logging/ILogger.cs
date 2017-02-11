@@ -26,10 +26,20 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <summary>
         /// Logs a message to the <see cref="ILogger"/> with the given type, and colours if appropriate.
         /// </summary>
+        /// <param name="type">The <see cref="Logging.LoggingType"/> the message is, for filtering.</param>
+        /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
+        /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
+        /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        void Log(LoggingType type, string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
+
+        /// <summary>
+        /// Logs a message to the <see cref="ILogger"/> with the given type, and colours if appropriate.
+        /// </summary>
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="type">The <see cref="Logging.LoggingType"/> the message is, for filtering.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogMessage(string message, LoggingType type, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
 
         /// <summary>
@@ -37,6 +47,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogInformation(string message, params object[] args);
 
         /// <summary>
@@ -45,6 +56,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogInformation(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
 
         /// <summary>
@@ -52,6 +64,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogWarning(string message, params object[] args);
 
         /// <summary>
@@ -60,6 +73,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogWarning(string message, Color.Preset foreColor = Color.Preset.DarkYellow, Color.Preset backColor = Color.Preset.Black);
 
         /// <summary>
@@ -67,6 +81,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogError(string message, params object[] args);
 
         /// <summary>
@@ -75,6 +90,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogError(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.DarkRed);
 
         /// <summary>
@@ -82,6 +98,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogVerbose(string message, params object[] args);
 
         /// <summary>
@@ -90,6 +107,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogVerbose(string message, Color.Preset foreColor = Color.Preset.Gray, Color.Preset backColor = Color.Preset.Black);
 
         /// <summary>
@@ -97,6 +115,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// </summary>
         /// <param name="message">The <code>string</code> to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="args">The arguments to be replaced into the message.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogImportant(string message, params object[] args);
 
         /// <summary>
@@ -105,6 +124,7 @@ namespace Evbpc.Framework.Utilities.Logging
         /// <param name="message">The message to be sent to the <see cref="ILogger"/>.</param>
         /// <param name="foreColor">The foreground colour if the message is displayed in a graphics environment.</param>
         /// <param name="backColor">The background colour of the message is displayed in a graphics environment.</param>
+        [Obsolete("This method is obsolete and may not be implemented, you should prefer " + nameof(Log) + " instead.")]
         void LogImportant(string message, Color.Preset foreColor = Color.Preset.White, Color.Preset backColor = Color.Preset.Black);
 
         /// <summary>
