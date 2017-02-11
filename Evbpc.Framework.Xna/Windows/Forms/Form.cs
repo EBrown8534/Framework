@@ -115,13 +115,19 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                 foreach (var c in Controls)
                 {
                     var drawableControl = c as IDrawableControl;
+
+                    if (drawableControl == null)
+                    {
+                        continue;
+                    }
+
                     if (ShowTitleBar)
                     {
-                        drawableControl?.Draw(s, new EFD.Point(Location.X, Location.Y + TitleBarHeight));
+                        drawableControl.Draw(s, new EFD.Point(Location.X, Location.Y + TitleBarHeight));
                     }
                     else
                     {
-                        drawableControl?.Draw(s, Location);
+                        drawableControl.Draw(s, Location);
                     }
                 }
             }
