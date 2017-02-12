@@ -21,7 +21,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
     /// </summary>
     public class Form : Framework.Windows.Forms.Form
     {
-        private TimeSpan _clickTrigger = new TimeSpan(0, 0, 0, 0, 500);
+        private TimeSpan _clickTrigger = new TimeSpan(0, 0, 0, 1, 0);
         private DateTime _clickStart;
         private EFD.Point _dragMouseStart;
         private EFD.Point _dragPosStart;
@@ -191,13 +191,14 @@ namespace Evbpc.Framework.Xna.Windows.Forms
                         || MouseStateManager.MouseStateNow.RightButton == ButtonState.Pressed)
                     {
                         Select();
+                        SelectControl(this, MouseStateManager.MouseStateNow);
                     }
 
                     if (MouseStateManager.WentUp(MouseButtons.Left))
                     {
                         if (DateTime.UtcNow - _clickStart <= _clickTrigger)
                         {
-                            OnClick(new EventArgs());
+                            OnClick(new MouseEventArgs(MouseStateManager.ButtonsDown(), 1, MouseStateManager.MouseStateNow.X, MouseStateManager.MouseStateNow.Y, 0));
                         }
 
                         _inDrag = false;
@@ -242,6 +243,22 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             else if (Enabled && Visible)
             {
                 // Down here we can do any updating that doesn't require input. The form must be both Enabled and Visible for us to do anything.
+            }
+        }
+
+        private void SelectControl(Control rootControl, MouseState mouseState)
+        {
+            foreach (Control control in rootControl.Controls)
+            {
+                if (mouseState.X >= control.Bounds.Left
+                    && mouseState.X < control.Bounds.Right
+                    && mouseState.Y >= control.Bounds.Top
+                    && mouseState.Y < control.Bounds.Bottom)
+                {
+                    control.Select();
+                    SelectControl(control, mouseState);
+                    return;
+                }
             }
         }
 

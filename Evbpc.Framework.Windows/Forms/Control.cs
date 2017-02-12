@@ -570,14 +570,25 @@ namespace Evbpc.Framework.Windows.Forms
         /// <summary>
         /// Raises the <see cref="Click"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="MouseEventArgs"/> that contains the event data.</param>
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.onclick(v=vs.110).aspx
         /// </remarks>
-        protected virtual void OnClick(EventArgs e)
+        protected virtual void OnClick(MouseEventArgs e)
         {
             var handler = Click;
             handler?.Invoke(this, e);
+
+            foreach (Control control in Controls)
+            {
+                if (e.X >= control.Bounds.Left
+                    && e.X < control.Bounds.Right
+                    && e.Y >= control.Bounds.Top
+                    && e.Y < control.Bounds.Bottom)
+                {
+                    control.OnClick(e);
+                }
+            }
         }
 
         /// <summary>

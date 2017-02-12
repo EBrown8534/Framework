@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Point = Evbpc.Framework.Drawing.Point;
 
 namespace Evbpc.Framework.Xna.Windows.Forms
 {
@@ -22,31 +23,22 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// </summary>
         public SpriteFont Font { get; }
 
-        /// <summary>
-        /// Constructs a new <see cref="TextBox"/> with the specified <see cref="Control.Name"/>.
-        /// </summary>
-        /// <param name="font">The <see cref="Font"/>.</param>
-        /// <param name="name">The <see cref="Control.Name"/>.</param>
-        public TextBox(SpriteFont font, string name)
-            : base()
-        {
-            Font = font;
-            Name = name;
-            Form.KeyboardStateManager.KeyDown += KeyStateMan_KeyDown;
-            Form.KeyboardStateManager.KeyPress += KeyStateMan_KeyPress;
-            Form.KeyboardStateManager.KeyUp += KeyStateMan_KeyUp;
-        }
+        public Texture2D Texture { get; }
 
         /// <summary>
         /// Constructs a new <see cref="TextBox"/> with the specified <see cref="Control.Name"/>.
         /// </summary>
         /// <param name="font">The <see cref="Font"/>.</param>
         /// <param name="name">The <see cref="Control.Name"/>.</param>
-        /// <param name="text">The <see cref="Control.Text"/></param>
-        public TextBox(SpriteFont font, string name, string text)
-            : this(font, name)
+        /// <param name="texture">The <see cref="Texture2D"/> for background and borders.</param>
+        public TextBox(SpriteFont font, string name, Texture2D texture)
         {
-            Text = text;
+            Font = font;
+            Name = name;
+            Texture = texture;
+            Form.KeyboardStateManager.KeyDown += KeyStateMan_KeyDown;
+            Form.KeyboardStateManager.KeyPress += KeyStateMan_KeyPress;
+            Form.KeyboardStateManager.KeyUp += KeyStateMan_KeyUp;
         }
 
         void KeyStateMan_KeyUp(object sender, KeyEventArgs e)
@@ -64,9 +56,19 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             OnKeyDown(e);
         }
 
-        void IDrawableControl.Draw(SpriteBatch s, Framework.Drawing.Point initialLocation)
+        void IDrawableControl.Draw(SpriteBatch s, Point initialLocation)
         {
-            s.DrawString(Font, Text, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
+            var drawText = Text;
+            if (ContainsFocus)
+            {
+                if (DateTime.UtcNow.Millisecond / 500 == 0)
+                {
+                    drawText += "|";
+                }
+            }
+
+            s.Draw(Texture, new Rectangle(Location.X + initialLocation.X, Location.Y + initialLocation.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
+            s.DrawString(Font, drawText, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
         }
 
         void IUpdateableControl.Update(bool hasFocus, GameTime gt)
