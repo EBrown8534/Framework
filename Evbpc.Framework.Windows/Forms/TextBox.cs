@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Evbpc.Framework.Drawing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -10,6 +11,9 @@ namespace Evbpc.Framework.Windows.Forms
     [ComVisible(true)]
     public class TextBox : TextBoxBase
     {
+        public string TextPlaceholder { get; set; }
+        public Color ForeColorPlaceholder { get; set; }
+
         public TextBox()
         {
             KeyPress += TextBox_KeyPress;

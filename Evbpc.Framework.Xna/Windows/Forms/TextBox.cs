@@ -41,34 +41,50 @@ namespace Evbpc.Framework.Xna.Windows.Forms
             Form.KeyboardStateManager.KeyUp += KeyStateMan_KeyUp;
         }
 
-        void KeyStateMan_KeyUp(object sender, KeyEventArgs e)
+        private void KeyStateMan_KeyUp(object sender, KeyEventArgs e)
         {
             OnKeyUp(e);
         }
 
-        void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e)
-        { 
+        private void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e)
+        {
             OnKeyPress(e);
         }
 
-        void KeyStateMan_KeyDown(object sender, KeyEventArgs e)
+        private void KeyStateMan_KeyDown(object sender, KeyEventArgs e)
         {
             OnKeyDown(e);
         }
 
-        void IDrawableControl.Draw(SpriteBatch s, Point initialLocation)
+        protected void Draw(SpriteBatch s, Point initialLocation, string text)
         {
-            var drawText = Text;
-            if (ContainsFocus)
+            s.Draw(Texture, new Rectangle(Location.X + initialLocation.X, Location.Y + initialLocation.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
+
+            var drawText = text;
+            if (!string.IsNullOrEmpty(Text))
             {
-                if (DateTime.UtcNow.Millisecond / 500 == 0)
+                if (ContainsFocus && DateTime.UtcNow.Millisecond / 500 == 0)
                 {
                     drawText += "|";
                 }
-            }
 
-            s.Draw(Texture, new Rectangle(Location.X + initialLocation.X, Location.Y + initialLocation.Y, Size.Width, Size.Height), BackColor.ToXnaColor());
-            s.DrawString(Font, drawText, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
+                s.DrawString(Font, drawText, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
+            }
+            else
+            {
+                drawText = TextPlaceholder;
+                s.DrawString(Font, drawText, new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColorPlaceholder.ToXnaColor());
+
+                if (ContainsFocus && DateTime.UtcNow.Millisecond / 500 == 0)
+                {
+                    s.DrawString(Font, "|", new Vector2(initialLocation.X + Location.X, initialLocation.Y + Location.Y), ForeColor.ToXnaColor());
+                }
+            }
+        }
+
+        void IDrawableControl.Draw(SpriteBatch s, Point initialLocation)
+        {
+            Draw(s, initialLocation, Text);
         }
 
         void IUpdateableControl.Update(bool hasFocus, GameTime gt)
