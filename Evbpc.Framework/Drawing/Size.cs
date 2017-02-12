@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Evbpc.Framework.Utilities.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Evbpc.Framework.Drawing
     /// </summary>
     [Serializable]
     [TypeConverter(typeof(SizeConverter))]
-    public struct Size
+    public struct Size : ISerializableByteArray
     {
         /// <summary>
         /// Constructs a new instance of <see cref="Size"/> from the specified <see cref="Point"/>.
@@ -40,7 +41,7 @@ namespace Evbpc.Framework.Drawing
         /// <summary>
         /// Represents the vertical distance of the <see cref="Size"/> object.
         /// </summary>
-        public int Height { get; }
+        public int Height { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates if the current <see cref="Size"/>  is empty or a default instance (both are equivalent).
@@ -51,7 +52,9 @@ namespace Evbpc.Framework.Drawing
         /// <summary>
         /// Represents the horizontal distance of the <see cref="Size"/> object.
         /// </summary>
-        public int Width { get; }
+        public int Width { get; private set; }
+
+        public int SizeInBytes => 8;
 
         /// <summary>
         /// Adds two <see cref="Size"/> structures together and returns the result.
@@ -109,6 +112,16 @@ namespace Evbpc.Framework.Drawing
         /// <returns>The <see cref="Size"/> representing the rounded <see cref="SizeF"/>.</returns>
         public static Size Truncate(SizeF value) => new Size((int)(value.Width), (int)(value.Height));
 
+        public byte[] GetBytes() =>
+            new Point(this).GetBytes();
+
+        public void FromBytes(byte[] data)
+        {
+            var pt = new Point();
+            pt.FromBytes(data);
+            this = new Size(pt);
+        }
+
         /// <summary>
         /// Adds two <see cref="Size"/> structures together and returns the result.
         /// </summary>
@@ -124,7 +137,7 @@ namespace Evbpc.Framework.Drawing
         /// <param name="sz2">The <see cref="Size"/> to compare to.</param>
         /// <returns>True if the <see cref="Size"/> structures have the same value, false otherwise.</returns>
         public static bool operator ==(Size sz1, Size sz2) => sz1.Width == sz2.Width && sz1.Height == sz2.Height;
-        
+
         /// <summary>
         /// Convers a <see cref="Size"/> to a <see cref="Point"/>.
         /// </summary>
