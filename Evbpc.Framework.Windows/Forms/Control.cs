@@ -507,12 +507,13 @@ namespace Evbpc.Framework.Windows.Forms
         /// <remarks>
         /// http://msdn.microsoft.com/en-us/library/system.windows.forms.control.focus(v=vs.110).aspx
         /// </remarks>
-        public bool Focus()
+        public virtual bool Focus()
         {
             if (Parent != null)
             {
                 if (CanFocus)
                 {
+                    Parent.Focus();
                     FindForm().ActiveControl = this;
                 }
             }

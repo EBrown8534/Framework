@@ -28,6 +28,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         /// <param name="font">The <see cref="Font"/>.</param>
         /// <param name="name">The <see cref="Control.Name"/>.</param>
         public TextBox(SpriteFont font, string name)
+            : base()
         {
             Font = font;
             Name = name;
@@ -54,7 +55,7 @@ namespace Evbpc.Framework.Xna.Windows.Forms
         }
 
         void KeyStateMan_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        { 
             OnKeyPress(e);
         }
 

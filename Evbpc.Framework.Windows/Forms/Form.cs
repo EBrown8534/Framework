@@ -264,6 +264,17 @@ namespace Evbpc.Framework.Windows.Forms
             OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing));
         }
 
+        public override bool Focus()
+        {
+            if (CanFocus)
+            {
+                ActiveForm = this;
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Retrieves the <see cref="Form"/> with the specified <see cref="Control.Name"/>.
         /// </summary>

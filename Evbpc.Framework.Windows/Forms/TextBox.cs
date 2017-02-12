@@ -15,10 +15,9 @@ namespace Evbpc.Framework.Windows.Forms
             KeyPress += TextBox_KeyPress;
         }
 
-        void TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //if (this.ContainsFocus)
-            if (Parent.Focused)
+            if (ContainsFocus && Parent.Focused)
             {
                 if (e.KeyChar < 32 || e.KeyChar >= 127)
                 {
