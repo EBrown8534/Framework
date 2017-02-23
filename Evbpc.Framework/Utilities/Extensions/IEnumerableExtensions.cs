@@ -12,6 +12,34 @@ namespace Evbpc.Framework.Utilities.Extensions
     public static class IEnumerableExtensions
     {
         /// <summary>
+        /// Determins if both <see cref="IEnumerable{T}"/> instances have the same items in the same order.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="first">The first <see cref="IEnumerable{T}"/> to test.</param>
+        /// <param name="second">The second <see cref="IEnumerable{T}"/>to test.</param>
+        /// <returns>True if both <see cref="IEnumerable{T}"/> instances have the same items in the same order.</returns>
+        public static bool EquivalentTo<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        {
+            var firstList = first.ToList();
+            var secondList = second.ToList();
+
+            if (firstList.Count != secondList.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < firstList.Count; i++)
+            {
+                if (!firstList[i].Equals(secondList[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Removes all elements from the source <code>IEnumerable{T}</code> that are present in the exceptions <code>IEnumerable{T}</code>.
         /// </summary>
         /// <typeparam name="T">The type of the source and exception parameters.</typeparam>
