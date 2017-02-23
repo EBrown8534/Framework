@@ -34,5 +34,21 @@ namespace Evbpc.Framework.Utilities.Cryptography
                 return sha512.Hash;
             }
         }
+
+        /// <summary>
+        /// Hashes a password with <see cref="Rfc2898DeriveBytes"/> / PBKDF2.
+        /// </summary>
+        /// <param name="password">The string password to hash.</param>
+        /// <param name="salt">The byte array of the salt.</param>
+        /// <param name="byteCount">Optionally specify the number of bytes of the hash to return, default is 32.</param>
+        /// <param name="iterations">Optionally specify the number of iterations to perform, default is 10000.</param>
+        /// <returns>The byte array for the hashed password.</returns>
+        public static byte[] HashPassword(string password, byte[] salt, int byteCount = 32, int iterations = 10000)
+        {
+            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, iterations))
+            {
+                return rfc2898DeriveBytes.GetBytes(byteCount);
+            }
+        }
     }
 }
