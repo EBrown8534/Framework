@@ -34,6 +34,10 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public string Max { get; set; }
 
+        public RequestType RequestType => RequestType.GET;
+
+        public string PostParameters => null;
+
         public DateTime? FromDate { get; set; }
 
         public DateTime? ToDate { get; set; }

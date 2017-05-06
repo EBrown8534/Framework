@@ -1,16 +1,17 @@
-﻿using Evbpc.Framework.Integrations.StackExchange.API.Models;
-using Evbpc.Framework.Integrations.StackExchange.API.Requests;
-using Evbpc.Framework.Utilities.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Evbpc.Framework.Integrations.StackExchange.OAuth.Models;
+using Evbpc.Framework.Integrations.StackExchange.OAuth.Requests;
+using System.Net;
+using System.IO;
+using Evbpc.Framework.Utilities.Serialization;
 
-namespace Evbpc.Framework.Integrations.StackExchange.API
+namespace Evbpc.Framework.Integrations.StackExchange.OAuth
 {
+
     /// <summary>
     /// Fires and processes the actual SE API requests.
     /// </summary>
@@ -54,12 +55,6 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
 
             var response = "";
 
-            if (request.RequestType == RequestType.POST)
-            {
-                Configuration.Key = null;
-                Configuration.AccessToken = null;
-            }
-
             var url = Configuration.GetFormattedUrl(request);
 
             var webRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -101,10 +96,8 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         /// <typeparam name="T">The type of the object to be returned. This should be inferred from the <see cref="IRequest{T}"/>.</typeparam>
         /// <param name="response">The JSON response from the API.</param>
         /// <returns>A <see cref="Wrapper{T}"/> representing the JSON data.</returns>
-        public Wrapper<T> ProcessResponse<T>(string response)
-            where T : IBaseModel
-        {
-            return DataContractJsonSerialization.Deserialize<Wrapper<T>>(response);
-        }
+        public T ProcessResponse<T>(string response)
+            where T : IBaseModel =>
+            DataContractJsonSerialization.Deserialize<T>(response);
     }
 }

@@ -48,7 +48,12 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         /// </summary>
         /// <param name="url">The URL to append to. Should be the result of <see cref="FormattedUrl"/>, then the API </param>
         /// <returns></returns>
-        public string AppendKey(string url) => string.IsNullOrWhiteSpace(Key) ? url : url + (url.Contains('?') ? '&' : '?') + "key=" + Key;
+        public string AppendKey(string url)
+        {
+            url = string.IsNullOrWhiteSpace(Key) ? url : url + (url.Contains('?') ? '&' : '?') + "key=" + Key;
+            url = string.IsNullOrWhiteSpace(AccessToken) ? url : url + (url.Contains('?') ? '&' : '?') + "access_token=" + AccessToken;
+            return url;
+        }
 
         /// <summary>
         /// Returns the fully formatted URL for Stack Exchange API requests.
@@ -56,5 +61,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API
         /// <param name="requester">The fully filled <see cref="IRequest"/> making the request.</param>
         /// <returns>The formatted url.</returns>
         public string GetFormattedUrl<T>(IRequest<T> requester) where T : IBaseModel => AppendKey(FormattedUrl + requester.FormattedEndpoint);
+
+        public string AccessToken { get; set; }
     }
 }

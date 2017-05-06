@@ -35,6 +35,10 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
 
         public string Filter { get; set; }
 
+        public RequestType RequestType => RequestType.GET;
+
+        public string PostParameters => null;
+
         /// <summary>
         /// Returns the fully formatted endpoint for this <see cref="SitesRequest"/> instance.
         /// </summary>

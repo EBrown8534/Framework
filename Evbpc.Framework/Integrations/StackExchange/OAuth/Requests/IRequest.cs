@@ -1,11 +1,11 @@
-﻿using Evbpc.Framework.Integrations.StackExchange.API.Models;
+﻿using Evbpc.Framework.Integrations.StackExchange.OAuth.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
+namespace Evbpc.Framework.Integrations.StackExchange.OAuth.Requests
 {
     /// <summary>
     /// This representes a generic request against the Stack Exchange API. Though this does not make use of the type parameter intrinsically, it's necessary for generic inference and type constraints.
@@ -18,11 +18,6 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
         /// The basic endpoint for the <see cref="IRequest{T}"/>.
         /// </summary>
         string EndpointUrl { get; }
-
-        /// <summary>
-        /// An optional filter to use for the <see cref="IRequest{T}"/>.
-        /// </summary>
-        string Filter { get; }
 
         /// <summary>
         /// Gets the formatted endpoint for the <see cref="IRequest{T}"/>. This should <b>NOT</b> contain the Stack Exchange API base URL or key.
