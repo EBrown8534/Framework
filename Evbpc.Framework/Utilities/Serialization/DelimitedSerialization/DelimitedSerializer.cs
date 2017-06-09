@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -115,16 +116,27 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
             public DelimitedColumnAttribute Attribute { get; set; }
             public PropertyInfo Info { get; set; }
 
+            public IEnumerable<Property> Properties { get; set; }
+
             public bool CanSerialize => !Info.PropertyType.IsArray && (Info.PropertyType == typeof(string) || Info.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) == null);
         }
 
         private IEnumerable<Property> _getProperties(object item) =>
-            item.GetType().GetProperties()
+            _getProperties(item.GetType());
+
+        private IEnumerable<Property> _getProperties(Type type) =>
+            type.GetProperties()
                 .Where(p => p.GetCustomAttribute<DelimitedIgnoreAttribute>() == null)
                 .Select(p => new Property
                 {
                     Attribute = p.GetCustomAttribute<DelimitedColumnAttribute>() ?? new DelimitedColumnAttribute { Name = p.Name.InsertOnCharacter(CharacterType.UpperLetter, " ") },
                     Info = p
+                })
+                .Select(p => new Property
+                {
+                    Attribute = p.Attribute,
+                    Info = p.Info,
+                    Properties = p.Attribute.Traverse ? _getProperties(p.Info.PropertyType) : null
                 })
                 .OrderBy(p => p.Attribute.Order)
                 .ThenBy(p => p.Attribute.Name)
@@ -213,7 +225,7 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                 if (property.Attribute.Traverse)
                 {
                     var itemValue = property.Info.GetValue(item);
-                    value = _buildRow(itemValue, _getProperties(itemValue), false);
+                    value = _buildRow(itemValue, property.Properties, false);
                 }
                 else
                 {
@@ -233,14 +245,16 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
                         {
                             value = value.Replace("\"", DoubleQuoteEscape);
                         }
-
-                        _validateCharacters(value, ColumnDelimiter, "property value");
-                        _validateCharacters(value, RowDelimiter, "property value");
                     }
 
                     if (QuoteValues)
                     {
                         value = "\"" + value + "\"";
+                    }
+                    else
+                    {
+                        _validateCharacters(value, ColumnDelimiter, "property value");
+                        _validateCharacters(value, RowDelimiter, "property value");
                     }
                 }
 
@@ -294,6 +308,143 @@ namespace Evbpc.Framework.Utilities.Serialization.DelimitedSerialization
 
             return result;
         }
+
+        private IEnumerable<string> _readLines(Stream stream, Encoding encoding)
+        {
+            var buffer = new byte[512];
+            var decoder = encoding.GetDecoder();
+            var readSize = buffer.Length;
+            var esb = new ExtendedStringBuilder();
+
+            while (stream.Position < stream.Length)
+            {
+                var remaining = stream.Length - stream.Position;
+
+                if (remaining < buffer.Length)
+                {
+                    readSize = (int)remaining;
+                }
+
+                stream.Read(buffer, 0, readSize);
+
+                var chars = new char[decoder.GetCharCount(buffer, 0, readSize)];
+                decoder.GetChars(buffer, 0, readSize, chars, 0);
+
+                foreach (char c in chars)
+                {
+                    esb += c;
+                }
+
+                if (esb.Contains(RowDelimiter))
+                {
+                    string str = esb;
+                    string[] parts = str.QuotedSplit(RowDelimiter).ToArray();
+
+                    for (int i = 0; i < parts.Length - 1; i++)
+                    {
+                        yield return parts[i];
+                    }
+
+                    esb.Length = 0;
+                    esb += parts[parts.Length - 1];
+                }
+            }
+
+            {
+                string str = esb;
+                string[] parts = str.QuotedSplit(RowDelimiter).ToArray();
+
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    yield return parts[i];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserializes an object from a CSV stream.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="stream">The stream to deserialize.</param>
+        /// <param name="encoding">The character encoding of the stream.</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> of the items resulting from the stream.</returns>
+        /// <remarks>
+        /// This method is lazily evaluated, the stream will only be read as needed and items will be returned as needed. As such, to deserialize the entire stream at once you must call a materialization method on this result, such as <code>.ToArray()</code> or <code>.ToList()</code>.
+        /// </remarks>
+        public IEnumerable<T> Deserialize<T>(Stream stream, Encoding encoding)
+        {
+            var properties = _getProperties(typeof(T));
+
+            var lines = _readLines(stream, encoding);
+            var didFirst = false;
+            foreach (var line in lines)
+            {
+                if (IncludeHeader && !didFirst)
+                {
+                    didFirst = true;
+                    continue;
+                }
+
+                yield return _deserializeRow<T>(line, properties);
+            }
+        }
+
+        private T _deserializeRow<T>(string line, IEnumerable<Property> properties)
+        {
+            var values = line.QuotedSplit(ColumnDelimiter);
+
+            var result = (T)Activator.CreateInstance(typeof(T), true);
+
+            foreach (var property in properties)
+            {
+                if (!property.CanSerialize)
+                {
+                    continue;
+                }
+
+                if (property.Attribute.Traverse)
+                {
+                    var mi = typeof(DelimitedSerializer).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).First(x => x.Name == nameof(_deserializeRow));
+                    var gmi = mi.MakeGenericMethod(property.Info.PropertyType);
+                    var subProperties = property.Properties;
+                    var nestedPropertyCount = _getPropertyCount(property);
+                    var valueString = string.Join(ColumnDelimiter, values.Take(nestedPropertyCount));
+                    var value = gmi.Invoke(this, new object[] { valueString, subProperties });
+                    property.Info.SetValue(result, value);
+                    values = values.Skip(nestedPropertyCount);
+                }
+                else
+                {
+                    var value = values.First();
+
+                    if (InvalidColumnReplace != null)
+                    {
+                        value = value.Replace(InvalidColumnReplace, ColumnDelimiter);
+                    }
+                    if (InvalidRowReplace != null)
+                    {
+                        value = value.Replace(InvalidRowReplace, RowDelimiter);
+                    }
+                    if (DoubleQuoteEscape != null)
+                    {
+                        value = value.Replace(DoubleQuoteEscape, "\"");
+                    }
+
+                    if (QuoteValues)
+                    {
+                        value = value.Substring(1, value.Length - 2);
+                    }
+
+                    property.Info.SetValue(result, Convert.ChangeType(value, property.Info.PropertyType), null);
+                    values = values.Skip(1);
+                }
+            }
+
+            return result;
+        }
+
+        private int _getPropertyCount(Property property) =>
+            property.Attribute.Traverse ? property.Properties.Sum(x => x.Attribute.Traverse ? _getPropertyCount(x) : 1) : 1;
 
         /// <summary>
         /// Returns an instance of the <see cref="DelimitedSerializer"/> setup for Tab-Separated Value files.
