@@ -91,6 +91,44 @@ namespace Evbpc.Framework.Utilities
             HasBeenAppended = false;
         }
 
+        public bool Contains(string s)
+        {
+            var si = 0;
+            for (int i = 0; i < _stringBuilder.Length; i++)
+            {
+                if (_stringBuilder[i] == s[si])
+                {
+                    if (si == s.Length - 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        si++;
+                    }
+                }
+                else
+                {
+                    si = 0;
+                }
+            }
+
+            return false;
+        }
+
+        public bool EndsWith(string rowDelimiter)
+        {
+            for (int i = 0; i < rowDelimiter.Length; i++)
+            {
+                if (rowDelimiter[i] != _stringBuilder[_stringBuilder.Length - i - 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Appends a <code>string</code> to the current <see cref="ExtendedStringBuilder"/>.
         /// </summary>
