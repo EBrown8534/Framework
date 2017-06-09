@@ -463,6 +463,81 @@ namespace Evbpc.Framework.Utilities.Extensions
             return esb;
         }
 
+        /// <summary>
+        /// Splits a string on the delimiter, except within a quotation where the delimiter is ignored.
+        /// </summary>
+        /// <param name="s">The string to split.</param>
+        /// <param name="delim">The string to split on.</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> of the result strings.</returns>
+        /// <remarks>
+        /// This method is lazily evaluated, the string will only be read as needed and items will be returned as needed. As such, to return the entire selection at once you must call a materialization method on this result, such as <code>.ToArray()</code> or <code>.ToList()</code>.
+        /// </remarks>
+        public static IEnumerable<string> QuotedSplit(this string s, string delim)
+        {
+            var esb = new ExtendedStringBuilder(s.Length);
+
+            bool inQuote = false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '\"')
+                {
+                    if (i < s.Length - 1 && s[i + 1] == '\"')
+                    {
+                        esb += s[i++];
+                        esb += s[i];
+                    }
+                    else
+                    {
+                        inQuote = !inQuote;
+                        esb += s[i];
+                    }
+                }
+                else if (!inQuote)
+                {
+                    if (s[i] == delim[0])
+                    {
+                        var split = true;
+                        for (int j = 0; j < delim.Length; j++)
+                        {
+                            if (s.Length - 1 <= i + j)
+                            {
+                                split = false;
+                                break;
+                            }
+
+                            if (s[i + j] != delim[j])
+                            {
+                                split = false;
+                                break;
+                            }
+                        }
+
+                        if (split)
+                        {
+                            yield return esb;
+                            esb.Length = 0;
+                            i += delim.Length - 1;
+                            split = true;
+                            continue;
+                        }
+                    }
+
+                    esb += s[i];
+                }
+                else if (inQuote)
+                {
+                    esb += s[i];
+                }
+            }
+
+            if (esb.EndsWith(delim))
+            {
+                esb.Length -= delim.Length;
+            }
+
+            yield return esb;
+        }
+
         public static CharacterType GetCharacterType(this char c)
         {
             if (c >= 'a' && c <= 'z')
