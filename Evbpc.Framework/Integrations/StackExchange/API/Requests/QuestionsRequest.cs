@@ -44,7 +44,7 @@ namespace Evbpc.Framework.Integrations.StackExchange.API.Requests
                 values.Add(nameof(Order).ToLower(), Order == OrderType.Ascending ? "asc" : "desc");
                 values.Add(nameof(Sort).ToLower(), Sort.ToString().ToLower());
                 values.Add(nameof(Page).ToLower(), (Page < 2 ? 1 : Page).ToString());
-                values.Add("page_size", PageSize.ToString());
+                values.Add(nameof(PageSize).ToLower(), PageSize.ToString());
 
                 var qs = StringExtensions.BuildQueryString(values);
 
