@@ -23,7 +23,7 @@ This solution requires Visual Studio 2015, XNA 4.0, and .NET 4.5. Detailed setup
 
 ## Setting up XNA 4.0
 
-To setup XNA 4.0 with Visual Studio 2015 you should follow the guidelines [in this article](http://rbwhitaker.wikidot.com/setting-up-xna) with the exception of using the [XnaFor2015.ps1](https://github.com/EBrown8534/Framework/blob/master/XnaFor2015.ps1) script provided in this project instead.
+To setup XNA 4.0 with Visual Studio 2015 you should follow the guidelines [in this article](http://rbwhitaker.wikidot.com/setting-up-xna) with the exception of using the [XnaFor2017.ps1](https://github.com/EBrown8534/Framework/blob/master/XnaFor2017.ps1) script provided in this project instead.
 
 If you do not wish to download the script from this repository directly, you may download the script from that article and make the following modification:
 
@@ -49,3 +49,14 @@ Before:
 This is confirmed working with Visual Studio 2015 Enterprise, and Visual Studio 2015 Enterprise RC. (To be tested with Visual Studio 2015 Community)
 
 Note: this process also works with Visual Studio 2012 (all versions) and Visual Studio 2013 (all versions). This repository, however, uses features available **only** in C#6.0, which mandates the use of Visual Studio 2015.
+
+In order to install in Visual Studio 2017 Community, one should run the new XnaFor2017.ps1 script, or make the following modification in the same place as the previous:
+
+	$appName = "Visual Studio 2017";
+	$pathToExe = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.exe";
+	$installLocation = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\Microsoft"
+	$extensionCacheLocation = "$home\AppData\Local\Microsoft\VisualStudio\15.0_55c916b4\Extensions";
+	$version = "14.0";
+	InstallXna $appName $pathToExe $installLocation $extensionCacheLocation $version;
+
+And then copy `C:\Program Files (x86)\MSBuild\Microsoft\XNA Game Studio` to `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\XNA Game Studio`.
