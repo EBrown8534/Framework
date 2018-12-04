@@ -30,17 +30,17 @@ namespace Evbpc.Framework.Utilities
 
             if (unit == SizeUnit.Bits)
             {
-                SizeInBytes = (uint)(size / 8);
+                SizeInBytes = (ulong)(size / 8);
                 return;
             }
 
             if (((int)unit & 0x03) == (int)SizeUnit.Bytes)
             {
-                SizeInBytes = (uint)(size * Math.Pow(10, 3 * (((int)unit & 0xFF00) >> 8)));
+                SizeInBytes = (ulong)(size * Math.Pow(10, 3 * (((int)unit & 0xFF00) >> 8)));
                 return;
             }
 
-            SizeInBytes = (uint)(size * Math.Pow(2, 10 * (((int)unit & 0xFF00) >> 8)));
+            SizeInBytes = (ulong)(size * Math.Pow(2, 10 * (((int)unit & 0xFF00) >> 8)));
         }
 
         public double GetSize(SizeUnit unit)
